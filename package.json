@@ -2,11 +2,11 @@
   "name": "studio",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "storybook": "ng run ui:storybook",
-    "storybook:build": "ng run ui:build-storybook",
-    "build:ui": "ng build ui",
-    "test": "ng test"
+    "ng": "node node_modules/@angular/cli/bin/ng.js",
+    "storybook": "node node_modules/@angular/cli/bin/ng.js run ui:storybook",
+    "storybook:build": "node node_modules/@angular/cli/bin/ng.js run ui:build-storybook",
+    "build:ui": "node node_modules/@angular/cli/bin/ng.js build ui",
+    "test": "node node_modules/@angular/cli/bin/ng.js test"
   },
   "private": true,
   "packageManager": "npm@10.8.2",
