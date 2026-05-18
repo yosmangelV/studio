@@ -151,6 +151,10 @@
 // =============================================================================
 
 @mixin dark-tokens {
+  // Primary hover surfaces (para ghost, focus rings, etc.)
+  --color-primary-50:  #092b5f;
+  --color-primary-100: #0d3d85;
+
   // Surface
   --color-surface:         #0f172a;
   --color-surface-raised:  #1e293b;
