@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { ButtonComponent } from './button.component';
 
 const meta: Meta<ButtonComponent> = {
-  title: 'Components/Button',
+  title: 'Atoms/Button',
   component: ButtonComponent,
   tags: ['autodocs'],
   argTypes: {
@@ -21,13 +21,13 @@ const meta: Meta<ButtonComponent> = {
   render: (args) => ({
     props: args,
     template: `
-      <ui-button
+      <ds-button
         [variant]="variant"
         [size]="size"
         [disabled]="disabled"
         [loading]="loading"
         [fullWidth]="fullWidth"
-      >Click me</ui-button>
+      >Click me</ds-button>
     `,
   }),
 };
@@ -71,10 +71,10 @@ export const AllVariants: Story = {
   render: () => ({
     template: `
       <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-        <ui-button variant="primary">Primary</ui-button>
-        <ui-button variant="secondary">Secondary</ui-button>
-        <ui-button variant="ghost">Ghost</ui-button>
-        <ui-button variant="danger">Danger</ui-button>
+        <ds-button variant="primary">Primary</ds-button>
+        <ds-button variant="secondary">Secondary</ds-button>
+        <ds-button variant="ghost">Ghost</ds-button>
+        <ds-button variant="danger">Danger</ds-button>
       </div>
     `,
   }),
@@ -84,9 +84,9 @@ export const AllSizes: Story = {
   render: () => ({
     template: `
       <div style="display: flex; gap: 12px; align-items: center;">
-        <ui-button variant="primary" size="sm">Small</ui-button>
-        <ui-button variant="primary" size="md">Medium</ui-button>
-        <ui-button variant="primary" size="lg">Large</ui-button>
+        <ds-button variant="primary" size="sm">Small</ds-button>
+        <ds-button variant="primary" size="md">Medium</ds-button>
+        <ds-button variant="primary" size="lg">Large</ds-button>
       </div>
     `,
   }),

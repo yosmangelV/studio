@@ -15,7 +15,7 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "ui": ["./dist/ui"]
+      "design-system": ["./dist/design-system"]
     }
   },
   "angularCompilerOptions": {
@@ -27,10 +27,10 @@
   "files": [],
   "references": [
     {
-      "path": "./projects/ui/tsconfig.lib.json"
+      "path": "./projects/design-system/tsconfig.lib.json"
     },
     {
-      "path": "./projects/ui/tsconfig.spec.json"
+      "path": "./projects/design-system/tsconfig.spec.json"
     }
   ]
 }

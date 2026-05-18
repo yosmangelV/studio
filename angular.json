@@ -6,20 +6,20 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "ui": {
+    "design-system": {
       "projectType": "library",
-      "root": "projects/ui",
-      "sourceRoot": "projects/ui/src",
-      "prefix": "ui",
+      "root": "projects/design-system",
+      "sourceRoot": "projects/design-system/src",
+      "prefix": "ds",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/ui/tsconfig.lib.prod.json"
+              "tsConfig": "projects/design-system/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ui/tsconfig.lib.json"
+              "tsConfig": "projects/design-system/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,18 +27,18 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/ui/tsconfig.spec.json"
+            "tsConfig": "projects/design-system/tsconfig.spec.json"
           }
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "ui:build",
+            "browserTarget": "design-system:build",
             "tsConfig": "tsconfig.storybook.json",
             "styles": [
-              "projects/ui/src/styles/global.css",
-              "projects/ui/src/styles/tokens.scss"
+              "projects/design-system/src/styles/global.css",
+              "projects/design-system/src/styles/tokens.scss"
             ],
             "compodoc": false,
             "port": 6006
@@ -48,11 +48,11 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "ui:build",
+            "browserTarget": "design-system:build",
             "tsConfig": "tsconfig.storybook.json",
             "styles": [
-              "projects/ui/src/styles/global.css",
-              "projects/ui/src/styles/tokens.scss"
+              "projects/design-system/src/styles/global.css",
+              "projects/design-system/src/styles/tokens.scss"
             ],
             "compodoc": false,
             "outputDir": "dist/storybook"

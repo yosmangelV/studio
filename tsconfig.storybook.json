@@ -6,11 +6,11 @@
   "files": [],
   "include": [
     ".storybook/**/*.ts",
-    "projects/ui/src/**/*.ts"
+    "projects/design-system/src/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "projects/ui/src/**/*.spec.ts"
+    "projects/design-system/src/**/*.spec.ts"
   ]
 }
