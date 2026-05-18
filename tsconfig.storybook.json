@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "files": [],
+  "include": [
+    ".storybook/**/*.ts",
+    "projects/ui/src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "projects/ui/src/**/*.spec.ts"
+  ]
+}
