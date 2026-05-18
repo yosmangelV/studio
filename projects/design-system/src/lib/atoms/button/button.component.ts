@@ -5,7 +5,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 @Component({
-  selector: 'ui-button',
+  selector: 'ds-button',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './button.component.html',

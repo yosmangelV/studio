@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "node node_modules/@angular/cli/bin/ng.js",
-    "storybook": "node node_modules/@angular/cli/bin/ng.js run ui:storybook",
-    "storybook:build": "node node_modules/@angular/cli/bin/ng.js run ui:build-storybook",
-    "build:ui": "node node_modules/@angular/cli/bin/ng.js build ui",
+    "storybook": "node node_modules/@angular/cli/bin/ng.js run design-system:storybook",
+    "storybook:build": "node node_modules/@angular/cli/bin/ng.js run design-system:build-storybook",
+    "build:ds": "node node_modules/@angular/cli/bin/ng.js build design-system",
     "test": "node node_modules/@angular/cli/bin/ng.js test"
   },
   "private": true,
