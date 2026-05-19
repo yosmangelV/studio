@@ -7,7 +7,29 @@
   @if (loading()) {
     <span class="btn__spinner" aria-hidden="true"></span>
   }
-  <span [class.opacity-0]="loading()">
-    <ng-content />
-  </span>
+  @if (iconLeft()) {
+    <lucide-angular
+      class="btn__icon"
+      [img]="iconLeft()!"
+      [size]="iconSize()"
+      [strokeWidth]="1.5"
+      [class.opacity-0]="loading()"
+      aria-hidden="true"
+    />
+  }
+  @if (!iconOnly()) {
+    <span [class.opacity-0]="loading()">
+      <ng-content />
+    </span>
+  }
+  @if (iconRight()) {
+    <lucide-angular
+      class="btn__icon"
+      [img]="iconRight()!"
+      [size]="iconSize()"
+      [strokeWidth]="1.5"
+      [class.opacity-0]="loading()"
+      aria-hidden="true"
+    />
+  }
 </button>
