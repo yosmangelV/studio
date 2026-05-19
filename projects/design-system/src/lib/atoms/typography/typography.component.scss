@@ -1,0 +1,99 @@
+.text {
+  margin: 0;
+  font-family: var(--font-sans);
+
+  // ---- Variants ------------------------------------------------------------
+  &--display {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+  }
+
+  &--h1 {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.01em;
+  }
+
+  &--h2 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.01em;
+  }
+
+  &--h3 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-tight);
+  }
+
+  &--h4 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-normal);
+  }
+
+  &--h5 {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-normal);
+  }
+
+  &--h6 {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-normal);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &--body-lg {
+    font-size: var(--text-lg);
+    font-weight: var(--font-normal);
+    line-height: var(--leading-relaxed);
+  }
+
+  &--body {
+    font-size: var(--text-base);
+    font-weight: var(--font-normal);
+    line-height: var(--leading-relaxed);
+  }
+
+  &--body-sm {
+    font-size: var(--text-sm);
+    font-weight: var(--font-normal);
+    line-height: var(--leading-relaxed);
+  }
+
+  &--label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-normal);
+  }
+
+  &--caption {
+    font-size: var(--text-xs);
+    font-weight: var(--font-normal);
+    line-height: var(--leading-normal);
+    color: var(--color-text-tertiary);
+  }
+
+  // ---- Colors --------------------------------------------------------------
+  &--primary   { color: var(--color-text-primary); }
+  &--secondary { color: var(--color-text-secondary); }
+  &--muted     { color: var(--color-text-tertiary); }
+  &--link      { color: var(--color-text-link); }
+  &--error     { color: var(--color-error); }
+  &--success   { color: var(--color-success); }
+  &--inverse   { color: var(--color-text-inverse); }
+
+  // ---- Truncate ------------------------------------------------------------
+  &--truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

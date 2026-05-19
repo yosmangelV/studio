@@ -6,11 +6,12 @@ const config: StorybookConfig = {
     '../projects/design-system/src/lib/molecules/**/*.stories.@(ts|mdx)',
     '../projects/design-system/src/lib/organisms/**/*.stories.@(ts|mdx)',
   ],
+  addons: ['@storybook/addon-docs'],
   framework: {
     name: '@storybook/angular',
     options: {},
   },
-  docs: {},
+  docs: { defaultName: 'Docs' },
 };
 
 export default config;

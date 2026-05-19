@@ -1,0 +1,95 @@
+.img-wrap {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-surface-overlay);
+
+  // ---- Aspect ratios -------------------------------------------------------
+  &--16-9 { aspect-ratio: 16 / 9; }
+  &--4-3  { aspect-ratio: 4 / 3; }
+  &--1-1  { aspect-ratio: 1; }
+  &--3-4  { aspect-ratio: 3 / 4; }
+  &--auto { aspect-ratio: auto; }
+
+  // ---- Border radius -------------------------------------------------------
+  &--none { border-radius: 0; }
+  &--sm   { border-radius: var(--radius-sm); }
+  &--md   { border-radius: var(--radius-md); }
+  &--lg   { border-radius: var(--radius-lg); }
+  &--xl   { border-radius: var(--radius-xl); }
+  &--full { border-radius: var(--radius-full); }
+
+  // ---- Skeleton shimmer ----------------------------------------------------
+  &__skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      var(--color-surface-overlay) 25%,
+      var(--color-surface-raised) 50%,
+      var(--color-surface-overlay) 75%
+    );
+    background-size: 200% 100%;
+    animation: img-shimmer 1.5s ease-in-out infinite;
+  }
+
+  // ---- Error state ---------------------------------------------------------
+  &__error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-tertiary);
+    background-color: var(--color-surface-overlay);
+  }
+
+  // ---- Image ---------------------------------------------------------------
+  &__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+
+    &--cover   { object-fit: cover; object-position: center; }
+    &--contain { object-fit: contain; }
+
+    // Entrance animations — only play when --loaded is added
+    &--fade.img-wrap__img--loaded {
+      animation: img-fade var(--duration-slow) var(--ease-default) forwards;
+    }
+
+    &--slide-up.img-wrap__img--loaded {
+      animation: img-slide-up var(--duration-slow) var(--ease-default) forwards;
+    }
+
+    &--scale.img-wrap__img--loaded {
+      animation: img-scale var(--duration-slow) var(--ease-default) forwards;
+    }
+
+    // No animation — just show immediately
+    &--none.img-wrap__img--loaded {
+      opacity: 1;
+    }
+  }
+}
+
+// ---- Keyframes -------------------------------------------------------------
+@keyframes img-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes img-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes img-slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes img-scale {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
