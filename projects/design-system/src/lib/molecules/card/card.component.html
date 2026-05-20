@@ -1,0 +1,7 @@
+<article [class]="classes()">
+  <ng-content select="[card-header]" />
+  <div class="card__body">
+    <ng-content />
+  </div>
+  <ng-content select="[card-footer]" />
+</article>
