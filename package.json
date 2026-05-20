@@ -2,11 +2,11 @@
   "name": "studio",
   "version": "0.0.0",
   "scripts": {
-    "ng": "node node_modules/@angular/cli/bin/ng.js",
-    "storybook": "node node_modules/@angular/cli/bin/ng.js run design-system:storybook",
-    "storybook:build": "node node_modules/@angular/cli/bin/ng.js run design-system:build-storybook",
-    "build:ds": "node node_modules/@angular/cli/bin/ng.js build design-system",
-    "test": "node node_modules/@angular/cli/bin/ng.js test"
+    "ng": "ng",
+    "storybook": "ng run design-system:storybook",
+    "storybook:build": "ng run design-system:build-storybook",
+    "build:ds": "ng build design-system",
+    "test": "ng test"
   },
   "private": true,
   "packageManager": "npm@10.8.2",
