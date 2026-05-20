@@ -1,0 +1,18 @@
+<nav class="story-nav">
+  <button
+    class="story-nav__btn story-nav__btn--prev"
+    [disabled]="isFirst()"
+    (click)="previous.emit()"
+    aria-label="Diapositiva anterior"
+  >
+    ←
+  </button>
+
+  <button
+    class="story-nav__btn story-nav__btn--next"
+    (click)="next.emit()"
+    [attr.aria-label]="isLast() ? 'Ver desde el principio' : 'Siguiente diapositiva'"
+  >
+    {{ isLast() ? '↺' : '→' }}
+  </button>
+</nav>

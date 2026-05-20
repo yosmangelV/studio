@@ -1,0 +1,16 @@
+<div class="text-slide">
+  @if (data().eyebrow) {
+    <p class="text-slide__eyebrow">{{ data().eyebrow }}</p>
+  }
+  @if (data().title) {
+    <h1 class="text-slide__title">{{ data().title }}</h1>
+  }
+  <p class="text-slide__body">
+    @if (data().emphasis) {
+      {{ data().body.replace(data().emphasis!, '') }}
+      <em class="text-slide__emphasis">{{ data().emphasis }}</em>
+    } @else {
+      {{ data().body }}
+    }
+  </p>
+</div>

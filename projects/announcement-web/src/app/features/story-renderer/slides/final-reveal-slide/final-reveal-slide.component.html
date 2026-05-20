@@ -1,0 +1,15 @@
+<div class="final-reveal-slide">
+  <div class="final-reveal-slide__heart" aria-hidden="true">❤️</div>
+
+  <div class="final-reveal-slide__banner">
+    <h1 class="final-reveal-slide__title">{{ data().title }}</h1>
+  </div>
+
+  @if (data().subtitle) {
+    <p class="final-reveal-slide__subtitle">{{ data().subtitle }}</p>
+  }
+
+  @if (data().message) {
+    <p class="final-reveal-slide__message">{{ data().message }}</p>
+  }
+</div>
