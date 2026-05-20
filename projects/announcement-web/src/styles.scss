@@ -1,0 +1,17 @@
+@use '../../../projects/design-system/src/styles/tokens' as *;
+@use 'app/shared/styles/announcement-fonts';
+@use 'app/shared/styles/announcement-tokens';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--ann-font-body);
+  color: var(--ann-text-dark);
+  background-color: var(--ann-bg-cream);
+  -webkit-font-smoothing: antialiased;
+}

@@ -1,0 +1,81 @@
+.final-reveal-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-10) var(--space-8);
+  background-color: var(--ann-bg-cream);
+  text-align: center;
+  gap: var(--space-6);
+
+  &__heart {
+    font-size: 3rem;
+    animation: heart-beat var(--duration-xslow) var(--ease-spring) both;
+  }
+
+  &__banner {
+    border: 3px solid var(--ann-accent-gold);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-8);
+    position: relative;
+    animation: banner-reveal var(--duration-cinematic) var(--ease-spring) var(--stagger-2) both;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      width: 8px;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--ann-accent-gold) 0,
+        var(--ann-accent-gold) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    }
+    &::before { left: -14px; }
+    &::after  { right: -14px; }
+  }
+
+  &__title {
+    font-family: var(--ann-font-script);
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    font-weight: 700;
+    color: var(--ann-text-dark);
+  }
+
+  &__subtitle {
+    font-family: var(--ann-font-body);
+    font-size: var(--text-base);
+    color: var(--ann-text-soft);
+    max-width: 300px;
+    line-height: var(--leading-relaxed);
+    animation: fade-up var(--duration-cinematic) var(--ease-out) var(--stagger-3) both;
+  }
+
+  &__message {
+    font-family: var(--ann-font-script);
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    color: var(--ann-text-script);
+    animation: fade-up var(--duration-cinematic) var(--ease-out) var(--stagger-4) both;
+  }
+}
+
+@keyframes heart-beat {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes banner-reveal {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(var(--slide-md)); }
+  to   { opacity: 1; transform: translateY(0); }
+}

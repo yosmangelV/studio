@@ -1,0 +1,5 @@
+<div class="progress-dots" role="progressbar" [attr.aria-valuenow]="current() + 1" [attr.aria-valuemax]="total()">
+  @for (dot of dots(); track dot) {
+    <span class="progress-dots__dot" [class.progress-dots__dot--active]="dot === current()"></span>
+  }
+</div>

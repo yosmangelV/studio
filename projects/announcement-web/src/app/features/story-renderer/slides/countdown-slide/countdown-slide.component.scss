@@ -1,0 +1,28 @@
+.countdown-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: var(--ann-bg-lavender);
+
+  &__number {
+    font-family: var(--ann-font-script);
+    font-size: clamp(8rem, 40vw, 14rem);
+    font-weight: 700;
+    color: var(--ann-text-script);
+    line-height: 1;
+    animation: countdown-pop var(--duration-xslow) var(--ease-spring) both;
+    user-select: none;
+  }
+}
+
+@keyframes countdown-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

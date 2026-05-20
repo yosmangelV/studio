@@ -1,0 +1,21 @@
+.progress-dots {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  align-items: center;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background-color: var(--ann-text-dark);
+    opacity: 0.2;
+    transition: opacity var(--duration-normal) var(--ease-default),
+                transform var(--duration-normal) var(--ease-spring);
+
+    &--active {
+      opacity: 0.7;
+      transform: scale(1.4);
+    }
+  }
+}

@@ -1,0 +1,36 @@
+// =============================================================================
+// Announcement App Tokens — extends Studio DS tokens (spacing, radius, shadow,
+// animation are inherited from design-system/src/styles/tokens.scss)
+// Only colors and fonts are project-specific.
+// =============================================================================
+
+:root {
+  // ---------------------------------------------------------------------------
+  // Backgrounds — two visual moods
+  // ---------------------------------------------------------------------------
+  --ann-bg-cream:    #F5F0E8;   // Warm: intro, text, final-reveal slides
+  --ann-bg-lavender: #C4B5F4;   // Cool: envelope, countdown, reveal slides
+  --ann-bg-mist:     #EDE8FF;   // Watercolor lavender tint (reveal backgrounds)
+
+  // ---------------------------------------------------------------------------
+  // Text
+  // ---------------------------------------------------------------------------
+  --ann-text-dark:   #2D1F3D;
+  --ann-text-soft:   #5C4A6E;
+  --ann-text-accent: #7BB4E3;   // Pastel blue
+  --ann-text-script: #9B7BFF;   // Handwriting font emphasis
+
+  // ---------------------------------------------------------------------------
+  // Accents
+  // ---------------------------------------------------------------------------
+  --ann-accent-pink: #FFC6D9;
+  --ann-accent-gold: #C8A84B;   // Banner borders
+  --ann-accent-sage: #7BAF8B;   // Decorative borders
+
+  // ---------------------------------------------------------------------------
+  // Typography — project-specific, does not override DS --font-* vars
+  // ---------------------------------------------------------------------------
+  --ann-font-display: 'Playfair Display', Georgia, serif;
+  --ann-font-script:  'Dancing Script', cursive;
+  --ann-font-body:    'Nunito', system-ui, sans-serif;
+}

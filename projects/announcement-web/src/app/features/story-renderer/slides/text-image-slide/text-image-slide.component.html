@@ -1,0 +1,16 @@
+<div class="text-image-slide" [class]="'text-image-slide--img-' + (data().imagePosition ?? 'bottom')">
+  <div class="text-image-slide__text">
+    @if (data().title) {
+      <h2 class="text-image-slide__title">{{ data().title }}</h2>
+    }
+    @if (data().body) {
+      <p class="text-image-slide__body">{{ data().body }}</p>
+    }
+    @if (data().emphasis) {
+      <em class="text-image-slide__emphasis">{{ data().emphasis }}</em>
+    }
+  </div>
+  <figure class="text-image-slide__image">
+    <img [src]="data().imageUrl" [alt]="data().alt" />
+  </figure>
+</div>

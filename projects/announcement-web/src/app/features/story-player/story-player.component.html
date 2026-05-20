@@ -1,0 +1,26 @@
+@if (status() === 'loading') {
+  <div class="story-player story-player--loading">
+    <div class="story-player__spinner"></div>
+  </div>
+} @else if (status() === 'error') {
+  <div class="story-player story-player--error">
+    <p class="story-player__error-msg">{{ error() }}</p>
+  </div>
+} @else if (status() === 'success' && currentSlide()) {
+  <div class="story-player">
+    <app-slide-renderer class="story-player__stage" [slide]="currentSlide()!" />
+
+    <footer class="story-player__footer">
+      <app-progress-dots
+        [total]="story()!.slides.length"
+        [current]="currentIndex()"
+      />
+      <app-story-nav
+        [isFirst]="isFirst()"
+        [isLast]="isLast()"
+        (previous)="previous()"
+        (next)="next()"
+      />
+    </footer>
+  </div>
+}

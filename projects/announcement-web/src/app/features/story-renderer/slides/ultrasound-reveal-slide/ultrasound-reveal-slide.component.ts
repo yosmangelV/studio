@@ -1,0 +1,14 @@
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { AnnouncementSlide, UltrasoundRevealSlide } from '../../../../core/models/announcement.models';
+
+@Component({
+  selector: 'app-ultrasound-reveal-slide',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './ultrasound-reveal-slide.component.html',
+  styleUrl: './ultrasound-reveal-slide.component.scss',
+})
+export class UltrasoundRevealSlideComponent {
+  readonly slide = input.required<AnnouncementSlide>();
+  readonly data = computed(() => this.slide() as UltrasoundRevealSlide);
+}
