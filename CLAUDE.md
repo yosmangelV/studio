@@ -1,8 +1,35 @@
 # Studio Design System — Claude Guidelines
 
-## Project Overview
+## Developer Profile
 
-Angular workspace + library design system. Library: `projects/ui`. Storybook v10 for documentation.
+You are assisting a **Senior Frontend Engineer** specialized in:
+- Angular, Nx Monorepos, RxJS, NgRx
+- Enterprise architectures and performance optimization
+- Frontend scalability and API migration strategies
+- Feature flag systems and Developer Experience
+
+The developer values:
+- Maintainability over quick hacks
+- Scalability over short-term solutions
+- Readability over cleverness
+- Explicit architecture over implicit magic
+- Reactive patterns over imperative code
+- Reusability without overengineering
+- Incremental migrations over big bang rewrites
+
+---
+
+## General Behavior
+
+When proposing solutions:
+- Explain tradeoffs, scalability, performance, and maintainability implications
+- Mention migration impact and risks when relevant
+- Do not blindly agree with implementation requests — challenge weak architecture respectfully
+- If requirements conflict with maintainability, explain why and propose alternatives
+
+See `ARCHITECTURE_PRINCIPLES.md` and `FRONTEND_STANDARDS.md` for full engineering expectations.
+
+---
 
 ## Skills Available
 
@@ -17,53 +44,83 @@ Load these skills from `.agents/skills/` when relevant:
 | `typescript-advanced-types` | Complex types, generics, type inference |
 | `vitest` | Unit tests for components and services |
 
-## Project Rules
+---
 
-### Angular
+## Angular Rules
+
 - **Always use standalone components** — no NgModules
-- **Prefer Signals over RxJS** — use `signal()`, `computed()`, `effect()`, `linkedSignal()`, `resource()`. Use RxJS only when interoperating with existing streams or HTTP
-- **Smart/Dumb component split** — smart components handle state/data, dumb components receive `@Input()` / emit `@Output()` only
-- **No business logic in templates** — computed values go in the component class, not inline expressions in HTML
-- **Use Signal-based inputs/outputs** — `input()`, `output()`, `model()` instead of decorator-based `@Input()` / `@Output()` where possible
+- **`inject()` API** — prefer over constructor injection
+- **`ChangeDetectionStrategy.OnPush`** — required on every component
+- **Signals over RxJS** — `signal()`, `computed()`, `effect()`, `linkedSignal()`, `resource()`. RxJS only when interoperating with existing streams or HTTP
+- **Signal-based inputs/outputs** — `input()`, `output()`, `model()` over decorator-based `@Input()` / `@Output()`
+- **Smart/Dumb split** — smart components handle state/data, dumb components are purely presentational
+- **No business logic in templates** — computed values in the class, not inline template expressions
+- **No method calls in templates** — use `computed()` or pipes instead
+- **Components ≤ ~300 lines** — if complexity grows, extract facades, domain services, or reusable UI
 
-### Design System
-- **Follow Atomic Design** — atoms → molecules → organisms. File path: `projects/ui/src/lib/{atoms|molecules|organisms}/component-name/`
-- **Always use design tokens** — colors, spacing, radii, shadows via CSS custom properties from `tokens.scss`. Never hardcode values
+---
+
+## Design System Rules
+
+- **Follow Atomic Design** — atoms → molecules → organisms. Path: `projects/design-system/src/lib/{atoms|molecules|organisms}/component-name/`
+- **Always use design tokens** — colors, spacing, radii, shadows, animation durations via CSS custom properties from `tokens.scss`. Never hardcode values
 - **Dark mode required** — every component must support `prefers-color-scheme: dark` and the `.dark` class strategy
 - **Accessibility AA required** — WCAG 2.2 Level AA minimum. Use native HTML elements, `:focus-visible`, ARIA only when necessary, min 44×44px touch targets
 - **SCSS with BEM** — component styles use BEM (`.btn`, `.btn--primary`, `.btn__icon`). Tailwind for layout utilities in templates
+- **Stories required** — every component needs a Storybook story with all variants documented
+- **Export everything** from `public-api.ts`
 
-### Code Quality
-- No `any` types — use proper generics or `unknown`
-- Export everything from `public-api.ts`
-- Stories required for every component in Storybook
-- Run `npm run build:ui` after changes to verify no build errors
+---
+
+## Code Quality
+
+Never generate:
+- `any` types — use proper generics or `unknown`
+- Massive components or services (> ~300 lines)
+- Nested subscriptions or imperative subscription management
+- Magic strings or hardcoded business rules
+- Duplicated logic
+- God reducers or giant effects
+- Unnecessary abstractions
+
+Always prefer:
+- Composability and separation of concerns
+- Typed contracts
+- Predictable data flow
+- Explicit ownership
+
+---
 
 ## Project Structure
 
 ```
 studio/
-├── .agents/skills/         ← Skills reference library
-├── .claude/commands/       ← Custom slash commands
-├── .storybook/             ← Storybook config
-├── projects/ui/src/
+├── .agents/skills/                  ← Skills reference library
+├── .claude/commands/                ← Custom slash commands
+├── .storybook/                      ← Storybook config
+├── projects/design-system/src/
 │   ├── lib/
-│   │   ├── atoms/          ← Basic building blocks (Button, Input, Badge...)
-│   │   ├── molecules/      ← Compound components (FormField, Alert, Card...)
-│   │   └── organisms/      ← Complex sections (Header, Table, Modal...)
+│   │   ├── atoms/                   ← Basic building blocks (Button, Typography, Image...)
+│   │   ├── molecules/               ← Compound components (Card, FormField, Alert...)
+│   │   └── organisms/               ← Complex sections (Header, Table, Modal...)
 │   ├── styles/
-│   │   ├── global.css      ← Tailwind v4 import + base styles
-│   │   └── tokens.scss     ← CSS custom properties (design tokens)
-│   └── public-api.ts       ← Public exports
+│   │   ├── global.css               ← Tailwind v4 import + base styles
+│   │   └── tokens.scss              ← CSS custom properties (design tokens)
+│   └── public-api.ts                ← Public exports
+├── ARCHITECTURE_PRINCIPLES.md
+├── FRONTEND_STANDARDS.md
+├── PR_REVIEW_GUIDELINES.md
 ├── postcss.config.js
 ├── tailwind.config.js
 └── angular.json
 ```
+
+---
 
 ## Commands
 
 ```bash
 npm run storybook       # Start Storybook dev server → http://localhost:6006
 npm run storybook:build # Build static Storybook
-npm run build:ui        # Build the library
+npm run build:ds        # Build the library
 ```
