@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { AnnouncementSlide, TextSlide, IntroSlide } from '../../../../core/models/announcement.models';
+import { AnnouncementSlide, CountdownSlide } from '../../../../../../core/models/announcement.models';
 
 @Component({
   selector: 'app-text-slide',
@@ -10,5 +10,5 @@ import { AnnouncementSlide, TextSlide, IntroSlide } from '../../../../core/model
 })
 export class TextSlideComponent {
   readonly slide = input.required<AnnouncementSlide>();
-  readonly data = computed(() => this.slide() as TextSlide | IntroSlide);
+  readonly data = computed(() => this.slide());
 }

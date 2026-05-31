@@ -1,0 +1,57 @@
+.intro-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-10) var(--space-8);
+  background-color: var(--ann-bg-cream);
+  text-align: center;
+  animation: slide-fade-up var(--duration-cinematic) var(--ease-out) both;
+
+  &__eyebrow {
+    font-family: var(--ann-font-body);
+    font-size: var(--text-xs);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ann-text-soft);
+    margin-bottom: var(--space-4);
+  }
+
+  &__body {
+    font-family: var(--ann-font-display);
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    color: var(--ann-text-dark);
+    line-height: var(--leading-normal);
+    margin-bottom: var(--space-4);
+  }
+
+  &__emphasis {
+    font-family: var(--ann-font-script);
+    font-style: normal;
+    font-size: clamp(2rem, 8vw, 3rem);
+    color: var(--ann-text-script);
+    display: block;
+    margin-top: var(--space-2);
+  }
+
+  &__footer {
+    font-family: var(--ann-font-display);
+    font-size: clamp(1rem, 8vw, 1rem);
+    font-weight: 400;
+    color: var(--ann-text-dark);
+    text-transform: uppercase;
+    line-height: var(--leading-tight);
+  }
+}
+
+@keyframes slide-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--slide-md));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

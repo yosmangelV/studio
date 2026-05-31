@@ -1,0 +1,15 @@
+<div class="intro-slide">
+  @if (slide().title) {
+    <p class="intro-slide__eyebrow">{{slide().title }}</p>
+  }
+  <p class="intro-slide__body">
+    <em class="intro-slide__emphasis">{{slide().body }}</em>
+  </p>
+  
+  @if (slide().footer) {
+    <h4 class="intro-slide__footer">{{slide().footer }}</h4>
+  }
+  
+</div>
+
+

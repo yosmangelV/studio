@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "announcement": "ng serve announcement-web",
     "storybook": "ng run design-system:storybook",
     "storybook:build": "ng run design-system:build-storybook",
     "build:ds": "ng build design-system",

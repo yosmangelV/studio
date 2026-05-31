@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { AnnouncementSlide, UltrasoundRevealSlide } from '../../../../core/models/announcement.models';
+import { AnnouncementSlide } from '../../../../../../core/models/announcement.models';
 
 @Component({
   selector: 'app-ultrasound-reveal-slide',
@@ -9,6 +9,6 @@ import { AnnouncementSlide, UltrasoundRevealSlide } from '../../../../core/model
   styleUrl: './ultrasound-reveal-slide.component.scss',
 })
 export class UltrasoundRevealSlideComponent {
-  readonly slide = input.required<AnnouncementSlide>();
-  readonly data = computed(() => this.slide() as UltrasoundRevealSlide);
+  readonly slide = input.required<AnnouncementSlide | undefined>();
+  readonly data = computed(() => this.slide());
 }
