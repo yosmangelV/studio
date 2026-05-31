@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AnnouncementApiService } from '../../core/services/announcement-api.service';
-import { AnnouncementSlide, AnnouncementStory, StoryStatus } from '../../core/models/announcement.models';
-import { SlideRendererComponent } from '../story-renderer/slide-renderer.component';
+import { AnnouncementSlide, StoryStatus } from '../../core/models/announcement.models';
 import { ProgressDotsComponent } from '../../shared/components/progress-dots/progress-dots.component';
 import { StoryNavComponent } from '../../shared/components/story-nav/story-nav.component';
+import { StoryService } from './services/story/story.service';
+import { SlideRendererComponent } from './components/story-renderer/slide-renderer.component';
 
 @Component({
   selector: 'app-story-player',
@@ -17,24 +16,26 @@ import { StoryNavComponent } from '../../shared/components/story-nav/story-nav.c
 })
 export class StoryPlayerComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly api = inject(AnnouncementApiService);
+  private readonly storyService = inject(StoryService);
 
-  readonly story = signal<AnnouncementStory | null>(null);
-  readonly status = signal<StoryStatus>('idle');
   readonly currentIndex = signal(0);
-  readonly error = signal<string | null>(null);
 
-  readonly currentSlide = computed<AnnouncementSlide | null>(
-    () => this.story()?.slides[this.currentIndex()] ?? null,
+  readonly currentSlide = computed<AnnouncementSlide | undefined>(
+    () => this.storyService.slides()[this.currentIndex()] ?? undefined,
   );
   readonly isFirst = computed(() => this.currentIndex() === 0);
   readonly isLast = computed(
-    () => this.currentIndex() === (this.story()?.slides.length ?? 1) - 1,
+    () => this.currentIndex() === this.storyService.slides().length - 1,
   );
 
+  readonly status = computed(() => this.storyService.status());
+  readonly error = computed(() => this.storyService.error());
+  readonly totalSlides = computed<number>(() => this.storyService.slides().length);
+  readonly StoryStatus = StoryStatus;
+  
   ngOnInit(): void {
     const code = this.route.snapshot.paramMap.get('code') ?? '';
-    this.loadStory(code);
+    this.storyService.load(code);
   }
 
   next(): void {
@@ -47,20 +48,5 @@ export class StoryPlayerComponent implements OnInit {
     if (!this.isFirst()) {
       this.currentIndex.update((i) => i - 1);
     }
-  }
-
-  private loadStory(code: string): void {
-    this.status.set('loading');
-    this.api.getStory(code).subscribe({
-      next: (story) => {
-        this.story.set(story);
-        this.currentIndex.set(0);
-        this.status.set('success');
-      },
-      error: (err: HttpErrorResponse) => {
-        this.error.set(err.error?.message ?? 'No pudimos cargar este mensaje.');
-        this.status.set('error');
-      },
-    });
   }
 }

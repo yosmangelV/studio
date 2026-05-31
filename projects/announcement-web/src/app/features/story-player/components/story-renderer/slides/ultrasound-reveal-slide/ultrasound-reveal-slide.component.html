@@ -1,0 +1,19 @@
+<div class="ultrasound-slide">
+  <div class="ultrasound-slide__bg"></div>
+
+  <div class="ultrasound-slide__content">
+    <figure class="ultrasound-slide__photo">
+      <img [src]="data()?.image" [alt]="data()?.title" />
+      @if (data()) {
+        <div class="ultrasound-slide__badge">Family</div>
+      }
+    </figure>
+
+    @if (data()?.title) {
+      <p class="ultrasound-slide__title">{{ data()?.title }}</p>
+    }
+    @if (data()?.body) {
+       <p class="ultrasound-slide__body">{{ data()?.body }}</p>
+    }
+  </div>
+</div>

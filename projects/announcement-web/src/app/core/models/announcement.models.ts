@@ -14,7 +14,12 @@ export type SlideAnimation = 'fade' | 'fade-up' | 'slide-up' | 'soft-scale' | 'r
 
 export type StoryTheme = 'soft-pastel';
 
-export type StoryStatus = 'idle' | 'loading' | 'success' | 'error';
+export enum StoryStatus {
+  IDLE = 'idle',
+  LOADING = 'loading',
+  SUCCESS = 'success',
+  ERROR = 'error',
+};
 
 type BaseSlide = {
   id: string;
@@ -85,21 +90,29 @@ export type FinalRevealSlide = BaseSlide & {
   alt?: string;
 };
 
-export type AnnouncementSlide =
-  | IntroSlide
-  | TextSlide
-  | ImageSlide
-  | TextImageSlide
-  | CountdownSlide
-  | EnvelopeSlide
-  | UltrasoundRevealSlide
-  | FinalRevealSlide;
+export enum MessageType {
+  INTRO = 'intro',
+  FINAL_REVEAL = 'final-reveal',
+  ULTRASOUND_REVEAL = 'ultrasound-reveal',
+  TEXT = 'text',
+  TEXT_IMAGE = 'text-image',
+  COUNTDOWN = 'countdown',
+  ENVELOPE = 'envelope',
+  IMAGE = 'image',
+}
+
+export type AnnouncementSlide = {
+  title: string;
+  body: string;
+  image?: string;
+  messageType: MessageType;
+  footer: string;
+};
 
 export type AnnouncementStory = {
   id: string;
   code: string;
   audienceType: AudienceType;
   recipientName?: string | null;
-  theme: StoryTheme;
   slides: AnnouncementSlide[];
 };

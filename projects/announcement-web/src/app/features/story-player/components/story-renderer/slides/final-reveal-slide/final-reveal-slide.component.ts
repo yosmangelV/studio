@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { AnnouncementSlide, FinalRevealSlide } from '../../../../core/models/announcement.models';
+import { AnnouncementSlide, CountdownSlide } from '../../../../../../core/models/announcement.models';
 
 @Component({
   selector: 'app-final-reveal-slide',
@@ -10,5 +10,5 @@ import { AnnouncementSlide, FinalRevealSlide } from '../../../../core/models/ann
 })
 export class FinalRevealSlideComponent {
   readonly slide = input.required<AnnouncementSlide>();
-  readonly data = computed(() => this.slide() as FinalRevealSlide);
+  readonly data = computed(() => this.slide());
 }

@@ -5,11 +5,11 @@
     <h1 class="final-reveal-slide__title">{{ data().title }}</h1>
   </div>
 
-  @if (data().subtitle) {
-    <p class="final-reveal-slide__subtitle">{{ data().subtitle }}</p>
+  @if (data()) {
+    <p class="final-reveal-slide__subtitle">{{ data() }}</p>
   }
 
-  @if (data().message) {
-    <p class="final-reveal-slide__message">{{ data().message }}</p>
+  @if (data()) {
+    <p class="final-reveal-slide__message">{{ data()}}</p>
   }
 </div>

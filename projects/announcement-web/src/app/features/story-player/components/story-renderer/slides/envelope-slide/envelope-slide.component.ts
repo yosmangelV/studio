@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { AnnouncementSlide, EnvelopeSlide } from '../../../../core/models/announcement.models';
+import { AnnouncementSlide, CountdownSlide } from '../../../../../../core/models/announcement.models';
 
 @Component({
   selector: 'app-envelope-slide',
@@ -9,6 +9,6 @@ import { AnnouncementSlide, EnvelopeSlide } from '../../../../core/models/announ
   styleUrl: './envelope-slide.component.scss',
 })
 export class EnvelopeSlideComponent {
-  readonly slide = input.required<AnnouncementSlide>();
-  readonly data = computed(() => this.slide() as EnvelopeSlide);
+  readonly slide = input.required<AnnouncementSlide | undefined>();
+  readonly data = computed(() => this.slide());
 }

@@ -11,7 +11,7 @@ export class AnnouncementApiService {
 
   getStory(code: string): Observable<AnnouncementStory> {
     return this.http
-      .get<AnnouncementStory>(`${this.baseUrl}/announcements/${code}`)
+      .get<AnnouncementStory>(`${this.baseUrl}/messages/${code}`)
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 }
