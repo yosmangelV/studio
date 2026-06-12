@@ -97,7 +97,6 @@ export enum MessageType {
   TEXT = 'text',
   TEXT_IMAGE = 'text-image',
   COUNTDOWN = 'countdown',
-  ENVELOPE = 'envelope',
   IMAGE = 'image',
 }
 
@@ -105,6 +104,7 @@ export type AnnouncementSlide = {
   title: string;
   body: string;
   image?: string;
+  altText?: string;
   messageType: MessageType;
   footer: string;
 };

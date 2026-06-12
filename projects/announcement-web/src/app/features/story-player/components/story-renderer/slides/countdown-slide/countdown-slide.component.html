@@ -1,3 +1,5 @@
 <div class="countdown-slide">
-  <span class="countdown-slide__number">{{ data() }}</span>
+  @for (n of [count()]; track n) {
+    <span class="countdown-slide__number">{{ n }}</span>
+  }
 </div>

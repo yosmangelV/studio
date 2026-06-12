@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { AnnouncementSlide, CountdownSlide } from '../../../../../../core/models/announcement.models';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, output, signal } from '@angular/core';
+
+const STEP_MS = 1000;
+
 @Component({
   selector: 'app-countdown-slide',
   standalone: true,
@@ -8,6 +10,22 @@ import { AnnouncementSlide, CountdownSlide } from '../../../../../../core/models
   styleUrl: './countdown-slide.component.scss',
 })
 export class CountdownSlideComponent {
-  readonly slide = input.required<AnnouncementSlide | undefined>();
-  readonly data = computed(() => this.slide());
+  private readonly destroyRef = inject(DestroyRef);
+
+  readonly completed = output<void>();
+  readonly count = signal(3);
+
+  constructor() {
+    const interval = setInterval(() => {
+      const next = this.count() - 1;
+      this.count.set(next);
+
+      if (next === 0) {
+        clearInterval(interval);
+        this.completed.emit();
+      }
+    }, STEP_MS);
+
+    this.destroyRef.onDestroy(() => clearInterval(interval));
+  }
 }

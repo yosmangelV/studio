@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { AnnouncementSlide, CountdownSlide } from '../../../../../../core/models/announcement.models';
+import { AnnouncementSlide } from '../../../../../../core/models/announcement.models';
 
 @Component({
   selector: 'app-text-slide',

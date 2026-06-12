@@ -62,6 +62,20 @@
     color: var(--ann-text-script);
     animation: fade-up var(--duration-cinematic) var(--ease-out) var(--stagger-4) both;
   }
+
+  &__photo {
+    position: relative;
+    width: min(280px, 80%);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    animation: reveal-scale var(--duration-reveal) var(--ease-spring) both;
+
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
 }
 
 @keyframes heart-beat {

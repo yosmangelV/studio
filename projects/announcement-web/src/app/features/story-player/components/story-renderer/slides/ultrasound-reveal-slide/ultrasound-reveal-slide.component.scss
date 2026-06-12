@@ -5,15 +5,6 @@
   justify-content: center;
   height: 100%;
   overflow: hidden;
-  background-color: var(--ann-bg-mist);
-
-  &__bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 40%, var(--ann-bg-lavender) 0%, var(--ann-bg-mist) 80%);
-    filter: blur(40px);
-    transform: scale(1.1);
-  }
 
   &__content {
     position: relative;
@@ -40,7 +31,7 @@
     }
   }
 
-  &__badge {
+  &__footer {
     position: absolute;
     bottom: -1px;
     left: 50%;
@@ -69,6 +60,7 @@
     color: var(--ann-text-script);
     font-weight: 700;
     animation: fade-up var(--duration-cinematic) var(--ease-out) var(--stagger-5) both;
+    margin-bottom: var(--space-4);
   }
 }
 

@@ -8,7 +8,7 @@
   </div>
 } @else if (status() === StoryStatus.SUCCESS && currentSlide()) {
   <div class="story-player">
-    <app-slide-renderer class="story-player__stage" [slide]="currentSlide()" />
+    <app-slide-renderer class="story-player__stage" [slide]="currentSlide()" (completed)="next()" />
 
     <footer class="story-player__footer">
       <app-progress-dots
