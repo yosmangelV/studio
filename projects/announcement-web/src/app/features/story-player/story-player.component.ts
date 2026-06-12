@@ -39,9 +39,14 @@ export class StoryPlayerComponent implements OnInit {
   }
 
   next(): void {
+    if (this.isLast()) {
+      this.currentIndex.set(0);
+      return;
+    }
     if (!this.isLast()) {
       this.currentIndex.update((i) => i + 1);
     }
+    
   }
 
   previous(): void {

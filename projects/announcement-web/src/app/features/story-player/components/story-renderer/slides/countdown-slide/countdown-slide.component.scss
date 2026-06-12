@@ -3,13 +3,13 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: var(--ann-bg-lavender);
+  background-color: var(--ann-bg-cream);
 
   &__number {
     font-family: var(--ann-font-script);
     font-size: clamp(8rem, 40vw, 14rem);
     font-weight: 700;
-    color: var(--ann-text-script);
+    color: color-mix(in srgb, var(--ann-text-script) 60%, white);
     line-height: 1;
     animation: countdown-pop var(--duration-xslow) var(--ease-spring) both;
     user-select: none;

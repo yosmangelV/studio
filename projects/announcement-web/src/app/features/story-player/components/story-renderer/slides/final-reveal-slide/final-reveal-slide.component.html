@@ -4,12 +4,10 @@
   <div class="final-reveal-slide__banner">
     <h1 class="final-reveal-slide__title">{{ data().title }}</h1>
   </div>
+  <figure class="final-reveal-slide__photo">
+    <img [src]="data().image" [alt]="data().altText" />
+  </figure>
+  <p class="final-reveal-slide__subtitle">{{ data().body }}</p>
 
-  @if (data()) {
-    <p class="final-reveal-slide__subtitle">{{ data() }}</p>
-  }
-
-  @if (data()) {
-    <p class="final-reveal-slide__message">{{ data()}}</p>
-  }
+  <p class="final-reveal-slide__message">{{ data().footer}}</p>
 </div>

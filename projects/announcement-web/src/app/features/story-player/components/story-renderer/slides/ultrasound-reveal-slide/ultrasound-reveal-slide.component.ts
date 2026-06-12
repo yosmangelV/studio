@@ -9,6 +9,6 @@ import { AnnouncementSlide } from '../../../../../../core/models/announcement.mo
   styleUrl: './ultrasound-reveal-slide.component.scss',
 })
 export class UltrasoundRevealSlideComponent {
-  readonly slide = input.required<AnnouncementSlide | undefined>();
+  readonly slide = input.required<AnnouncementSlide>();
   readonly data = computed(() => this.slide());
 }
