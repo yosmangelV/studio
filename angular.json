@@ -87,6 +87,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/announcement-web/src/environments/environment.ts",
+                  "with": "projects/announcement-web/src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
