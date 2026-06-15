@@ -7,10 +7,9 @@
 
   &__img {
     flex: 1;
-    min-height: 0;
     width: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center;
   }
 
   &__caption {

@@ -4,10 +4,10 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: clamp(var(--space-4), 5vh, var(--space-10)) var(--space-8);
+  padding: var(--space-10) var(--space-8);
   background-color: var(--ann-bg-cream);
   text-align: center;
-  gap: clamp(var(--space-3), 3vh, var(--space-6));
+  gap: var(--space-6);
 
   &__heart {
     font-size: 3rem;
