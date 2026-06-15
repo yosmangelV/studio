@@ -4,8 +4,8 @@
   <div class="final-reveal-slide__banner">
     <h1 class="final-reveal-slide__title">{{ data().title }}</h1>
   </div>
-  <figure class="final-reveal-slide__photo">
-    <img [src]="data().image" [alt]="data().altText" />
+  <figure class="final-reveal-slide__photo" [class.is-loading]="!imageLoaded()">
+    <img [src]="data().image" [alt]="data().altText" (load)="imageLoaded.set(true)" />
   </figure>
   <p class="final-reveal-slide__subtitle">{{ data().body }}</p>
 

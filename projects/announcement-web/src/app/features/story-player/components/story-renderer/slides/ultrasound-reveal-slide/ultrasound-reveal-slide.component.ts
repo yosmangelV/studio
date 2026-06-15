@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { AnnouncementSlide } from '../../../../../../core/models/announcement.models';
 
 @Component({
@@ -11,4 +11,5 @@ import { AnnouncementSlide } from '../../../../../../core/models/announcement.mo
 export class UltrasoundRevealSlideComponent {
   readonly slide = input.required<AnnouncementSlide>();
   readonly data = computed(() => this.slide());
+  readonly imageLoaded = signal(false);
 }

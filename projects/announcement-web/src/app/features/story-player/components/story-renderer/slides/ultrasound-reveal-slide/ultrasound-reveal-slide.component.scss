@@ -28,6 +28,21 @@
     img {
       width: 100%;
       display: block;
+      transition: opacity 0.4s ease;
+    }
+
+    &.is-loading {
+      min-height: 180px;
+      background: linear-gradient(90deg,
+        var(--ann-bg-cream) 0%,
+        rgba(255, 255, 255, 0.55) 50%,
+        var(--ann-bg-cream) 100%
+      );
+      background-size: 200% 100%;
+      animation: reveal-scale var(--duration-reveal) var(--ease-spring) both,
+                 shimmer 1.5s ease-in-out infinite;
+
+      img { opacity: 0; }
     }
   }
 
@@ -61,6 +76,24 @@
     font-weight: 700;
     animation: fade-up var(--duration-cinematic) var(--ease-out) var(--stagger-5) both;
     margin-bottom: var(--space-4);
+  }
+}
+
+@media (max-height: 700px) and (max-width: 480px) {
+  .ultrasound-slide {
+    &__content {
+      padding: var(--space-4) var(--space-6) var(--space-10);
+      gap: var(--space-2);
+    }
+
+    &__photo {
+      width: min(200px, 65%);
+    }
+
+    &__body {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      margin-bottom: 0;
+    }
   }
 }
 

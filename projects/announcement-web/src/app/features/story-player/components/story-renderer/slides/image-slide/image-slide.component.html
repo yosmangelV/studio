@@ -1,5 +1,5 @@
-<figure class="image-slide">
-  <img class="image-slide__img" [src]="data().image" [alt]="data().title" />
+<figure class="image-slide" [class.is-loading]="!imageLoaded()">
+  <img class="image-slide__img" [src]="data().image" [alt]="data().title" (load)="imageLoaded.set(true)" />
   @if (data()) {
     <figcaption class="image-slide__caption">{{ data() }}</figcaption>
   }
