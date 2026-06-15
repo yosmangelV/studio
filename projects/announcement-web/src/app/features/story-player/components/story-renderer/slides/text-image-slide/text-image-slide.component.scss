@@ -48,6 +48,7 @@
     padding: 0 var(--space-5);
     display: flex;
     align-items: center;
+    border-radius: 20px;
 
     img {
       width: 100%;
@@ -55,6 +56,19 @@
       object-fit: cover;
       border-radius: 20px;
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+      transition: opacity 0.4s ease;
+    }
+
+    &.is-loading {
+      background: linear-gradient(90deg,
+        var(--ann-bg-cream) 0%,
+        rgba(255, 255, 255, 0.55) 50%,
+        var(--ann-bg-cream) 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+
+      img { opacity: 0; }
     }
   }
 }

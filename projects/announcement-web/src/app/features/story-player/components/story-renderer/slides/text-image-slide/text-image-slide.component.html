@@ -3,8 +3,8 @@
     <h2 class="text-image-slide__title">{{ data().title }}</h2>
     <p class="text-image-slide__body">{{ data().body }}</p>
   </div>
-  <figure class="text-image-slide__image">
-    <img [src]="data().image" [alt]="data().altText" />
+  <figure class="text-image-slide__image" [class.is-loading]="!imageLoaded()">
+    <img [src]="data().image" [alt]="data().altText" (load)="imageLoaded.set(true)" />
   </figure>
   <em class="text-image-slide__emphasis">{{ data().footer }}</em>
 </div>

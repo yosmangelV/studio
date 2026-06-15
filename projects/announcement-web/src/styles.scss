@@ -15,3 +15,8 @@ html, body {
   background-color: var(--ann-bg-cream);
   -webkit-font-smoothing: antialiased;
 }
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}

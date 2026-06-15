@@ -1,7 +1,7 @@
 <div class="ultrasound-slide">
   <div class="ultrasound-slide__content">
-    <figure class="ultrasound-slide__photo">
-      <img [src]="data().image" [alt]="data().altText" />
+    <figure class="ultrasound-slide__photo" [class.is-loading]="!imageLoaded()">
+      <img [src]="data().image" [alt]="data().altText" (load)="imageLoaded.set(true)" />
     </figure>
 
     <p class="ultrasound-slide__title">{{ data().title }}</p>
