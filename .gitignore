@@ -46,3 +46,6 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 debug-storybook.log
+
+# Story assets backup
+projects/announcement-web/public/assets/stories/_backup/
