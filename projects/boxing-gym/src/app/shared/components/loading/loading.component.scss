@@ -1,0 +1,226 @@
+.loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: var(--gym-black);
+  z-index: 9999;
+}
+
+// Outer decorative ring — pulses like a spotlight
+.loading__ring {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  border: 2px solid var(--gym-red);
+  opacity: 0.15;
+  animation: ring-pulse 2.4s ease-in-out infinite;
+}
+
+// Glove container — holds both gloves centered
+.loading__arena {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 240px;
+  height: 96px;
+}
+
+// Each glove wrapper handles horizontal movement
+.loading__glove-wrap {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--left {
+    left: 0;
+    animation: glove-left 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  }
+
+  &--right {
+    right: 0;
+    animation: glove-right 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  }
+}
+
+.loading__glove {
+  font-size: 4rem;
+  line-height: 1;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(196, 18, 48, 0.6));
+
+  &--mirrored {
+    transform: scaleX(-1);
+  }
+}
+
+// Impact flash that appears at collision
+.loading__impact {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196, 18, 48, 0.8) 0%, transparent 70%);
+  animation: impact-flash 2.4s ease-out infinite;
+}
+
+// Brand name below the animation
+.loading__name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  animation: name-fade 2.4s ease-in-out infinite;
+}
+
+.loading__name-top {
+  font-family: var(--gym-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gym-white);
+}
+
+.loading__name-bottom {
+  font-family: var(--gym-font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gym-red);
+}
+
+// ─── Keyframes ─────────────────────────────────────────────────────────────
+
+// Left glove: starts off-screen left → rushes to center → impact → spin → exit
+@keyframes glove-left {
+  // Start: off-screen left
+  0% {
+    transform: translateX(-140px);
+    opacity: 0;
+  }
+  // Appear and rush in
+  10% {
+    transform: translateX(-140px);
+    opacity: 0;
+  }
+  // Overshoot slightly (impact feel)
+  42% {
+    transform: translateX(28px);
+    opacity: 1;
+  }
+  // Settle at impact point
+  50% {
+    transform: translateX(16px) rotate(-8deg);
+    opacity: 1;
+  }
+  // Hold at impact + start spin
+  58% {
+    transform: translateX(16px) rotate(-8deg) scale(1.1);
+    opacity: 1;
+  }
+  // Spin outward
+  72% {
+    transform: translateX(16px) rotate(-180deg) scale(0.9);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(16px) rotate(-360deg) scale(1);
+    opacity: 1;
+  }
+  // Hold briefly after spin
+  88% {
+    transform: translateX(16px) rotate(-360deg);
+    opacity: 1;
+  }
+  // Exit left
+  100% {
+    transform: translateX(-140px) rotate(-360deg);
+    opacity: 0;
+  }
+}
+
+// Right glove: mirror of left (from right side)
+@keyframes glove-right {
+  0% {
+    transform: translateX(140px);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(140px);
+    opacity: 0;
+  }
+  42% {
+    transform: translateX(-28px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-16px) rotate(8deg);
+    opacity: 1;
+  }
+  58% {
+    transform: translateX(-16px) rotate(8deg) scale(1.1);
+    opacity: 1;
+  }
+  72% {
+    transform: translateX(-16px) rotate(180deg) scale(0.9);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-16px) rotate(360deg) scale(1);
+    opacity: 1;
+  }
+  88% {
+    transform: translateX(-16px) rotate(360deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(140px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+// Impact flash: invisible most of time, briefly appears at collision
+@keyframes impact-flash {
+  0%, 40%   { opacity: 0; transform: scale(0); }
+  50%       { opacity: 1; transform: scale(1.4); }
+  62%       { opacity: 0; transform: scale(0.8); }
+  100%      { opacity: 0; transform: scale(0); }
+}
+
+// Ring pulses in sync with impact
+@keyframes ring-pulse {
+  0%, 40%   { opacity: 0.1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(1.08); }
+  65%       { opacity: 0.1; transform: scale(1); }
+  100%      { opacity: 0.1; transform: scale(1); }
+}
+
+// Name fades in after impact
+@keyframes name-fade {
+  0%, 35%   { opacity: 0.3; }
+  55%       { opacity: 1; }
+  88%       { opacity: 1; }
+  100%      { opacity: 0.3; }
+}
+
+// Respect prefers-reduced-motion
+@media (prefers-reduced-motion: reduce) {
+  .loading__glove-wrap,
+  .loading__impact,
+  .loading__ring,
+  .loading__name {
+    animation: none;
+  }
+
+  .loading__glove-wrap--left  { transform: translateX(16px); opacity: 1; }
+  .loading__glove-wrap--right { transform: translateX(-16px); opacity: 1; }
+  .loading__name { opacity: 1; }
+}

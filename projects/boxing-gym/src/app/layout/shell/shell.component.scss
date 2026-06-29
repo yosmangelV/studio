@@ -1,0 +1,76 @@
+.shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100dvh;
+  background: #0a0a0a;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 150;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  &__topbar {
+    display: none;
+    align-items: center;
+    padding: 0 1rem;
+    height: 52px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    position: sticky;
+    top: 0;
+    background: #0a0a0a;
+    z-index: 50;
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+  }
+
+  &__menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+
+    span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 2px;
+      transition: background 0.15s;
+    }
+
+    &:hover span {
+      background: #fff;
+    }
+  }
+
+  &__main {
+    flex: 1;
+    padding: 2rem 2.5rem;
+
+    @media (max-width: 768px) {
+      padding: 1.25rem 1rem;
+    }
+  }
+}

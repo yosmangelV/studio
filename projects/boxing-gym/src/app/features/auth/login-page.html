@@ -1,0 +1,104 @@
+<div class="login">
+
+  <!-- ── Left: Brand panel ──────────────────────────────────────── -->
+  <div class="login__brand" aria-hidden="true">
+    <div class="login__brand-bg">
+      <div class="login__brand-spotlight"></div>
+      <div class="login__brand-grid"></div>
+    </div>
+    <img class="login__brand-img" [src]="config.assets.logoIllustrated" alt="" />
+    <div class="login__brand-content">
+      <p class="login__brand-eyebrow">
+        <span class="login__brand-eyebrow-line"></span>
+        {{ config.subtitle }}
+      </p>
+      <div class="login__brand-headline">
+        <span class="login__brand-headline-top">{{ headlineTop }}</span>
+        <span class="login__brand-headline-main">{{ headlineMain }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right: Form panel ─────────────────────────────────────── -->
+  <div class="login__panel">
+    <div class="login__form-wrap">
+
+      <div class="login__form-header">
+        <p class="login__form-eyebrow">
+          <span class="login__form-eyebrow-line"></span>
+          Panel de Administración
+        </p>
+        <h1 class="login__form-title">
+          Iniciar <span class="login__form-title--accent">Sesión</span>
+        </h1>
+      </div>
+
+      <form
+        class="login__form"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        data-testid="login-form"
+      >
+        <div class="login__field">
+          <label class="login__label" for="login-email">Email</label>
+          <input
+            id="login-email"
+            class="login__input"
+            [class.login__input--invalid]="emailInvalid()"
+            type="email"
+            formControlName="email"
+            placeholder="tu@email.com"
+            autocomplete="email"
+            data-testid="login-email-input"
+          />
+          @if (emailInvalid()) {
+            <p class="login__field-error" role="alert" data-testid="login-email-error">
+              Introduce un email válido
+            </p>
+          }
+        </div>
+
+        <div class="login__field">
+          <label class="login__label" for="login-password">Contraseña</label>
+          <input
+            id="login-password"
+            class="login__input"
+            [class.login__input--invalid]="passwordInvalid()"
+            type="password"
+            formControlName="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            data-testid="login-password-input"
+          />
+          @if (passwordInvalid()) {
+            <p class="login__field-error" role="alert" data-testid="login-password-error">
+              Mínimo 6 caracteres
+            </p>
+          }
+        </div>
+
+        @if (error()) {
+          <div class="login__error" role="alert" data-testid="login-error">
+            {{ error() }}
+          </div>
+        }
+
+        <button
+          class="login__submit"
+          type="submit"
+          [disabled]="loading()"
+          data-testid="login-submit-button"
+        >
+          {{ submitLabel() }}
+        </button>
+      </form>
+
+      <a class="login__back" routerLink="/" data-testid="login-back-link">
+        ← Volver a la web
+      </a>
+
+    </div>
+  </div>
+
+</div>

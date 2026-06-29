@@ -1,0 +1,26 @@
+<div class="shell">
+  <app-sidebar [open]="sidebarOpen()" (close)="sidebarOpen.set(false)" />
+
+  @if (sidebarOpen()) {
+    <div class="shell__overlay" (click)="sidebarOpen.set(false)" aria-hidden="true"></div>
+  }
+
+  <div class="shell__body">
+    <header class="shell__topbar">
+      <button
+        class="shell__menu-btn"
+        type="button"
+        aria-label="Abrir menú"
+        (click)="sidebarOpen.set(!sidebarOpen())"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <main class="shell__main" id="main-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

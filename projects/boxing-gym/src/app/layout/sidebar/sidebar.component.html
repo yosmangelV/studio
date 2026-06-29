@@ -1,0 +1,48 @@
+<aside class="sidebar" [class.sidebar--open]="open()" aria-label="Menú de navegación">
+  <!-- Brand -->
+  <div class="sidebar__brand">
+    <img
+      class="sidebar__logo"
+      [src]="config.assets.logoMain"
+      [alt]="config.name"
+      width="36"
+      height="36"
+    />
+    <div class="sidebar__brand-text">
+      <span class="sidebar__gym-name">{{ config.name }}</span>
+      <span class="sidebar__gym-sub">{{ config.subtitle }}</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar__nav" aria-label="Navegación principal">
+    <ul class="sidebar__list" role="list">
+      @for (item of navItems; track item.route) {
+        <li class="sidebar__item">
+          @if (item.disabled) {
+            <span class="sidebar__link sidebar__link--disabled">
+              {{ item.label }}
+              @if (item.badge) {
+                <span class="sidebar__badge">{{ item.badge }}</span>
+              }
+            </span>
+          } @else {
+            <a
+              class="sidebar__link"
+              [routerLink]="item.route"
+              routerLinkActive="sidebar__link--active"
+              (click)="close.emit()"
+            >{{ item.label }}</a>
+          }
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="sidebar__footer">
+    <button class="sidebar__signout" type="button" (click)="onSignOut()">
+      Cerrar sesión
+    </button>
+  </footer>
+</aside>
