@@ -131,6 +131,79 @@
           "builder": "@angular/build:unit-test"
         }
       }
+    },
+    "boxing-gym": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/boxing-gym",
+      "sourceRoot": "projects/boxing-gym/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/boxing-gym/src/main.ts",
+            "tsConfig": "projects/boxing-gym/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/boxing-gym/public"
+              }
+            ],
+            "styles": [
+              "projects/design-system/src/styles/global.css",
+              "projects/boxing-gym/src/styles.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "boxing-gym:build:production"
+            },
+            "development": {
+              "buildTarget": "boxing-gym:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/boxing-gym/tsconfig.spec.json",
+            "setupFiles": ["projects/boxing-gym/src/test-setup.ts"]
+          }
+        }
+      }
     }
   }
 }

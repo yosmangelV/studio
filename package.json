@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "announcement": "ng serve announcement-web",
+    "boxing-gym": "node projects/boxing-gym/scripts/set-env.js && ng serve boxing-gym --port 4301",
+    "boxing-gym:build": "node projects/boxing-gym/scripts/set-env.js && ng build boxing-gym",
     "storybook": "ng run design-system:storybook",
     "storybook:build": "ng run design-system:build-storybook",
     "build:ds": "ng build design-system",
@@ -19,6 +21,7 @@
     "@angular/platform-browser": "^21.2.0",
     "@angular/router": "^21.2.0",
     "@storybook/addon-docs": "^10.4.0",
+    "@supabase/supabase-js": "^2.108.2",
     "lucide-angular": "^1.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
@@ -30,6 +33,9 @@
     "@storybook/angular": "^10.4.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/vite": "^4.3.0",
+    "@testing-library/angular": "^19.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/user-event": "^14.6.1",
     "autoprefixer": "^10.5.0",
     "jsdom": "^28.0.0",
     "ng-packagr": "^21.2.0",

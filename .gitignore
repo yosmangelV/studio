@@ -49,3 +49,8 @@ debug-storybook.log
 
 # Story assets backup
 projects/announcement-web/public/assets/stories/_backup/
+
+# Boxing gym — generated environment files (contain secrets, never commit)
+projects/boxing-gym/src/environments/environment.ts
+projects/boxing-gym/src/environments/environment.prod.ts
+projects/boxing-gym/.env

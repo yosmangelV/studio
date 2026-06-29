@@ -1,0 +1,16 @@
+<section class="schedule" id="schedule" data-testid="schedule-section">
+  <div class="schedule__container">
+    <p class="schedule__eyebrow">Cuándo entrenamos</p>
+    <h2 class="schedule__title">Hora<span class="schedule__title--accent">rios</span></h2>
+
+    <ul class="schedule__list" role="list">
+      @for (entry of schedule(); track entry.day) {
+        <li class="schedule__row" [class.schedule__row--closed]="entry.closed">
+          <span class="schedule__day">{{ entry.day }}</span>
+          <span class="schedule__separator" aria-hidden="true"></span>
+          <span class="schedule__time">{{ entry.time }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

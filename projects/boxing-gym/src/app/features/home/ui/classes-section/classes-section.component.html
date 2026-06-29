@@ -1,0 +1,19 @@
+<section class="classes" id="classes" data-testid="classes-section">
+  <div class="classes__container">
+    <div class="classes__header">
+      <p class="classes__eyebrow">Lo que ofrecemos</p>
+      <h2 class="classes__title">Nuestras <span class="classes__title--accent">Clases</span></h2>
+    </div>
+
+    <ul class="classes__list" role="list">
+      @for (cls of numberedClasses(); track cls.name) {
+        <li class="classes__item" [attr.data-testid]="'class-card-' + cls.name">
+          <span class="classes__item-num" aria-hidden="true">{{ cls.num }}</span>
+          <h3 class="classes__item-name">{{ cls.name }}</h3>
+          <p class="classes__item-desc">{{ cls.description }}</p>
+          <span class="classes__item-arrow" aria-hidden="true">→</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

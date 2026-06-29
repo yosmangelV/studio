@@ -1,0 +1,116 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem clamp(1.5rem, 4vw, 3rem);
+  background: linear-gradient(to bottom, rgba(13, 13, 13, 0.96) 0%, transparent 100%);
+  backdrop-filter: blur(10px);
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 34px;
+    background: var(--gym-red);
+    flex-shrink: 0;
+  }
+}
+
+.nav__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1;
+}
+
+.nav__brand-name {
+  font-family: var(--gym-font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gym-white);
+}
+
+.nav__brand-sub {
+  font-family: var(--gym-font-body);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gym-red);
+}
+
+.nav__links {
+  display: none;
+  list-style: none;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.nav__link {
+  font-family: var(--gym-font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gym-gray);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gym-red);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+    transform-origin: left;
+  }
+
+  &:hover {
+    color: var(--gym-white);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.nav__cta {
+  font-family: var(--gym-font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gym-white);
+  text-decoration: none;
+  background: var(--gym-red);
+  padding: 0.5rem 1.25rem;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--gym-red-light);
+  }
+}
