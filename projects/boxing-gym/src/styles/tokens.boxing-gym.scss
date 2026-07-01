@@ -1,0 +1,95 @@
+// =============================================================================
+// Boxing Gym — Brand Tokens
+// Extends the Studio design-system tokens.scss with gym-specific brand values.
+// Components must consume semantic tokens (bottom half), not primitives.
+// =============================================================================
+
+:root {
+  // ---------------------------------------------------------------------------
+  // Primitives — raw brand palette (reference only)
+  // ---------------------------------------------------------------------------
+
+  // Red — main brand color (crimson)
+  --gym-red-300: #e63950;
+  --gym-red-500: #c41230;
+  --gym-red-700: #8b0000;
+
+  // Dark backgrounds
+  --gym-black:   #0d0d0d;
+  --gym-dark:    #1a1a1a;
+  --gym-mid:     #2a2a2a;
+
+  // Accent — gold
+  --gym-gold-400: #c9a84c;
+  --gym-gold-600: #9b7d2a;
+
+  // Base white
+  --gym-white:   #fafafa;
+
+  // Neutral (gray)
+  --gym-gray:       #6b7280;
+  --gym-gray-light: #d1d5db;
+
+  // Third-party brand
+  --gym-whatsapp:       #25d366;
+  --gym-whatsapp-hover: #1ebe5b;
+
+  // ---------------------------------------------------------------------------
+  // Aliases — nombres legacy usados por los componentes actuales.
+  // Se eliminarán cuando los componentes migren a los tokens semánticos.
+  // ---------------------------------------------------------------------------
+  --gym-red:        var(--gym-red-500);
+  --gym-red-dark:   var(--gym-red-700);
+  --gym-red-light:  var(--gym-red-300);
+  --gym-dark-mid:   var(--gym-mid);
+  --gym-gold:       var(--gym-gold-600);
+  --gym-gold-light: var(--gym-gold-400);
+
+  // ---------------------------------------------------------------------------
+  // Typography
+  // ---------------------------------------------------------------------------
+  --gym-font-display: 'Oswald', 'Impact', sans-serif;
+  --gym-font-body:    'Inter', system-ui, sans-serif;
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Surfaces
+  // Components use these, never the raw dark values above.
+  // ---------------------------------------------------------------------------
+  --gym-surface-app:      var(--gym-black);          // main app background
+  --gym-surface-panel:    var(--gym-dark);            // sidebar, sheet panels
+  --gym-surface-elevated: var(--gym-mid);             // cards, dropdowns
+  --gym-surface-subtle:   rgba(255, 255, 255, 0.04);  // barely-there bg
+  --gym-surface-hover:    rgba(255, 255, 255, 0.05);  // hover state on dark
+  --gym-surface-active:   rgba(255, 255, 255, 0.08);  // active / pressed
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Borders
+  // ---------------------------------------------------------------------------
+  --gym-border-subtle: rgba(255, 255, 255, 0.06);  // hairlines, dividers
+  --gym-border-muted:  rgba(255, 255, 255, 0.08);  // cards, inputs
+  --gym-border-strong: rgba(255, 255, 255, 0.18);  // prominent outlines
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Text
+  // ---------------------------------------------------------------------------
+  --gym-text-primary:   var(--gym-white);           // body copy
+  --gym-text-secondary: rgba(255, 255, 255, 0.55);  // supporting labels
+  --gym-text-muted:     rgba(255, 255, 255, 0.35);  // placeholders, captions
+  --gym-text-disabled:  rgba(255, 255, 255, 0.25);  // disabled state
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Brand (red)
+  // ---------------------------------------------------------------------------
+  --gym-brand:          var(--gym-red-500);          // primary actions, accents
+  --gym-brand-dark:     var(--gym-red-700);          // pressed / active state
+  --gym-brand-light:    var(--gym-red-300);          // bright red on dark bg
+  --gym-brand-subtle:   rgba(196, 18, 48, 0.06);    // tinted surface (4–6%)
+  --gym-brand-hover:    rgba(196, 18, 48, 0.12);    // hovered tinted surface
+  --gym-brand-glow:     rgba(196, 18, 48, 0.30);    // drop-shadows, glows
+  --gym-text-danger:    #f87171;                     // danger text on dark (red-400)
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Grid overlay (hero / login backgrounds)
+  // ---------------------------------------------------------------------------
+  --gym-grid-line: rgba(250, 250, 250, 0.025);
+}
