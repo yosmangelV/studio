@@ -92,4 +92,18 @@
   // Semantic — Grid overlay (hero / login backgrounds)
   // ---------------------------------------------------------------------------
   --gym-grid-line: rgba(250, 250, 250, 0.025);
+
+  // ---------------------------------------------------------------------------
+  // Design System overrides — remap DS primary scale to gym brand red.
+  // Any DS component that uses --color-primary-* will automatically
+  // render in crimson red when consumed by this app.
+  // ---------------------------------------------------------------------------
+  --color-primary-50:  rgba(196, 18, 48, 0.06);
+  --color-primary-100: rgba(196, 18, 48, 0.12);
+  --color-primary-500: var(--gym-red-500);
+  --color-primary-600: var(--gym-red-700);
+  --color-primary-700: #6b0000;
+
+  --color-border-focus: var(--gym-red-500);
+  --color-text-link:    var(--gym-red-500);
 }
