@@ -1,30 +1,5 @@
 @use '../../design-system/src/styles/tokens' as *;
-
-// Boxing Gym brand tokens — override design-system defaults
-:root {
-  // Primary: Crimson red (boxing gloves)
-  --gym-red:        #C41230;
-  --gym-red-dark:   #8B0000;
-  --gym-red-light:  #E63950;
-
-  // Dark tones
-  --gym-black:      #0D0D0D;
-  --gym-dark:       #1A1A1A;
-  --gym-dark-mid:   #2A2A2A;
-
-  // Accent: gold (stars)
-  --gym-gold:       #9B7D2A;
-  --gym-gold-light: #C9A84C;
-
-  // Neutral
-  --gym-white:      #FAFAFA;
-  --gym-gray:       #6B7280;
-  --gym-gray-light: #D1D5DB;
-
-  // Typography
-  --gym-font-display: 'Oswald', 'Impact', sans-serif;
-  --gym-font-body:    'Inter', system-ui, sans-serif;
-}
+@use './styles/tokens.boxing-gym' as *;
 
 html {
   scroll-behavior: smooth;
@@ -34,6 +9,6 @@ html,
 body {
   height: 100%;
   font-family: var(--gym-font-body);
-  color: var(--gym-white);
-  background-color: var(--gym-black);
+  color: var(--gym-text-primary);
+  background-color: var(--gym-surface-app);
 }
