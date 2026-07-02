@@ -56,14 +56,14 @@
   font-weight: 600;
   text-decoration: none;
   color: var(--gym-white);
-  background-color: #25D366;
+  background-color: var(--gym-whatsapp);
   padding: 1rem 2rem;
   border-radius: 4px;
   margin-bottom: 3rem;
   transition: background-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: #1ebe5b;
+    background-color: var(--gym-whatsapp-hover);
     transform: translateY(-2px);
   }
 }
@@ -75,7 +75,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  border: 1px solid rgba(250, 250, 250, 0.08);
+  border: 1px solid var(--gym-border-muted);
   border-radius: 4px;
   overflow: hidden;
   text-align: left;
@@ -87,7 +87,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1.1rem 1.75rem;
-  border-bottom: 1px solid rgba(250, 250, 250, 0.06);
+  border-bottom: 1px solid var(--gym-border-subtle);
 
   &:last-child {
     border-bottom: none;
@@ -115,7 +115,7 @@
 }
 
 .footer {
-  border-top: 1px solid rgba(250, 250, 250, 0.06);
+  border-top: 1px solid var(--gym-border-subtle);
   padding: 1.5rem;
   text-align: center;
 }
