@@ -41,8 +41,11 @@
 
   <!-- Footer -->
   <footer class="sidebar__footer">
-    <button class="sidebar__signout" type="button" (click)="onSignOut()">
-      Cerrar sesión
-    </button>
+    <ds-button
+      variant="subtle"
+      size="sm"
+      [fullWidth]="true"
+      (click)="onSignOut()"
+    >Cerrar sesión</ds-button>
   </footer>
 </aside>
