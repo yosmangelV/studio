@@ -15,9 +15,10 @@
   --gym-red-700: #8b0000;
 
   // Dark backgrounds
-  --gym-black:   #0d0d0d;
-  --gym-dark:    #1a1a1a;
-  --gym-mid:     #2a2a2a;
+  --gym-black:        #0d0d0d;
+  --gym-neutral-900:  #111111;  // sidebar panel surface
+  --gym-dark:         #1a1a1a;
+  --gym-mid:          #2a2a2a;
 
   // Accent — gold
   --gym-gold-400: #c9a84c;
@@ -55,12 +56,14 @@
   // Semantic — Surfaces
   // Components use these, never the raw dark values above.
   // ---------------------------------------------------------------------------
-  --gym-surface-app:      var(--gym-black);          // main app background
-  --gym-surface-panel:    var(--gym-dark);            // sidebar, sheet panels
-  --gym-surface-elevated: var(--gym-mid);             // cards, dropdowns
-  --gym-surface-subtle:   rgba(255, 255, 255, 0.04);  // barely-there bg
-  --gym-surface-hover:    rgba(255, 255, 255, 0.05);  // hover state on dark
-  --gym-surface-active:   rgba(255, 255, 255, 0.08);  // active / pressed
+  --gym-surface-app:      var(--gym-black);            // main app background
+  --gym-surface-panel:    var(--gym-neutral-900);      // sidebar, sheet panels
+  --gym-surface-elevated: var(--gym-mid);              // cards, dropdowns
+  --gym-surface-subtle:   rgba(255, 255, 255, 0.04);   // barely-there bg
+  --gym-surface-hover:    rgba(255, 255, 255, 0.05);   // hover state on dark
+  --gym-surface-active:   rgba(255, 255, 255, 0.08);   // active / pressed
+  --gym-surface-nav:      rgba(13, 13, 13, 0.96);      // fixed nav frosted bg
+  --gym-backdrop:         rgba(0, 0, 0, 0.60);         // mobile overlay
 
   // ---------------------------------------------------------------------------
   // Semantic — Borders
@@ -72,7 +75,8 @@
   // ---------------------------------------------------------------------------
   // Semantic — Text
   // ---------------------------------------------------------------------------
-  --gym-text-primary:   var(--gym-white);           // body copy
+  --gym-text-primary:   var(--gym-white);            // body copy
+  --gym-text-high:      rgba(255, 255, 255, 0.90);  // high-emphasis hover text
   --gym-text-secondary: rgba(255, 255, 255, 0.55);  // supporting labels
   --gym-text-muted:     rgba(255, 255, 255, 0.35);  // placeholders, captions
   --gym-text-disabled:  rgba(255, 255, 255, 0.25);  // disabled state
