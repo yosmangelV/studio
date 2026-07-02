@@ -84,14 +84,13 @@
           </div>
         }
 
-        <button
-          class="login__submit"
-          type="submit"
-          [disabled]="loading()"
+        <ds-button
+          variant="primary"
+          size="lg"
+          [fullWidth]="true"
+          [loading]="loading()"
           data-testid="login-submit-button"
-        >
-          {{ submitLabel() }}
-        </button>
+        >{{ submitLabel() }}</ds-button>
       </form>
 
       <a class="login__back" routerLink="/" data-testid="login-back-link">

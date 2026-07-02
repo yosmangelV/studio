@@ -234,31 +234,6 @@
   line-height: 1.5;
 }
 
-.login__submit {
-  width: 100%;
-  background: var(--gym-red);
-  color: var(--gym-white);
-  border: none;
-  font-family: var(--gym-font-body);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-top: 0.5rem;
-
-  &:hover:not(:disabled) {
-    background-color: var(--gym-red-light);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
-
 // ── Back link ───────────────────────────────────────────────────────
 
 .login__back {

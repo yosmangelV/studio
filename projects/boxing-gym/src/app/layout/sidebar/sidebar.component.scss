@@ -144,25 +144,4 @@
     padding: 0.75rem 0.625rem 1.25rem;
     border-top: 1px solid var(--gym-border-subtle);
   }
-
-  &__signout {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 0.625rem 0.75rem;
-    background: transparent;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--gym-text-muted);
-    cursor: pointer;
-    text-align: left;
-    transition: background 0.15s, color 0.15s;
-
-    &:hover {
-      background: var(--gym-brand-subtle);
-      color: var(--gym-text-danger);
-    }
-  }
 }

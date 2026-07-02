@@ -1,7 +1,7 @@
 import { Component, input, computed, HostBinding } from '@angular/core';
 import { LucideAngularModule, LucideIconData } from 'lucide-angular';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'subtle';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 /**
@@ -39,7 +39,7 @@ export class ButtonComponent {
   readonly iconOnly = input(false);
 
   @HostBinding('class') get hostClass() {
-    return 'inline-flex';
+    return this.fullWidth() ? 'block w-full' : 'inline-flex';
   }
 
   readonly classes = computed(() => {
