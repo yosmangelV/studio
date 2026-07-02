@@ -110,4 +110,11 @@
 
   --color-border-focus: var(--gym-red-500);
   --color-text-link:    var(--gym-red-500);
+
+  // DS text tokens remapped for the always-dark gym context.
+  // Without this, DS components (e.g. ds-button subtle) would render with
+  // light-mode slate values that fail contrast on the dark panel background.
+  --color-text-primary:   var(--gym-text-primary);
+  --color-text-secondary: var(--gym-text-secondary);
+  --color-text-tertiary:  var(--gym-text-muted);
 }

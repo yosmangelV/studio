@@ -28,7 +28,7 @@ The button keeps its size so the layout does not shift.
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'ghost', 'danger'],
+      options: ['primary', 'secondary', 'ghost', 'danger', 'subtle'],
     },
     size: {
       control: 'select',
@@ -71,6 +71,10 @@ export const Ghost: Story = {
 
 export const Danger: Story = {
   args: { variant: 'danger', size: 'md' },
+};
+
+export const Subtle: Story = {
+  args: { variant: 'subtle', size: 'md' },
 };
 
 export const Small: Story = {
@@ -131,6 +135,7 @@ export const AllVariants: Story = {
         <ds-button variant="secondary">Secondary</ds-button>
         <ds-button variant="ghost">Ghost</ds-button>
         <ds-button variant="danger">Danger</ds-button>
+        <ds-button variant="subtle">Subtle</ds-button>
       </div>
     `,
   }),
