@@ -1,0 +1,36 @@
+<section class="hero" aria-labelledby="hero-headline">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__spotlight"></div>
+    <div class="hero__grid"></div>
+  </div>
+
+  @if (logoSrc()) {
+    <img class="hero__watermark" [src]="logoSrc()" alt="" aria-hidden="true" />
+  }
+
+  <div class="hero__content">
+    <div class="hero__eyebrow-wrapper">
+      <ds-eyebrow [label]="eyebrow()" />
+    </div>
+
+    <h1 id="hero-headline" class="hero__headline">
+      <span class="hero__headline-top">{{ headlineTop() }}</span>
+      <span class="hero__headline-main">{{ headlineMain() }}</span>
+    </h1>
+
+    <p class="hero__tagline">{{ tagline() }}</p>
+
+    <div class="hero__actions">
+      <a class="hero__cta hero__cta--primary" [href]="primaryCtaHref()">
+        {{ primaryCtaLabel() }}
+      </a>
+      <a class="hero__cta hero__cta--ghost" [href]="secondaryCtaHref()">
+        {{ secondaryCtaLabel() }}
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__scroll-hint" aria-hidden="true">
+    <span></span>
+  </div>
+</section>
