@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-primary-500);
+
+  &::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--color-primary-500);
+    flex-shrink: 0;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+}
