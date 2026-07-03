@@ -72,8 +72,9 @@
   // ---------------------------------------------------------------------------
   // Typography
   // ---------------------------------------------------------------------------
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
 
   --text-xs:   0.75rem;
   --text-sm:   0.875rem;
@@ -82,7 +83,8 @@
   --text-xl:   1.25rem;
   --text-2xl:  1.5rem;
   --text-3xl:  1.875rem;
-  --text-4xl:  2.25rem;
+  --text-4xl:     2.25rem;
+  --text-display: var(--text-4xl);
 
   --font-normal:   400;
   --font-medium:   500;

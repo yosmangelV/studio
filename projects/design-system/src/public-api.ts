@@ -10,3 +10,4 @@ export * from './lib/atoms/typography/typography.component';
 
 // Molecules
 export * from './lib/molecules/card/card.component';
+export * from './lib/molecules/section-header/section-header.component';
