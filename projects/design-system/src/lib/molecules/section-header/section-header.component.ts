@@ -14,7 +14,8 @@ export type SectionHeaderLevel = 'h1' | 'h2' | 'h3';
 export class SectionHeaderComponent {
   readonly eyebrow = input.required<string>();
   readonly title = input.required<string>();
-  readonly titleAccent = input<string>('');
+  readonly titleAccent    = input<string>('');
+  readonly titleSeparator = input<string>(' ');
   readonly align = input<EyebrowAlign>('start');
   readonly level = input<SectionHeaderLevel>('h2');
 
