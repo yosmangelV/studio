@@ -1,7 +1,14 @@
 <section class="schedule" id="schedule" data-testid="schedule-section">
   <div class="schedule__container">
-    <p class="schedule__eyebrow">Cuándo entrenamos</p>
-    <h2 class="schedule__title">Hora<span class="schedule__title--accent">rios</span></h2>
+    <div class="schedule__header">
+      <ds-section-header
+        eyebrow="Cuándo entrenamos"
+        title="Hora"
+        titleAccent="rios"
+        titleSeparator=""
+        align="center"
+      />
+    </div>
 
     <ul class="schedule__list" role="list">
       @for (entry of schedule(); track entry.day) {
