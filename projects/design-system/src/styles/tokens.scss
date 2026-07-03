@@ -51,6 +51,8 @@
   --color-surface-raised:  #f8fafc;
   --color-surface-overlay: #f1f5f9;
   --color-surface-sunken:  #e2e8f0;
+  --color-surface-nav:     rgba(255, 255, 255, 0.92);
+  --color-grid-line:       rgba(0, 0, 0, 0.06);
 
   // ---------------------------------------------------------------------------
   // Text (light mode)
@@ -181,6 +183,8 @@
   --color-surface-raised:  #1e293b;
   --color-surface-overlay: #334155;
   --color-surface-sunken:  #020617;
+  --color-surface-nav:     rgba(15, 23, 42, 0.92);
+  --color-grid-line:       rgba(255, 255, 255, 0.025);
 
   // Text
   --color-text-primary:   #f1f5f9;
