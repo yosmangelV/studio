@@ -1,0 +1,92 @@
+:host {
+  display: block;
+}
+
+.striped-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--color-border);
+
+  &__item {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    grid-template-areas:
+      'index name'
+      'index desc';
+    column-gap: 1.5rem;
+    row-gap: 0.35rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--duration-normal) var(--ease-default);
+
+    @media (min-width: 768px) {
+      grid-template-columns: 3.5rem 14rem 1fr 1.5rem;
+      grid-template-areas: 'index name desc arrow';
+      align-items: center;
+      column-gap: 2.5rem;
+      padding: 2rem 1rem;
+      margin: 0 -1rem;
+
+      &:hover {
+        background-color: var(--color-primary-50);
+
+        .striped-list__name  { color: var(--color-primary-500); }
+        .striped-list__arrow { opacity: 1; transform: translateX(4px); }
+      }
+    }
+  }
+
+  &__index {
+    grid-area: index;
+    align-self: start;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: var(--font-bold);
+    letter-spacing: 0.05em;
+    color: var(--color-primary-500);
+    padding-top: 3px;
+
+    @media (min-width: 768px) {
+      align-self: center;
+      font-size: 0.9rem;
+    }
+  }
+
+  &__name {
+    grid-area: name;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+    letter-spacing: 0.04em;
+    transition: color var(--duration-normal) var(--ease-default);
+
+    @media (min-width: 768px) {
+      font-size: 1.05rem;
+    }
+  }
+
+  &__description {
+    grid-area: desc;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  &__arrow {
+    display: none;
+    grid-area: arrow;
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-default),
+                transform var(--duration-normal) var(--ease-default);
+
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+}
