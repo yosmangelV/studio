@@ -1,7 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import {
+  PageNavComponent,
+  HeroSectionComponent,
+  NavLink,
+} from 'design-system';
 import { GYM_CONFIG } from '../../core/config/gym-config.token';
-import { HomeNavComponent } from './ui/home-nav/home-nav.component';
-import { HeroSectionComponent } from './ui/hero-section/hero-section.component';
 import { AboutSectionComponent } from './ui/about-section/about-section.component';
 import { ClassesSectionComponent } from './ui/classes-section/classes-section.component';
 import { ScheduleSectionComponent } from './ui/schedule-section/schedule-section.component';
@@ -11,7 +15,7 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
   selector: 'app-home-page',
   standalone: true,
   imports: [
-    HomeNavComponent,
+    PageNavComponent,
     HeroSectionComponent,
     AboutSectionComponent,
     ClassesSectionComponent,
@@ -19,12 +23,22 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
     ContactSectionComponent,
   ],
   template: `
-    <app-home-nav [name]="config.name" [subtitle]="config.subtitle" />
+    <ds-page-nav
+      [brandName]="config.name"
+      [brandSubtitle]="config.subtitle"
+      [links]="navLinks"
+      (ctaClick)="onNavCtaClick()"
+    />
     <main>
-      <app-hero-section
-        [name]="config.name"
-        [subtitle]="config.subtitle"
+      <ds-hero-section
+        [eyebrow]="config.subtitle"
+        [headlineTop]="headlineTop()"
+        [headlineMain]="headlineMain()"
         [tagline]="config.tagline"
+        primaryCtaLabel="Ver clases"
+        primaryCtaHref="#classes"
+        secondaryCtaLabel="Contáctanos"
+        secondaryCtaHref="#contact"
         [logoSrc]="config.assets.logoIllustrated"
       />
       <app-about-section
@@ -45,4 +59,26 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
 })
 export default class HomePage {
   protected readonly config = inject(GYM_CONFIG);
+  private readonly router = inject(Router);
+
+  protected readonly navLinks: NavLink[] = [
+    { label: 'Nosotros', href: '#about' },
+    { label: 'Clases',   href: '#classes' },
+    { label: 'Horarios', href: '#schedule' },
+    { label: 'Contacto', href: '#contact' },
+  ];
+
+  protected readonly headlineTop = computed(() => {
+    const words = this.config.name.trim().split(/\s+/);
+    return words.slice(0, -1).join(' ');
+  });
+
+  protected readonly headlineMain = computed(() => {
+    const words = this.config.name.trim().split(/\s+/);
+    return words[words.length - 1];
+  });
+
+  protected onNavCtaClick(): void {
+    this.router.navigate(['/login']);
+  }
 }
