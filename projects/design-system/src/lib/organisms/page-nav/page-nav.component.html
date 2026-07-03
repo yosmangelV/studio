@@ -1,0 +1,20 @@
+<nav class="page-nav" aria-label="Navegación principal">
+  <a class="page-nav__brand" [href]="brandHref()" [attr.aria-label]="brandAriaLabel()">
+    <div class="page-nav__brand-text">
+      <span class="page-nav__brand-name">{{ brandName() }}</span>
+      <span class="page-nav__brand-sub">{{ brandSubtitle() }}</span>
+    </div>
+  </a>
+
+  <ul class="page-nav__links" role="list">
+    @for (link of links(); track $index) {
+      <li>
+        <a class="page-nav__link" [href]="link.href">{{ link.label }}</a>
+      </li>
+    }
+  </ul>
+
+  <button class="page-nav__cta" type="button" (click)="ctaClick.emit()">
+    {{ ctaLabel() }}
+  </button>
+</nav>
