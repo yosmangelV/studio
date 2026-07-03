@@ -1,0 +1,28 @@
+<ds-eyebrow [label]="eyebrow()" [align]="align()" />
+
+@switch (level()) {
+  @case ('h1') {
+    <h1 [class]="titleClasses()">
+      {{ title() }}
+      @if (titleAccent()) {
+        <span class="section-header__accent">{{ titleAccent() }}</span>
+      }
+    </h1>
+  }
+  @case ('h2') {
+    <h2 [class]="titleClasses()">
+      {{ title() }}
+      @if (titleAccent()) {
+        <span class="section-header__accent">{{ titleAccent() }}</span>
+      }
+    </h2>
+  }
+  @case ('h3') {
+    <h3 [class]="titleClasses()">
+      {{ title() }}
+      @if (titleAccent()) {
+        <span class="section-header__accent">{{ titleAccent() }}</span>
+      }
+    </h3>
+  }
+}

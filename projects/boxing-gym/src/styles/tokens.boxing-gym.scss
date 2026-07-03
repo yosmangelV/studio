@@ -117,4 +117,8 @@
   --color-text-primary:   var(--gym-text-primary);
   --color-text-secondary: var(--gym-text-secondary);
   --color-text-tertiary:  var(--gym-text-muted);
+
+  // DS typography tokens remapped for the gym's display aesthetic.
+  --font-display: var(--gym-font-display);
+  --text-display: clamp(2.5rem, 5vw, 4rem);
 }
