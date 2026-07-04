@@ -6,10 +6,12 @@
 export * from './lib/atoms/button/button.component';
 export * from './lib/atoms/eyebrow/eyebrow.component';
 export * from './lib/atoms/image/image.component';
+export * from './lib/atoms/input/input.component';
 export * from './lib/atoms/typography/typography.component';
 
 // Molecules
 export * from './lib/molecules/card/card.component';
+export * from './lib/molecules/form-field/form-field.component';
 
 // Organisms
 export * from './lib/organisms/hero-section/hero-section.component';

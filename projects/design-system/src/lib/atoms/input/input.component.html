@@ -1,0 +1,12 @@
+<input
+  [id]="inputId()"
+  [type]="type()"
+  [value]="value()"
+  [placeholder]="placeholder()"
+  [autocomplete]="autocomplete()"
+  [class]="inputClasses()"
+  [disabled]="disabled()"
+  [attr.data-testid]="testId() || null"
+  (input)="onInput($event)"
+  (blur)="onTouched()"
+/>
