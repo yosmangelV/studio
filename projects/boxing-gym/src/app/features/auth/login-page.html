@@ -26,10 +26,11 @@
       <div class="login__form-header">
         <p class="login__form-eyebrow">
           <span class="login__form-eyebrow-line"></span>
-          Panel de Administración
+          <span i18n="@@login.eyebrow">Panel de Administración</span>
         </p>
         <h1 class="login__form-title">
-          Iniciar <span class="login__form-title--accent">Sesión</span>
+          <span i18n="@@login.title">Iniciar</span>
+          <span class="login__form-title--accent" i18n="@@login.titleAccent">Sesión</span>
         </h1>
       </div>
 
@@ -41,10 +42,10 @@
         data-testid="login-form"
       >
         <ds-form-field
-          label="Email"
+          label="Email" i18n-label="@@login.email.label"
           inputId="login-email"
           [hasError]="emailInvalid()"
-          errorMessage="Introduce un email válido"
+          errorMessage="Introduce un email válido" i18n-errorMessage="@@login.email.error"
         >
           <ds-input
             inputId="login-email"
@@ -58,10 +59,10 @@
         </ds-form-field>
 
         <ds-form-field
-          label="Contraseña"
+          label="Contraseña" i18n-label="@@login.password.label"
           inputId="login-password"
           [hasError]="passwordInvalid()"
-          errorMessage="Mínimo 6 caracteres"
+          errorMessage="Mínimo 6 caracteres" i18n-errorMessage="@@login.password.error"
         >
           <ds-input
             inputId="login-password"
@@ -89,7 +90,7 @@
         >{{ submitLabel() }}</ds-button>
       </form>
 
-      <a class="login__back" routerLink="/" data-testid="login-back-link">
+      <a class="login__back" routerLink="/" data-testid="login-back-link" i18n="@@login.back">
         ← Volver a la web
       </a>
 

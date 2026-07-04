@@ -6,6 +6,7 @@ import {
   NavLink,
 } from 'design-system';
 import { GYM_CONFIG } from '../../core/config/gym-config.token';
+import { LocaleSwitcherComponent } from '../../shared/components/locale-switcher/locale-switcher.component';
 import { AboutSectionComponent } from './ui/about-section/about-section.component';
 import { ClassesSectionComponent } from './ui/classes-section/classes-section.component';
 import { ScheduleSectionComponent } from './ui/schedule-section/schedule-section.component';
@@ -21,6 +22,7 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
     ClassesSectionComponent,
     ScheduleSectionComponent,
     ContactSectionComponent,
+    LocaleSwitcherComponent,
   ],
   template: `
     <ds-page-nav
@@ -28,16 +30,18 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
       [brandSubtitle]="config.subtitle"
       [links]="navLinks"
       (ctaClick)="onNavCtaClick()"
-    />
+    >
+      <app-locale-switcher />
+    </ds-page-nav>
     <main>
       <ds-hero-section
         [eyebrow]="config.subtitle"
         [headlineTop]="headlineTop()"
         [headlineMain]="headlineMain()"
         [tagline]="config.tagline"
-        primaryCtaLabel="Ver clases"
+        primaryCtaLabel="Ver clases" i18n-primaryCtaLabel="@@hero.cta.primary"
         primaryCtaHref="#classes"
-        secondaryCtaLabel="Contáctanos"
+        secondaryCtaLabel="Contáctanos" i18n-secondaryCtaLabel="@@hero.cta.secondary"
         secondaryCtaHref="#contact"
         [logoSrc]="config.assets.logoIllustrated"
       />
@@ -62,10 +66,10 @@ export default class HomePage {
   private readonly router = inject(Router);
 
   protected readonly navLinks: NavLink[] = [
-    { label: 'Nosotros', href: '#about' },
-    { label: 'Clases',   href: '#classes' },
-    { label: 'Horarios', href: '#schedule' },
-    { label: 'Contacto', href: '#contact' },
+    { label: $localize`:@@nav.about:Nosotros`,  href: '#about' },
+    { label: $localize`:@@nav.classes:Clases`,  href: '#classes' },
+    { label: $localize`:@@nav.schedule:Horarios`, href: '#schedule' },
+    { label: $localize`:@@nav.contact:Contacto`, href: '#contact' },
   ];
 
   protected readonly headlineTop = computed(() => {

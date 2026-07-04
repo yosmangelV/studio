@@ -107,6 +107,13 @@
     }
   }
 
+  // ---- Actions (switcher slot + CTA) ---------------------------------------
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
   // ---- CTA -----------------------------------------------------------------
   &__cta {
     font-size: 0.68rem;

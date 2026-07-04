@@ -83,7 +83,9 @@
                 "input": "projects/announcement-web/public"
               }
             ],
-            "styles": ["projects/announcement-web/src/styles.scss"]
+            "styles": [
+              "projects/announcement-web/src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {
@@ -158,6 +160,10 @@
             "styles": [
               "projects/design-system/src/styles/global.css",
               "projects/boxing-gym/src/styles.scss"
+            ],
+            "localize": false,
+            "polyfills": [
+              "@angular/localize/init"
             ]
           },
           "configurations": {
@@ -180,6 +186,58 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "production-es": {
+              "localize": [
+                "es"
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "production-en": {
+              "localize": [
+                "en"
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development-es": {
+              "localize": [
+                "es"
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "development-en": {
+              "localize": [
+                "en"
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -192,6 +250,12 @@
             },
             "development": {
               "buildTarget": "boxing-gym:build:development"
+            },
+            "development-es": {
+              "buildTarget": "boxing-gym:build:development-es"
+            },
+            "development-en": {
+              "buildTarget": "boxing-gym:build:development-en"
             }
           },
           "defaultConfiguration": "development"
@@ -200,7 +264,17 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/boxing-gym/tsconfig.spec.json",
-            "setupFiles": ["projects/boxing-gym/src/test-setup.ts"]
+            "setupFiles": [
+              "projects/boxing-gym/src/test-setup.ts"
+            ]
+          }
+        }
+      },
+      "i18n": {
+        "sourceLocale": "es",
+        "locales": {
+          "en": {
+            "translation": "projects/boxing-gym/src/locale/messages.en.xlf"
           }
         }
       }

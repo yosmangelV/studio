@@ -14,7 +14,10 @@
     }
   </ul>
 
-  <button class="page-nav__cta" type="button" (click)="ctaClick.emit()">
-    {{ ctaLabel() }}
-  </button>
+  <div class="page-nav__actions">
+    <ng-content />
+    <button class="page-nav__cta" type="button" (click)="ctaClick.emit()">
+      {{ ctaLabel() }}
+    </button>
+  </div>
 </nav>
