@@ -40,43 +40,39 @@
         novalidate
         data-testid="login-form"
       >
-        <div class="login__field">
-          <label class="login__label" for="login-email">Email</label>
-          <input
-            id="login-email"
-            class="login__input"
-            [class.login__input--invalid]="emailInvalid()"
+        <ds-form-field
+          label="Email"
+          inputId="login-email"
+          [hasError]="emailInvalid()"
+          errorMessage="Introduce un email válido"
+        >
+          <ds-input
+            inputId="login-email"
             type="email"
-            formControlName="email"
             placeholder="tu@email.com"
             autocomplete="email"
-            data-testid="login-email-input"
+            formControlName="email"
+            [hasError]="emailInvalid()"
+            testId="login-email-input"
           />
-          @if (emailInvalid()) {
-            <p class="login__field-error" role="alert" data-testid="login-email-error">
-              Introduce un email válido
-            </p>
-          }
-        </div>
+        </ds-form-field>
 
-        <div class="login__field">
-          <label class="login__label" for="login-password">Contraseña</label>
-          <input
-            id="login-password"
-            class="login__input"
-            [class.login__input--invalid]="passwordInvalid()"
+        <ds-form-field
+          label="Contraseña"
+          inputId="login-password"
+          [hasError]="passwordInvalid()"
+          errorMessage="Mínimo 6 caracteres"
+        >
+          <ds-input
+            inputId="login-password"
             type="password"
-            formControlName="password"
             placeholder="••••••••"
             autocomplete="current-password"
-            data-testid="login-password-input"
+            formControlName="password"
+            [hasError]="passwordInvalid()"
+            testId="login-password-input"
           />
-          @if (passwordInvalid()) {
-            <p class="login__field-error" role="alert" data-testid="login-password-error">
-              Mínimo 6 caracteres
-            </p>
-          }
-        </div>
+        </ds-form-field>
 
         @if (error()) {
           <div class="login__error" role="alert" data-testid="login-error">

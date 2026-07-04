@@ -175,55 +175,6 @@
   margin-bottom: 1.5rem;
 }
 
-.login__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.login__label {
-  font-family: var(--gym-font-body);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gym-gray);
-}
-
-.login__input {
-  width: 100%;
-  background: var(--gym-surface-subtle);
-  border: 1px solid var(--gym-border-muted);
-  color: var(--gym-white);
-  font-family: var(--gym-font-body);
-  font-size: 0.9rem;
-  padding: 0.875rem 1rem;
-  outline: none;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-  appearance: none;
-
-  &::placeholder {
-    color: var(--gym-gray);
-    opacity: 0.6;
-  }
-
-  &:focus {
-    border-color: var(--gym-red);
-    background: var(--gym-surface-active);
-  }
-
-  &--invalid {
-    border-color: var(--gym-red);
-  }
-}
-
-.login__field-error {
-  font-family: var(--gym-font-body);
-  font-size: 0.72rem;
-  color: var(--gym-red-light);
-  letter-spacing: 0.02em;
-}
-
 .login__error {
   background: var(--gym-brand-hover);
   border: 1px solid var(--gym-brand-glow);
