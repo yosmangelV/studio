@@ -1,0 +1,11 @@
+<label [for]="inputId()" class="form-field__label">{{ label() }}</label>
+
+<div class="form-field__control">
+  <ng-content />
+</div>
+
+@if (hasError() && errorMessage()) {
+  <p class="form-field__error" role="alert">{{ errorMessage() }}</p>
+} @else if (hint()) {
+  <p class="form-field__hint">{{ hint() }}</p>
+}

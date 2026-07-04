@@ -108,10 +108,16 @@
   --color-primary-600: var(--gym-red-700);
   --color-primary-700: #6b0000;
 
-  --color-surface:      var(--gym-surface-app);
-  --color-surface-nav:  var(--gym-surface-nav);
-  --color-border:       var(--gym-border-subtle);
-  --color-border-strong: var(--gym-border-strong);
+  --color-surface:         var(--gym-surface-app);
+  --color-surface-raised:  var(--gym-surface-subtle);   // ds-input default bg
+  --color-surface-sunken:  rgba(0, 0, 0, 0.20);         // ds-input disabled bg
+  --color-surface-nav:     var(--gym-surface-nav);
+  --color-border:          var(--gym-border-subtle);
+  --color-border-strong:   var(--gym-border-strong);
+
+  // Error tokens remapped for dark context (DS defaults are light-mode reds)
+  --color-error:        var(--gym-text-danger);   // #f87171 — readable on dark
+  --color-error-subtle: var(--gym-brand-hover);   // red-tinted surface (12%)
   --color-grid-line:    var(--gym-grid-line);
   --color-border-focus: var(--gym-red-500);
   --color-text-link:    var(--gym-red-500);
