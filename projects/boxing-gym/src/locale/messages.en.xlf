@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="es" trgLang="en">
+  <file id="ngi18n" original="ng.template">
+    <unit id="login.eyebrow">
+      <segment>
+        <source>Panel de Administración</source>
+        <target>Admin Panel</target>
+      </segment>
+    </unit>
+    <unit id="login.title">
+      <segment>
+        <source>Iniciar</source>
+        <target>Log</target>
+      </segment>
+    </unit>
+    <unit id="login.titleAccent">
+      <segment>
+        <source>Sesión</source>
+        <target>In</target>
+      </segment>
+    </unit>
+    <unit id="login.email.label">
+      <segment>
+        <source>Email</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="login.email.error">
+      <segment>
+        <source>Introduce un email válido</source>
+        <target>Please enter a valid email</target>
+      </segment>
+    </unit>
+    <unit id="login.password.label">
+      <segment>
+        <source>Contraseña</source>
+        <target>Password</target>
+      </segment>
+    </unit>
+    <unit id="login.password.error">
+      <segment>
+        <source>Mínimo 6 caracteres</source>
+        <target>Minimum 6 characters</target>
+      </segment>
+    </unit>
+    <unit id="login.back">
+      <segment>
+        <source> ← Volver a la web </source>
+        <target> ← Back to website </target>
+      </segment>
+    </unit>
+    <unit id="hero.cta.primary">
+      <segment>
+        <source>Ver clases</source>
+        <target>View classes</target>
+      </segment>
+    </unit>
+    <unit id="hero.cta.secondary">
+      <segment>
+        <source>Contáctanos</source>
+        <target>Contact us</target>
+      </segment>
+    </unit>
+    <unit id="nav.about">
+      <segment>
+        <source>Nosotros</source>
+        <target>About</target>
+      </segment>
+    </unit>
+    <unit id="nav.classes">
+      <segment>
+        <source>Clases</source>
+        <target>Classes</target>
+      </segment>
+    </unit>
+    <unit id="nav.schedule">
+      <segment>
+        <source>Horarios</source>
+        <target>Schedule</target>
+      </segment>
+    </unit>
+    <unit id="nav.contact">
+      <segment>
+        <source>Contacto</source>
+        <target>Contact</target>
+      </segment>
+    </unit>
+    <unit id="about.eyebrow">
+      <segment>
+        <source>Quiénes somos</source>
+        <target>Who we are</target>
+      </segment>
+    </unit>
+    <unit id="about.title">
+      <segment>
+        <source>Sobre</source>
+        <target>About</target>
+      </segment>
+    </unit>
+    <unit id="about.titleAccent">
+      <segment>
+        <source>Nosotros</source>
+        <target>Us</target>
+      </segment>
+    </unit>
+    <unit id="classes.eyebrow">
+      <segment>
+        <source>Lo que ofrecemos</source>
+        <target>What we offer</target>
+      </segment>
+    </unit>
+    <unit id="classes.title">
+      <segment>
+        <source>Nuestras</source>
+        <target>Our</target>
+      </segment>
+    </unit>
+    <unit id="classes.titleAccent">
+      <segment>
+        <source>Clases</source>
+        <target>Classes</target>
+      </segment>
+    </unit>
+    <unit id="contact.eyebrow">
+      <segment>
+        <source>Estamos aquí</source>
+        <target>We're here</target>
+      </segment>
+    </unit>
+    <unit id="contact.title">
+      <segment>
+        <source>Contác</source>
+        <target>Con</target>
+      </segment>
+    </unit>
+    <unit id="contact.titleAccent">
+      <segment>
+        <source>tanos</source>
+        <target>tact</target>
+      </segment>
+    </unit>
+    <unit id="contact.whatsapp">
+      <segment>
+        <source>Escríbenos por WhatsApp</source>
+        <target>Message us on WhatsApp</target>
+      </segment>
+    </unit>
+    <unit id="contact.phone.label">
+      <segment>
+        <source>Teléfono</source>
+        <target>Phone</target>
+      </segment>
+    </unit>
+    <unit id="contact.email.label">
+      <segment>
+        <source>Email</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="contact.address.label">
+      <segment>
+        <source>Dirección</source>
+        <target>Address</target>
+      </segment>
+    </unit>
+    <unit id="contact.instagram.label">
+      <segment>
+        <source>Instagram</source>
+        <target>Instagram</target>
+      </segment>
+    </unit>
+    <unit id="schedule.eyebrow">
+      <segment>
+        <source>Cuándo entrenamos</source>
+        <target>When we train</target>
+      </segment>
+    </unit>
+    <unit id="schedule.title">
+      <segment>
+        <source>Hora</source>
+        <target>Sche</target>
+      </segment>
+    </unit>
+    <unit id="schedule.titleAccent">
+      <segment>
+        <source>rios</source>
+        <target>dule</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

@@ -2,9 +2,9 @@
   <div class="contact__container">
     <div class="contact__header">
       <ds-section-header
-        eyebrow="Estamos aquí"
-        title="Contác"
-        titleAccent="tanos"
+        eyebrow="Estamos aquí" i18n-eyebrow="@@contact.eyebrow"
+        title="Contác" i18n-title="@@contact.title"
+        titleAccent="tanos" i18n-titleAccent="@@contact.titleAccent"
         titleSeparator=""
         align="center"
       />
@@ -18,25 +18,25 @@
       data-testid="contact-whatsapp"
     >
       <span aria-hidden="true">💬</span>
-      Escríbenos por WhatsApp
+      <span i18n="@@contact.whatsapp">Escríbenos por WhatsApp</span>
     </a>
 
     <ul class="contact__details" role="list">
       <li class="contact__item">
-        <span class="contact__label">Teléfono</span>
+        <span class="contact__label" i18n="@@contact.phone.label">Teléfono</span>
         <a class="contact__value" [href]="'tel:' + contact().phone">{{ contact().phone }}</a>
       </li>
       <li class="contact__item">
-        <span class="contact__label">Email</span>
+        <span class="contact__label" i18n="@@contact.email.label">Email</span>
         <a class="contact__value" [href]="'mailto:' + contact().email">{{ contact().email }}</a>
       </li>
       <li class="contact__item">
-        <span class="contact__label">Dirección</span>
+        <span class="contact__label" i18n="@@contact.address.label">Dirección</span>
         <span class="contact__value">{{ contact().address }}</span>
       </li>
       @if (contact().instagram) {
         <li class="contact__item">
-          <span class="contact__label">Instagram</span>
+          <span class="contact__label" i18n="@@contact.instagram.label">Instagram</span>
           <a
             class="contact__value"
             [href]="'https://instagram.com/' + contact().instagram!.replace('@', '')"

@@ -1,0 +1,9 @@
+<button
+  class="locale-switcher"
+  type="button"
+  [attr.aria-label]="'Cambiar idioma a ' + alternateLabel.label"
+  (click)="switchLocale()"
+>
+  <span class="locale-switcher__flag" aria-hidden="true">{{ alternateLabel.flag }}</span>
+  <span class="locale-switcher__label">{{ alternateLabel.label }}</span>
+</button>
