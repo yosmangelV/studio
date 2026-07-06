@@ -127,18 +127,6 @@
     }
   }
 
-  &__badge {
-    font-size: 0.6rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    background: var(--gym-brand-hover);
-    color: var(--gym-text-danger);
-    padding: 0.2em 0.55em;
-    border-radius: 999px;
-    flex-shrink: 0;
-  }
-
   // ── Footer ───────────────────────────────────────────────────────────
   &__footer {
     padding: 0.75rem 0.625rem 1.25rem;
