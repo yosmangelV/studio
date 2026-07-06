@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { ButtonComponent } from 'design-system';
+import { BadgeComponent, ButtonComponent } from 'design-system';
 import { AuthService } from '../../core/auth/auth.service';
 import { GYM_CONFIG } from '../../core/config/gym-config.token';
 
@@ -14,7 +14,7 @@ interface NavItem {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, ButtonComponent],
+  imports: [RouterLink, RouterLinkActive, BadgeComponent, ButtonComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
