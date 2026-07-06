@@ -1,4 +1,4 @@
-<aside class="sidebar" [class.sidebar--open]="open()" aria-label="Menú de navegación">
+<aside class="sidebar" [class.sidebar--open]="open()" aria-label="Menú de navegación" data-testid="sidebar">
   <!-- Brand -->
   <div class="sidebar__brand">
     <img
@@ -9,7 +9,7 @@
       height="36"
     />
     <div class="sidebar__brand-text">
-      <span class="sidebar__gym-name">{{ config.name }}</span>
+      <span class="sidebar__gym-name" data-testid="sidebar-gym-name">{{ config.name }}</span>
       <span class="sidebar__gym-sub">{{ config.subtitle }}</span>
     </div>
   </div>
@@ -20,7 +20,10 @@
       @for (item of navItems; track item.route) {
         <li class="sidebar__item">
           @if (item.disabled) {
-            <span class="sidebar__link sidebar__link--disabled">
+            <span
+              class="sidebar__link sidebar__link--disabled"
+              [attr.data-testid]="'sidebar-nav-disabled-' + item.route.slice(1)"
+            >
               {{ item.label }}
               @if (item.badge) {
                 <ds-badge variant="warning">{{ item.badge }}</ds-badge>
@@ -31,6 +34,7 @@
               class="sidebar__link"
               [routerLink]="item.route"
               routerLinkActive="sidebar__link--active"
+              [attr.data-testid]="'sidebar-nav-link-' + item.route.slice(1)"
               (click)="close.emit()"
             >{{ item.label }}</a>
           }
@@ -45,6 +49,7 @@
       variant="subtle"
       size="sm"
       [fullWidth]="true"
+      data-testid="sidebar-signout-btn"
       (click)="onSignOut()"
     >Cerrar sesión</ds-button>
   </footer>

@@ -2,7 +2,7 @@
   <app-sidebar [open]="sidebarOpen()" (close)="sidebarOpen.set(false)" />
 
   @if (sidebarOpen()) {
-    <div class="shell__overlay" (click)="sidebarOpen.set(false)" aria-hidden="true"></div>
+    <div class="shell__overlay" data-testid="shell-overlay" (click)="sidebarOpen.set(false)" aria-hidden="true"></div>
   }
 
   <div class="shell__body">
@@ -11,6 +11,7 @@
         class="shell__menu-btn"
         type="button"
         aria-label="Abrir menú"
+        data-testid="shell-menu-btn"
         (click)="sidebarOpen.set(!sidebarOpen())"
       >
         <span></span>
