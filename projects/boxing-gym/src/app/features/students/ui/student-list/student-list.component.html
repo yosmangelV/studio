@@ -1,0 +1,55 @@
+<div class="student-list" data-testid="students-list">
+  @if (students().length === 0) {
+    <p class="student-list__empty" data-testid="students-empty">
+      No hay alumnos registrados.
+    </p>
+  } @else {
+    <table class="student-list__table">
+      <thead class="student-list__head">
+        <tr>
+          <th class="student-list__th">Nombre</th>
+          <th class="student-list__th">Email</th>
+          <th class="student-list__th">Nivel</th>
+          <th class="student-list__th">Estado</th>
+          <th class="student-list__th student-list__th--actions">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (student of students(); track student.id) {
+          <tr class="student-list__row" [attr.data-testid]="'student-item-' + student.id">
+            <td class="student-list__td">{{ student.full_name }}</td>
+            <td class="student-list__td student-list__td--email">{{ student.email }}</td>
+            <td class="student-list__td">
+              <ds-badge [variant]="levelVariants[student.level]">
+                {{ levelLabels[student.level] }}
+              </ds-badge>
+            </td>
+            <td class="student-list__td">
+              <span class="student-list__status" [class.student-list__status--inactive]="!student.is_active">
+                {{ student.is_active ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="student-list__td student-list__td--actions">
+              <ds-button
+                variant="ghost"
+                size="sm"
+                [attr.data-testid]="'students-edit-button-' + student.id"
+                (click)="edit.emit(student)"
+              >
+                Editar
+              </ds-button>
+              <ds-button
+                variant="danger"
+                size="sm"
+                [attr.data-testid]="'students-delete-button-' + student.id"
+                (click)="deletedStudent.emit(student.id)"
+              >
+                Eliminar
+              </ds-button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

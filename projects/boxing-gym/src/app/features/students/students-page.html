@@ -1,0 +1,44 @@
+<div class="students-page" data-testid="students-page">
+  <header class="students-page__header">
+    <div class="students-page__heading">
+      <h1 class="students-page__title">Alumnos</h1>
+      <p class="students-page__subtitle">Gestiona el padrón de alumnos del gimnasio.</p>
+    </div>
+    @if (mode() === 'list') {
+      <ds-button
+        variant="primary"
+        data-testid="students-create-button"
+        (click)="onCreate()"
+      >
+        Nuevo alumno
+      </ds-button>
+    }
+  </header>
+
+  @if (service.error()) {
+    <p class="students-page__error">{{ service.error() }}</p>
+  }
+
+  @if (mode() === 'list') {
+    @if (service.loading()) {
+      <p class="students-page__loading">Cargando alumnos…</p>
+    } @else {
+      <app-student-list
+        [students]="service.students()"
+        (edit)="onEdit($event)"
+        (deletedStudent)="onDelete($event)"
+      />
+    }
+  } @else {
+    <div class="students-page__form-wrapper">
+      <h2 class="students-page__form-title">
+        {{ mode() === 'create' ? 'Nuevo alumno' : 'Editar alumno' }}
+      </h2>
+      <app-student-form
+        [student]="selectedStudent()"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+      />
+    </div>
+  }
+</div>
