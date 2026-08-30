@@ -1,0 +1,137 @@
+<form
+  class="student-form"
+  data-testid="students-form"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="student-form__grid">
+    <ds-form-field
+      label="Nombre completo"
+      inputId="full_name"
+      [hasError]="form.controls.full_name.touched && form.controls.full_name.invalid"
+      errorMessage="Mínimo 2 caracteres, máximo 100."
+    >
+      <ds-input
+        inputId="full_name"
+        placeholder="Juan Pérez"
+        testId="students-fullname-input"
+        [hasError]="form.controls.full_name.touched && form.controls.full_name.invalid"
+        formControlName="full_name"
+      />
+    </ds-form-field>
+
+    <ds-form-field
+      label="Email"
+      inputId="email"
+      [hasError]="form.controls.email.touched && form.controls.email.invalid"
+      errorMessage="Introduce un email válido."
+    >
+      <ds-input
+        inputId="email"
+        type="email"
+        placeholder="juan@ejemplo.com"
+        testId="students-email-input"
+        [hasError]="form.controls.email.touched && form.controls.email.invalid"
+        formControlName="email"
+      />
+    </ds-form-field>
+
+    <ds-form-field label="Teléfono" inputId="phone">
+      <ds-input
+        inputId="phone"
+        type="tel"
+        placeholder="+34 600 000 000"
+        testId="students-phone-input"
+        formControlName="phone"
+      />
+    </ds-form-field>
+
+    <ds-form-field
+      label="Fecha de nacimiento"
+      inputId="birth_date"
+      [hasError]="form.controls.birth_date.touched && form.controls.birth_date.invalid"
+      errorMessage="Campo obligatorio."
+    >
+      <input
+        class="student-form__date-input"
+        id="birth_date"
+        type="date"
+        data-testid="students-birthdate-input"
+        formControlName="birth_date"
+      />
+    </ds-form-field>
+
+    <ds-form-field
+      label="Fecha de inscripción"
+      inputId="enrollment_date"
+      [hasError]="form.controls.enrollment_date.touched && form.controls.enrollment_date.invalid"
+      errorMessage="Campo obligatorio."
+    >
+      <input
+        class="student-form__date-input"
+        id="enrollment_date"
+        type="date"
+        data-testid="students-enrollmentdate-input"
+        formControlName="enrollment_date"
+      />
+    </ds-form-field>
+
+    <ds-form-field
+      label="Nivel"
+      inputId="level"
+      [hasError]="form.controls.level.touched && form.controls.level.invalid"
+      errorMessage="Selecciona un nivel."
+    >
+      <select
+        class="student-form__select"
+        id="level"
+        data-testid="students-level-select"
+        formControlName="level"
+      >
+        <option value="" disabled>Seleccionar nivel</option>
+        @for (level of levels; track level) {
+          <option [value]="level">{{ levelLabels[level] }}</option>
+        }
+      </select>
+    </ds-form-field>
+
+    <ds-form-field label="Peso (kg)" inputId="weight">
+      <ds-input
+        inputId="weight"
+        type="number"
+        placeholder="70"
+        testId="students-weight-input"
+        formControlName="weight"
+      />
+    </ds-form-field>
+  </div>
+
+  <div class="student-form__checkbox">
+    <label class="student-form__checkbox-label">
+      <input
+        type="checkbox"
+        data-testid="students-isactive-checkbox"
+        formControlName="is_active"
+      />
+      Alumno activo
+    </label>
+  </div>
+
+  <div class="student-form__actions">
+    <ds-button
+      type="button"
+      variant="ghost"
+      data-testid="students-cancel-button"
+      (click)="cancel.emit()"
+    >
+      Cancelar
+    </ds-button>
+    <ds-button
+      type="submit"
+      variant="primary"
+      data-testid="students-submit-button"
+    >
+      Guardar
+    </ds-button>
+  </div>
+</form>

@@ -1,0 +1,81 @@
+.student-list {
+  width: 100%;
+  overflow-x: auto;
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.35);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin: 0;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__head {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  &__th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.4);
+
+    &--actions {
+      text-align: right;
+    }
+  }
+
+  &__row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__td {
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.85);
+    vertical-align: middle;
+
+    &--email {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.8125rem;
+    }
+
+    &--actions {
+      text-align: right;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+
+  &__status {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.7);
+
+    &--inactive {
+      color: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
