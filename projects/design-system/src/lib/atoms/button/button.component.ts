@@ -31,6 +31,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 export class ButtonComponent {
   readonly variant = input<ButtonVariant>('primary');
   readonly size = input<ButtonSize>('md');
+  readonly type = input<'button' | 'submit' | 'reset'>('button');
   readonly disabled = input(false);
   readonly loading = input(false);
   readonly fullWidth = input(false);
