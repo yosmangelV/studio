@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { ButtonComponent } from 'design-system';
 import { StudentCreate, StudentResponse } from '../../core/api/students.service';
 import { StudentsService } from './data-access/students.service';
@@ -23,6 +23,12 @@ export default class StudentsPage {
 
   constructor() {
     this.service.loadAll();
+    effect(() => {
+      if (this.service.mutationSuccess() > 0) {
+        this.mode.set('list');
+        this.selectedStudent.set(null);
+      }
+    }, { allowSignalWrites: true });
   }
 
   protected onCreate(): void {
@@ -40,18 +46,17 @@ export default class StudentsPage {
     this.mode.set('list');
   }
 
-  protected async onSave(payload: StudentCreate): Promise<void> {
+  protected onSave(payload: StudentCreate): void {
     const current = this.selectedStudent();
     if (this.mode() === 'edit' && current) {
-      await this.service.update(current.id, payload);
+      this.service.update(current.id, payload);
     } else {
-      await this.service.create(payload);
+      this.service.create(payload);
     }
-    this.onCancel();
   }
 
-  protected async onDelete(id: string): Promise<void> {
+  protected onDelete(id: string): void {
     if (!confirm('¿Eliminar este alumno? Esta acción no se puede deshacer.')) return;
-    await this.service.remove(id);
+    this.service.remove(id);
   }
 }

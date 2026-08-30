@@ -22,6 +22,7 @@ type MockService = {
   loading: ReturnType<typeof signal<boolean>>;
   error: ReturnType<typeof signal<string | null>>;
   total: ReturnType<typeof signal<number>>;
+  mutationSuccess: ReturnType<typeof signal<number>>;
   loadAll: ReturnType<typeof vi.fn>;
   create: ReturnType<typeof vi.fn>;
   update: ReturnType<typeof vi.fn>;
@@ -34,10 +35,11 @@ function makeMockService(overrides: Partial<MockService> = {}): MockService {
     loading: signal(false),
     error: signal<string | null>(null),
     total: signal(0),
-    loadAll: vi.fn().mockResolvedValue(undefined),
-    create: vi.fn().mockResolvedValue(mockStudent),
-    update: vi.fn().mockResolvedValue(undefined),
-    remove: vi.fn().mockResolvedValue(undefined),
+    mutationSuccess: signal(0),
+    loadAll: vi.fn(),
+    create: vi.fn(),
+    update: vi.fn(),
+    remove: vi.fn(),
     ...overrides,
   };
 }
