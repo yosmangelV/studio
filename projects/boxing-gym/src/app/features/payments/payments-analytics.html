@@ -1,0 +1,61 @@
+<div class="payments-analytics">
+
+  <!-- Header -->
+  <header class="payments-analytics__header">
+    <div class="payments-analytics__heading">
+      <h1 class="payments-analytics__title">Pagos</h1>
+      <nav class="payments-analytics__tabs" aria-label="Vistas de pagos">
+        <a
+          class="payments-analytics__tab"
+          routerLink=".."
+          routerLinkActive="payments-analytics__tab--active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          data-testid="payments-tab-resumen"
+        >Resumen</a>
+        <a
+          class="payments-analytics__tab payments-analytics__tab--active"
+          routerLink="."
+          data-testid="payments-tab-analiticas"
+        >Analíticas</a>
+      </nav>
+    </div>
+
+    <div class="payments-analytics__filters">
+      <input
+        class="payments-analytics__month-input"
+        type="month"
+        [value]="selectedPeriod()"
+        (change)="onPeriodChange($event)"
+        data-testid="payments-analytics-period"
+        aria-label="Seleccionar mes"
+      />
+      <select
+        class="payments-analytics__type-select"
+        [value]="selectedType()"
+        (change)="onTypeChange($event)"
+        data-testid="payments-analytics-type"
+        aria-label="Filtrar por tipo"
+      >
+        @for (opt of paymentTypes; track opt.value) {
+          <option [value]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+    </div>
+  </header>
+
+  <p class="payments-analytics__period-label" data-testid="payments-analytics-period-label">
+    {{ periodLabel() }}
+  </p>
+
+  @if (service.error()) {
+    <div class="payments-analytics__error" role="alert" data-testid="payments-analytics-error">
+      {{ service.error() }}
+    </div>
+  }
+
+  <app-payment-analytics-view
+    [analytics]="service.analytics()"
+    [loading]="service.loading()"
+  />
+
+</div>

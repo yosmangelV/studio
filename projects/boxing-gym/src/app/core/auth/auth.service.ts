@@ -6,8 +6,9 @@ import { SUPABASE_CLIENT } from './supabase.token';
 export class AuthService {
   private readonly supabase = inject(SUPABASE_CLIENT);
 
-  readonly currentUser    = signal<User | null>(null);
+  readonly currentUser     = signal<User | null>(null);
   readonly isAuthenticated = computed(() => this.currentUser() !== null);
+  readonly isAdmin         = computed(() => this.currentUser()?.app_metadata?.['role'] === 'admin');
 
   async init(): Promise<void> {
     const { data } = await this.supabase.auth.getSession();
