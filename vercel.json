@@ -1,7 +1,0 @@
-{
-  "buildCommand": "node projects/boxing-gym/scripts/set-env.js && ng build boxing-gym",
-  "outputDirectory": "dist/boxing-gym/browser",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
