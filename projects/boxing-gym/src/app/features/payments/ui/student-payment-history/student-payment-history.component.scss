@@ -1,0 +1,111 @@
+.student-payment-history {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0.25rem 0 0;
+  }
+
+  &__loading,
+  &__empty {
+    color: var(--color-text-muted);
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  &__table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__head {
+    background: var(--color-surface-raised, var(--color-surface));
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  &__th {
+    padding: 0.625rem 0.75rem;
+    text-align: left;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+
+    &--actions {
+      text-align: right;
+    }
+  }
+
+  &__row {
+    border-bottom: 1px solid var(--color-border-subtle, var(--color-border));
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: var(--color-surface-raised, color-mix(in srgb, var(--color-border) 30%, transparent));
+    }
+  }
+
+  &__td {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    vertical-align: middle;
+
+    &--amount {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    &--notes {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &--actions {
+      text-align: right;
+      white-space: nowrap;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  &__count {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+}

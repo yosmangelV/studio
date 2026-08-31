@@ -1,0 +1,49 @@
+@if (loading()) {
+  <div class="payment-analytics-view__skeleton" data-testid="payments-analytics-loading">
+    <p>Cargando analíticas...</p>
+  </div>
+} @else if (!analytics()) {
+  <p class="payment-analytics-view__empty" data-testid="payments-analytics-empty">
+    No hay datos para este período.
+  </p>
+} @else {
+  <div class="payment-analytics-view" data-testid="payments-analytics">
+
+    <!-- Tarjeta resumen total -->
+    <div class="payment-analytics-view__total-card" data-testid="payments-analytics-total">
+      <span class="payment-analytics-view__total-label">Total recaudado</span>
+      <span class="payment-analytics-view__total-amount">
+        {{ analytics()!.total_amount | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+      </span>
+      <span class="payment-analytics-view__total-count">
+        {{ analytics()!.total_payments }} pago{{ analytics()!.total_payments !== 1 ? 's' : '' }}
+      </span>
+    </div>
+
+    <!-- Tarjetas por método -->
+    <div class="payment-analytics-view__methods" data-testid="payments-analytics-methods">
+      @for (method of methods(); track method.key) {
+        <div
+          class="payment-analytics-view__method-card"
+          [attr.data-testid]="'payments-analytics-method-' + method.key"
+        >
+          <span class="payment-analytics-view__method-label">{{ method.label }}</span>
+          @if (method.data) {
+            <span class="payment-analytics-view__method-amount">
+              {{ method.data.amount | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+            </span>
+            <span class="payment-analytics-view__method-count">
+              {{ method.data.count }} pago{{ method.data.count !== 1 ? 's' : '' }}
+            </span>
+          } @else {
+            <span class="payment-analytics-view__method-amount payment-analytics-view__method-amount--zero">
+              {{ 0 | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+            </span>
+            <span class="payment-analytics-view__method-count">0 pagos</span>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+}
