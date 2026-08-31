@@ -5,12 +5,13 @@ import { GYM_CONFIG } from './core/config/gym-config.token';
 import { gymConfig } from './core/config/gym.config';
 import { AuthService } from './core/auth/auth.service';
 import { authInterceptor } from './core/auth/auth.interceptor';
+import { apiBaseUrlInterceptor } from './core/api/api-base-url.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([apiBaseUrlInterceptor, authInterceptor])),
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' })),
     { provide: GYM_CONFIG, useValue: gymConfig },
     {
