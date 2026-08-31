@@ -27,6 +27,7 @@ if (missing.length) {
 }
 
 const envDir = path.join(projectRoot, 'src/environments');
+fs.mkdirSync(envDir, { recursive: true });
 
 const template = (production) =>
   `export const environment = {\n  production: ${production},\n  supabase: {\n    url:    '${SUPABASE_URL}',\n    anonKey: '${SUPABASE_ANON_KEY}',\n  },\n  apiUrl: '${API_URL}',\n};\n`;
