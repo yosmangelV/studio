@@ -1,0 +1,94 @@
+<div class="payments-dashboard">
+
+  <!-- Header -->
+  <header class="payments-dashboard__header">
+    <div class="payments-dashboard__heading">
+      <h1 class="payments-dashboard__title">Pagos</h1>
+      <nav class="payments-dashboard__tabs" aria-label="Vistas de pagos">
+        <a
+          class="payments-dashboard__tab"
+          routerLink="."
+          routerLinkActive="payments-dashboard__tab--active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          data-testid="payments-tab-resumen"
+        >Resumen</a>
+        <a
+          class="payments-dashboard__tab"
+          routerLink="analytics"
+          routerLinkActive="payments-dashboard__tab--active"
+          data-testid="payments-tab-analiticas"
+        >Analíticas</a>
+      </nav>
+    </div>
+
+    <div class="payments-dashboard__controls">
+      @if (mode() === 'summary') {
+        <input
+          class="payments-dashboard__month-input"
+          type="month"
+          [value]="selectedPeriod()"
+          (change)="onPeriodChange($event)"
+          data-testid="payments-period-input"
+          aria-label="Seleccionar mes"
+        />
+        <ds-button
+          variant="primary"
+          size="sm"
+          data-testid="payments-new-btn"
+          (click)="onShowForm(null)"
+        >+ Registrar pago</ds-button>
+      }
+    </div>
+  </header>
+
+  <!-- Period label -->
+  @if (mode() === 'summary') {
+    <p class="payments-dashboard__period-label" data-testid="payments-period-label">
+      {{ periodLabel() }}
+    </p>
+  }
+
+  <!-- Error -->
+  @if (paymentsService.error()) {
+    <div class="payments-dashboard__error" role="alert" data-testid="payments-error">
+      {{ paymentsService.error() }}
+    </div>
+  }
+
+  <!-- Summary -->
+  @if (mode() === 'summary') {
+    <app-payment-summary-dashboard
+      [summary]="paymentsService.summary()"
+      [loading]="paymentsService.loading()"
+      (registerPayment)="onShowForm($event)"
+      (viewHistory)="onViewHistory($event)"
+    />
+  }
+
+  <!-- Registration form -->
+  @if (mode() === 'form') {
+    <div class="payments-dashboard__form-wrapper">
+      <app-payment-registration-form
+        [students]="studentsService.students()"
+        [prefilledStudentId]="prefilledStudentId()"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+      />
+    </div>
+  }
+
+  <!-- Student payment history -->
+  @if (mode() === 'history') {
+    <app-student-payment-history
+      [payments]="paymentsService.studentPayments()"
+      [total]="paymentsService.studentPaymentsTotal()"
+      [loading]="paymentsService.loading()"
+      [studentName]="selectedStudentName()"
+      [currentOffset]="historyOffset()"
+      (loadMore)="onLoadMore($event)"
+      (deletePayment)="onDeletePayment($event)"
+      (close)="onCloseHistory()"
+    />
+  }
+
+</div>

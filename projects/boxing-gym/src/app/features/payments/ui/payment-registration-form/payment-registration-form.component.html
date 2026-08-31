@@ -1,0 +1,135 @@
+<form
+  class="payment-registration-form"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  data-testid="payments-registration-form"
+  novalidate
+>
+  <h2 class="payment-registration-form__title">Registrar pago</h2>
+
+  <!-- Alumno -->
+  <ds-form-field
+    label="Alumno"
+    inputId="pay-student"
+    [hasError]="form.controls.student_id.touched && form.controls.student_id.invalid"
+    errorMessage="Selecciona un alumno."
+  >
+    <select
+      class="payment-registration-form__select"
+      id="pay-student"
+      formControlName="student_id"
+      data-testid="payments-form-student"
+    >
+      <option value="" disabled>Seleccionar alumno…</option>
+      @for (student of students(); track student.id) {
+        <option [value]="student.id">{{ student.full_name }}</option>
+      }
+    </select>
+  </ds-form-field>
+
+  <!-- Tipo de pago -->
+  <fieldset class="payment-registration-form__fieldset">
+    <legend class="payment-registration-form__legend">Tipo de pago</legend>
+    <div class="payment-registration-form__radio-group" data-testid="payments-form-type">
+      @for (type of paymentTypes; track type) {
+        <label class="payment-registration-form__radio-label">
+          <input
+            type="radio"
+            formControlName="type"
+            [value]="type"
+          />
+          {{ typeLabels[type] }}
+        </label>
+      }
+    </div>
+  </fieldset>
+
+  <!-- Período (solo mensualidad) -->
+  @if (isMonthlyFee()) {
+    <ds-form-field
+      label="Período"
+      inputId="pay-period"
+      [hasError]="form.controls.period.touched && form.controls.period.invalid"
+      errorMessage="Selecciona el período."
+    >
+      <input
+        class="payment-registration-form__native-input"
+        id="pay-period"
+        type="month"
+        formControlName="period"
+        data-testid="payments-form-period"
+      />
+    </ds-form-field>
+  }
+
+  <!-- Importe -->
+  <ds-form-field
+    label="Importe (€)"
+    inputId="pay-amount"
+    [hasError]="form.controls.amount.touched && form.controls.amount.invalid"
+    errorMessage="Introduce un importe válido (mayor que 0)."
+  >
+    <input
+      class="payment-registration-form__native-input"
+      id="pay-amount"
+      type="number"
+      min="0.01"
+      step="0.01"
+      placeholder="0.00"
+      formControlName="amount"
+      data-testid="payments-form-amount"
+    />
+  </ds-form-field>
+
+  <!-- Método de pago -->
+  <ds-form-field
+    label="Método de pago"
+    inputId="pay-method"
+    [hasError]="form.controls.payment_method.touched && form.controls.payment_method.invalid"
+    errorMessage="Selecciona un método de pago."
+  >
+    <select
+      class="payment-registration-form__select"
+      id="pay-method"
+      formControlName="payment_method"
+      data-testid="payments-form-method"
+    >
+      <option value="" disabled>Seleccionar método…</option>
+      @for (method of paymentMethods; track method) {
+        <option [value]="method">{{ methodLabels[method] }}</option>
+      }
+    </select>
+  </ds-form-field>
+
+  <!-- Notas -->
+  <ds-form-field
+    [label]="isMonthlyFee() ? 'Notas (opcional)' : 'Notas (obligatorio)'"
+    inputId="pay-notes"
+    [hasError]="form.controls.notes.touched && form.controls.notes.invalid"
+    errorMessage="Describe el material comprado."
+  >
+    <textarea
+      class="payment-registration-form__textarea"
+      id="pay-notes"
+      formControlName="notes"
+      [placeholder]="isMonthlyFee() ? 'Opcional…' : 'Descripción del material (obligatorio)'"
+      rows="3"
+      data-testid="payments-form-notes"
+    ></textarea>
+  </ds-form-field>
+
+  <!-- Actions -->
+  <div class="payment-registration-form__actions">
+    <ds-button
+      type="button"
+      variant="ghost"
+      data-testid="payments-form-cancel"
+      (click)="cancel.emit()"
+    >Cancelar</ds-button>
+    <ds-button
+      type="submit"
+      variant="primary"
+      data-testid="payments-form-submit"
+    >Guardar pago</ds-button>
+  </div>
+</form>

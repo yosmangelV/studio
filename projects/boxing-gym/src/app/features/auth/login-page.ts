@@ -6,6 +6,7 @@ import { startWith } from 'rxjs';
 import { ButtonComponent, FormFieldComponent, InputComponent } from 'design-system';
 import { GYM_CONFIG } from '../../core/config/gym-config.token';
 import { AuthService } from '../../core/auth/auth.service';
+import { InactivityService } from '../../core/auth/inactivity.service';
 
 @Component({
   selector: 'app-login-page',
@@ -16,10 +17,11 @@ import { AuthService } from '../../core/auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LoginPage {
-  protected readonly config = inject(GYM_CONFIG);
-  private  readonly auth   = inject(AuthService);
-  private  readonly fb     = inject(FormBuilder);
-  private  readonly router  = inject(Router);
+  protected readonly config    = inject(GYM_CONFIG);
+  private  readonly auth       = inject(AuthService);
+  private  readonly inactivity = inject(InactivityService);
+  private  readonly fb         = inject(FormBuilder);
+  private  readonly router     = inject(Router);
 
   protected readonly headlineTop  = this.config.name.trim().split(/\s+/).slice(0, -1).join(' ');
   protected readonly headlineMain = this.config.name.trim().split(/\s+/).at(-1) ?? '';
@@ -56,6 +58,7 @@ export default class LoginPage {
 
     try {
       await this.auth.signIn(this.form.value.email!, this.form.value.password!);
+      this.inactivity.start();
       await this.router.navigate(['/students']);
     } catch {
       this.error.set('Credenciales incorrectas. Inténtalo de nuevo.');
