@@ -17,7 +17,7 @@
   <!-- Navigation -->
   <nav class="sidebar__nav" aria-label="Navegación principal">
     <ul class="sidebar__list" role="list">
-      @for (item of navItems; track item.route) {
+      @for (item of navItems(); track item.route) {
         <li class="sidebar__item">
           @if (item.disabled) {
             <span

@@ -1,0 +1,149 @@
+@if (loading()) {
+  <div class="payment-summary-dashboard__skeleton" data-testid="payments-summary-loading">
+    <p>Cargando resumen...</p>
+  </div>
+} @else if (!summary()) {
+  <p class="payment-summary-dashboard__empty" data-testid="payments-summary-empty">
+    No hay datos para este mes.
+  </p>
+} @else {
+  <div class="payment-summary-dashboard" data-testid="payments-summary">
+
+    <!-- Pagados -->
+    <section class="payment-summary-dashboard__section payment-summary-dashboard__section--paid" data-testid="payments-section-paid">
+      <header class="payment-summary-dashboard__section-header">
+        <span class="payment-summary-dashboard__section-title">✓ Pagados</span>
+        <ds-badge variant="success">{{ paid().length }}</ds-badge>
+      </header>
+
+      @if (paid().length === 0) {
+        <p class="payment-summary-dashboard__section-empty">Sin pagos este mes.</p>
+      } @else {
+        <ul class="payment-summary-dashboard__list" role="list">
+          @for (student of paid(); track student.student_id) {
+            <li class="payment-summary-dashboard__item" [attr.data-testid]="'payments-paid-item-' + student.student_id">
+              <div class="payment-summary-dashboard__item-info">
+                <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
+                <span class="payment-summary-dashboard__item-meta">
+                  {{ student.amount | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+                  &nbsp;·&nbsp;
+                  {{ student.paid_at | date:'d MMM' }}
+                </span>
+              </div>
+              <ds-button
+                variant="ghost"
+                size="sm"
+                [attr.data-testid]="'payments-history-btn-' + student.student_id"
+                (click)="onViewHistory(student)"
+              >Historial</ds-button>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <!-- Pendientes -->
+    @if (pending().length > 0) {
+      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--pending" data-testid="payments-section-pending">
+        <header class="payment-summary-dashboard__section-header">
+          <span class="payment-summary-dashboard__section-title">⏳ Pendientes</span>
+          <ds-badge variant="warning">{{ pending().length }}</ds-badge>
+        </header>
+        <ul class="payment-summary-dashboard__list" role="list">
+          @for (student of pending(); track student.student_id) {
+            <li class="payment-summary-dashboard__item" [attr.data-testid]="'payments-pending-item-' + student.student_id">
+              <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
+              <div class="payment-summary-dashboard__item-actions">
+                <ds-button
+                  variant="ghost"
+                  size="sm"
+                  [attr.data-testid]="'payments-history-btn-' + student.student_id"
+                  (click)="onViewHistory(student)"
+                >Historial</ds-button>
+                <ds-button
+                  variant="primary"
+                  size="sm"
+                  [attr.data-testid]="'payments-register-btn-' + student.student_id"
+                  (click)="onRegister(student)"
+                >Registrar pago</ds-button>
+              </div>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
+    <!-- Vencidos -->
+    @if (overdue().length > 0) {
+      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--overdue" data-testid="payments-section-overdue">
+        <header class="payment-summary-dashboard__section-header">
+          <span class="payment-summary-dashboard__section-title">⚠ Vencidos</span>
+          <ds-badge variant="danger">{{ overdue().length }}</ds-badge>
+        </header>
+        <ul class="payment-summary-dashboard__list" role="list">
+          @for (student of overdue(); track student.student_id) {
+            <li class="payment-summary-dashboard__item" [attr.data-testid]="'payments-overdue-item-' + student.student_id">
+              <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
+              <div class="payment-summary-dashboard__item-actions">
+                <ds-button
+                  variant="ghost"
+                  size="sm"
+                  [attr.data-testid]="'payments-history-btn-' + student.student_id"
+                  (click)="onViewHistory(student)"
+                >Historial</ds-button>
+                <ds-button
+                  variant="primary"
+                  size="sm"
+                  [attr.data-testid]="'payments-register-btn-' + student.student_id"
+                  (click)="onRegister(student)"
+                >Registrar pago</ds-button>
+              </div>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
+    <!-- En riesgo de inactividad -->
+    @if (atRisk().length > 0) {
+      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--at-risk" data-testid="payments-section-at-risk">
+        <header class="payment-summary-dashboard__section-header">
+          <span class="payment-summary-dashboard__section-title">
+            🚨 En riesgo de inactividad
+          </span>
+          <ds-badge variant="danger">{{ atRisk().length }}</ds-badge>
+        </header>
+        <p class="payment-summary-dashboard__at-risk-warning">
+          Llevan 2 o más meses consecutivos sin pagar.
+        </p>
+        <ul class="payment-summary-dashboard__list" role="list">
+          @for (student of atRisk(); track student.student_id) {
+            <li class="payment-summary-dashboard__item" [attr.data-testid]="'payments-at-risk-item-' + student.student_id">
+              <div class="payment-summary-dashboard__item-info">
+                <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
+                <span class="payment-summary-dashboard__item-months">
+                  {{ student.months_unpaid }} {{ student.months_unpaid === 1 ? 'mes' : 'meses' }} sin pagar
+                </span>
+              </div>
+              <div class="payment-summary-dashboard__item-actions">
+                <ds-button
+                  variant="ghost"
+                  size="sm"
+                  [attr.data-testid]="'payments-history-btn-' + student.student_id"
+                  (click)="onViewHistory(student)"
+                >Historial</ds-button>
+                <ds-button
+                  variant="primary"
+                  size="sm"
+                  [attr.data-testid]="'payments-register-btn-' + student.student_id"
+                  (click)="onRegister(student)"
+                >Registrar pago</ds-button>
+              </div>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
+  </div>
+}

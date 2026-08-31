@@ -1,0 +1,91 @@
+<div class="student-payment-history" data-testid="payments-student-history">
+  <header class="student-payment-history__header">
+    <div>
+      <h2 class="student-payment-history__title">Historial de pagos</h2>
+      @if (studentName()) {
+        <p class="student-payment-history__subtitle">{{ studentName() }}</p>
+      }
+    </div>
+    <ds-button
+      variant="ghost"
+      size="sm"
+      data-testid="payments-history-close"
+      (click)="close.emit()"
+    >✕ Cerrar</ds-button>
+  </header>
+
+  @if (loading()) {
+    <p class="student-payment-history__loading" data-testid="payments-history-loading">
+      Cargando historial…
+    </p>
+  } @else if (displayPayments().length === 0) {
+    <p class="student-payment-history__empty" data-testid="payments-history-empty">
+      Este alumno no tiene pagos registrados.
+    </p>
+  } @else {
+    <div class="student-payment-history__table-wrapper">
+      <table class="student-payment-history__table">
+        <thead class="student-payment-history__head">
+          <tr>
+            <th class="student-payment-history__th">Fecha</th>
+            <th class="student-payment-history__th">Tipo</th>
+            <th class="student-payment-history__th">Período</th>
+            <th class="student-payment-history__th">Importe</th>
+            <th class="student-payment-history__th">Método</th>
+            <th class="student-payment-history__th">Notas</th>
+            <th class="student-payment-history__th student-payment-history__th--actions">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (payment of displayPayments(); track payment.id) {
+            <tr
+              class="student-payment-history__row"
+              [attr.data-testid]="'payments-history-item-' + payment.id"
+            >
+              <td class="student-payment-history__td">
+                {{ payment.paid_at | date:'d/MM/yyyy' }}
+              </td>
+              <td class="student-payment-history__td">
+                {{ typeLabels[payment.type] }}
+              </td>
+              <td class="student-payment-history__td">
+                {{ payment.periodLabel }}
+              </td>
+              <td class="student-payment-history__td student-payment-history__td--amount">
+                {{ payment.amount | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
+              </td>
+              <td class="student-payment-history__td">
+                {{ methodLabels[payment.payment_method] }}
+              </td>
+              <td class="student-payment-history__td student-payment-history__td--notes">
+                {{ payment.notes ?? '—' }}
+              </td>
+              <td class="student-payment-history__td student-payment-history__td--actions">
+                <ds-button
+                  variant="danger"
+                  size="sm"
+                  [attr.data-testid]="'payments-history-delete-' + payment.id"
+                  (click)="onDelete(payment.id)"
+                >Anular</ds-button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (hasMore()) {
+      <div class="student-payment-history__pagination">
+        <ds-button
+          variant="ghost"
+          size="sm"
+          data-testid="payments-history-load-more"
+          (click)="onLoadMore()"
+        >Cargar más</ds-button>
+        <span class="student-payment-history__count">
+          Mostrando {{ payments().length }} de {{ total() }}
+        </span>
+      </div>
+    }
+  }
+</div>
