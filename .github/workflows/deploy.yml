@@ -1,0 +1,69 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  affected:
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.affected.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - id: affected
+        run: echo "apps=$(npx nx show projects --affected --type=app --base=HEAD~1)" >> $GITHUB_OUTPUT
+
+  deploy-boxing-gym-api:
+    needs: affected
+    if: contains(needs.affected.outputs.apps, 'boxing-gym-api')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy boxing-gym-api to Cloud Run
+        run: |
+          gcloud run deploy boxing-gym-api \
+            --source apps/boxing-gym-api \
+            --region us-central1 \
+            --min-instances 1 \
+            --platform managed \
+            --allow-unauthenticated
+
+  deploy-announcement-api:
+    needs: affected
+    if: contains(needs.affected.outputs.apps, 'announcement-api')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy announcement-api to Cloud Run
+        run: |
+          gcloud run deploy announcement-api \
+            --source apps/announcement-api \
+            --region us-central1 \
+            --min-instances 1 \
+            --platform managed \
+            --allow-unauthenticated

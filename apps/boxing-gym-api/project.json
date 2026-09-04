@@ -1,0 +1,27 @@
+{
+  "name": "boxing-gym-api",
+  "tags": ["scope:api", "lang:python"],
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "uv run uvicorn app.main:app --reload",
+        "cwd": "apps/boxing-gym-api"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "uv build",
+        "cwd": "apps/boxing-gym-api"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "uv run pytest",
+        "cwd": "apps/boxing-gym-api"
+      }
+    }
+  }
+}

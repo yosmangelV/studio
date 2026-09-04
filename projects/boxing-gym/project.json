@@ -1,0 +1,18 @@
+{
+  "name": "boxing-gym",
+  "targets": {
+    "generate-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/set-env.js",
+        "cwd": "projects/boxing-gym"
+      }
+    },
+    "serve": {
+      "dependsOn": ["generate-env"]
+    },
+    "build": {
+      "dependsOn": ["generate-env"]
+    }
+  }
+}
