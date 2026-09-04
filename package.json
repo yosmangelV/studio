@@ -33,6 +33,7 @@
     "@angular/compiler-cli": "^21.2.0",
     "@angular/localize": "^21.2.13",
     "@nx/angular": "^22.7.9",
+    "@nx/eslint-plugin": "^22.7.9",
     "@storybook/angular": "^10.4.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/vite": "^4.3.0",
