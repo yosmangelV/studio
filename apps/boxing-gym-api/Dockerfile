@@ -4,11 +4,11 @@ WORKDIR /app
 
 RUN pip install uv --no-cache-dir
 
-COPY apps/boxing-gym-api/pyproject.toml apps/boxing-gym-api/uv.lock ./
+COPY pyproject.toml uv.lock ./
 
 RUN uv sync --frozen --no-dev
 
-COPY apps/boxing-gym-api/ .
+COPY . .
 
 EXPOSE 8080
 

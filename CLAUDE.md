@@ -43,6 +43,7 @@ Load these skills from `.agents/skills/` when relevant:
 | `tailwind-css-patterns` | Tailwind utilities, responsive layout, dark mode |
 | `typescript-advanced-types` | Complex types, generics, type inference |
 | `vitest` | Unit tests for components and services |
+| `studio-code-reviewer` | Pre-commit, pre-push, or PR review across Angular/TS, Python/FastAPI, SCSS |
 
 ---
 
@@ -124,3 +125,13 @@ npm run storybook       # Start Storybook dev server → http://localhost:6006
 npm run storybook:build # Build static Storybook
 npm run build:ds        # Build the library
 ```
+
+## Slash Commands
+
+| Command | Description |
+|---------|-------------|
+| `/code-review` | Review staged changes (pre-commit) |
+| `/code-review --branch` | Review all commits on this branch vs `main` (pre-push) |
+| `/code-review <PR_NUMBER>` | Review a GitHub pull request |
+| `/design-system-ops` | Design system component operations |
+| `/frontend-design` | Frontend design and aesthetics decisions |
