@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.*
+*.tsbuildinfo
+coverage/
+.nyc_output/
+test/
+scripts/
+.vscode/
+.idea/
+.DS_Store
+*.md
+railway.toml
