@@ -1,8 +1,0 @@
-{
-  "buildCommand": "npx nx build boxing-gym --configuration=production",
-  "outputDirectory": "dist/boxing-gym/browser",
-  "installCommand": "npm ci",
-  "framework": null,
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
-  "ignoreCommand": "git diff HEAD^ HEAD --quiet -- projects/boxing-gym/ package.json package-lock.json nx.json"
-}
