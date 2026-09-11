@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: boxing-gym-api
+    env: docker
+    rootDir: apps/boxing-gym-api
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: APP_NAME
+        value: Boxing Gym API
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWKS_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+
+  - type: web
+    name: announcement-api
+    env: docker
+    rootDir: apps/announcement-api
+    plan: free
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
