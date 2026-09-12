@@ -45,7 +45,7 @@ export const WithoutArrow: Story = {
 };
 
 export const AllVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     props: { items: SAMPLE_ITEMS },
     template: `
       <div style="display: flex; flex-direction: column; gap: 3rem;">

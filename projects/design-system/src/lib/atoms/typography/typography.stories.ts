@@ -92,7 +92,7 @@ export const Truncate: Story = {
 };
 
 export const AllVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display: flex; flex-direction: column; gap: 20px;">
         <ds-text variant="display">Display — The quick brown fox</ds-text>
@@ -115,7 +115,7 @@ export const AllVariants: Story = {
 };
 
 export const AllColors: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display: flex; flex-direction: column; gap: 8px;">
         <ds-text variant="body" color="primary">Primary — Main content text</ds-text>
