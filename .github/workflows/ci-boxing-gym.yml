@@ -1,0 +1,33 @@
+name: CI — Boxing Gym
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/boxing-gym/**'
+      - 'projects/design-system/**'
+      - 'package.json'
+      - 'package-lock.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'projects/boxing-gym/**'
+      - 'projects/design-system/**'
+      - 'package.json'
+      - 'package-lock.json'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Test boxing-gym
+        run: npx nx test boxing-gym --watch=false

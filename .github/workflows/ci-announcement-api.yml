@@ -1,0 +1,34 @@
+name: CI — Announcement API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/announcement-api/**'
+      - 'apps/announcement-api/package.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/announcement-api/**'
+      - 'apps/announcement-api/package.json'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/announcement-api
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/announcement-api/package-lock.json
+
+      - run: npm ci
+
+      - name: Test announcement-api
+        run: npm test
