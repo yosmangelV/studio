@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { action } from '@storybook/addon-actions';
 import { PageNavComponent } from './page-nav.component';
 
 const SAMPLE_LINKS = [
@@ -37,7 +36,7 @@ Nav fija con logo, links de sección y un CTA. Se posiciona en \`fixed top-0\` c
     ctaClick:      { action: 'ctaClick' },
   },
   render: (args) => ({
-    props: { ...args, links: SAMPLE_LINKS, ctaClick: action('ctaClick') },
+    props: { ...args, links: SAMPLE_LINKS },
     template: `
       <ds-page-nav
         [brandName]="brandName"
