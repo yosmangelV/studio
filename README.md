@@ -22,7 +22,7 @@ A component library built with Angular, Tailwind v4, and SCSS/BEM following Atom
 ### Boxing Gym App
 Management platform for a boxing gym. Handles student management, authentication via Supabase, and class scheduling.
 
-- **Frontend:** Angular 21 — [boxing-gym.vercel.app](https://boxing-gym.vercel.app) *(or configured Vercel URL)*
+- **Frontend:** Angular 21 — [boxing-gym-ten.vercel.app](https://boxing-gym-ten.vercel.app)
 - **API:** Python + FastAPI + Supabase — deployed on Render
 - **Paths:** `projects/boxing-gym/` · `apps/boxing-gym-api/`
 
