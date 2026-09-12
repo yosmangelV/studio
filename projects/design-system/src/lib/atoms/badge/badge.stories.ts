@@ -49,7 +49,7 @@ export const Danger: Story = {
 };
 
 export const AllVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
         <ds-badge variant="default">Default</ds-badge>

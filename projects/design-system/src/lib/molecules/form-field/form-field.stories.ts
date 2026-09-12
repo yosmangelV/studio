@@ -14,7 +14,7 @@ export default meta;
 type Story = StoryObj<FormFieldComponent>;
 
 export const Default: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <ds-form-field label="Email" inputId="s-email" style="max-width:320px">
         <ds-input inputId="s-email" type="email" placeholder="tu@email.com" autocomplete="email" />
@@ -25,7 +25,7 @@ export const Default: Story = {
 };
 
 export const WithHint: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <ds-form-field label="Contraseña" inputId="s-pw" hint="Mínimo 6 caracteres" style="max-width:320px">
         <ds-input inputId="s-pw" type="password" placeholder="••••••••" autocomplete="new-password" />
@@ -36,7 +36,7 @@ export const WithHint: Story = {
 };
 
 export const WithError: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <ds-form-field label="Email" inputId="s-email-err" [hasError]="true" errorMessage="Introduce un email válido" style="max-width:320px">
         <ds-input inputId="s-email-err" type="email" placeholder="tu@email.com" [hasError]="true" />
@@ -90,7 +90,7 @@ class LoginFormStory {
 
 // Simpler reactive form story without the class complexity
 export const ReactiveFormIntegration: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `<story-reactive-ff />`,
     imports: [ReactiveFormStoryComponent],
   }),

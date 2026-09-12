@@ -61,7 +61,7 @@ export const Interactive: Story = {
 };
 
 export const WithHeader: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="max-width: 360px;">
         <ds-card variant="elevated">
@@ -82,7 +82,7 @@ export const WithHeader: Story = {
 };
 
 export const WithFooter: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="max-width: 360px;">
         <ds-card variant="outlined">
@@ -99,7 +99,7 @@ export const WithFooter: Story = {
 };
 
 export const AllVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
         <div style="width: 200px;">

@@ -181,7 +181,7 @@ export const ErrorState: Story = {
 };
 
 export const AllAspectRatios: Story = {
-  render: () => ({
+  render: (_args) => ({
     props: { src: SAMPLE.landscape },
     template: `
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 720px;">

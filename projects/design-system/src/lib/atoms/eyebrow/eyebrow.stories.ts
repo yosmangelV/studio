@@ -42,7 +42,7 @@ export const Centered: Story = {
 };
 
 export const AllVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display: flex; flex-direction: column; gap: 2rem;">
         <ds-eyebrow label="Quiénes somos" align="start" />

@@ -64,11 +64,14 @@ class ReactiveFormStory {
 }
 
 export const WithReactiveForm: Story = {
-  render: () => ({ component: ReactiveFormStory }),
+  render: (_args) => ({
+    template: `<story-reactive-form></story-reactive-form>`,
+    moduleMetadata: { imports: [ReactiveFormStory] },
+  }),
 };
 
 export const AllVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display:flex;flex-direction:column;gap:16px;max-width:320px">
         <ds-input inputId="v1" placeholder="Default" />

@@ -76,7 +76,7 @@ export const NoAccent: Story = {
 };
 
 export const AllVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display: flex; flex-direction: column; gap: 3rem;">
         <ds-section-header eyebrow="Quiénes somos" title="Sobre" titleAccent="Nosotros" align="start" level="h2" />

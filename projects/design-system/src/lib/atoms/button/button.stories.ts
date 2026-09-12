@@ -94,28 +94,28 @@ export const Disabled: Story = {
 };
 
 export const WithIconLeft: Story = {
-  render: () => ({
+  render: (_args) => ({
     props: { PlusIcon: Plus },
     template: `<ds-button [iconLeft]="PlusIcon">Add Item</ds-button>`,
   }),
 };
 
 export const WithIconRight: Story = {
-  render: () => ({
+  render: (_args) => ({
     props: { ArrowRightIcon: ArrowRight },
     template: `<ds-button [iconRight]="ArrowRightIcon">Continue</ds-button>`,
   }),
 };
 
 export const WithBothIcons: Story = {
-  render: () => ({
+  render: (_args) => ({
     props: { SearchIcon: Search, ArrowRightIcon: ArrowRight },
     template: `<ds-button [iconLeft]="SearchIcon" [iconRight]="ArrowRightIcon">Search</ds-button>`,
   }),
 };
 
 export const IconOnly: Story = {
-  render: () => ({
+  render: (_args) => ({
     props: { XIcon: X },
     template: `
       <div style="display: flex; gap: 12px; align-items: center;">
@@ -128,7 +128,7 @@ export const IconOnly: Story = {
 };
 
 export const AllVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
         <ds-button variant="primary">Primary</ds-button>
@@ -142,7 +142,7 @@ export const AllVariants: Story = {
 };
 
 export const AllSizes: Story = {
-  render: () => ({
+  render: (_args) => ({
     template: `
       <div style="display: flex; gap: 12px; align-items: center;">
         <ds-button variant="primary" size="sm">Small</ds-button>
@@ -154,7 +154,7 @@ export const AllSizes: Story = {
 };
 
 export const IconVariants: Story = {
-  render: () => ({
+  render: (_args) => ({
     props: { PlusIcon: Plus, SearchIcon: Search, XIcon: X, LoaderIcon: Loader },
     template: `
       <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
