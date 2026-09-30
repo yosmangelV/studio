@@ -20,6 +20,19 @@
   }
 
   @if (mode() === 'list') {
+    <div class="students-page__toolbar">
+      <input
+        class="students-page__search"
+        type="search"
+        placeholder="Buscar por nombre o email…"
+        [value]="service.search()"
+        (input)="onSearch($any($event.target).value)"
+      />
+      @if (service.total() > 0) {
+        <span class="students-page__count">{{ service.total() }} alumno{{ service.total() === 1 ? '' : 's' }}</span>
+      }
+    </div>
+
     @if (service.loading()) {
       <p class="students-page__loading">Cargando alumnos…</p>
     } @else {
@@ -27,6 +40,13 @@
         [students]="service.students()"
         (edit)="onEdit($event)"
         (deletedStudent)="onDelete($event)"
+      />
+
+      <ds-pagination
+        [currentPage]="service.currentPage()"
+        [pages]="service.pages()"
+        [total]="service.total()"
+        (pageChange)="onPageChange($event)"
       />
     }
   } @else {

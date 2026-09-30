@@ -22,6 +22,9 @@ type MockService = {
   loading: ReturnType<typeof signal<boolean>>;
   error: ReturnType<typeof signal<string | null>>;
   total: ReturnType<typeof signal<number>>;
+  pages: ReturnType<typeof signal<number>>;
+  currentPage: ReturnType<typeof signal<number>>;
+  search: ReturnType<typeof signal<string>>;
   mutationSuccess: ReturnType<typeof signal<number>>;
   loadAll: ReturnType<typeof vi.fn>;
   create: ReturnType<typeof vi.fn>;
@@ -35,6 +38,9 @@ function makeMockService(overrides: Partial<MockService> = {}): MockService {
     loading: signal(false),
     error: signal<string | null>(null),
     total: signal(0),
+    pages: signal(1),
+    currentPage: signal(1),
+    search: signal(''),
     mutationSuccess: signal(0),
     loadAll: vi.fn(),
     create: vi.fn(),

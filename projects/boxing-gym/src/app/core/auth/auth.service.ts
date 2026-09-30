@@ -8,7 +8,11 @@ export class AuthService {
 
   readonly currentUser     = signal<User | null>(null);
   readonly isAuthenticated = computed(() => this.currentUser() !== null);
-  readonly isAdmin         = computed(() => this.currentUser()?.app_metadata?.['role'] === 'admin');
+  readonly isAdmin         = computed(() => this._permissions().includes('admin'));
+  readonly isInstructor    = computed(() => this._permissions().includes('instructor'));
+  readonly isStudent       = computed(() => this._permissions().includes('student'));
+
+  private _permissions = computed<string[]>(() => this.currentUser()?.app_metadata?.['permissions'] ?? []);
 
   async init(): Promise<void> {
     const { data } = await this.supabase.auth.getSession();
