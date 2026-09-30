@@ -38,12 +38,34 @@ def get_current_user(
         )
 
 
+def _permissions(user: dict) -> list[str]:
+    return user.get("app_metadata", {}).get("permissions", [])
+
+
 def require_admin(user: dict = Depends(get_current_user)) -> dict:
-    # El rol se guarda en app_metadata en Supabase (Settings > Auth > Custom claims)
-    # Ejemplo: { "app_metadata": { "role": "admin" } }
-    if user.get("app_metadata", {}).get("role") != "admin":
+    if "admin" not in _permissions(user):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Admin access required",
+        )
+    return user
+
+
+def require_instructor(user: dict = Depends(get_current_user)) -> dict:
+    perms = _permissions(user)
+    if "instructor" not in perms and "admin" not in perms:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Instructor access required",
+        )
+    return user
+
+
+def require_student(user: dict = Depends(get_current_user)) -> dict:
+    perms = _permissions(user)
+    if "student" not in perms and "admin" not in perms:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Student access required",
         )
     return user

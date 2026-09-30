@@ -1,16 +1,20 @@
-from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from typing import Optional
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from app.auth import get_current_user
-from app.students.schemas import StudentCreate, StudentUpdate, StudentResponse
+from app.students.schemas import StudentCreate, StudentUpdate, StudentResponse, PaginatedStudents
 from app.students import service
-from app.students.service import EmailAlreadyExistsError
+from app.students.service import AuthUserCreationError, EmailAlreadyExistsError
 
 router = APIRouter(dependencies=[Depends(get_current_user)])
 
 
-@router.get("/", response_model=List[StudentResponse])
-def list_students():
-    return service.get_all_students()
+@router.get("/", response_model=PaginatedStudents)
+def list_students(
+    search: Optional[str] = Query(None),
+    limit: int = Query(20, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+):
+    return service.get_all_students(search=search, limit=limit, offset=offset)
 
 
 @router.post("/", response_model=StudentResponse, status_code=status.HTTP_201_CREATED)
@@ -19,6 +23,8 @@ def create_student(payload: StudentCreate):
         return service.create_student(payload)
     except EmailAlreadyExistsError:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
+    except AuthUserCreationError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Could not create system user: {e.detail}")
 
 
 @router.get("/{student_id}", response_model=StudentResponse)
