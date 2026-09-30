@@ -1,0 +1,28 @@
+{
+  "name": "El Arte del Guante — Boxing E.Bote",
+  "short_name": "Boxing Gym",
+  "description": "Sistema de gestión del gimnasio Boxing E.Bote",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#e11d48",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logo-main.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logo-main.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

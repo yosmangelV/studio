@@ -1,6 +1,7 @@
-import { APP_INITIALIZER, ApplicationConfig, inject, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, inject, isDevMode, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideServiceWorker } from '@angular/service-worker';
 import { GYM_CONFIG } from './core/config/gym-config.token';
 import { gymConfig } from './core/config/gym.config';
 import { AuthService } from './core/auth/auth.service';
@@ -15,6 +16,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([apiBaseUrlInterceptor, authInterceptor])),
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' })),
     { provide: GYM_CONFIG, useValue: gymConfig },
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
     {
       provide: APP_INITIALIZER,
       useFactory: () => {
