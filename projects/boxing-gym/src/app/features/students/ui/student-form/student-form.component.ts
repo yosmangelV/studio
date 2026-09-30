@@ -69,6 +69,10 @@ export class StudentFormComponent {
           level: s.level,
           is_active: s.is_active ?? true,
           weight: s.weight ?? null,
+          permissions: {
+            student: s.permissions?.includes('student') ?? false,
+            instructor: s.permissions?.includes('instructor') ?? false,
+          },
         });
       } else {
         this.form.reset({ is_active: true, permissions: { student: true, instructor: false } });
@@ -92,13 +96,11 @@ export class StudentFormComponent {
       weight: raw.weight ?? undefined,
     };
 
-    if (this.isCreating()) {
-      const permissions = Object.entries(raw.permissions)
-        .filter(([, checked]) => checked)
-        .map(([perm]) => perm);
-      if (permissions.length > 0) {
-        payload.system_access = { permissions };
-      }
+    const permissions = Object.entries(raw.permissions)
+      .filter(([, checked]) => checked)
+      .map(([perm]) => perm);
+    if (permissions.length > 0) {
+      payload.system_access = { permissions };
     }
 
     this.save.emit(payload);
