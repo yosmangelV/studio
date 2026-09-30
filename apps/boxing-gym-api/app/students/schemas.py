@@ -21,8 +21,12 @@ class StudentBase(BaseModel):
     weight: Optional[float] = Field(None, gt=0)
 
 
+class SystemAccessCreate(BaseModel):
+    permissions: list[str]
+
+
 class StudentCreate(StudentBase):
-    pass
+    system_access: Optional[SystemAccessCreate] = None
 
 
 class StudentUpdate(BaseModel):
@@ -33,9 +37,20 @@ class StudentUpdate(BaseModel):
     level: Optional[StudentLevel] = None
     is_active: Optional[bool] = None
     weight: Optional[float] = Field(None, gt=0)
+    system_access: Optional[SystemAccessCreate] = None
 
 
 class StudentResponse(StudentBase):
     id: str
+    auth_user_id: Optional[str] = None
+    permissions: list[str] = []
     created_at: str
     updated_at: str
+
+
+class PaginatedStudents(BaseModel):
+    data: list[StudentResponse]
+    total: int
+    limit: int
+    offset: int
+    pages: int
