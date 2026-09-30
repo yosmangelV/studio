@@ -25,6 +25,7 @@
 | `level`           | enum      | sí        | `beginner` \| `intermediate` \| `advanced`      |
 | `is_active`       | boolean   | sí        | Default `true`. No se eliminan registros, se desactivan |
 | `weight`          | decimal   | no        | Peso en kg. Opcional, principalmente para peleadores activos |
+| `auth_user_id`    | uuid      | no        | FK a `auth.users(id)`. Null si el alumno no tiene acceso al sistema. Ver `specs/user-management.md` |
 | `created_at`      | timestamp | auto      | Generado por Supabase                           |
 | `updated_at`      | timestamp | auto      | Actualizado automáticamente por Supabase        |
 
@@ -145,6 +146,9 @@ create table students (
 -- Campos agregados en sesión 3:
 -- alter table students add column birth_date date not null;
 -- alter table students add column weight numeric(5, 2);
+
+-- Campos agregados en sesión 5:
+-- alter table students add column auth_user_id uuid references auth.users(id);
 ```
 
 > El trigger para `updated_at` automático se configura por separado en Supabase.
