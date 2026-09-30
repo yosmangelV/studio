@@ -272,6 +272,9 @@
             "tsConfig": "projects/boxing-gym/tsconfig.spec.json",
             "setupFiles": [
               "projects/boxing-gym/src/test-setup.ts"
+            ],
+            "polyfills": [
+              "@angular/localize/init"
             ]
           }
         }
