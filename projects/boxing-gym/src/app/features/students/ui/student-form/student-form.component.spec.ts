@@ -92,30 +92,30 @@ describe('StudentFormComponent', () => {
     );
   });
 
-  it('shows permissions section only on create', async () => {
-    await render(StudentFormComponent, {
-      componentInputs: { student: null },
-    });
+  it('shows permissions section on create, never admin', async () => {
+    await render(StudentFormComponent, { componentInputs: { student: null } });
     expect(screen.getByTestId('perm-student')).toBeInTheDocument();
     expect(screen.getByTestId('perm-instructor')).toBeInTheDocument();
     expect(screen.queryByTestId('perm-admin')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('students-sysaccess-toggle')).not.toBeInTheDocument();
   });
 
-  it('hides permissions section on edit', async () => {
-    await render(StudentFormComponent, {
-      componentInputs: { student: mockStudent },
-    });
-    expect(screen.queryByTestId('perm-student')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('perm-instructor')).not.toBeInTheDocument();
+  it('shows permissions section on edit, never admin', async () => {
+    await render(StudentFormComponent, { componentInputs: { student: mockStudent } });
+    expect(screen.getByTestId('perm-student')).toBeInTheDocument();
+    expect(screen.getByTestId('perm-instructor')).toBeInTheDocument();
+    expect(screen.queryByTestId('perm-admin')).not.toBeInTheDocument();
   });
 
   it('pre-checks estudiante permission on create', async () => {
-    await render(StudentFormComponent, {
-      componentInputs: { student: null },
-    });
-    const studentCheckbox = screen.getByTestId('perm-student') as HTMLInputElement;
-    expect(studentCheckbox.checked).toBe(true);
+    await render(StudentFormComponent, { componentInputs: { student: null } });
+    expect((screen.getByTestId('perm-student') as HTMLInputElement).checked).toBe(true);
+  });
+
+  it('populates student/instructor permissions from existing student on edit', async () => {
+    const studentWithPerms: StudentResponse = { ...mockStudent, permissions: ['instructor'] };
+    await render(StudentFormComponent, { componentInputs: { student: studentWithPerms } });
+    expect((screen.getByTestId('perm-student') as HTMLInputElement).checked).toBe(false);
+    expect((screen.getByTestId('perm-instructor') as HTMLInputElement).checked).toBe(true);
   });
 
   it('includes system_access with student permission in payload on create', async () => {
@@ -130,25 +130,10 @@ describe('StudentFormComponent', () => {
     fireEvent.input(screen.getByTestId('students-birthdate-input'), { target: { value: '1980-01-01' } });
     fireEvent.input(screen.getByTestId('students-enrollmentdate-input'), { target: { value: '2024-01-01' } });
     await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'advanced');
-
     await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
 
     const payload: StudentFormPayload = saveSpy.mock.calls[0][0];
-    expect(payload.system_access).toBeDefined();
     expect(payload.system_access?.permissions).toContain('student');
     expect(payload.system_access?.permissions).not.toContain('admin');
-  });
-
-  it('does not include system_access in payload on edit', async () => {
-    const saveSpy = vi.fn();
-    await render(StudentFormComponent, {
-      componentInputs: { student: mockStudent },
-      componentOutputs: { save: { emit: saveSpy } as unknown as never },
-    });
-
-    await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
-
-    const payload: StudentFormPayload = saveSpy.mock.calls[0][0];
-    expect(payload.system_access).toBeUndefined();
   });
 });

@@ -129,23 +129,21 @@
     </label>
   </div>
 
-  @if (isCreating()) {
-    <div class="student-form__system-access">
-      <div class="student-form__permissions" formGroupName="permissions">
-        <p class="student-form__permissions-label">Permisos</p>
-        <div class="student-form__permissions-checks">
-          <label class="student-form__checkbox-label">
-            <input type="checkbox" data-testid="perm-student" formControlName="student" />
-            Estudiante
-          </label>
-          <label class="student-form__checkbox-label">
-            <input type="checkbox" data-testid="perm-instructor" formControlName="instructor" />
-            Instructor
-          </label>
-        </div>
+  <div class="student-form__system-access">
+    <div class="student-form__permissions" formGroupName="permissions">
+      <p class="student-form__permissions-label">Permisos</p>
+      <div class="student-form__permissions-checks">
+        <label class="student-form__checkbox-label">
+          <input type="checkbox" data-testid="perm-student" formControlName="student" />
+          Estudiante
+        </label>
+        <label class="student-form__checkbox-label">
+          <input type="checkbox" data-testid="perm-instructor" formControlName="instructor" />
+          Instructor
+        </label>
       </div>
     </div>
-  }
+  </div>
 
   <div class="student-form__actions">
     <ds-button
