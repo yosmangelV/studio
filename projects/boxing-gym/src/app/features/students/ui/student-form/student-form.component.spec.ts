@@ -92,7 +92,7 @@ describe('StudentFormComponent', () => {
     );
   });
 
-  it('always shows permissions section without a toggle', async () => {
+  it('shows permissions section only on create', async () => {
     await render(StudentFormComponent, {
       componentInputs: { student: null },
     });
@@ -100,6 +100,14 @@ describe('StudentFormComponent', () => {
     expect(screen.getByTestId('perm-instructor')).toBeInTheDocument();
     expect(screen.queryByTestId('perm-admin')).not.toBeInTheDocument();
     expect(screen.queryByTestId('students-sysaccess-toggle')).not.toBeInTheDocument();
+  });
+
+  it('hides permissions section on edit', async () => {
+    await render(StudentFormComponent, {
+      componentInputs: { student: mockStudent },
+    });
+    expect(screen.queryByTestId('perm-student')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('perm-instructor')).not.toBeInTheDocument();
   });
 
   it('pre-checks estudiante permission on create', async () => {
@@ -110,7 +118,7 @@ describe('StudentFormComponent', () => {
     expect(studentCheckbox.checked).toBe(true);
   });
 
-  it('includes system_access with student permission in payload by default on create', async () => {
+  it('includes system_access with student permission in payload on create', async () => {
     const saveSpy = vi.fn();
     await render(StudentFormComponent, {
       componentInputs: { student: null },
@@ -131,14 +139,16 @@ describe('StudentFormComponent', () => {
     expect(payload.system_access?.permissions).not.toContain('admin');
   });
 
-  it('populates permissions from existing student on edit', async () => {
-    const studentWithPerms: StudentResponse = { ...mockStudent, permissions: ['instructor'] };
+  it('does not include system_access in payload on edit', async () => {
+    const saveSpy = vi.fn();
     await render(StudentFormComponent, {
-      componentInputs: { student: studentWithPerms },
+      componentInputs: { student: mockStudent },
+      componentOutputs: { save: { emit: saveSpy } as unknown as never },
     });
-    const studentCheckbox = screen.getByTestId('perm-student') as HTMLInputElement;
-    const instructorCheckbox = screen.getByTestId('perm-instructor') as HTMLInputElement;
-    expect(studentCheckbox.checked).toBe(false);
-    expect(instructorCheckbox.checked).toBe(true);
+
+    await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
+
+    const payload: StudentFormPayload = saveSpy.mock.calls[0][0];
+    expect(payload.system_access).toBeUndefined();
   });
 });

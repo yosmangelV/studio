@@ -53,7 +53,6 @@ export class StudentFormComponent {
     permissions: this.fb.group({
       student: [false],
       instructor: [false],
-      admin: [false],
     }),
   });
 
@@ -70,14 +69,9 @@ export class StudentFormComponent {
           level: s.level,
           is_active: s.is_active ?? true,
           weight: s.weight ?? null,
-          permissions: {
-            student: s.permissions?.includes('student') ?? false,
-            instructor: s.permissions?.includes('instructor') ?? false,
-            admin: s.permissions?.includes('admin') ?? false,
-          },
         });
       } else {
-        this.form.reset({ is_active: true, permissions: { student: true, instructor: false, admin: false } });
+        this.form.reset({ is_active: true, permissions: { student: true, instructor: false } });
       }
     });
   }
@@ -98,12 +92,13 @@ export class StudentFormComponent {
       weight: raw.weight ?? undefined,
     };
 
-    const permissions = Object.entries(raw.permissions)
-      .filter(([, checked]) => checked)
-      .map(([perm]) => perm);
-
-    if (permissions.length > 0) {
-      payload.system_access = { permissions };
+    if (this.isCreating()) {
+      const permissions = Object.entries(raw.permissions)
+        .filter(([, checked]) => checked)
+        .map(([perm]) => perm);
+      if (permissions.length > 0) {
+        payload.system_access = { permissions };
+      }
     }
 
     this.save.emit(payload);
