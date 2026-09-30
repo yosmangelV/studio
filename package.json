@@ -50,6 +50,7 @@
     "orval": "^7.13.2",
     "postcss": "^8.5.14",
     "prettier": "^3.8.1",
+    "sharp": "^0.35.5",
     "storybook": "^10.4.0",
     "tailwindcss": "^4.3.0",
     "typescript": "~5.9.2",
