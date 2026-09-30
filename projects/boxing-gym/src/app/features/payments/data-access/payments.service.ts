@@ -1,22 +1,24 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { EMPTY, catchError, finalize, tap } from 'rxjs';
 import {
-  GetPaymentAnalyticsParams,
-  GetStudentPaymentsParams,
-  ListPaymentsParams,
-  PaymentAnalytics,
+  BoxingGymAPIService,
+  GetAnalyticsPaymentsAnalyticsGetParams,
+  GetStudentPaymentsStudentsStudentIdPaymentsGetParams,
+  ListPaymentsPaymentsGetParams,
+  PaymentAnalyticsResponse,
   PaymentCreate,
   PaymentResponse,
-  PaymentSummary,
-  PaymentsAPIService,
+  PaymentSummaryResponse,
 } from '../../../core/api/payments.service';
+
+type NoNull<T> = { [K in keyof T]: NonNullable<T[K]> };
 
 @Injectable({ providedIn: 'root' })
 export class PaymentsService {
-  private readonly api = inject(PaymentsAPIService);
+  private readonly api = inject(BoxingGymAPIService);
 
-  readonly summary            = signal<PaymentSummary | null>(null);
-  readonly analytics          = signal<PaymentAnalytics | null>(null);
+  readonly summary            = signal<PaymentSummaryResponse | null>(null);
+  readonly analytics          = signal<PaymentAnalyticsResponse | null>(null);
   readonly paymentsList       = signal<PaymentResponse[]>([]);
   readonly paymentsTotal      = signal(0);
   readonly studentPayments    = signal<PaymentResponse[]>([]);
@@ -29,7 +31,7 @@ export class PaymentsService {
     this.loading.set(true);
     this.error.set(null);
     this.api
-      .getPaymentSummaryPaymentsSummaryGet(period ? { period } : undefined)
+      .getSummaryPaymentsSummaryGet(period ? { period } : undefined)
       .pipe(
         tap(data => this.summary.set(data)),
         catchError(() => {
@@ -41,11 +43,11 @@ export class PaymentsService {
       .subscribe();
   }
 
-  loadAnalytics(params?: GetPaymentAnalyticsParams): void {
+  loadAnalytics(params?: GetAnalyticsPaymentsAnalyticsGetParams): void {
     this.loading.set(true);
     this.error.set(null);
     this.api
-      .getPaymentAnalyticsPaymentsAnalyticsGet(params)
+      .getAnalyticsPaymentsAnalyticsGet(params as NoNull<GetAnalyticsPaymentsAnalyticsGetParams>)
       .pipe(
         tap(data => this.analytics.set(data)),
         catchError(() => {
@@ -57,11 +59,11 @@ export class PaymentsService {
       .subscribe();
   }
 
-  loadPayments(params?: ListPaymentsParams): void {
+  loadPayments(params?: ListPaymentsPaymentsGetParams): void {
     this.loading.set(true);
     this.error.set(null);
     this.api
-      .listPaymentsPaymentsGet(params)
+      .listPaymentsPaymentsGet(params as NoNull<ListPaymentsPaymentsGetParams>)
       .pipe(
         tap(res => {
           this.paymentsList.set(res.data ?? []);
@@ -76,11 +78,11 @@ export class PaymentsService {
       .subscribe();
   }
 
-  loadStudentPayments(studentId: string, params?: GetStudentPaymentsParams): void {
+  loadStudentPayments(studentId: string, params?: GetStudentPaymentsStudentsStudentIdPaymentsGetParams): void {
     this.loading.set(true);
     this.error.set(null);
     this.api
-      .getStudentPaymentsStudentsStudentIdPaymentsGet(studentId, params)
+      .getStudentPaymentsStudentsStudentIdPaymentsGet(studentId, params as NoNull<GetStudentPaymentsStudentsStudentIdPaymentsGetParams>)
       .pipe(
         tap(res => {
           this.studentPayments.set(res.data ?? []);

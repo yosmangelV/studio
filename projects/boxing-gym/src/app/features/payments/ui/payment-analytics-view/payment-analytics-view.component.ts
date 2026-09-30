@@ -1,6 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { PaymentAnalytics } from '../../../../core/api/payments.service';
+import { PaymentAnalyticsResponse } from '../../../../core/api/payments.service';
 
 @Component({
   selector: 'app-payment-analytics-view',
@@ -11,16 +11,16 @@ import { PaymentAnalytics } from '../../../../core/api/payments.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentAnalyticsViewComponent {
-  readonly analytics = input<PaymentAnalytics | null>(null);
+  readonly analytics = input<PaymentAnalyticsResponse | null>(null);
   readonly loading   = input(false);
 
   protected readonly methods = computed(() => {
     const a = this.analytics();
     if (!a) return [];
     return [
-      { key: 'cash',     label: 'Efectivo',       data: a.by_method.cash },
-      { key: 'transfer', label: 'Transferencia',   data: a.by_method.transfer },
-      { key: 'bizum',    label: 'Bizum',            data: a.by_method.bizum },
+      { key: 'cash',     label: 'Efectivo',       data: a.by_method['cash'] },
+      { key: 'transfer', label: 'Transferencia',   data: a.by_method['transfer'] },
+      { key: 'bizum',    label: 'Bizum',            data: a.by_method['bizum'] },
     ];
   });
 }

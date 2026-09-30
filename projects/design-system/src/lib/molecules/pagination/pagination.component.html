@@ -1,0 +1,38 @@
+@if (pages() > 1) {
+  <nav class="pagination" aria-label="Paginación">
+    <button
+      class="pagination__btn"
+      [class.pagination__btn--disabled]="currentPage() === 1"
+      [disabled]="currentPage() === 1"
+      (click)="go(currentPage() - 1)"
+      aria-label="Página anterior"
+    >
+      ‹
+    </button>
+
+    @for (item of pageNumbers(); track $index) {
+      @if (item === null) {
+        <span class="pagination__ellipsis">…</span>
+      } @else {
+        <button
+          class="pagination__btn"
+          [class.pagination__btn--active]="item === currentPage()"
+          [attr.aria-current]="item === currentPage() ? 'page' : null"
+          (click)="go(item)"
+        >
+          {{ item }}
+        </button>
+      }
+    }
+
+    <button
+      class="pagination__btn"
+      [class.pagination__btn--disabled]="currentPage() === pages()"
+      [disabled]="currentPage() === pages()"
+      (click)="go(currentPage() + 1)"
+      aria-label="Página siguiente"
+    >
+      ›
+    </button>
+  </nav>
+}

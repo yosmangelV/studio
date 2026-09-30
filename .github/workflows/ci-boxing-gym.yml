@@ -29,5 +29,12 @@ jobs:
 
       - run: npm ci
 
+      - name: Generate environment files
+        run: npx nx generate-env boxing-gym
+        env:
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_ANON_KEY: placeholder-anon-key
+          API_URL: http://localhost:8000
+
       - name: Test boxing-gym
         run: npx nx test boxing-gym --watch=false

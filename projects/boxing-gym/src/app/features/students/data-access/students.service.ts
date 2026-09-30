@@ -1,4 +1,4 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { EMPTY, catchError, finalize, tap } from 'rxjs';
 import {
   BoxingGymAPIService,
@@ -11,18 +11,32 @@ import {
 export class StudentsService {
   private readonly api = inject(BoxingGymAPIService);
 
+  readonly limit = 20;
+
   readonly students = signal<StudentResponse[]>([]);
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
-  readonly total = computed(() => this.students().length);
+  readonly total = signal(0);
+  readonly pages = signal(0);
+  readonly currentPage = signal(1);
+  readonly search = signal('');
   readonly mutationSuccess = signal(0);
 
   loadAll(): void {
+    const offset = (this.currentPage() - 1) * this.limit;
+    const searchVal = this.search();
+    const params = searchVal
+      ? { search: searchVal, limit: this.limit, offset }
+      : { limit: this.limit, offset };
     this.loading.set(true);
     this.error.set(null);
-    this.api.listStudentsStudentsGet()
+    this.api.listStudentsStudentsGet(params)
       .pipe(
-        tap(data => this.students.set(data ?? [])),
+        tap(result => {
+          this.students.set(result.data ?? []);
+          this.total.set(result.total);
+          this.pages.set(result.pages);
+        }),
         catchError(() => {
           this.error.set('Error al cargar los alumnos.');
           return EMPTY;
@@ -37,8 +51,7 @@ export class StudentsService {
     this.error.set(null);
     this.api.createStudentStudentsPost(payload)
       .pipe(
-        tap(student => {
-          this.students.update(list => [...list, student]);
+        tap(() => {
           this.mutationSuccess.update(n => n + 1);
         }),
         catchError(() => {
@@ -74,7 +87,6 @@ export class StudentsService {
     this.api.deleteStudentStudentsStudentIdDelete(id)
       .pipe(
         tap(() => {
-          this.students.update(list => list.filter(s => s.id !== id));
           this.mutationSuccess.update(n => n + 1);
         }),
         catchError(() => {

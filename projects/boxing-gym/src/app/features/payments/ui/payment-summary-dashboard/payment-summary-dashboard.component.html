@@ -20,7 +20,7 @@
         <p class="payment-summary-dashboard__section-empty">Sin pagos este mes.</p>
       } @else {
         <ul class="payment-summary-dashboard__list" role="list">
-          @for (student of paid(); track student.student_id) {
+          @for (student of paidSlice(); track student.student_id) {
             <li class="payment-summary-dashboard__item" [attr.data-testid]="'payments-paid-item-' + student.student_id">
               <div class="payment-summary-dashboard__item-info">
                 <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
@@ -39,6 +39,16 @@
             </li>
           }
         </ul>
+        @if (paidPages() > 1) {
+          <div class="payment-summary-dashboard__pagination">
+            <ds-pagination
+              [currentPage]="paidPage()"
+              [pages]="paidPages()"
+              [total]="paid().length"
+              (pageChange)="paidPage.set($event)"
+            />
+          </div>
+        }
       }
     </section>
 
@@ -50,7 +60,7 @@
           <ds-badge variant="warning">{{ pending().length }}</ds-badge>
         </header>
         <ul class="payment-summary-dashboard__list" role="list">
-          @for (student of pending(); track student.student_id) {
+          @for (student of pendingSlice(); track student.student_id) {
             <li class="payment-summary-dashboard__item" [attr.data-testid]="'payments-pending-item-' + student.student_id">
               <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
               <div class="payment-summary-dashboard__item-actions">
@@ -70,6 +80,16 @@
             </li>
           }
         </ul>
+        @if (pendingPages() > 1) {
+          <div class="payment-summary-dashboard__pagination">
+            <ds-pagination
+              [currentPage]="pendingPage()"
+              [pages]="pendingPages()"
+              [total]="pending().length"
+              (pageChange)="pendingPage.set($event)"
+            />
+          </div>
+        }
       </section>
     }
 
@@ -81,7 +101,7 @@
           <ds-badge variant="danger">{{ overdue().length }}</ds-badge>
         </header>
         <ul class="payment-summary-dashboard__list" role="list">
-          @for (student of overdue(); track student.student_id) {
+          @for (student of overdueSlice(); track student.student_id) {
             <li class="payment-summary-dashboard__item" [attr.data-testid]="'payments-overdue-item-' + student.student_id">
               <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
               <div class="payment-summary-dashboard__item-actions">
@@ -101,6 +121,16 @@
             </li>
           }
         </ul>
+        @if (overduePages() > 1) {
+          <div class="payment-summary-dashboard__pagination">
+            <ds-pagination
+              [currentPage]="overduePage()"
+              [pages]="overduePages()"
+              [total]="overdue().length"
+              (pageChange)="overduePage.set($event)"
+            />
+          </div>
+        }
       </section>
     }
 
@@ -117,7 +147,7 @@
           Llevan 2 o más meses consecutivos sin pagar.
         </p>
         <ul class="payment-summary-dashboard__list" role="list">
-          @for (student of atRisk(); track student.student_id) {
+          @for (student of atRiskSlice(); track student.student_id) {
             <li class="payment-summary-dashboard__item" [attr.data-testid]="'payments-at-risk-item-' + student.student_id">
               <div class="payment-summary-dashboard__item-info">
                 <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
@@ -142,6 +172,16 @@
             </li>
           }
         </ul>
+        @if (atRiskPages() > 1) {
+          <div class="payment-summary-dashboard__pagination">
+            <ds-pagination
+              [currentPage]="atRiskPage()"
+              [pages]="atRiskPages()"
+              [total]="atRisk().length"
+              (pageChange)="atRiskPage.set($event)"
+            />
+          </div>
+        }
       </section>
     }
 

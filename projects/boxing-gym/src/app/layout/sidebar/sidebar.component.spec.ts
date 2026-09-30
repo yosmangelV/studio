@@ -25,6 +25,9 @@ const AUTH_SERVICE_MOCK = {
   signOut: vi.fn().mockResolvedValue(undefined),
   currentUser: () => null,
   isAuthenticated: () => false,
+  isAdmin: () => false,
+  isInstructor: () => false,
+  isStudent: () => false,
 };
 
 const PROVIDERS = [
@@ -42,15 +45,27 @@ describe('SidebarComponent', () => {
     expect(screen.getByTestId('sidebar-gym-name')).toHaveTextContent('Boxing Club');
   });
 
-  it('renders all nav items', async () => {
+  it('renders nav items visible to non-admin', async () => {
     await render(SidebarComponent, {
       componentInputs: { open: false },
       providers: PROVIDERS,
     });
     expect(screen.getByText('Alumnos')).toBeInTheDocument();
-    expect(screen.getByText('Pagos')).toBeInTheDocument();
     expect(screen.getByText('Pedidos')).toBeInTheDocument();
     expect(screen.getByText('Clases')).toBeInTheDocument();
+    expect(screen.queryByText('Pagos')).not.toBeInTheDocument();
+  });
+
+  it('renders Pagos nav item for admin user', async () => {
+    const adminProviders = [
+      ...PROVIDERS.slice(0, -1),
+      { provide: AuthService, useValue: { ...AUTH_SERVICE_MOCK, isAdmin: () => true } },
+    ];
+    await render(SidebarComponent, {
+      componentInputs: { open: false },
+      providers: adminProviders,
+    });
+    expect(screen.getByText('Pagos')).toBeInTheDocument();
   });
 
   it('renders "Pronto" badges on disabled nav items', async () => {
@@ -59,7 +74,7 @@ describe('SidebarComponent', () => {
       providers: PROVIDERS,
     });
     const badges = screen.getAllByText('Pronto');
-    expect(badges).toHaveLength(3);
+    expect(badges).toHaveLength(2);
   });
 
   it('calls auth.signOut when sign-out button is clicked', async () => {
