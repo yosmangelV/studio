@@ -92,21 +92,26 @@ describe('StudentFormComponent', () => {
     );
   });
 
-  it('shows permissions section after toggling system access on', async () => {
-    const user = userEvent.setup();
+  it('always shows permissions section without a toggle', async () => {
     await render(StudentFormComponent, {
       componentInputs: { student: null },
     });
-    expect(screen.queryByTestId('perm-student')).not.toBeInTheDocument();
-    await user.click(screen.getByTestId('students-sysaccess-toggle'));
     expect(screen.getByTestId('perm-student')).toBeInTheDocument();
     expect(screen.getByTestId('perm-instructor')).toBeInTheDocument();
-    expect(screen.getByTestId('perm-admin')).toBeInTheDocument();
+    expect(screen.queryByTestId('perm-admin')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('students-sysaccess-toggle')).not.toBeInTheDocument();
   });
 
-  it('includes system_access in payload when permissions are selected', async () => {
+  it('pre-checks estudiante permission on create', async () => {
+    await render(StudentFormComponent, {
+      componentInputs: { student: null },
+    });
+    const studentCheckbox = screen.getByTestId('perm-student') as HTMLInputElement;
+    expect(studentCheckbox.checked).toBe(true);
+  });
+
+  it('includes system_access with student permission in payload by default on create', async () => {
     const saveSpy = vi.fn();
-    const user = userEvent.setup();
     await render(StudentFormComponent, {
       componentInputs: { student: null },
       componentOutputs: { save: { emit: saveSpy } as unknown as never },
@@ -118,14 +123,22 @@ describe('StudentFormComponent', () => {
     fireEvent.input(screen.getByTestId('students-enrollmentdate-input'), { target: { value: '2024-01-01' } });
     await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'advanced');
 
-    await user.click(screen.getByTestId('students-sysaccess-toggle'));
-    await user.click(screen.getByTestId('perm-admin'));
-
     await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
 
     const payload: StudentFormPayload = saveSpy.mock.calls[0][0];
     expect(payload.system_access).toBeDefined();
-    expect(payload.system_access?.permissions).toContain('admin');
-    expect(payload.system_access?.permissions).not.toContain('student');
+    expect(payload.system_access?.permissions).toContain('student');
+    expect(payload.system_access?.permissions).not.toContain('admin');
+  });
+
+  it('populates permissions from existing student on edit', async () => {
+    const studentWithPerms: StudentResponse = { ...mockStudent, permissions: ['instructor'] };
+    await render(StudentFormComponent, {
+      componentInputs: { student: studentWithPerms },
+    });
+    const studentCheckbox = screen.getByTestId('perm-student') as HTMLInputElement;
+    const instructorCheckbox = screen.getByTestId('perm-instructor') as HTMLInputElement;
+    expect(studentCheckbox.checked).toBe(false);
+    expect(instructorCheckbox.checked).toBe(true);
   });
 });

@@ -130,38 +130,19 @@
   </div>
 
   <div class="student-form__system-access">
-    <label class="student-form__checkbox-label">
-      <input
-        type="checkbox"
-        data-testid="students-sysaccess-toggle"
-        [checked]="showSystemAccess()"
-        (change)="toggleSystemAccess($any($event.target).checked)"
-      />
-      Acceso al sistema
-    </label>
-
-    @if (showSystemAccess()) {
-      <div class="student-form__permissions" formGroupName="permissions">
-        <p class="student-form__permissions-label">Permisos</p>
-        <div class="student-form__permissions-checks">
-          <label class="student-form__checkbox-label">
-            <input type="checkbox" data-testid="perm-student" formControlName="student" />
-            Estudiante
-          </label>
-          <label class="student-form__checkbox-label">
-            <input type="checkbox" data-testid="perm-instructor" formControlName="instructor" />
-            Instructor
-          </label>
-          <label class="student-form__checkbox-label">
-            <input type="checkbox" data-testid="perm-admin" formControlName="admin" />
-            Administrador
-          </label>
-        </div>
-        @if (form.hasError('noPermission') && form.touched) {
-          <p class="student-form__permissions-error">Selecciona al menos un permiso.</p>
-        }
+    <div class="student-form__permissions" formGroupName="permissions">
+      <p class="student-form__permissions-label">Permisos</p>
+      <div class="student-form__permissions-checks">
+        <label class="student-form__checkbox-label">
+          <input type="checkbox" data-testid="perm-student" formControlName="student" />
+          Estudiante
+        </label>
+        <label class="student-form__checkbox-label">
+          <input type="checkbox" data-testid="perm-instructor" formControlName="instructor" />
+          Instructor
+        </label>
       </div>
-    }
+    </div>
   </div>
 
   <div class="student-form__actions">

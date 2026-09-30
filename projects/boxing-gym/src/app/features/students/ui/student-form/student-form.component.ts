@@ -6,9 +6,8 @@ import {
   inject,
   input,
   output,
-  signal,
 } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonComponent, FormFieldComponent, InputComponent } from 'design-system';
 import {
   StudentCreate,
@@ -17,12 +16,6 @@ import {
 } from '../../../../core/api/students.service';
 
 export type StudentFormPayload = StudentCreate;
-
-function atLeastOnePermission(control: AbstractControl): ValidationErrors | null {
-  const perms = control.get('permissions');
-  const hasAny = perms?.get('student')?.value || perms?.get('instructor')?.value || perms?.get('admin')?.value;
-  return hasAny ? null : { noPermission: true };
-}
 
 @Component({
   selector: 'app-student-form',
@@ -40,8 +33,6 @@ export class StudentFormComponent {
 
   readonly save = output<StudentFormPayload>();
   readonly cancel = output<void>();
-
-  readonly showSystemAccess = signal(false);
 
   readonly levels: StudentLevel[] = ['beginner', 'intermediate', 'advanced'];
   readonly levelLabels: Record<StudentLevel, string> = {
@@ -70,8 +61,6 @@ export class StudentFormComponent {
     effect(() => {
       const s = this.student();
       if (s) {
-        const hasAccess = !!s.permissions?.length;
-        this.showSystemAccess.set(hasAccess);
         this.form.patchValue({
           full_name: s.full_name,
           email: s.email,
@@ -88,17 +77,9 @@ export class StudentFormComponent {
           },
         });
       } else {
-        this.showSystemAccess.set(false);
-        this.form.reset({ is_active: true, permissions: { student: false, instructor: false, admin: false } });
+        this.form.reset({ is_active: true, permissions: { student: true, instructor: false, admin: false } });
       }
     });
-  }
-
-  protected toggleSystemAccess(enabled: boolean): void {
-    this.showSystemAccess.set(enabled);
-    if (!enabled) {
-      this.form.patchValue({ permissions: { student: false, instructor: false, admin: false } });
-    }
   }
 
   protected onSubmit(): void {
@@ -117,10 +98,11 @@ export class StudentFormComponent {
       weight: raw.weight ?? undefined,
     };
 
-    if (this.showSystemAccess()) {
-      const permissions = Object.entries(raw.permissions)
-        .filter(([, checked]) => checked)
-        .map(([perm]) => perm);
+    const permissions = Object.entries(raw.permissions)
+      .filter(([, checked]) => checked)
+      .map(([perm]) => perm);
+
+    if (permissions.length > 0) {
       payload.system_access = { permissions };
     }
 
