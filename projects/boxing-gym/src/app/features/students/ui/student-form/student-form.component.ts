@@ -1,18 +1,28 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   input,
   output,
+  signal,
 } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ButtonComponent, FormFieldComponent, InputComponent } from 'design-system';
 import {
   StudentCreate,
   StudentLevel,
   StudentResponse,
 } from '../../../../core/api/students.service';
+
+export type StudentFormPayload = StudentCreate;
+
+function atLeastOnePermission(control: AbstractControl): ValidationErrors | null {
+  const perms = control.get('permissions');
+  const hasAny = perms?.get('student')?.value || perms?.get('instructor')?.value || perms?.get('admin')?.value;
+  return hasAny ? null : { noPermission: true };
+}
 
 @Component({
   selector: 'app-student-form',
@@ -26,9 +36,12 @@ export class StudentFormComponent {
   private readonly fb = inject(FormBuilder);
 
   readonly student = input<StudentResponse | null>(null);
+  readonly isCreating = computed(() => this.student() === null);
 
-  readonly save = output<StudentCreate>();
+  readonly save = output<StudentFormPayload>();
   readonly cancel = output<void>();
+
+  readonly showSystemAccess = signal(false);
 
   readonly levels: StudentLevel[] = ['beginner', 'intermediate', 'advanced'];
   readonly levelLabels: Record<StudentLevel, string> = {
@@ -40,18 +53,25 @@ export class StudentFormComponent {
   readonly form = this.fb.group({
     full_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
     email: ['', [Validators.required, Validators.email]],
-    phone: [''],
+    phone: ['', [Validators.maxLength(20), Validators.pattern(/^\+?[0-9\s]*$/)]],
     birth_date: ['', Validators.required],
     enrollment_date: ['', Validators.required],
     level: ['' as StudentLevel, Validators.required],
     is_active: [true],
-    weight: [null as number | null],
+    weight: [null as number | null, Validators.min(0.01)],
+    permissions: this.fb.group({
+      student: [false],
+      instructor: [false],
+      admin: [false],
+    }),
   });
 
   constructor() {
     effect(() => {
       const s = this.student();
       if (s) {
+        const hasAccess = !!s.permissions?.length;
+        this.showSystemAccess.set(hasAccess);
         this.form.patchValue({
           full_name: s.full_name,
           email: s.email,
@@ -61,11 +81,24 @@ export class StudentFormComponent {
           level: s.level,
           is_active: s.is_active ?? true,
           weight: s.weight ?? null,
+          permissions: {
+            student: s.permissions?.includes('student') ?? false,
+            instructor: s.permissions?.includes('instructor') ?? false,
+            admin: s.permissions?.includes('admin') ?? false,
+          },
         });
       } else {
-        this.form.reset({ is_active: true });
+        this.showSystemAccess.set(false);
+        this.form.reset({ is_active: true, permissions: { student: false, instructor: false, admin: false } });
       }
     });
+  }
+
+  protected toggleSystemAccess(enabled: boolean): void {
+    this.showSystemAccess.set(enabled);
+    if (!enabled) {
+      this.form.patchValue({ permissions: { student: false, instructor: false, admin: false } });
+    }
   }
 
   protected onSubmit(): void {
@@ -73,7 +106,7 @@ export class StudentFormComponent {
     if (this.form.invalid) return;
 
     const raw = this.form.getRawValue();
-    const payload: StudentCreate = {
+    const payload: StudentFormPayload = {
       full_name: raw.full_name!,
       email: raw.email!,
       birth_date: raw.birth_date!,
@@ -83,6 +116,13 @@ export class StudentFormComponent {
       phone: raw.phone || undefined,
       weight: raw.weight ?? undefined,
     };
+
+    if (this.showSystemAccess()) {
+      const permissions = Object.entries(raw.permissions)
+        .filter(([, checked]) => checked)
+        .map(([perm]) => perm);
+      payload.system_access = { permissions };
+    }
 
     this.save.emit(payload);
   }

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { StudentLevel, StudentResponse } from '../../../../core/api/students.service';
-import { StudentFormComponent } from './student-form.component';
+import { StudentFormComponent, StudentFormPayload } from './student-form.component';
 
 const mockStudent: StudentResponse = {
   id: '1',
@@ -90,5 +90,42 @@ describe('StudentFormComponent', () => {
         level: 'beginner',
       })
     );
+  });
+
+  it('shows permissions section after toggling system access on', async () => {
+    const user = userEvent.setup();
+    await render(StudentFormComponent, {
+      componentInputs: { student: null },
+    });
+    expect(screen.queryByTestId('perm-student')).not.toBeInTheDocument();
+    await user.click(screen.getByTestId('students-sysaccess-toggle'));
+    expect(screen.getByTestId('perm-student')).toBeInTheDocument();
+    expect(screen.getByTestId('perm-instructor')).toBeInTheDocument();
+    expect(screen.getByTestId('perm-admin')).toBeInTheDocument();
+  });
+
+  it('includes system_access in payload when permissions are selected', async () => {
+    const saveSpy = vi.fn();
+    const user = userEvent.setup();
+    await render(StudentFormComponent, {
+      componentInputs: { student: null },
+      componentOutputs: { save: { emit: saveSpy } as unknown as never },
+    });
+
+    await userEvent.type(screen.getByTestId('students-fullname-input'), 'Roberto García');
+    await userEvent.type(screen.getByTestId('students-email-input'), 'roberto@gym.com');
+    fireEvent.input(screen.getByTestId('students-birthdate-input'), { target: { value: '1980-01-01' } });
+    fireEvent.input(screen.getByTestId('students-enrollmentdate-input'), { target: { value: '2024-01-01' } });
+    await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'advanced');
+
+    await user.click(screen.getByTestId('students-sysaccess-toggle'));
+    await user.click(screen.getByTestId('perm-admin'));
+
+    await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
+
+    const payload: StudentFormPayload = saveSpy.mock.calls[0][0];
+    expect(payload.system_access).toBeDefined();
+    expect(payload.system_access?.permissions).toContain('admin');
+    expect(payload.system_access?.permissions).not.toContain('student');
   });
 });

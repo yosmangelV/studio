@@ -36,12 +36,18 @@
       />
     </ds-form-field>
 
-    <ds-form-field label="Teléfono" inputId="phone">
+    <ds-form-field
+      label="Teléfono"
+      inputId="phone"
+      [hasError]="form.controls.phone.touched && form.controls.phone.invalid"
+      errorMessage="Solo se permiten números, espacios y +."
+    >
       <ds-input
         inputId="phone"
         type="tel"
         placeholder="+34 600 000 000"
         testId="students-phone-input"
+        [hasError]="form.controls.phone.touched && form.controls.phone.invalid"
         formControlName="phone"
       />
     </ds-form-field>
@@ -95,12 +101,18 @@
       </select>
     </ds-form-field>
 
-    <ds-form-field label="Peso (kg)" inputId="weight">
+    <ds-form-field
+      label="Peso (kg)"
+      inputId="weight"
+      [hasError]="form.controls.weight.touched && form.controls.weight.invalid"
+      errorMessage="El peso debe ser mayor que 0."
+    >
       <ds-input
         inputId="weight"
         type="number"
         placeholder="70"
         testId="students-weight-input"
+        [hasError]="form.controls.weight.touched && form.controls.weight.invalid"
         formControlName="weight"
       />
     </ds-form-field>
@@ -117,6 +129,41 @@
     </label>
   </div>
 
+  <div class="student-form__system-access">
+    <label class="student-form__checkbox-label">
+      <input
+        type="checkbox"
+        data-testid="students-sysaccess-toggle"
+        [checked]="showSystemAccess()"
+        (change)="toggleSystemAccess($any($event.target).checked)"
+      />
+      Acceso al sistema
+    </label>
+
+    @if (showSystemAccess()) {
+      <div class="student-form__permissions" formGroupName="permissions">
+        <p class="student-form__permissions-label">Permisos</p>
+        <div class="student-form__permissions-checks">
+          <label class="student-form__checkbox-label">
+            <input type="checkbox" data-testid="perm-student" formControlName="student" />
+            Estudiante
+          </label>
+          <label class="student-form__checkbox-label">
+            <input type="checkbox" data-testid="perm-instructor" formControlName="instructor" />
+            Instructor
+          </label>
+          <label class="student-form__checkbox-label">
+            <input type="checkbox" data-testid="perm-admin" formControlName="admin" />
+            Administrador
+          </label>
+        </div>
+        @if (form.hasError('noPermission') && form.touched) {
+          <p class="student-form__permissions-error">Selecciona al menos un permiso.</p>
+        }
+      </div>
+    }
+  </div>
+
   <div class="student-form__actions">
     <ds-button
       type="button"
@@ -130,6 +177,7 @@
       type="submit"
       variant="primary"
       data-testid="students-submit-button"
+      [disabled]="form.invalid"
     >
       Guardar
     </ds-button>
