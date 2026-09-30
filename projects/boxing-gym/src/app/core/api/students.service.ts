@@ -20,17 +20,121 @@ import {
   inject
 } from '@angular/core';
 
+import type {
+  DeepNonNullable
+} from '@orval/core';
+
 import {
   Observable
 } from 'rxjs';
+
+export interface AtRiskStudentInfo {
+  student_id: string;
+  student_name: string;
+  months_unpaid: number;
+}
 
 export interface HTTPValidationError {
   detail?: ValidationError[];
 }
 
+export interface MethodStats {
+  count: number;
+  amount: number;
+}
+
+export interface PaginatedPayments {
+  data: PaymentResponse[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
+export interface PaidStudentInfo {
+  student_id: string;
+  student_name: string;
+  paid_at: string;
+  amount: number;
+}
+
+export type PaymentAnalyticsResponseByMethod = {[key: string]: MethodStats};
+
+export interface PaymentAnalyticsResponse {
+  period: string;
+  total_amount: number;
+  total_payments: number;
+  by_method: PaymentAnalyticsResponseByMethod;
+}
+
+export type PaymentCreatePeriodYear = number | null;
+
+export type PaymentCreatePeriodMonth = number | null;
+
+export type PaymentCreateNotes = string | null;
+
+export interface PaymentCreate {
+  student_id: string;
+  type: PaymentType;
+  period_year?: PaymentCreatePeriodYear;
+  period_month?: PaymentCreatePeriodMonth;
+  /** */
+  amount: number;
+  payment_method: PaymentMethod;
+  notes?: PaymentCreateNotes;
+}
+
+export type PaymentMethod = typeof PaymentMethod[keyof typeof PaymentMethod];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PaymentMethod = {
+  cash: 'cash',
+  transfer: 'transfer',
+  bizum: 'bizum',
+} as const;
+
+export type PaymentResponsePeriodYear = number | null;
+
+export type PaymentResponsePeriodMonth = number | null;
+
+export type PaymentResponseNotes = string | null;
+
+export interface PaymentResponse {
+  id: string;
+  student_id: string;
+  type: PaymentType;
+  period_year: PaymentResponsePeriodYear;
+  period_month: PaymentResponsePeriodMonth;
+  amount: number;
+  payment_method: PaymentMethod;
+  paid_at: string;
+  created_by: string;
+  notes: PaymentResponseNotes;
+  created_at: string;
+}
+
+export interface PaymentSummaryResponse {
+  period: string;
+  paid: PaidStudentInfo[];
+  pending: UnpaidStudentInfo[];
+  overdue: UnpaidStudentInfo[];
+  at_risk_of_inactivity: AtRiskStudentInfo[];
+}
+
+export type PaymentType = typeof PaymentType[keyof typeof PaymentType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PaymentType = {
+  monthly_fee: 'monthly_fee',
+  material: 'material',
+} as const;
+
 export type StudentCreatePhone = string | null;
 
 export type StudentCreateWeight = number | null;
+
+export type StudentCreateSystemAccess = SystemAccessCreate | null;
 
 export interface StudentCreate {
   /**
@@ -45,6 +149,7 @@ export interface StudentCreate {
   level: StudentLevel;
   is_active?: boolean;
   weight?: StudentCreateWeight;
+  system_access?: StudentCreateSystemAccess;
 }
 
 export type StudentLevel = typeof StudentLevel[keyof typeof StudentLevel];
@@ -61,6 +166,8 @@ export type StudentResponsePhone = string | null;
 
 export type StudentResponseWeight = number | null;
 
+export type StudentResponseAuthUserId = string | null;
+
 export interface StudentResponse {
   /**
    * @minLength 2
@@ -75,6 +182,8 @@ export interface StudentResponse {
   is_active?: boolean;
   weight?: StudentResponseWeight;
   id: string;
+  auth_user_id?: StudentResponseAuthUserId;
+  permissions?: string[];
   created_at: string;
   updated_at: string;
 }
@@ -93,6 +202,8 @@ export type StudentUpdateIsActive = boolean | null;
 
 export type StudentUpdateWeight = number | null;
 
+export type StudentUpdateSystemAccess = SystemAccessCreate | null;
+
 export interface StudentUpdate {
   full_name?: StudentUpdateFullName;
   email?: StudentUpdateEmail;
@@ -101,6 +212,16 @@ export interface StudentUpdate {
   level?: StudentUpdateLevel;
   is_active?: StudentUpdateIsActive;
   weight?: StudentUpdateWeight;
+  system_access?: StudentUpdateSystemAccess;
+}
+
+export interface SystemAccessCreate {
+  permissions: string[];
+}
+
+export interface UnpaidStudentInfo {
+  student_id: string;
+  student_name: string;
 }
 
 export type ValidationErrorLocItem = string | number;
@@ -114,6 +235,64 @@ export interface ValidationError {
   input?: unknown;
   ctx?: ValidationErrorCtx;
 }
+
+export interface PaginatedStudents {
+  data: StudentResponse[];
+  total: number;
+  limit: number;
+  offset: number;
+  pages: number;
+}
+
+export type ListStudentsStudentsGetParams = {
+  search?: string | null;
+  /**
+   * @minimum 1
+   * @maximum 100
+   */
+  limit?: number;
+  /**
+   * @minimum 0
+   */
+  offset?: number;
+};
+
+export type ListPaymentsPaymentsGetParams = {
+type?: string | null;
+period?: string | null;
+student_id?: string | null;
+payment_method?: string | null;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+/**
+ * @minimum 0
+ */
+offset?: number;
+};
+
+export type GetSummaryPaymentsSummaryGetParams = {
+period?: string | null;
+};
+
+export type GetAnalyticsPaymentsAnalyticsGetParams = {
+period?: string | null;
+type?: string | null;
+};
+
+export type GetStudentPaymentsStudentsStudentIdPaymentsGetParams = {
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+/**
+ * @minimum 0
+ */
+offset?: number;
+};
 
 interface HttpClientOptions {
   headers?: HttpHeaders | Record<string, string | string[]>;
@@ -143,13 +322,15 @@ export class BoxingGymAPIService {
 /**
  * @summary List Students
  */
- listStudentsStudentsGet<TData = StudentResponse[]>( options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- listStudentsStudentsGet<TData = StudentResponse[]>( options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- listStudentsStudentsGet<TData = StudentResponse[]>( options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  listStudentsStudentsGet<TData = StudentResponse[]>(
-     options?: HttpClientOptions & { observe?: any }): Observable<any> {
+ listStudentsStudentsGet<TData = PaginatedStudents>(params?: DeepNonNullable<ListStudentsStudentsGetParams>, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ listStudentsStudentsGet<TData = PaginatedStudents>(params?: DeepNonNullable<ListStudentsStudentsGetParams>, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ listStudentsStudentsGet<TData = PaginatedStudents>(params?: DeepNonNullable<ListStudentsStudentsGetParams>, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  listStudentsStudentsGet<TData = PaginatedStudents>(
+    params?: DeepNonNullable<ListStudentsStudentsGetParams>, options?: HttpClientOptions & { observe?: any }): Observable<any> {
     return this.http.get<TData>(
-      `http://127.0.0.1:8000/students/`,options
+      `http://127.0.0.1:8000/students/`,{
+    ...options,
+        params: {...params, ...options?.params},}
     );
   }
 
@@ -212,6 +393,110 @@ export class BoxingGymAPIService {
   }
 
 /**
+ * @summary Create Payment
+ */
+ createPaymentPaymentsPost<TData = PaymentResponse>(paymentCreate: PaymentCreate, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ createPaymentPaymentsPost<TData = PaymentResponse>(paymentCreate: PaymentCreate, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ createPaymentPaymentsPost<TData = PaymentResponse>(paymentCreate: PaymentCreate, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  createPaymentPaymentsPost<TData = PaymentResponse>(
+    paymentCreate: PaymentCreate, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.post<TData>(
+      `http://127.0.0.1:8000/payments/`,
+      paymentCreate,options
+    );
+  }
+
+/**
+ * @summary List Payments
+ */
+ listPaymentsPaymentsGet<TData = PaginatedPayments>(params?: DeepNonNullable<ListPaymentsPaymentsGetParams>, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ listPaymentsPaymentsGet<TData = PaginatedPayments>(params?: DeepNonNullable<ListPaymentsPaymentsGetParams>, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ listPaymentsPaymentsGet<TData = PaginatedPayments>(params?: DeepNonNullable<ListPaymentsPaymentsGetParams>, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  listPaymentsPaymentsGet<TData = PaginatedPayments>(
+    params?: DeepNonNullable<ListPaymentsPaymentsGetParams>, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.get<TData>(
+      `http://127.0.0.1:8000/payments/`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+/**
+ * @summary Get Summary
+ */
+ getSummaryPaymentsSummaryGet<TData = PaymentSummaryResponse>(params?: DeepNonNullable<GetSummaryPaymentsSummaryGetParams>, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ getSummaryPaymentsSummaryGet<TData = PaymentSummaryResponse>(params?: DeepNonNullable<GetSummaryPaymentsSummaryGetParams>, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ getSummaryPaymentsSummaryGet<TData = PaymentSummaryResponse>(params?: DeepNonNullable<GetSummaryPaymentsSummaryGetParams>, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  getSummaryPaymentsSummaryGet<TData = PaymentSummaryResponse>(
+    params?: DeepNonNullable<GetSummaryPaymentsSummaryGetParams>, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.get<TData>(
+      `http://127.0.0.1:8000/payments/summary`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+/**
+ * @summary Get Analytics
+ */
+ getAnalyticsPaymentsAnalyticsGet<TData = PaymentAnalyticsResponse>(params?: DeepNonNullable<GetAnalyticsPaymentsAnalyticsGetParams>, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ getAnalyticsPaymentsAnalyticsGet<TData = PaymentAnalyticsResponse>(params?: DeepNonNullable<GetAnalyticsPaymentsAnalyticsGetParams>, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ getAnalyticsPaymentsAnalyticsGet<TData = PaymentAnalyticsResponse>(params?: DeepNonNullable<GetAnalyticsPaymentsAnalyticsGetParams>, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  getAnalyticsPaymentsAnalyticsGet<TData = PaymentAnalyticsResponse>(
+    params?: DeepNonNullable<GetAnalyticsPaymentsAnalyticsGetParams>, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.get<TData>(
+      `http://127.0.0.1:8000/payments/analytics`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+/**
+ * @summary Get Payment
+ */
+ getPaymentPaymentsPaymentIdGet<TData = PaymentResponse>(paymentId: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ getPaymentPaymentsPaymentIdGet<TData = PaymentResponse>(paymentId: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ getPaymentPaymentsPaymentIdGet<TData = PaymentResponse>(paymentId: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  getPaymentPaymentsPaymentIdGet<TData = PaymentResponse>(
+    paymentId: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.get<TData>(
+      `http://127.0.0.1:8000/payments/${paymentId}`,options
+    );
+  }
+
+/**
+ * @summary Delete Payment
+ */
+ deletePaymentPaymentsPaymentIdDelete<TData = void>(paymentId: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ deletePaymentPaymentsPaymentIdDelete<TData = void>(paymentId: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ deletePaymentPaymentsPaymentIdDelete<TData = void>(paymentId: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  deletePaymentPaymentsPaymentIdDelete<TData = void>(
+    paymentId: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.delete<TData>(
+      `http://127.0.0.1:8000/payments/${paymentId}`,options
+    );
+  }
+
+/**
+ * @summary Get Student Payments
+ */
+ getStudentPaymentsStudentsStudentIdPaymentsGet<TData = PaginatedPayments>(studentId: string,
+    params?: DeepNonNullable<GetStudentPaymentsStudentsStudentIdPaymentsGetParams>, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ getStudentPaymentsStudentsStudentIdPaymentsGet<TData = PaginatedPayments>(studentId: string,
+    params?: DeepNonNullable<GetStudentPaymentsStudentsStudentIdPaymentsGetParams>, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ getStudentPaymentsStudentsStudentIdPaymentsGet<TData = PaginatedPayments>(studentId: string,
+    params?: DeepNonNullable<GetStudentPaymentsStudentsStudentIdPaymentsGetParams>, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  getStudentPaymentsStudentsStudentIdPaymentsGet<TData = PaginatedPayments>(
+    studentId: string,
+    params?: DeepNonNullable<GetStudentPaymentsStudentsStudentIdPaymentsGetParams>, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.get<TData>(
+      `http://127.0.0.1:8000/students/${studentId}/payments`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+/**
  * @summary Health Check
  */
  healthCheckHealthGet<TData = unknown>( options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
@@ -226,9 +511,16 @@ export class BoxingGymAPIService {
 
 };
 
-export type ListStudentsStudentsGetClientResult = NonNullable<StudentResponse[]>
+export type ListStudentsStudentsGetClientResult = NonNullable<PaginatedStudents>
 export type CreateStudentStudentsPostClientResult = NonNullable<StudentResponse>
 export type GetStudentStudentsStudentIdGetClientResult = NonNullable<StudentResponse>
 export type UpdateStudentStudentsStudentIdPatchClientResult = NonNullable<StudentResponse>
 export type DeleteStudentStudentsStudentIdDeleteClientResult = NonNullable<void>
+export type CreatePaymentPaymentsPostClientResult = NonNullable<PaymentResponse>
+export type ListPaymentsPaymentsGetClientResult = NonNullable<PaginatedPayments>
+export type GetSummaryPaymentsSummaryGetClientResult = NonNullable<PaymentSummaryResponse>
+export type GetAnalyticsPaymentsAnalyticsGetClientResult = NonNullable<PaymentAnalyticsResponse>
+export type GetPaymentPaymentsPaymentIdGetClientResult = NonNullable<PaymentResponse>
+export type DeletePaymentPaymentsPaymentIdDeleteClientResult = NonNullable<void>
+export type GetStudentPaymentsStudentsStudentIdPaymentsGetClientResult = NonNullable<PaginatedPayments>
 export type HealthCheckHealthGetClientResult = NonNullable<unknown>

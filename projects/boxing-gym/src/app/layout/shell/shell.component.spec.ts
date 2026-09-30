@@ -22,6 +22,9 @@ const AUTH_SERVICE_MOCK = {
   signOut: vi.fn().mockResolvedValue(undefined),
   currentUser: () => null,
   isAuthenticated: () => false,
+  isAdmin: () => false,
+  isInstructor: () => false,
+  isStudent: () => false,
 };
 
 const PROVIDERS = [
