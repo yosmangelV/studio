@@ -3,11 +3,13 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 html,
 body {
   height: 100%;
+  overflow-x: hidden;
   font-family: var(--gym-font-body);
   color: var(--gym-text-primary);
   background-color: var(--gym-surface-app);
