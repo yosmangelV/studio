@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoadingComponent } from './shared/components/loading/loading.component';
+import { PwaInstallBannerComponent } from './shared/components/pwa-install-banner/pwa-install-banner.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LoadingComponent],
+  imports: [RouterOutlet, LoadingComponent, PwaInstallBannerComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
