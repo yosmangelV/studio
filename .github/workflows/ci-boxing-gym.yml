@@ -10,14 +10,27 @@ on:
       - 'package-lock.json'
   pull_request:
     branches: [main]
-    paths:
-      - 'projects/boxing-gym/**'
-      - 'projects/design-system/**'
-      - 'package.json'
-      - 'package-lock.json'
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      relevant: ${{ steps.filter.outputs.relevant }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            relevant:
+              - 'projects/boxing-gym/**'
+              - 'projects/design-system/**'
+              - 'package.json'
+              - 'package-lock.json'
+
   test:
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
