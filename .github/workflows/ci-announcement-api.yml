@@ -5,20 +5,30 @@ on:
     branches: [main]
     paths:
       - 'apps/announcement-api/**'
-      - 'apps/announcement-api/package.json'
   pull_request:
     branches: [main]
-    paths:
-      - 'apps/announcement-api/**'
-      - 'apps/announcement-api/package.json'
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      relevant: ${{ steps.filter.outputs.relevant }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            relevant:
+              - 'apps/announcement-api/**'
+
   test:
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: apps/announcement-api
-
     steps:
       - uses: actions/checkout@v4
 
