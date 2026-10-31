@@ -31,7 +31,7 @@
       &:hover {
         background-color: var(--color-primary-50);
 
-        .striped-list__name  { color: var(--color-primary-500); }
+        .striped-list__name  { color: var(--color-text-accent); }
         .striped-list__arrow { opacity: 1; transform: translateX(4px); }
       }
     }
@@ -44,7 +44,7 @@
     font-size: 0.85rem;
     font-weight: var(--font-bold);
     letter-spacing: 0.05em;
-    color: var(--color-primary-500);
+    color: var(--color-text-accent);
     padding-top: 3px;
 
     @media (min-width: 768px) {

@@ -23,6 +23,7 @@ jobs:
               - 'apps/announcement-api/**'
 
   test:
+    name: Announcement API test
     needs: changes
     if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest

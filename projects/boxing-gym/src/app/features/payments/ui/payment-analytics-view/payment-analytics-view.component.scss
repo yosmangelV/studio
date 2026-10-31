@@ -5,7 +5,7 @@
 
   &__skeleton,
   &__empty {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     padding: 2rem 0;
     text-align: center;
   }
@@ -25,21 +25,19 @@
   &__total-label {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
   }
 
   &__total-amount {
     font-size: 2.25rem;
     font-weight: 700;
-    color: var(--color-text);
+    color: var(--color-text-primary);
     line-height: 1.1;
   }
 
   &__total-count {
     font-size: 0.875rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
 
   &__methods {
@@ -65,23 +63,21 @@
   &__method-label {
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    color: var(--color-text-secondary);
   }
 
   &__method-amount {
     font-size: 1.375rem;
     font-weight: 700;
-    color: var(--color-text);
+    color: var(--color-text-primary);
 
     &--zero {
-      color: var(--color-text-muted);
+      color: var(--color-text-secondary);
     }
   }
 
   &__method-count {
     font-size: 0.8125rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
 }

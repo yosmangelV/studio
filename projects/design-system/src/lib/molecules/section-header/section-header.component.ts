@@ -1,22 +1,18 @@
 import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
-import { EyebrowComponent, EyebrowAlign } from '../../atoms/eyebrow/eyebrow.component';
 
 export type SectionHeaderLevel = 'h1' | 'h2' | 'h3';
+export type SectionHeaderAlign = 'start' | 'center';
 
 @Component({
   selector: 'ds-section-header',
   standalone: true,
-  imports: [EyebrowComponent],
   templateUrl: './section-header.component.html',
   styleUrl: './section-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionHeaderComponent {
-  readonly eyebrow = input.required<string>();
   readonly title = input.required<string>();
-  readonly titleAccent    = input<string>('');
-  readonly titleSeparator = input<string>(' ');
-  readonly align = input<EyebrowAlign>('start');
+  readonly align = input<SectionHeaderAlign>('start');
   readonly level = input<SectionHeaderLevel>('h2');
 
   readonly titleClasses = computed(() => {

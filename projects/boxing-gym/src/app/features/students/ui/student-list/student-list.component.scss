@@ -8,7 +8,7 @@
     justify-content: center;
     height: 200px;
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--gym-text-muted);
     border: 1px dashed rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     margin: 0;
@@ -28,9 +28,7 @@
     text-align: left;
     font-size: 0.75rem;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--gym-text-secondary);
 
     &--actions {
       text-align: right;
@@ -53,11 +51,11 @@
   &__td {
     padding: 1rem;
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--gym-text-high);
     vertical-align: middle;
 
     &--email {
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--gym-text-muted);
       font-size: 0.8125rem;
     }
 
@@ -72,10 +70,10 @@
 
   &__status {
     font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--gym-text-secondary);
 
     &--inactive {
-      color: rgba(255, 255, 255, 0.3);
+      color: var(--gym-text-muted);
     }
   }
 }

@@ -1,0 +1,222 @@
+{
+  "name": "design-system",
+  "sources": [
+    "projects/design-system/src/lib"
+  ],
+  "forbiddenTextTokens": [
+    "--color-primary-500",
+    "--color-primary-600"
+  ],
+  "themes": [
+    {
+      "name": "design-system (light)",
+      "layers": [
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": ":root"
+        }
+      ],
+      "canvas": "--color-surface",
+      "checks": [
+        {
+          "label": "text on surfaces",
+          "min": 4.5,
+          "fg": [
+            "--color-text-primary",
+            "--color-text-secondary",
+            "--color-text-tertiary",
+            "--color-text-link",
+            "--color-text-accent",
+            "--color-success",
+            "--color-error"
+          ],
+          "bg": [
+            "--color-surface",
+            "--color-surface-raised",
+            "--color-surface-overlay"
+          ]
+        },
+        {
+          "label": "text on hover/active fills",
+          "min": 4.5,
+          "fg": [
+            "--color-text-primary",
+            "--color-text-link"
+          ],
+          "bg": [
+            "--color-primary-50",
+            "--color-primary-100",
+            "--color-surface-sunken"
+          ]
+        },
+        {
+          "label": "text on solid fills",
+          "min": 4.5,
+          "fg": [
+            "--color-text-on-primary"
+          ],
+          "bg": [
+            "--color-primary-500",
+            "--color-primary-600",
+            "--color-primary-700",
+            "--color-error-solid"
+          ]
+        },
+        {
+          "label": "badge success",
+          "min": 4.5,
+          "fg": [
+            "--color-success"
+          ],
+          "bg": [
+            "--color-success-subtle"
+          ]
+        },
+        {
+          "label": "badge warning",
+          "min": 4.5,
+          "fg": [
+            "--color-warning"
+          ],
+          "bg": [
+            "--color-warning-subtle"
+          ]
+        },
+        {
+          "label": "badge danger",
+          "min": 4.5,
+          "fg": [
+            "--color-error"
+          ],
+          "bg": [
+            "--color-error-subtle"
+          ]
+        },
+        {
+          "label": "badge default",
+          "min": 4.5,
+          "fg": [
+            "--color-neutral-600"
+          ],
+          "bg": [
+            "--color-neutral-100"
+          ]
+        },
+        {
+          "label": "focus ring",
+          "min": 3,
+          "fg": [
+            "--color-border-focus"
+          ],
+          "bg": [
+            "--color-surface",
+            "--color-surface-raised",
+            "--color-surface-overlay"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "design-system (dark)",
+      "layers": [
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": ":root"
+        },
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": "@mixin dark-tokens"
+        }
+      ],
+      "canvas": "--color-surface",
+      "checks": [
+        {
+          "label": "text on surfaces",
+          "min": 4.5,
+          "fg": [
+            "--color-text-primary",
+            "--color-text-secondary",
+            "--color-text-tertiary",
+            "--color-text-link",
+            "--color-text-accent",
+            "--color-success",
+            "--color-error"
+          ],
+          "bg": [
+            "--color-surface",
+            "--color-surface-raised",
+            "--color-surface-overlay"
+          ]
+        },
+        {
+          "label": "text on hover/active fills",
+          "min": 4.5,
+          "fg": [
+            "--color-text-primary",
+            "--color-text-link"
+          ],
+          "bg": [
+            "--color-primary-50",
+            "--color-primary-100",
+            "--color-surface-sunken"
+          ]
+        },
+        {
+          "label": "text on solid fills",
+          "min": 4.5,
+          "fg": [
+            "--color-text-on-primary"
+          ],
+          "bg": [
+            "--color-primary-500",
+            "--color-primary-600",
+            "--color-primary-700",
+            "--color-error-solid"
+          ]
+        },
+        {
+          "label": "badge success",
+          "min": 4.5,
+          "fg": [
+            "--color-success"
+          ],
+          "bg": [
+            "--color-success-subtle"
+          ]
+        },
+        {
+          "label": "badge warning",
+          "min": 4.5,
+          "fg": [
+            "--color-warning"
+          ],
+          "bg": [
+            "--color-warning-subtle"
+          ]
+        },
+        {
+          "label": "badge danger",
+          "min": 4.5,
+          "fg": [
+            "--color-error"
+          ],
+          "bg": [
+            "--color-error-subtle"
+          ]
+        },
+        {
+          "label": "focus ring",
+          "min": 3,
+          "fg": [
+            "--color-border-focus"
+          ],
+          "bg": [
+            "--color-surface",
+            "--color-surface-raised",
+            "--color-surface-overlay"
+          ]
+        }
+      ]
+    }
+  ]
+}
