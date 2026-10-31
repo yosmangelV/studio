@@ -35,7 +35,6 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
     </ds-page-nav>
     <main>
       <ds-hero-section
-        [eyebrow]="config.subtitle"
         [headlineTop]="headlineTop()"
         [headlineMain]="headlineMain()"
         [tagline]="config.tagline"

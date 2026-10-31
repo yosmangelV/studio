@@ -24,7 +24,7 @@
   &__title {
     font-size: 1.375rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--gym-text-primary);
     margin: 0;
 
     @media (min-width: 640px) {
@@ -34,7 +34,7 @@
 
   &__subtitle {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.45);
+    color: var(--gym-text-secondary);
     margin: 0;
   }
 
@@ -46,11 +46,11 @@
   }
 
   &__loading {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--gym-text-secondary);
   }
 
   &__error {
-    color: #f87171;
+    color: var(--gym-text-danger);
     background-color: rgba(248, 113, 113, 0.08);
     border: 1px solid rgba(248, 113, 113, 0.2);
   }
@@ -73,9 +73,8 @@
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    color: var(--gym-text-primary);
     font-size: 1rem;
-    outline: none;
     transition: border-color 0.15s;
     box-sizing: border-box;
 
@@ -87,17 +86,17 @@
     }
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.35);
+      color: var(--gym-text-muted);
     }
 
     &:focus {
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: var(--color-border-focus);
     }
   }
 
   &__count {
     font-size: 0.8125rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--gym-text-secondary);
     white-space: nowrap;
   }
 
@@ -115,7 +114,7 @@
   &__form-title {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #fff;
+    color: var(--gym-text-primary);
     margin: 0;
 
     @media (min-width: 640px) {

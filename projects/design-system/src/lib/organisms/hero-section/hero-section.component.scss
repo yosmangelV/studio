@@ -62,11 +62,6 @@
     width: 100%;
   }
 
-  &__eyebrow-wrapper {
-    margin-bottom: 2rem;
-    animation: hero-enter var(--duration-slow) var(--ease-default) both;
-  }
-
   // ---- Headline ------------------------------------------------------------
   &__headline {
     font-family: var(--font-display);
@@ -79,7 +74,7 @@
     display: block;
     font-size: clamp(2rem, 6.5vw, 5.5rem);
     font-weight: var(--font-normal);
-    color: var(--color-text-tertiary);
+    color: var(--color-text-primary);
     letter-spacing: 0.08em;
     animation: hero-enter var(--duration-slow) 100ms var(--ease-default) both;
   }
@@ -96,8 +91,7 @@
 
   // ---- Tagline -------------------------------------------------------------
   &__tagline {
-    font-size: 0.9rem;
-    letter-spacing: 0.08em;
+    font-size: var(--text-lg);
     color: var(--color-text-secondary);
     margin-bottom: 3rem;
     max-width: 44ch;
@@ -114,18 +108,16 @@
 
   &__cta {
     display: inline-block;
-    font-size: 0.78rem;
-    font-weight: var(--font-bold);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
     text-decoration: none;
-    padding: 0.9rem 2.5rem;
+    padding: 0.75rem 2.5rem;
     transition: background-color var(--duration-normal) var(--ease-default),
                 border-color var(--duration-normal) var(--ease-default);
 
     &--primary {
       background-color: var(--color-primary-500);
-      color: #ffffff;
+      color: var(--color-text-on-primary);
       border: 2px solid var(--color-primary-500);
 
       &:hover { background-color: var(--color-primary-600); border-color: var(--color-primary-600); }
@@ -190,7 +182,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__eyebrow-wrapper,
   .hero__headline-top,
   .hero__headline-main,
   .hero__tagline,

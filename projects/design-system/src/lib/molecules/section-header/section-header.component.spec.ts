@@ -2,39 +2,32 @@ import { render, screen } from '@testing-library/angular';
 import { SectionHeaderComponent } from './section-header.component';
 
 describe('SectionHeaderComponent', () => {
-  it('renders the eyebrow label', async () => {
+  it('renders the title as a single heading', async () => {
     await render(SectionHeaderComponent, {
-      componentInputs: { eyebrow: 'Nosotros', title: 'Quiénes somos' },
+      componentInputs: { title: 'Quiénes somos' },
     });
-    expect(screen.getByText('Nosotros')).toBeInTheDocument();
-  });
-
-  it('renders the title', async () => {
-    await render(SectionHeaderComponent, {
-      componentInputs: { eyebrow: 'Nosotros', title: 'Quiénes somos' },
-    });
-    expect(screen.getByText('Quiénes somos')).toBeInTheDocument();
-  });
-
-  it('renders title accent when provided', async () => {
-    await render(SectionHeaderComponent, {
-      componentInputs: { eyebrow: 'Clases', title: 'Nuestras', titleAccent: 'Clases' },
-    });
-    expect(screen.getByText('Clases', { selector: '.section-header__accent' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Quiénes somos' })).toBeInTheDocument();
   });
 
   it('renders as h2 by default', async () => {
     const { container } = await render(SectionHeaderComponent, {
-      componentInputs: { eyebrow: 'Label', title: 'Title' },
+      componentInputs: { title: 'Title' },
     });
     expect(container.querySelector('h2')).toBeInTheDocument();
   });
 
   it('renders as the specified heading level', async () => {
     const { container } = await render(SectionHeaderComponent, {
-      componentInputs: { eyebrow: 'Label', title: 'Title', level: 'h3' },
+      componentInputs: { title: 'Title', level: 'h3' },
     });
     expect(container.querySelector('h3')).toBeInTheDocument();
     expect(container.querySelector('h2')).not.toBeInTheDocument();
+  });
+
+  it('applies the center modifier when aligned center', async () => {
+    await render(SectionHeaderComponent, {
+      componentInputs: { title: 'Title', align: 'center' },
+    });
+    expect(screen.getByRole('heading')).toHaveClass('section-header__title--center');
   });
 });

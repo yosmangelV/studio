@@ -10,6 +10,7 @@
   // ---------------------------------------------------------------------------
 
   // Red — main brand color (crimson)
+  --gym-red-200: #ff5468;  // the only red that passes 4.5:1 as text on every gym surface
   --gym-red-300: #e63950;
   --gym-red-500: #c41230;
   --gym-red-700: #8b0000;
@@ -34,6 +35,7 @@
   // Third-party brand
   --gym-whatsapp:       #25d366;
   --gym-whatsapp-hover: #1ebe5b;
+  --gym-whatsapp-ink:   var(--gym-black);  // white on WhatsApp green is 1.9:1
 
   // ---------------------------------------------------------------------------
   // Aliases — nombres legacy usados por los componentes actuales.
@@ -74,19 +76,22 @@
 
   // ---------------------------------------------------------------------------
   // Semantic — Text
+  // Every role except disabled passes 4.5:1 on app, panel, dark and elevated.
+  // Checked by `npm run test:contrast` (projects/boxing-gym/contrast.config.json).
   // ---------------------------------------------------------------------------
   --gym-text-primary:   var(--gym-white);            // body copy
   --gym-text-high:      rgba(255, 255, 255, 0.90);  // high-emphasis hover text
   --gym-text-secondary: rgba(255, 255, 255, 0.55);  // supporting labels
-  --gym-text-muted:     rgba(255, 255, 255, 0.35);  // placeholders, captions
-  --gym-text-disabled:  rgba(255, 255, 255, 0.25);  // disabled state
+  --gym-text-muted:     rgba(255, 255, 255, 0.50);  // placeholders, captions, inactive states
+  --gym-text-disabled:  rgba(255, 255, 255, 0.25);  // disabled state (exempt from contrast)
 
   // ---------------------------------------------------------------------------
   // Semantic — Brand (red)
   // ---------------------------------------------------------------------------
-  --gym-brand:          var(--gym-red-500);          // primary actions, accents
+  --gym-brand:          var(--gym-red-500);          // fills only: buttons, rules, bars
   --gym-brand-dark:     var(--gym-red-700);          // pressed / active state
-  --gym-brand-light:    var(--gym-red-300);          // bright red on dark bg
+  --gym-brand-light:    var(--gym-red-300);          // decorative red on dark bg (not text)
+  --gym-brand-on-dark:  var(--gym-red-200);          // red text, figures and focus rings
   --gym-brand-subtle:   rgba(196, 18, 48, 0.06);    // tinted surface (4–6%)
   --gym-brand-hover:    rgba(196, 18, 48, 0.12);    // hovered tinted surface
   --gym-brand-glow:     rgba(196, 18, 48, 0.30);    // drop-shadows, glows
@@ -117,10 +122,12 @@
 
   // Error tokens remapped for dark context (DS defaults are light-mode reds)
   --color-error:        var(--gym-text-danger);   // #f87171 — readable on dark
+  --color-error-solid:  var(--gym-red-500);       // danger buttons: white text passes
   --color-error-subtle: var(--gym-brand-hover);   // red-tinted surface (12%)
   --color-grid-line:    var(--gym-grid-line);
-  --color-border-focus: var(--gym-red-500);
-  --color-text-link:    var(--gym-red-500);
+  --color-border-focus: var(--gym-brand-on-dark);
+  --color-text-link:    var(--gym-brand-on-dark);
+  --color-text-accent:  var(--gym-brand-on-dark);
 
   // DS text tokens remapped for the always-dark gym context.
   // Without this, DS components (e.g. ds-button subtle) would render with
