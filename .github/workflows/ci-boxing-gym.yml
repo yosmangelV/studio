@@ -49,5 +49,8 @@ jobs:
           SUPABASE_ANON_KEY: placeholder-anon-key
           API_URL: http://localhost:8000
 
+      - name: Check boxing-gym contrast and token usage
+        run: node projects/design-system/scripts/check-contrast.mjs projects/boxing-gym/contrast.config.json
+
       - name: Test boxing-gym
         run: npx nx test boxing-gym --watch=false
