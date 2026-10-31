@@ -63,6 +63,7 @@ Load these skills from `.agents/skills/` when relevant:
 
 ## Design System Rules
 
+- **Read `design.md` before any UI work** — the visual rules for every product (contrast floor, anti-generated rules, layering), then the product's own `projects/<app>/design.md`
 - **Follow Atomic Design** — atoms → molecules → organisms. Path: `projects/design-system/src/lib/{atoms|molecules|organisms}/component-name/`
 - **Always use design tokens** — colors, spacing, radii, shadows, animation durations via CSS custom properties from `tokens.scss`. Never hardcode values
 - **Dark mode required** — every component must support `prefers-color-scheme: dark` and the `.dark` class strategy
@@ -124,6 +125,7 @@ studio/
 npm run storybook       # Start Storybook dev server → http://localhost:6006
 npm run storybook:build # Build static Storybook
 npm run build:ds        # Build the library
+npm run test:contrast   # WCAG contrast of tokens + token usage in components (runs in CI)
 ```
 
 ## Slash Commands
