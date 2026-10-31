@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="es">
   <file id="ngi18n" original="ng.template">
-    <unit id="login.eyebrow">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:29,31</note>
-      </notes>
-      <segment>
-        <source>Panel de Administración</source>
-      </segment>
-    </unit>
     <unit id="login.title">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:32,33</note>
+        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:23,24</note>
       </notes>
       <segment>
-        <source>Iniciar</source>
+        <source>Iniciar sesión</source>
       </segment>
     </unit>
-    <unit id="login.titleAccent">
+    <unit id="login.subtitle">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:33,35</note>
+        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:24,27</note>
       </notes>
       <segment>
-        <source>Sesión</source>
+        <source>Panel de administración</source>
       </segment>
     </unit>
     <unit id="login.email.label">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:45</note>
+        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:35</note>
       </notes>
       <segment>
         <source>Email</source>
@@ -35,7 +27,7 @@
     </unit>
     <unit id="login.email.error">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:48</note>
+        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:38</note>
       </notes>
       <segment>
         <source>Introduce un email válido</source>
@@ -43,7 +35,7 @@
     </unit>
     <unit id="login.password.label">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:62</note>
+        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:52</note>
       </notes>
       <segment>
         <source>Contraseña</source>
@@ -51,7 +43,7 @@
     </unit>
     <unit id="login.password.error">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:65</note>
+        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:55</note>
       </notes>
       <segment>
         <source>Mínimo 6 caracteres</source>
@@ -59,7 +51,7 @@
     </unit>
     <unit id="login.back">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:94,97</note>
+        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:85,88</note>
       </notes>
       <segment>
         <source> ← Volver a la web </source>
@@ -67,7 +59,7 @@
     </unit>
     <unit id="hero.cta.primary">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:42</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:41</note>
       </notes>
       <segment>
         <source>Ver clases</source>
@@ -75,7 +67,7 @@
     </unit>
     <unit id="hero.cta.secondary">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:44</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:43</note>
       </notes>
       <segment>
         <source>Contáctanos</source>
@@ -83,7 +75,7 @@
     </unit>
     <unit id="nav.about">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:69</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:68</note>
       </notes>
       <segment>
         <source>Nosotros</source>
@@ -91,7 +83,7 @@
     </unit>
     <unit id="nav.classes">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:70</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:69</note>
       </notes>
       <segment>
         <source>Clases</source>
@@ -99,7 +91,7 @@
     </unit>
     <unit id="nav.schedule">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:71</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:70</note>
       </notes>
       <segment>
         <source>Horarios</source>
@@ -107,87 +99,39 @@
     </unit>
     <unit id="nav.contact">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:72</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:71</note>
       </notes>
       <segment>
         <source>Contacto</source>
       </segment>
     </unit>
-    <unit id="about.eyebrow">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/about-section/about-section.component.html:5</note>
-      </notes>
-      <segment>
-        <source>Quiénes somos</source>
-      </segment>
-    </unit>
     <unit id="about.title">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/about-section/about-section.component.html:6</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/about-section/about-section.component.html:4</note>
       </notes>
       <segment>
-        <source>Sobre</source>
-      </segment>
-    </unit>
-    <unit id="about.titleAccent">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/about-section/about-section.component.html:7</note>
-      </notes>
-      <segment>
-        <source>Nosotros</source>
-      </segment>
-    </unit>
-    <unit id="classes.eyebrow">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/classes-section/classes-section.component.html:5</note>
-      </notes>
-      <segment>
-        <source>Lo que ofrecemos</source>
+        <source>Sobre nosotros</source>
       </segment>
     </unit>
     <unit id="classes.title">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/classes-section/classes-section.component.html:6</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/classes-section/classes-section.component.html:4</note>
       </notes>
       <segment>
-        <source>Nuestras</source>
-      </segment>
-    </unit>
-    <unit id="classes.titleAccent">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/classes-section/classes-section.component.html:7</note>
-      </notes>
-      <segment>
-        <source>Clases</source>
-      </segment>
-    </unit>
-    <unit id="contact.eyebrow">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:5</note>
-      </notes>
-      <segment>
-        <source>Estamos aquí</source>
+        <source>Nuestras clases</source>
       </segment>
     </unit>
     <unit id="contact.title">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:6</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:4</note>
       </notes>
       <segment>
-        <source>Contác</source>
-      </segment>
-    </unit>
-    <unit id="contact.titleAccent">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:7</note>
-      </notes>
-      <segment>
-        <source>tanos</source>
+        <source>Contáctanos</source>
       </segment>
     </unit>
     <unit id="contact.whatsapp">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:21,24</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:15,18</note>
       </notes>
       <segment>
         <source>Escríbenos por WhatsApp</source>
@@ -195,7 +139,7 @@
     </unit>
     <unit id="contact.phone.label">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:26,27</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:20,21</note>
       </notes>
       <segment>
         <source>Teléfono</source>
@@ -203,7 +147,7 @@
     </unit>
     <unit id="contact.email.label">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:30,31</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:24,25</note>
       </notes>
       <segment>
         <source>Email</source>
@@ -211,7 +155,7 @@
     </unit>
     <unit id="contact.address.label">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:34,35</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:28,29</note>
       </notes>
       <segment>
         <source>Dirección</source>
@@ -219,34 +163,18 @@
     </unit>
     <unit id="contact.instagram.label">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:39,41</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:33,35</note>
       </notes>
       <segment>
         <source>Instagram</source>
       </segment>
     </unit>
-    <unit id="schedule.eyebrow">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/schedule-section/schedule-section.component.html:5</note>
-      </notes>
-      <segment>
-        <source>Cuándo entrenamos</source>
-      </segment>
-    </unit>
     <unit id="schedule.title">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/schedule-section/schedule-section.component.html:6</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/schedule-section/schedule-section.component.html:4</note>
       </notes>
       <segment>
-        <source>Hora</source>
-      </segment>
-    </unit>
-    <unit id="schedule.titleAccent">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/schedule-section/schedule-section.component.html:7</note>
-      </notes>
-      <segment>
-        <source>rios</source>
+        <source>Horarios</source>
       </segment>
     </unit>
   </file>

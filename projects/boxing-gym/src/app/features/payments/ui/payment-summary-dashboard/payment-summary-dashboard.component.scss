@@ -9,7 +9,7 @@
 
   &__skeleton,
   &__empty {
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     padding: 2rem 0;
     text-align: center;
   }
@@ -59,12 +59,12 @@
   &__section-title {
     font-weight: 600;
     font-size: 0.9375rem;
-    color: var(--color-text);
+    color: var(--color-text-primary);
   }
 
   &__section-empty {
     font-size: 0.875rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
 
   &__at-risk-warning {
@@ -120,7 +120,7 @@
   &__item-name {
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--color-text);
+    color: var(--color-text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -128,7 +128,7 @@
 
   &__item-meta {
     font-size: 0.8125rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
   }
 
   &__item-months {

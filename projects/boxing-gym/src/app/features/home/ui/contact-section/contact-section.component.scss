@@ -24,7 +24,7 @@
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
-  color: var(--gym-white);
+  color: var(--gym-whatsapp-ink);
   background-color: var(--gym-whatsapp);
   padding: 1rem 2rem;
   border-radius: 4px;
@@ -35,6 +35,13 @@
     background-color: var(--gym-whatsapp-hover);
     transform: translateY(-2px);
   }
+}
+
+.contact__whatsapp-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+  flex-shrink: 0;
 }
 
 .contact__details {
@@ -66,9 +73,7 @@
 .contact__label {
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gym-gray);
+  color: var(--gym-text-secondary);
   min-width: 80px;
 }
 
@@ -91,6 +96,5 @@
 
 .footer__copy {
   font-size: 0.75rem;
-  color: var(--gym-gray);
-  letter-spacing: 0.05em;
+  color: var(--gym-text-secondary);
 }

@@ -49,11 +49,9 @@
   }
 
   &__gym-name {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--gym-text-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -61,10 +59,8 @@
   }
 
   &__gym-sub {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: var(--gym-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
     line-height: 1.3;
   }
 

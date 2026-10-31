@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="es" trgLang="en">
   <file id="ngi18n" original="ng.template">
-    <unit id="login.eyebrow">
-      <segment>
-        <source>Panel de Administración</source>
-        <target>Admin Panel</target>
-      </segment>
-    </unit>
     <unit id="login.title">
       <segment>
-        <source>Iniciar</source>
-        <target>Log</target>
+        <source>Iniciar sesión</source>
+        <target>Log in</target>
       </segment>
     </unit>
-    <unit id="login.titleAccent">
+    <unit id="login.subtitle">
       <segment>
-        <source>Sesión</source>
-        <target>In</target>
+        <source>Panel de administración</source>
+        <target>Admin panel</target>
       </segment>
     </unit>
     <unit id="login.email.label">
@@ -85,58 +79,22 @@
         <target>Contact</target>
       </segment>
     </unit>
-    <unit id="about.eyebrow">
-      <segment>
-        <source>Quiénes somos</source>
-        <target>Who we are</target>
-      </segment>
-    </unit>
     <unit id="about.title">
       <segment>
-        <source>Sobre</source>
-        <target>About</target>
-      </segment>
-    </unit>
-    <unit id="about.titleAccent">
-      <segment>
-        <source>Nosotros</source>
-        <target>Us</target>
-      </segment>
-    </unit>
-    <unit id="classes.eyebrow">
-      <segment>
-        <source>Lo que ofrecemos</source>
-        <target>What we offer</target>
+        <source>Sobre nosotros</source>
+        <target>About us</target>
       </segment>
     </unit>
     <unit id="classes.title">
       <segment>
-        <source>Nuestras</source>
-        <target>Our</target>
-      </segment>
-    </unit>
-    <unit id="classes.titleAccent">
-      <segment>
-        <source>Clases</source>
-        <target>Classes</target>
-      </segment>
-    </unit>
-    <unit id="contact.eyebrow">
-      <segment>
-        <source>Estamos aquí</source>
-        <target>We're here</target>
+        <source>Nuestras clases</source>
+        <target>Our classes</target>
       </segment>
     </unit>
     <unit id="contact.title">
       <segment>
-        <source>Contác</source>
-        <target>Con</target>
-      </segment>
-    </unit>
-    <unit id="contact.titleAccent">
-      <segment>
-        <source>tanos</source>
-        <target>tact</target>
+        <source>Contáctanos</source>
+        <target>Contact us</target>
       </segment>
     </unit>
     <unit id="contact.whatsapp">
@@ -169,22 +127,10 @@
         <target>Instagram</target>
       </segment>
     </unit>
-    <unit id="schedule.eyebrow">
-      <segment>
-        <source>Cuándo entrenamos</source>
-        <target>When we train</target>
-      </segment>
-    </unit>
     <unit id="schedule.title">
       <segment>
-        <source>Hora</source>
-        <target>Sche</target>
-      </segment>
-    </unit>
-    <unit id="schedule.titleAccent">
-      <segment>
-        <source>rios</source>
-        <target>dule</target>
+        <source>Horarios</source>
+        <target>Schedule</target>
       </segment>
     </unit>
   </file>

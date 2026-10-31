@@ -6,10 +6,8 @@
   border: 1px solid var(--gym-border-muted);
   color: var(--gym-text-secondary);
   font-family: var(--gym-font-body);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   padding: 0.3rem 0.65rem;
   cursor: pointer;
   transition:
@@ -22,7 +20,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--gym-red-500);
+    outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
   }
 

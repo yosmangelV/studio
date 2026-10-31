@@ -1,0 +1,147 @@
+{
+  "name": "boxing-gym",
+  "sources": [
+    "projects/boxing-gym/src/app"
+  ],
+  "forbiddenTextTokens": [
+    "--gym-red",
+    "--gym-red-500",
+    "--gym-red-300",
+    "--gym-red-light",
+    "--gym-brand",
+    "--gym-brand-light",
+    "--gym-gray",
+    "--color-primary-500",
+    "--gym-text-disabled"
+  ],
+  "themes": [
+    {
+      "name": "boxing-gym",
+      "layers": [
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": ":root"
+        },
+        {
+          "file": "projects/boxing-gym/src/styles/tokens.boxing-gym.scss",
+          "block": ":root"
+        }
+      ],
+      "canvas": "--gym-surface-app",
+      "checks": [
+        {
+          "label": "text on surfaces",
+          "min": 4.5,
+          "fg": [
+            "--gym-text-primary",
+            "--gym-text-secondary",
+            "--gym-text-muted",
+            "--gym-brand-on-dark",
+            "--gym-text-danger",
+            "--color-text-primary",
+            "--color-text-secondary",
+            "--color-text-tertiary",
+            "--color-text-link",
+            "--color-text-accent",
+            "--color-error"
+          ],
+          "bg": [
+            "--gym-surface-app",
+            "--gym-surface-panel",
+            "--gym-dark",
+            "--gym-surface-elevated",
+            "--color-surface-raised"
+          ]
+        },
+        {
+          "label": "text on solid fills",
+          "min": 4.5,
+          "fg": [
+            "--color-text-on-primary"
+          ],
+          "bg": [
+            "--gym-brand",
+            "--color-primary-500",
+            "--color-primary-600",
+            "--color-error-solid"
+          ]
+        },
+        {
+          "label": "WhatsApp button",
+          "min": 4.5,
+          "fg": [
+            "--gym-whatsapp-ink"
+          ],
+          "bg": [
+            "--gym-whatsapp",
+            "--gym-whatsapp-hover"
+          ]
+        },
+        {
+          "label": "focus ring",
+          "min": 3,
+          "fg": [
+            "--color-border-focus"
+          ],
+          "bg": [
+            "--gym-surface-app",
+            "--gym-surface-panel",
+            "--gym-dark",
+            "--gym-surface-elevated"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boxing-gym (OS in dark mode)",
+      "layers": [
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": ":root"
+        },
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": "@mixin dark-tokens"
+        },
+        {
+          "file": "projects/boxing-gym/src/styles/tokens.boxing-gym.scss",
+          "block": ":root"
+        }
+      ],
+      "canvas": "--gym-surface-app",
+      "checks": [
+        {
+          "label": "DS text on surfaces",
+          "min": 4.5,
+          "fg": [
+            "--color-text-primary",
+            "--color-text-secondary",
+            "--color-text-tertiary",
+            "--color-text-link",
+            "--color-text-accent"
+          ],
+          "bg": [
+            "--gym-surface-app",
+            "--gym-surface-panel",
+            "--gym-dark",
+            "--gym-surface-elevated",
+            "--color-surface-raised"
+          ]
+        },
+        {
+          "label": "focus ring",
+          "min": 3,
+          "fg": [
+            "--color-border-focus"
+          ],
+          "bg": [
+            "--gym-surface-app",
+            "--gym-surface-panel",
+            "--gym-dark",
+            "--gym-surface-elevated"
+          ]
+        }
+      ]
+    }
+  ]
+}

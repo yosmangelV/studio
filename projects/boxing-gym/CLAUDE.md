@@ -8,6 +8,8 @@ Extends the root `CLAUDE.md`. These rules are specific to this application and t
 
 Admin panel for a boxing school. Web app, mobile-first. Angular frontend consuming a Python FastAPI backend via a generated OpenAPI TypeScript client.
 
+Visual rules (voice, colour roles, type, public page) live in `design.md` in this folder.
+
 **Fase 1 — Active:** Student registration module.
 
 ---

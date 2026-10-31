@@ -16,7 +16,7 @@
 
   &__icon {
     flex-shrink: 0;
-    color: var(--gym-red, #e11d48);
+    color: var(--gym-brand-on-dark);
   }
 
   &__text {
@@ -24,38 +24,36 @@
     margin: 0;
     font-size: 0.8rem;
     line-height: 1.4;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--gym-text-high);
   }
 
   &__share-icon {
     display: inline-flex;
     vertical-align: middle;
     margin: 0 2px;
-    color: var(--gym-red, #e11d48);
+    color: var(--gym-brand-on-dark);
   }
 
   &__install {
     flex-shrink: 0;
-    background: var(--gym-red, #e11d48);
+    background: var(--gym-brand);
     border: none;
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    color: var(--color-text-on-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
     cursor: pointer;
     padding: 0.5rem 1rem;
     border-radius: 6px;
     min-height: 44px;
 
-    &:hover { background: #c81a40; }
+    &:hover { background: var(--gym-brand-dark); }
   }
 
   &__close {
     flex-shrink: 0;
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--gym-text-secondary);
     font-size: 0.85rem;
     cursor: pointer;
     padding: 0.25rem;
@@ -66,7 +64,7 @@
     align-items: center;
     justify-content: center;
 
-    &:hover { color: rgba(255, 255, 255, 0.8); }
+    &:hover { color: var(--gym-text-high); }
   }
 }
 

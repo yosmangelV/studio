@@ -19,7 +19,7 @@
     border-color var(--duration-fast) var(--ease-default),
     box-shadow var(--duration-fast) var(--ease-default),
     background var(--duration-fast) var(--ease-default);
-  outline: none;
+  outline: none; // a11y-ok: :focus-visible sets a --color-border-focus border
   appearance: none;
   box-sizing: border-box;
 

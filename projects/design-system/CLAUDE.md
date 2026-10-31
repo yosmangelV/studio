@@ -18,7 +18,6 @@ src/
 │   ├── atoms/             ← Basic building blocks (single responsibility, no composition)
 │   │   ├── badge/
 │   │   ├── button/
-│   │   ├── eyebrow/
 │   │   ├── image/
 │   │   ├── input/
 │   │   └── typography/
@@ -62,6 +61,9 @@ component-name/
 - **Tailwind for layout** — use Tailwind utilities in templates for layout (flex, grid, gap, padding). BEM for component-specific styles.
 - **Dark mode required** — every component must support both `prefers-color-scheme: dark` and the `.dark` class strategy using token variants.
 - **No global side effects** — component SCSS must be scoped. Never write global selectors.
+- **Text colours are text-role tokens** — `--color-text-*`, `--color-text-accent` for brand-coloured text, `--color-text-on-primary` on primary and `*-solid` fills. Never `--color-primary-*` or a literal as `color`.
+- **Never remove focus** — the global `:focus-visible` ring applies; replacing it needs an equally visible style and an `// a11y-ok:` note on the `outline: none` line.
+- **Contrast is tested** — `npm run test:contrast` checks every token pair in `contrast.config.json`. A new token or surface adds its pairs there.
 
 ---
 

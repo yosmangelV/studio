@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/angular';
 import { HeroSectionComponent } from './hero-section.component';
 
 const BASE_INPUTS = {
-  eyebrow:           'Escuela de Boxeo',
   headlineTop:       'Aprende',
   headlineMain:      'Boxeo',
   tagline:           'Entrena con los mejores',
@@ -13,11 +12,6 @@ const BASE_INPUTS = {
 };
 
 describe('HeroSectionComponent', () => {
-  it('renders eyebrow text', async () => {
-    await render(HeroSectionComponent, { componentInputs: BASE_INPUTS });
-    expect(screen.getByText('Escuela de Boxeo')).toBeInTheDocument();
-  });
-
   it('renders headline parts', async () => {
     await render(HeroSectionComponent, { componentInputs: BASE_INPUTS });
     expect(screen.getByText('Aprende')).toBeInTheDocument();

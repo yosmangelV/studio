@@ -6,6 +6,13 @@ html {
   overflow-x: hidden;
 }
 
+// Default keyboard focus ring for every interactive element. Components may restyle
+// it, but must not remove it. The token is checked at 3:1 on every gym surface.
+:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
 html,
 body {
   height: 100%;

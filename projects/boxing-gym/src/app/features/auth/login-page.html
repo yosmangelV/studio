@@ -8,10 +8,6 @@
     </div>
     <img class="login__brand-img" [src]="config.assets.logoIllustrated" alt="" />
     <div class="login__brand-content">
-      <p class="login__brand-eyebrow">
-        <span class="login__brand-eyebrow-line"></span>
-        {{ config.subtitle }}
-      </p>
       <div class="login__brand-headline">
         <span class="login__brand-headline-top">{{ headlineTop }}</span>
         <span class="login__brand-headline-main">{{ headlineMain }}</span>
@@ -24,14 +20,8 @@
     <div class="login__form-wrap">
 
       <div class="login__form-header">
-        <p class="login__form-eyebrow">
-          <span class="login__form-eyebrow-line"></span>
-          <span i18n="@@login.eyebrow">Panel de Administración</span>
-        </p>
-        <h1 class="login__form-title">
-          <span i18n="@@login.title">Iniciar</span>
-          <span class="login__form-title--accent" i18n="@@login.titleAccent">Sesión</span>
-        </h1>
+        <h1 class="login__form-title" i18n="@@login.title">Iniciar sesión</h1>
+        <p class="login__form-subtitle" i18n="@@login.subtitle">Panel de administración</p>
       </div>
 
       <form

@@ -5,7 +5,6 @@
 // Atoms
 export * from './lib/atoms/badge/badge.component';
 export * from './lib/atoms/button/button.component';
-export * from './lib/atoms/eyebrow/eyebrow.component';
 export * from './lib/atoms/image/image.component';
 export * from './lib/atoms/input/input.component';
 export * from './lib/atoms/typography/typography.component';

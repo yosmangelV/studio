@@ -25,7 +25,6 @@ Ambos se sobreescriben por app vía el token bridge.
     },
   },
   argTypes: {
-    eyebrow:           { control: 'text' },
     headlineTop:       { control: 'text' },
     headlineMain:      { control: 'text' },
     tagline:           { control: 'text' },
@@ -39,7 +38,6 @@ Ambos se sobreescriben por app vía el token bridge.
     props: args,
     template: `
       <ds-hero-section
-        [eyebrow]="eyebrow"
         [headlineTop]="headlineTop"
         [headlineMain]="headlineMain"
         [tagline]="tagline"
@@ -58,7 +56,6 @@ type Story = StoryObj<HeroSectionComponent>;
 
 export const Default: Story = {
   args: {
-    eyebrow:           'Bienvenido',
     headlineTop:       'LEGION',
     headlineMain:      'BOXING',
     tagline:           'Entrenamiento de alto rendimiento para todos los niveles. Técnica, disciplina y comunidad.',

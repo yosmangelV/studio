@@ -65,27 +65,6 @@
   z-index: 1;
 }
 
-.login__brand-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-family: var(--gym-font-body);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gym-red);
-  margin-bottom: 1rem;
-}
-
-.login__brand-eyebrow-line {
-  display: block;
-  width: 2rem;
-  height: 1px;
-  background: var(--gym-red);
-  flex-shrink: 0;
-}
-
 .login__brand-headline {
   font-family: var(--gym-font-display);
   text-transform: uppercase;
@@ -96,7 +75,7 @@
   display: block;
   font-size: clamp(1.5rem, 3.5vw, 3rem);
   font-weight: 300;
-  color: var(--gym-text-muted);
+  color: var(--gym-text-primary);
   letter-spacing: 0.06em;
 }
 
@@ -132,27 +111,6 @@
   margin-bottom: 2.5rem;
 }
 
-.login__form-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-family: var(--gym-font-body);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gym-red);
-  margin-bottom: 0.875rem;
-}
-
-.login__form-eyebrow-line {
-  display: block;
-  width: 2rem;
-  height: 1px;
-  background: var(--gym-red);
-  flex-shrink: 0;
-}
-
 .login__form-title {
   font-family: var(--gym-font-display);
   font-size: clamp(2.25rem, 5vw, 3.25rem);
@@ -160,10 +118,13 @@
   text-transform: uppercase;
   color: var(--gym-white);
   line-height: 1;
+  margin-bottom: 0.75rem;
+}
 
-  &--accent {
-    color: var(--gym-red);
-  }
+.login__form-subtitle {
+  font-family: var(--gym-font-body);
+  font-size: 1rem;
+  color: var(--gym-text-secondary);
 }
 
 // ── Form fields ─────────────────────────────────────────────────────
@@ -178,7 +139,7 @@
 .login__error {
   background: var(--gym-brand-hover);
   border: 1px solid var(--gym-brand-glow);
-  color: var(--gym-red-light);
+  color: var(--gym-text-danger);
   font-family: var(--gym-font-body);
   font-size: 0.85rem;
   padding: 0.75rem 1rem;
@@ -192,8 +153,7 @@
   font-family: var(--gym-font-body);
   font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--gym-gray);
+  color: var(--gym-text-secondary);
   text-decoration: none;
   text-align: center;
   transition: color 0.2s ease;
