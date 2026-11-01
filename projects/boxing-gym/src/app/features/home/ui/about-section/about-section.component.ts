@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SectionHeaderComponent } from 'design-system';
-import type { GymHighlight } from '../../../../core/config/gym-config.model';
+import type { HighlightView } from '../../../../core/gym-profile/gym-profile.model';
 
 @Component({
   selector: 'app-about-section',
@@ -12,6 +12,6 @@ import type { GymHighlight } from '../../../../core/config/gym-config.model';
 })
 export class AboutSectionComponent {
   readonly about      = input.required<string>();
-  readonly highlights = input.required<GymHighlight[]>();
+  readonly highlights = input.required<HighlightView[]>();
   readonly logoSrc    = input.required<string>();
 }

@@ -34,8 +34,140 @@ export interface AtRiskStudentInfo {
   months_unpaid: number;
 }
 
+export interface ClassesUpdate {
+  /** @maxItems 20 */
+  classes: GymClass[];
+}
+
+export interface GymClass {
+  name: GymClassName;
+  description: LocalizedText;
+  /** @minimum 0 */
+  sort_order?: number;
+  is_active?: boolean;
+}
+
+export type GymClassNameEn = string | null;
+
+export interface GymClassName {
+  /**
+   * @minLength 1
+   * @maxLength 60
+   */
+  es: string;
+  en?: GymClassNameEn;
+}
+
+export interface GymClassResponse {
+  name: GymClassName;
+  description: LocalizedText;
+  /** @minimum 0 */
+  sort_order?: number;
+  is_active?: boolean;
+  id: string;
+}
+
+export type GymProfileFullProfile = GymProfileResponse | null;
+
+export interface GymProfileFull {
+  profile: GymProfileFullProfile;
+  schedule: ScheduleSlotResponse[];
+  classes: GymClassResponse[];
+}
+
+/**
+ * E.164, e.g. +34658078039
+ */
+export type GymProfileResponsePhone = string | null;
+
+/**
+ * Digits with country code, e.g. 34658078039
+ */
+export type GymProfileResponseWhatsapp = string | null;
+
+export type GymProfileResponseEmail = string | null;
+
+export type GymProfileResponseAddress = string | null;
+
+/**
+ * Username without @
+ */
+export type GymProfileResponseInstagram = string | null;
+
+export type GymProfileResponseFoundedOn = string | null;
+
+export interface GymProfileResponse {
+  /** E.164, e.g. +34658078039 */
+  phone?: GymProfileResponsePhone;
+  /** Digits with country code, e.g. 34658078039 */
+  whatsapp?: GymProfileResponseWhatsapp;
+  email?: GymProfileResponseEmail;
+  address?: GymProfileResponseAddress;
+  /** Username without @ */
+  instagram?: GymProfileResponseInstagram;
+  founded_on?: GymProfileResponseFoundedOn;
+  /**
+   * @minimum 1
+   * @maximum 1000
+   */
+  active_students_min_display?: number;
+  updated_at: string;
+}
+
+/**
+ * E.164, e.g. +34658078039
+ */
+export type GymProfileUpdatePhone = string | null;
+
+/**
+ * Digits with country code, e.g. 34658078039
+ */
+export type GymProfileUpdateWhatsapp = string | null;
+
+export type GymProfileUpdateEmail = string | null;
+
+export type GymProfileUpdateAddress = string | null;
+
+/**
+ * Username without @
+ */
+export type GymProfileUpdateInstagram = string | null;
+
+export type GymProfileUpdateFoundedOn = string | null;
+
+export interface GymProfileUpdate {
+  /** E.164, e.g. +34658078039 */
+  phone?: GymProfileUpdatePhone;
+  /** Digits with country code, e.g. 34658078039 */
+  whatsapp?: GymProfileUpdateWhatsapp;
+  email?: GymProfileUpdateEmail;
+  address?: GymProfileUpdateAddress;
+  /** Username without @ */
+  instagram?: GymProfileUpdateInstagram;
+  founded_on?: GymProfileUpdateFoundedOn;
+  /**
+   * @minimum 1
+   * @maximum 1000
+   */
+  active_students_min_display?: number;
+}
+
 export interface HTTPValidationError {
   detail?: ValidationError[];
+}
+
+export type LocalizedTextEn = string | null;
+
+/**
+ * Translatable text. `es` is required; other locales fall back to it.
+ */
+export interface LocalizedText {
+  /**
+   * @minLength 1
+   * @maxLength 300
+   */
+  es: string;
+  en?: LocalizedTextEn;
 }
 
 export interface MethodStats {
@@ -48,6 +180,14 @@ export interface PaginatedPayments {
   total: number;
   limit: number;
   offset: number;
+}
+
+export interface PaginatedStudents {
+  data: StudentResponse[];
+  total: number;
+  limit: number;
+  offset: number;
+  pages: number;
 }
 
 export interface PaidStudentInfo {
@@ -130,6 +270,54 @@ export const PaymentType = {
   material: 'material',
 } as const;
 
+export type ScheduleSlotLabel = LocalizedText | null;
+
+export interface ScheduleSlot {
+  /**
+   * ISO weekday, 1 = Monday
+   * @minimum 1
+   * @maximum 7
+   */
+  day_from: number;
+  /**
+   * @minimum 1
+   * @maximum 7
+   */
+  day_to: number;
+  opens_at: string;
+  closes_at: string;
+  label?: ScheduleSlotLabel;
+  /** @minimum 0 */
+  sort_order?: number;
+}
+
+export type ScheduleSlotResponseLabel = LocalizedText | null;
+
+export interface ScheduleSlotResponse {
+  /**
+   * ISO weekday, 1 = Monday
+   * @minimum 1
+   * @maximum 7
+   */
+  day_from: number;
+  /**
+   * @minimum 1
+   * @maximum 7
+   */
+  day_to: number;
+  opens_at: string;
+  closes_at: string;
+  label?: ScheduleSlotResponseLabel;
+  /** @minimum 0 */
+  sort_order?: number;
+  id: string;
+}
+
+export interface ScheduleUpdate {
+  /** @maxItems 50 */
+  slots: ScheduleSlot[];
+}
+
 export type StudentCreatePhone = string | null;
 
 export type StudentCreateWeight = number | null;
@@ -183,6 +371,7 @@ export interface StudentResponse {
   weight?: StudentResponseWeight;
   id: string;
   auth_user_id?: StudentResponseAuthUserId;
+  permissions?: string[];
   created_at: string;
   updated_at: string;
 }
@@ -201,6 +390,8 @@ export type StudentUpdateIsActive = boolean | null;
 
 export type StudentUpdateWeight = number | null;
 
+export type StudentUpdateSystemAccess = SystemAccessCreate | null;
+
 export interface StudentUpdate {
   full_name?: StudentUpdateFullName;
   email?: StudentUpdateEmail;
@@ -209,12 +400,11 @@ export interface StudentUpdate {
   level?: StudentUpdateLevel;
   is_active?: StudentUpdateIsActive;
   weight?: StudentUpdateWeight;
+  system_access?: StudentUpdateSystemAccess;
 }
 
 export interface SystemAccessCreate {
   permissions: string[];
-  /** @minLength 8 */
-  password: string;
 }
 
 export interface UnpaidStudentInfo {
@@ -233,6 +423,19 @@ export interface ValidationError {
   input?: unknown;
   ctx?: ValidationErrorCtx;
 }
+
+export type ListStudentsStudentsGetParams = {
+search?: string | null;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+/**
+ * @minimum 0
+ */
+offset?: number;
+};
 
 export type ListPaymentsPaymentsGetParams = {
 type?: string | null;
@@ -299,13 +502,15 @@ export class BoxingGymAPIService {
 /**
  * @summary List Students
  */
- listStudentsStudentsGet<TData = StudentResponse[]>( options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- listStudentsStudentsGet<TData = StudentResponse[]>( options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- listStudentsStudentsGet<TData = StudentResponse[]>( options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  listStudentsStudentsGet<TData = StudentResponse[]>(
-     options?: HttpClientOptions & { observe?: any }): Observable<any> {
+ listStudentsStudentsGet<TData = PaginatedStudents>(params?: DeepNonNullable<ListStudentsStudentsGetParams>, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ listStudentsStudentsGet<TData = PaginatedStudents>(params?: DeepNonNullable<ListStudentsStudentsGetParams>, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ listStudentsStudentsGet<TData = PaginatedStudents>(params?: DeepNonNullable<ListStudentsStudentsGetParams>, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  listStudentsStudentsGet<TData = PaginatedStudents>(
+    params?: DeepNonNullable<ListStudentsStudentsGetParams>, options?: HttpClientOptions & { observe?: any }): Observable<any> {
     return this.http.get<TData>(
-      `http://127.0.0.1:8000/students/`,options
+      `http://127.0.0.1:8000/students/`,{
+    ...options,
+        params: {...params, ...options?.params},}
     );
   }
 
@@ -472,6 +677,61 @@ export class BoxingGymAPIService {
   }
 
 /**
+ * @summary Get Gym Profile
+ */
+ getGymProfileGymProfileGet<TData = GymProfileFull>( options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ getGymProfileGymProfileGet<TData = GymProfileFull>( options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ getGymProfileGymProfileGet<TData = GymProfileFull>( options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  getGymProfileGymProfileGet<TData = GymProfileFull>(
+     options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.get<TData>(
+      `http://127.0.0.1:8000/gym-profile`,options
+    );
+  }
+
+/**
+ * @summary Update Gym Profile
+ */
+ updateGymProfileGymProfileProfilePut<TData = GymProfileFull>(gymProfileUpdate: GymProfileUpdate, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ updateGymProfileGymProfileProfilePut<TData = GymProfileFull>(gymProfileUpdate: GymProfileUpdate, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ updateGymProfileGymProfileProfilePut<TData = GymProfileFull>(gymProfileUpdate: GymProfileUpdate, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  updateGymProfileGymProfileProfilePut<TData = GymProfileFull>(
+    gymProfileUpdate: GymProfileUpdate, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.put<TData>(
+      `http://127.0.0.1:8000/gym-profile/profile`,
+      gymProfileUpdate,options
+    );
+  }
+
+/**
+ * @summary Replace Gym Schedule
+ */
+ replaceGymScheduleGymProfileSchedulePut<TData = GymProfileFull>(scheduleUpdate: ScheduleUpdate, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ replaceGymScheduleGymProfileSchedulePut<TData = GymProfileFull>(scheduleUpdate: ScheduleUpdate, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ replaceGymScheduleGymProfileSchedulePut<TData = GymProfileFull>(scheduleUpdate: ScheduleUpdate, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  replaceGymScheduleGymProfileSchedulePut<TData = GymProfileFull>(
+    scheduleUpdate: ScheduleUpdate, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.put<TData>(
+      `http://127.0.0.1:8000/gym-profile/schedule`,
+      scheduleUpdate,options
+    );
+  }
+
+/**
+ * @summary Replace Gym Classes
+ */
+ replaceGymClassesGymProfileClassesPut<TData = GymProfileFull>(classesUpdate: ClassesUpdate, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ replaceGymClassesGymProfileClassesPut<TData = GymProfileFull>(classesUpdate: ClassesUpdate, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ replaceGymClassesGymProfileClassesPut<TData = GymProfileFull>(classesUpdate: ClassesUpdate, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  replaceGymClassesGymProfileClassesPut<TData = GymProfileFull>(
+    classesUpdate: ClassesUpdate, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.put<TData>(
+      `http://127.0.0.1:8000/gym-profile/classes`,
+      classesUpdate,options
+    );
+  }
+
+/**
  * @summary Health Check
  */
  healthCheckHealthGet<TData = unknown>( options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
@@ -486,7 +746,7 @@ export class BoxingGymAPIService {
 
 };
 
-export type ListStudentsStudentsGetClientResult = NonNullable<StudentResponse[]>
+export type ListStudentsStudentsGetClientResult = NonNullable<PaginatedStudents>
 export type CreateStudentStudentsPostClientResult = NonNullable<StudentResponse>
 export type GetStudentStudentsStudentIdGetClientResult = NonNullable<StudentResponse>
 export type UpdateStudentStudentsStudentIdPatchClientResult = NonNullable<StudentResponse>
@@ -498,4 +758,8 @@ export type GetAnalyticsPaymentsAnalyticsGetClientResult = NonNullable<PaymentAn
 export type GetPaymentPaymentsPaymentIdGetClientResult = NonNullable<PaymentResponse>
 export type DeletePaymentPaymentsPaymentIdDeleteClientResult = NonNullable<void>
 export type GetStudentPaymentsStudentsStudentIdPaymentsGetClientResult = NonNullable<PaginatedPayments>
+export type GetGymProfileGymProfileGetClientResult = NonNullable<GymProfileFull>
+export type UpdateGymProfileGymProfileProfilePutClientResult = NonNullable<GymProfileFull>
+export type ReplaceGymScheduleGymProfileSchedulePutClientResult = NonNullable<GymProfileFull>
+export type ReplaceGymClassesGymProfileClassesPutClientResult = NonNullable<GymProfileFull>
 export type HealthCheckHealthGetClientResult = NonNullable<unknown>

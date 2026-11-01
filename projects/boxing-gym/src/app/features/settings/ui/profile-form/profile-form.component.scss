@@ -1,0 +1,26 @@
+@use '../settings-form' as sf;
+
+.profile-form {
+  @include sf.block;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__title { @include sf.block-title; }
+  &__hint  { @include sf.block-hint; }
+
+  &__grid { @include sf.grid(2); }
+
+  &__wide {
+    grid-column: 1 / -1;
+  }
+
+  &__native { @include sf.native-control; }
+
+  &__footer { @include sf.footer; }
+
+  &__status { @include sf.status; }
+}

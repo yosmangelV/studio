@@ -1,0 +1,97 @@
+<form class="profile-form" [formGroup]="form" (ngSubmit)="onSubmit()" data-testid="settings-profile-form">
+  <div class="profile-form__header">
+    <h2 class="profile-form__title">Contacto</h2>
+    <p class="profile-form__hint">Los campos vacíos no se muestran en la web.</p>
+  </div>
+
+  <div class="profile-form__grid">
+    <ds-form-field
+      label="Teléfono"
+      inputId="settings-phone"
+      hint="Con prefijo internacional: +34 600 000 000"
+      [hasError]="form.controls.phone.touched && form.controls.phone.invalid"
+      errorMessage="Solo números, espacios y +."
+    >
+      <ds-input inputId="settings-phone" type="tel" testId="settings-phone-input" formControlName="phone"
+        [hasError]="form.controls.phone.touched && form.controls.phone.invalid" />
+    </ds-form-field>
+
+    <ds-form-field
+      label="WhatsApp"
+      inputId="settings-whatsapp"
+      hint="Vacío oculta el botón de WhatsApp."
+      [hasError]="form.controls.whatsapp.touched && form.controls.whatsapp.invalid"
+      errorMessage="Solo números, espacios y +."
+    >
+      <ds-input inputId="settings-whatsapp" type="tel" testId="settings-whatsapp-input" formControlName="whatsapp"
+        [hasError]="form.controls.whatsapp.touched && form.controls.whatsapp.invalid" />
+    </ds-form-field>
+
+    <ds-form-field
+      label="Email"
+      inputId="settings-email"
+      [hasError]="form.controls.email.touched && form.controls.email.invalid"
+      errorMessage="Introduce un email válido."
+    >
+      <ds-input inputId="settings-email" type="email" testId="settings-email-input" formControlName="email"
+        [hasError]="form.controls.email.touched && form.controls.email.invalid" />
+    </ds-form-field>
+
+    <ds-form-field
+      label="Instagram"
+      inputId="settings-instagram"
+      hint="Usuario, con o sin @."
+      [hasError]="form.controls.instagram.touched && form.controls.instagram.invalid"
+      errorMessage="Hasta 30 letras, números, puntos o guiones bajos."
+    >
+      <ds-input inputId="settings-instagram" testId="settings-instagram-input" formControlName="instagram"
+        [hasError]="form.controls.instagram.touched && form.controls.instagram.invalid" />
+    </ds-form-field>
+
+    <div class="profile-form__wide">
+      <ds-form-field
+        label="Dirección"
+        inputId="settings-address"
+        [hasError]="form.controls.address.touched && form.controls.address.invalid"
+        errorMessage="Máximo 200 caracteres."
+      >
+        <ds-input inputId="settings-address" testId="settings-address-input" formControlName="address"
+          [hasError]="form.controls.address.touched && form.controls.address.invalid" />
+      </ds-form-field>
+    </div>
+  </div>
+
+  <div class="profile-form__header">
+    <h2 class="profile-form__title">Cifras de la web</h2>
+    <p class="profile-form__hint">Se calculan solas. Aquí solo decides desde cuándo y a partir de cuántos alumnos se muestran.</p>
+  </div>
+
+  <div class="profile-form__grid">
+    <ds-form-field label="Fecha de inauguración" inputId="settings-founded" hint="Para calcular los años formando campeones.">
+      <input id="settings-founded" class="profile-form__native" type="date" [max]="today"
+        formControlName="founded_on" data-testid="settings-founded-input" />
+    </ds-form-field>
+
+    <ds-form-field
+      label="Mostrar alumnos activos a partir de"
+      inputId="settings-min-students"
+      hint="Por debajo de esta cifra no se publica. Se muestra redondeada a decenas."
+      [hasError]="form.controls.active_students_min_display.touched && form.controls.active_students_min_display.invalid"
+      errorMessage="Entre 1 y 1000."
+    >
+      <input id="settings-min-students" class="profile-form__native" type="number" min="1" max="1000"
+        formControlName="active_students_min_display" data-testid="settings-min-students-input" />
+    </ds-form-field>
+  </div>
+
+  <div class="profile-form__footer">
+    @if (error(); as message) {
+      <p class="profile-form__status profile-form__status--error" role="alert">{{ message }}</p>
+    } @else if (saved()) {
+      <p class="profile-form__status" role="status">Guardado.</p>
+    } @else {
+      <span></span>
+    }
+    <ds-button type="submit" [loading]="saving()" data-testid="settings-profile-save">Guardar contacto</ds-button>
+  </div>
+</form>
