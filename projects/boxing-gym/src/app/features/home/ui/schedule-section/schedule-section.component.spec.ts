@@ -1,33 +1,37 @@
-import { render, screen } from '@testing-library/angular';
+import { render, screen, within } from '@testing-library/angular';
 import { ScheduleSectionComponent } from './schedule-section.component';
+import type { ScheduleGroup } from '../../../../core/gym-profile/gym-profile.model';
 
-const SCHEDULE = [
-  { day: 'Lunes',   time: '18:00 – 20:00' },
-  { day: 'Martes',  time: '18:00 – 20:00' },
-  { day: 'Domingo', time: 'Cerrado', closed: true },
+const SCHEDULE: ScheduleGroup[] = [
+  {
+    days: 'Lunes – Viernes',
+    closed: false,
+    sessions: [
+      { label: 'Juniors', time: '17:30 – 18:30' },
+      { label: 'Adultos', time: '18:30 – 19:30' },
+    ],
+  },
+  { days: 'Sábado – Domingo', closed: true, sessions: [{ label: null, time: 'Cerrado' }] },
 ];
 
 describe('ScheduleSectionComponent', () => {
-  it('renders the schedule section', async () => {
-    await render(ScheduleSectionComponent, {
-      componentInputs: { schedule: SCHEDULE },
-    });
-    expect(screen.getByTestId('schedule-section')).toBeInTheDocument();
+  it('renders one row per day range', async () => {
+    await render(ScheduleSectionComponent, { componentInputs: { schedule: SCHEDULE } });
+    const rows = screen.getAllByTestId('schedule-group');
+    expect(rows).toHaveLength(2);
+    expect(within(rows[0]).getByText('Lunes – Viernes')).toBeInTheDocument();
   });
 
-  it('renders all schedule days', async () => {
-    await render(ScheduleSectionComponent, {
-      componentInputs: { schedule: SCHEDULE },
-    });
-    expect(screen.getByText('Lunes')).toBeInTheDocument();
-    expect(screen.getByText('Martes')).toBeInTheDocument();
-    expect(screen.getByText('Domingo')).toBeInTheDocument();
+  it('renders each session with its group label', async () => {
+    await render(ScheduleSectionComponent, { componentInputs: { schedule: SCHEDULE } });
+    expect(screen.getByText('Juniors')).toBeInTheDocument();
+    expect(screen.getByText('17:30 – 18:30')).toBeInTheDocument();
+    expect(screen.getByText('18:30 – 19:30')).toBeInTheDocument();
   });
 
-  it('renders open times', async () => {
-    await render(ScheduleSectionComponent, {
-      componentInputs: { schedule: SCHEDULE },
-    });
-    expect(screen.getAllByText('18:00 – 20:00')).toHaveLength(2);
+  it('marks closed days', async () => {
+    await render(ScheduleSectionComponent, { componentInputs: { schedule: SCHEDULE } });
+    expect(screen.getAllByTestId('schedule-group')[1]).toHaveClass('schedule__row--closed');
+    expect(screen.getByText('Cerrado')).toBeInTheDocument();
   });
 });

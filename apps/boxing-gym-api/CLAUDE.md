@@ -6,7 +6,7 @@ See `README.md` for full setup documentation. This file adds agent-facing rules.
 
 ## Project Context
 
-FastAPI + Supabase backend for a boxing school admin panel. Consumed by `projects/boxing-gym` (Angular frontend) via a generated TypeScript client (`@hey-api/openapi-ts`). Deployed on Railway.
+FastAPI + Supabase backend for a boxing school admin panel. Consumed by `projects/boxing-gym` (Angular frontend) via a generated TypeScript client (`@hey-api/openapi-ts`). Deployed on Render (free plan: cold starts of 30–60 s after idle).
 
 **Fase 1 — Active:** Student registration module.
 
@@ -20,7 +20,7 @@ FastAPI + Supabase backend for a boxing school admin panel. Consumed by `project
 | Validation | Pydantic v2 |
 | Database | Supabase (PostgreSQL + Auth + RLS) |
 | Package manager | uv |
-| Deploy | Railway |
+| Deploy | Render (`render.yaml`) |
 
 ---
 
@@ -31,13 +31,16 @@ app/
 ├── main.py          ← FastAPI app, mounts all routers
 ├── config.py        ← Pydantic Settings (reads from .env)
 ├── database.py      ← Supabase client singleton
-└── students/        ← Students module
-    ├── router.py    ← HTTP endpoints (no business logic)
-    ├── schemas.py   ← Pydantic request/response models
-    └── service.py   ← Business logic and Supabase queries
+├── students/        ← Students module
+│   ├── router.py    ← HTTP endpoints (no business logic)
+│   ├── schemas.py   ← Pydantic request/response models
+│   └── service.py   ← Business logic and Supabase queries
+├── payments/        ← Payments module (same layout)
+└── gym_profile/     ← Contact, schedule and classes for the public site (same layout)
 
 specs/               ← SDD specs per module (must exist before implementation)
-migrations/          ← SQL migrations
+migrations/          ← SQL migrations, run by hand in the Supabase SQL Editor
+tests/               ← pytest; services are mocked, no database needed
 ```
 
 ---
@@ -58,7 +61,9 @@ Before writing code for any new feature:
 - **Routers delegate only** — HTTP layer receives/validates input, calls service, returns response. No business logic in routers.
 - **Services own Supabase** — all database calls live in `service.py`
 - **Pydantic schemas as contract** — define explicit request and response models; never return raw Supabase dicts
-- **RLS enforced** — rely on Supabase Row Level Security; never bypass it with service role key in application code
+- **Authorization lives in FastAPI** — the API talks to Supabase with the `service_role` key (`app/database.py`), which bypasses RLS. Every router must therefore declare its guard at router level (`APIRouter(dependencies=[Depends(require_admin)])` or the matching `require_*`); a missing guard is not caught by the database
+- **RLS denies the anon key by default** — the anon key ships in the frontend bundle. Every table has RLS enabled; only tables meant for public reading get a `select` policy (see `specs/gym-profile.md`). Never add write policies for `anon`, and enable RLS in the migration that creates a table
+- **Public reads may bypass the API** — only for non-personal data the landing must show while Render is asleep, through a `security_invoker` view (`public_gym_profile`). Personal data (students, payments) is only ever read through the API
 - **OpenAPI spec is the client contract** — the Angular frontend generates its TypeScript client from `/openapi.json`. Any breaking change to the API requires regenerating the client: `npm run generate:api` in the frontend project.
 - **No new endpoints without a spec** in `specs/`
 
@@ -75,6 +80,7 @@ Supabase JWT from the Angular frontend is forwarded via `Authorization: Bearer <
 ```bash
 uv sync                                      # Install dependencies
 uv run uvicorn app.main:app --reload         # Dev server → http://localhost:8000
+uv run pytest                                # Tests
 # Docs: http://localhost:8000/docs
 # OpenAPI JSON: http://localhost:8000/openapi.json
 ```

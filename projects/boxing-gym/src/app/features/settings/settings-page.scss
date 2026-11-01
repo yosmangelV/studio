@@ -1,0 +1,38 @@
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+
+  @media (max-width: 640px) {
+    padding: 1rem;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  &__subtitle,
+  &__loading {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  &__error {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--gym-text-danger);
+  }
+}

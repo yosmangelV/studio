@@ -6,6 +6,7 @@ import {
   NavLink,
 } from 'design-system';
 import { GYM_CONFIG } from '../../core/config/gym-config.token';
+import { GymProfileService } from '../../core/gym-profile/gym-profile.service';
 import { LocaleSwitcherComponent } from '../../shared/components/locale-switcher/locale-switcher.component';
 import { AboutSectionComponent } from './ui/about-section/about-section.component';
 import { ClassesSectionComponent } from './ui/classes-section/classes-section.component';
@@ -46,13 +47,13 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
       />
       <app-about-section
         [about]="config.about"
-        [highlights]="config.highlights"
+        [highlights]="gymProfile.highlights()"
         [logoSrc]="config.assets.logoMain"
       />
-      <app-classes-section [classes]="config.classes" />
-      <app-schedule-section [schedule]="config.schedule" />
+      <app-classes-section [classes]="gymProfile.classes()" />
+      <app-schedule-section [schedule]="gymProfile.schedule()" />
       <app-contact-section
-        [contact]="config.contact"
+        [contact]="gymProfile.contact()"
         [name]="config.name"
         [copyright]="config.copyright"
       />
@@ -62,6 +63,7 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
 })
 export default class HomePage {
   protected readonly config = inject(GYM_CONFIG);
+  protected readonly gymProfile = inject(GymProfileService);
   private readonly router = inject(Router);
 
   protected readonly navLinks: NavLink[] = [

@@ -1,0 +1,63 @@
+<form class="classes-editor" [formGroup]="form" (ngSubmit)="onSubmit()" data-testid="settings-classes-form">
+  <div class="classes-editor__header">
+    <h2 class="classes-editor__title">Clases</h2>
+    <p class="classes-editor__hint">El orden de esta lista es el de la web. Las clases activas cuentan como modalidades.</p>
+  </div>
+
+  <ol class="classes-editor__list" role="list">
+    @for (row of rows.controls; track row; let i = $index, first = $first, last = $last) {
+      <li class="classes-editor__row" [formGroup]="row" data-testid="settings-class-row">
+        <div class="classes-editor__grid">
+          <ds-form-field
+            label="Nombre"
+            [inputId]="'class-' + i + '-name-es'"
+            [hasError]="row.controls.name_es.touched && row.controls.name_es.invalid"
+            errorMessage="Obligatorio, máximo 60 caracteres."
+          >
+            <ds-input [inputId]="'class-' + i + '-name-es'" formControlName="name_es"
+              [hasError]="row.controls.name_es.touched && row.controls.name_es.invalid" />
+          </ds-form-field>
+          <ds-form-field label="Nombre en inglés" [inputId]="'class-' + i + '-name-en'" hint="Si se deja vacío, se usa el español.">
+            <ds-input [inputId]="'class-' + i + '-name-en'" formControlName="name_en" />
+          </ds-form-field>
+          <ds-form-field
+            label="Descripción"
+            [inputId]="'class-' + i + '-desc-es'"
+            [hasError]="row.controls.description_es.touched && row.controls.description_es.invalid"
+            errorMessage="Obligatoria, máximo 300 caracteres."
+          >
+            <textarea class="classes-editor__native" rows="3" [id]="'class-' + i + '-desc-es'" formControlName="description_es"></textarea>
+          </ds-form-field>
+          <ds-form-field label="Descripción en inglés" [inputId]="'class-' + i + '-desc-en'">
+            <textarea class="classes-editor__native" rows="3" [id]="'class-' + i + '-desc-en'" formControlName="description_en"></textarea>
+          </ds-form-field>
+        </div>
+        <div class="classes-editor__row-footer">
+          <label class="classes-editor__check">
+            <input type="checkbox" formControlName="is_active" />
+            Visible en la web
+          </label>
+          <div class="classes-editor__row-actions">
+            <ds-button variant="ghost" [disabled]="first" (click)="move(i, -1)">Subir</ds-button>
+            <ds-button variant="ghost" [disabled]="last" (click)="move(i, 1)">Bajar</ds-button>
+            <ds-button variant="ghost" (click)="remove(i)" data-testid="settings-class-remove">Quitar esta clase</ds-button>
+          </div>
+        </div>
+      </li>
+    } @empty {
+      <li class="classes-editor__empty">Sin clases: la sección de clases no se mostrará.</li>
+    }
+  </ol>
+
+  <div class="classes-editor__footer">
+    <ds-button variant="secondary" (click)="add()" data-testid="settings-class-add">Añadir clase</ds-button>
+    <div class="classes-editor__save">
+      @if (error(); as message) {
+        <p class="classes-editor__status classes-editor__status--error" role="alert">{{ message }}</p>
+      } @else if (saved()) {
+        <p class="classes-editor__status" role="status">Guardado.</p>
+      }
+      <ds-button type="submit" [loading]="saving()" data-testid="settings-classes-save">Guardar clases</ds-button>
+    </div>
+  </div>
+</form>

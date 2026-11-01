@@ -41,4 +41,11 @@ describe('AboutSectionComponent', () => {
     expect(screen.getByText('Años de experiencia')).toBeInTheDocument();
     expect(screen.getByText('Alumnos activos')).toBeInTheDocument();
   });
+
+  it('renders no highlights list when there are no real figures', async () => {
+    await render(AboutSectionComponent, {
+      componentInputs: { about: 'Descripción.', highlights: [], logoSrc: '/logo.png' },
+    });
+    expect(screen.queryByTestId('about-highlights')).not.toBeInTheDocument();
+  });
 });

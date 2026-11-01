@@ -4,6 +4,7 @@ from app.config import settings
 from app.students.router import router as students_router
 from app.payments.router import router as payments_router
 from app.payments.router import students_router as payments_students_router
+from app.gym_profile.router import router as gym_profile_router
 
 app = FastAPI(
     title=settings.app_name,
@@ -23,6 +24,7 @@ app.add_middleware(
 app.include_router(students_router, prefix="/students", tags=["students"])
 app.include_router(payments_router, prefix="/payments", tags=["payments"])
 app.include_router(payments_students_router, prefix="/students", tags=["payments"])
+app.include_router(gym_profile_router, prefix="/gym-profile", tags=["gym-profile"])
 
 
 @app.get("/health", tags=["health"])

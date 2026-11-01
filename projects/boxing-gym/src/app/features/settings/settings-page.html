@@ -1,0 +1,34 @@
+<div class="settings-page" data-testid="settings-page">
+  <header class="settings-page__header">
+    <h1 class="settings-page__title">Datos del gimnasio</h1>
+    <p class="settings-page__subtitle">Lo que guardes aquí se ve en la web al instante, sin desplegar.</p>
+  </header>
+
+  @if (loadError(); as message) {
+    <p class="settings-page__error" role="alert">{{ message }}</p>
+  } @else if (settings.loading() && !settings.data()) {
+    <p class="settings-page__loading" role="status">Cargando…</p>
+  } @else {
+    <app-profile-form
+      [profile]="profile()"
+      [saving]="profileState().saving"
+      [saved]="profileState().saved"
+      [error]="profileState().error"
+      (save)="onSaveProfile($event)"
+    />
+    <app-schedule-editor
+      [slots]="schedule()"
+      [saving]="scheduleState().saving"
+      [saved]="scheduleState().saved"
+      [error]="scheduleState().error"
+      (save)="onSaveSchedule($event)"
+    />
+    <app-classes-editor
+      [classes]="classes()"
+      [saving]="classesState().saving"
+      [saved]="classesState().saved"
+      [error]="classesState().error"
+      (save)="onSaveClasses($event)"
+    />
+  }
+</div>

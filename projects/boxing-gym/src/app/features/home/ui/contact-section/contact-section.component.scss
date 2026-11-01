@@ -82,9 +82,14 @@
   color: var(--gym-gray-light);
   text-decoration: none;
   text-align: right;
+  overflow-wrap: anywhere;
 
   &:is(a):hover {
     color: var(--gym-white);
+  }
+
+  &--nowrap {
+    white-space: nowrap;
   }
 }
 
