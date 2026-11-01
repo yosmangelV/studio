@@ -26,6 +26,11 @@ export const routes: Routes = [
         canActivate: [adminGuard],
         loadChildren: () => import('./features/payments/payments.routes'),
       },
+      {
+        path: 'settings',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./features/settings/settings-page'),
+      },
     ],
   },
 ];

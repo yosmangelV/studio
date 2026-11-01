@@ -1,0 +1,58 @@
+<form class="schedule-editor" [formGroup]="form" (ngSubmit)="onSubmit()" data-testid="settings-schedule-form">
+  <div class="schedule-editor__header">
+    <h2 class="schedule-editor__title">Horarios</h2>
+    <p class="schedule-editor__hint">Una fila por sesión. Los días sin sesiones aparecen como cerrados en la web.</p>
+  </div>
+
+  <ol class="schedule-editor__list" role="list">
+    @for (row of rows.controls; track row; let i = $index) {
+      <li class="schedule-editor__row" [formGroup]="row" data-testid="settings-schedule-row">
+        <div class="schedule-editor__grid">
+          <ds-form-field label="Desde" [inputId]="'slot-' + i + '-from'">
+            <select class="schedule-editor__native" [id]="'slot-' + i + '-from'" formControlName="day_from">
+              @for (day of weekdays; track day.value) {
+                <option [ngValue]="day.value">{{ day.label }}</option>
+              }
+            </select>
+          </ds-form-field>
+          <ds-form-field label="Hasta" [inputId]="'slot-' + i + '-to'">
+            <select class="schedule-editor__native" [id]="'slot-' + i + '-to'" formControlName="day_to">
+              @for (day of weekdays; track day.value) {
+                <option [ngValue]="day.value">{{ day.label }}</option>
+              }
+            </select>
+          </ds-form-field>
+          <ds-form-field label="Empieza" [inputId]="'slot-' + i + '-opens'">
+            <input class="schedule-editor__native" type="time" [id]="'slot-' + i + '-opens'" formControlName="opens_at" />
+          </ds-form-field>
+          <ds-form-field label="Termina" [inputId]="'slot-' + i + '-closes'">
+            <input class="schedule-editor__native" type="time" [id]="'slot-' + i + '-closes'" formControlName="closes_at" />
+          </ds-form-field>
+          <ds-form-field label="Grupo" [inputId]="'slot-' + i + '-label-es'" hint="Adultos, Juniors… (opcional)">
+            <ds-input [inputId]="'slot-' + i + '-label-es'" formControlName="label_es" />
+          </ds-form-field>
+          <ds-form-field label="Grupo en inglés" [inputId]="'slot-' + i + '-label-en'" hint="Si se deja vacío, se usa el español.">
+            <ds-input [inputId]="'slot-' + i + '-label-en'" formControlName="label_en" />
+          </ds-form-field>
+        </div>
+        <div class="schedule-editor__row-actions">
+          <ds-button variant="ghost" (click)="remove(i)" data-testid="settings-schedule-remove">Quitar esta sesión</ds-button>
+        </div>
+      </li>
+    } @empty {
+      <li class="schedule-editor__empty">Sin sesiones: la web mostrará todos los días como cerrados.</li>
+    }
+  </ol>
+
+  <div class="schedule-editor__footer">
+    <ds-button variant="secondary" (click)="add()" data-testid="settings-schedule-add">Añadir sesión</ds-button>
+    <div class="schedule-editor__save">
+      @if (error(); as message) {
+        <p class="schedule-editor__status schedule-editor__status--error" role="alert">{{ message }}</p>
+      } @else if (saved()) {
+        <p class="schedule-editor__status" role="status">Guardado.</p>
+      }
+      <ds-button type="submit" [loading]="saving()" data-testid="settings-schedule-save">Guardar horarios</ds-button>
+    </div>
+  </div>
+</form>

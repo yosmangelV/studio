@@ -21,7 +21,23 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "files": ["/assets/**"]
+        "files": [
+          "/assets/**"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "gym-profile",
+      "urls": [
+        "https://*.supabase.co/rest/v1/public_gym_profile*"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout": "3s",
+        "maxAge": "1d",
+        "maxSize": 5
       }
     }
   ]

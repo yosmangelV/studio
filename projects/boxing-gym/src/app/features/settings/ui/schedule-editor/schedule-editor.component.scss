@@ -1,0 +1,41 @@
+@use '../settings-form' as sf;
+
+.schedule-editor {
+  @include sf.block;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__title { @include sf.block-title; }
+  &__hint  { @include sf.block-hint; }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__row { @include sf.row; }
+  &__grid { @include sf.grid(2); }
+  &__row-actions { @include sf.row-actions; }
+  &__native { @include sf.native-control; }
+
+  &__empty { @include sf.block-hint; }
+
+  &__footer { @include sf.footer; }
+
+  &__save {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto;
+  }
+
+  &__status { @include sf.status; }
+}

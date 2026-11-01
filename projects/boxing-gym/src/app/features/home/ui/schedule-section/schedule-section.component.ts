@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SectionHeaderComponent } from 'design-system';
-import type { ScheduleEntry } from '../../../../core/config/gym-config.model';
+import type { ScheduleGroup } from '../../../../core/gym-profile/gym-profile.model';
 
 @Component({
   selector: 'app-schedule-section',
@@ -11,5 +11,5 @@ import type { ScheduleEntry } from '../../../../core/config/gym-config.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScheduleSectionComponent {
-  readonly schedule = input.required<ScheduleEntry[]>();
+  readonly schedule = input.required<ScheduleGroup[]>();
 }

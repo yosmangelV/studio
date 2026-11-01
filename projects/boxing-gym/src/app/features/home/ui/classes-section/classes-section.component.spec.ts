@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/angular';
 import { ClassesSectionComponent } from './classes-section.component';
 
 const CLASSES = [
-  { icon: '🥊', name: 'Boxeo', description: 'Técnica y condición física' },
-  { icon: '🦵', name: 'Kickboxing', description: 'Golpes y patadas' },
+  { name: 'Boxeo', description: 'Técnica y condición física' },
+  { name: 'Kickboxing', description: 'Golpes y patadas' },
 ];
 
 describe('ClassesSectionComponent', () => {

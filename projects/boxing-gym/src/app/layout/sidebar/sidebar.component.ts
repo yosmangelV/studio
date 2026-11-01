@@ -35,6 +35,7 @@ export class SidebarComponent {
     { label: 'Pagos',   route: '/payments', adminOnly: true },
     { label: 'Pedidos', route: '/orders',   disabled: true, badge: 'Pronto' },
     { label: 'Clases',  route: '/classes',  disabled: true, badge: 'Pronto' },
+    { label: 'Datos del gimnasio', route: '/settings', adminOnly: true },
   ];
 
   protected readonly navItems = computed(() =>

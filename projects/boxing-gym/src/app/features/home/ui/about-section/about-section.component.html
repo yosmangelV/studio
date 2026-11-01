@@ -11,14 +11,16 @@
     <div class="about__body">
       <p class="about__text" data-testid="about-text">{{ about() }}</p>
 
-      <ul class="about__highlights" role="list" data-testid="about-highlights">
-        @for (item of highlights(); track item.label) {
-          <li class="about__highlight">
-            <span class="about__highlight-value">{{ item.value }}</span>
-            <span class="about__highlight-label">{{ item.label }}</span>
-          </li>
-        }
-      </ul>
+      @if (highlights().length) {
+        <ul class="about__highlights" role="list" data-testid="about-highlights">
+          @for (item of highlights(); track item.label) {
+            <li class="about__highlight">
+              <span class="about__highlight-value">{{ item.value }}</span>
+              <span class="about__highlight-label">{{ item.label }}</span>
+            </li>
+          }
+        </ul>
+      }
     </div>
   </div>
 </section>

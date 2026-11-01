@@ -1,0 +1,89 @@
+// Shared styles for the three settings blocks. ds-input covers text fields; these cover
+// the native controls it does not (select, time, date, number, textarea, checkbox).
+
+@mixin block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--gym-border-muted);
+  border-radius: 8px;
+  background-color: var(--gym-surface-panel);
+}
+
+@mixin block-title {
+  margin: 0;
+  font-family: var(--gym-font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gym-text-primary);
+}
+
+@mixin block-hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--gym-text-secondary);
+}
+
+@mixin grid($columns: 2) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat($columns, minmax(0, 1fr));
+  }
+}
+
+@mixin native-control {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.875rem;
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--gym-border-strong);
+  border-radius: 6px;
+  color: var(--gym-text-high);
+  font-family: var(--gym-font-body);
+  font-size: 1rem;
+  box-sizing: border-box;
+  color-scheme: dark;
+
+  &:focus {
+    border-color: var(--color-border-focus);
+  }
+}
+
+@mixin row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--gym-border-subtle);
+  border-radius: 6px;
+}
+
+@mixin row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+@mixin footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+@mixin status {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--gym-text-secondary);
+
+  &--error {
+    color: var(--gym-text-danger);
+  }
+}

@@ -5,11 +5,19 @@
     </div>
 
     <ul class="schedule__list" role="list">
-      @for (entry of schedule(); track entry.day) {
-        <li class="schedule__row" [class.schedule__row--closed]="entry.closed">
-          <span class="schedule__day">{{ entry.day }}</span>
-          <span class="schedule__separator" aria-hidden="true"></span>
-          <span class="schedule__time">{{ entry.time }}</span>
+      @for (group of schedule(); track group.days) {
+        <li class="schedule__row" [class.schedule__row--closed]="group.closed" data-testid="schedule-group">
+          <span class="schedule__day">{{ group.days }}</span>
+          <ul class="schedule__sessions" role="list">
+            @for (session of group.sessions; track $index) {
+              <li class="schedule__session">
+                @if (session.label) {
+                  <span class="schedule__label">{{ session.label }}</span>
+                }
+                <span class="schedule__time">{{ session.time }}</span>
+              </li>
+            }
+          </ul>
         </li>
       }
     </ul>

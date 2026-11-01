@@ -133,5 +133,35 @@
         <target>Schedule</target>
       </segment>
     </unit>
+    <unit id="schedule.closed">
+      <segment>
+        <source>Cerrado</source>
+        <target>Closed</target>
+      </segment>
+    </unit>
+    <unit id="about.highlight.students">
+      <segment>
+        <source>Alumnos activos</source>
+        <target>Active students</target>
+      </segment>
+    </unit>
+    <unit id="about.highlight.year">
+      <segment>
+        <source>Año formando campeones</source>
+        <target>Year training champions</target>
+      </segment>
+    </unit>
+    <unit id="about.highlight.years">
+      <segment>
+        <source>Años formando campeones</source>
+        <target>Years training champions</target>
+      </segment>
+    </unit>
+    <unit id="about.highlight.modalities">
+      <segment>
+        <source>Modalidades de entrenamiento</source>
+        <target>Training disciplines</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

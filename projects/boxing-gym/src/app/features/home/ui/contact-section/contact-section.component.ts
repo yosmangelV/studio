@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SectionHeaderComponent } from 'design-system';
-import type { GymContact } from '../../../../core/config/gym-config.model';
+import type { ContactView } from '../../../../core/gym-profile/gym-profile.model';
 
 @Component({
   selector: 'app-contact-section',
@@ -11,7 +11,7 @@ import type { GymContact } from '../../../../core/config/gym-config.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactSectionComponent {
-  readonly contact = input.required<GymContact>();
+  readonly contact = input.required<ContactView>();
   readonly name = input.required<string>();
   readonly copyright = input.required<string>();
 }
