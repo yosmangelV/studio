@@ -38,13 +38,14 @@ An old-school boxing gym: raw, disciplined, close to the ring. Black rooms, crim
 - **Hero:** the gym's name as the headline, one sentence, and two actions (primary: WhatsApp; secondary: classes).
 - **No splash screen.** The logo is in the nav and the hero.
 - **The install-app banner** is shown only to signed-in users, inside the app shell, never on the public page.
-- **Stats** ("+50 active students") appear only when `gym.config.ts` marks them as verified by the gym.
+- **Stats** are computed, never typed: active students (counted and rounded down to tens in the database, shown only above the threshold set in `/settings`), years since the founding date, and the number of active classes. A figure with no source is hidden.
 
 ## Migration from the 2026-10-28 audit
 
 The live page breaks these rules today. Each item names where it gets fixed.
 
-- [ ] Real phone, WhatsApp and address in `gym.config.ts` (Floor 3)
+- [x] Real phone, WhatsApp and address, now in Supabase and editable from `/settings` (Floor 3)
+- [x] Stats computed from real data (active students, years since founding, active classes), never typed in (Floor 4)
 - [x] Add `--gym-brand-on-dark`; red text uses it (stats, nav subtitle, links, focus rings)
 - [x] Labels and footer move from `--gym-gray` to `--gym-text-secondary`
 - [x] WhatsApp button: dark text, SVG icon instead of 💬
