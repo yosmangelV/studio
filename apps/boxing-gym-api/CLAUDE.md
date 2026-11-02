@@ -40,6 +40,7 @@ app/
 
 specs/               ← SDD specs per module (must exist before implementation)
 migrations/          ← SQL migrations, run by hand in the Supabase SQL Editor
+schema/public.sql    ← Generated snapshot of the deployed `public` schema (never edit by hand)
 tests/               ← pytest; services are mocked, no database needed
 ```
 
@@ -66,6 +67,8 @@ Before writing code for any new feature:
 - **Public reads may bypass the API** — only for non-personal data the landing must show while Render is asleep, through a `security_invoker` view (`public_gym_profile`). Personal data (students, payments) is only ever read through the API
 - **OpenAPI spec is the client contract** — the Angular frontend generates its TypeScript client from `/openapi.json`. Any breaking change to the API requires regenerating the client: `npm run generate:api` in the frontend project.
 - **No new endpoints without a spec** in `specs/`
+- **Production is the schema of record** — after running a migration in Supabase, regenerate `schema/public.sql` (`./scripts/dump_schema.sh`) and commit it with the migration. The diff must show exactly what the migration intended; anything else is drift and gets its own converging migration. Never change the schema from the dashboard without a migration
+- **Migrations are self-contained and idempotent where they touch existing objects** — production has drifted before (see 004), so do not rely on helpers from earlier migrations
 
 ---
 
@@ -81,6 +84,7 @@ Supabase JWT from the Angular frontend is forwarded via `Authorization: Bearer <
 uv sync                                      # Install dependencies
 uv run uvicorn app.main:app --reload         # Dev server → http://localhost:8000
 uv run pytest                                # Tests
+./scripts/dump_schema.sh                     # Refresh schema/public.sql from prod (read-only; needs SUPABASE_DB_URL in .env and any psql)
 # Docs: http://localhost:8000/docs
 # OpenAPI JSON: http://localhost:8000/openapi.json
 ```
