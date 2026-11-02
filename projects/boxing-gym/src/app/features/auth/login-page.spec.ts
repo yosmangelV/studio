@@ -20,6 +20,7 @@ const GYM_CONFIG_MOCK = {
 
 const AUTH_SERVICE_MOCK = {
   signIn: vi.fn().mockResolvedValue(undefined),
+  isStaff: () => true,
 };
 
 const PROVIDERS = [

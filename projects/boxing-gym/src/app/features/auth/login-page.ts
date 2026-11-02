@@ -59,7 +59,8 @@ export default class LoginPage {
     try {
       await this.auth.signIn(this.form.value.email!, this.form.value.password!);
       this.inactivity.start();
-      await this.router.navigate(['/students']);
+      // Students have no panel yet: only staff enter the admin area.
+      await this.router.navigate([this.auth.isStaff() ? '/students' : '/']);
     } catch {
       this.error.set('Credenciales incorrectas. Inténtalo de nuevo.');
     } finally {

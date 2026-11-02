@@ -12,6 +12,8 @@ import { StudentLevel, StudentResponse } from '../../../../core/api/students.ser
 })
 export class StudentListComponent {
   readonly students = input.required<StudentResponse[]>();
+  /** Edit and delete are admin-only; instructors get a read-only roster. */
+  readonly canEdit = input(false);
 
   readonly edit = output<StudentResponse>();
   readonly deletedStudent = output<string>();

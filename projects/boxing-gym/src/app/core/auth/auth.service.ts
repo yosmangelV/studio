@@ -11,6 +11,8 @@ export class AuthService {
   readonly isAdmin         = computed(() => this._permissions().includes('admin'));
   readonly isInstructor    = computed(() => this._permissions().includes('instructor'));
   readonly isStudent       = computed(() => this._permissions().includes('student'));
+  /** Gym staff: may consult the student roster. Writes stay admin-only (API-enforced). */
+  readonly isStaff         = computed(() => this.isAdmin() || this.isInstructor());
 
   private _permissions = computed<string[]>(() => this.currentUser()?.app_metadata?.['permissions'] ?? []);
 

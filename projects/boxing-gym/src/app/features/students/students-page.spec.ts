@@ -4,6 +4,14 @@ import userEvent from '@testing-library/user-event';
 import { StudentLevel, StudentResponse } from '../../core/api/students.service';
 import { StudentsService } from './data-access/students.service';
 import StudentsPage from './students-page';
+import { AuthService } from '../../core/auth/auth.service';
+
+function providers(mockService: MockService, role: 'admin' | 'instructor' = 'admin') {
+  return [
+    { provide: StudentsService, useValue: mockService },
+    { provide: AuthService, useValue: { isAdmin: signal(role === 'admin') } },
+  ];
+}
 
 const mockStudent: StudentResponse = {
   id: '1',
@@ -54,7 +62,7 @@ describe('StudentsPage', () => {
   it('renders the page container', async () => {
     const mockService = makeMockService();
     await render(StudentsPage, {
-      providers: [{ provide: StudentsService, useValue: mockService }],
+      providers: providers(mockService),
     });
     expect(screen.getByTestId('students-page')).toBeInTheDocument();
   });
@@ -62,7 +70,7 @@ describe('StudentsPage', () => {
   it('calls loadAll on init', async () => {
     const mockService = makeMockService();
     await render(StudentsPage, {
-      providers: [{ provide: StudentsService, useValue: mockService }],
+      providers: providers(mockService),
     });
     expect(mockService.loadAll).toHaveBeenCalledOnce();
   });
@@ -70,7 +78,7 @@ describe('StudentsPage', () => {
   it('renders the Nuevo alumno button in list mode', async () => {
     const mockService = makeMockService();
     await render(StudentsPage, {
-      providers: [{ provide: StudentsService, useValue: mockService }],
+      providers: providers(mockService),
     });
     expect(screen.getByTestId('students-create-button')).toBeInTheDocument();
   });
@@ -80,7 +88,7 @@ describe('StudentsPage', () => {
       students: signal([mockStudent]),
     });
     await render(StudentsPage, {
-      providers: [{ provide: StudentsService, useValue: mockService }],
+      providers: providers(mockService),
     });
     expect(screen.getByTestId('students-list')).toBeInTheDocument();
     expect(screen.getByTestId('student-item-1')).toBeInTheDocument();
@@ -89,7 +97,7 @@ describe('StudentsPage', () => {
   it('switches to create form when Nuevo alumno is clicked', async () => {
     const mockService = makeMockService();
     await render(StudentsPage, {
-      providers: [{ provide: StudentsService, useValue: mockService }],
+      providers: providers(mockService),
     });
     await userEvent.click(screen.getByTestId('students-create-button'));
     expect(screen.getByTestId('students-form')).toBeInTheDocument();
@@ -98,7 +106,7 @@ describe('StudentsPage', () => {
   it('returns to list when cancel is clicked', async () => {
     const mockService = makeMockService();
     await render(StudentsPage, {
-      providers: [{ provide: StudentsService, useValue: mockService }],
+      providers: providers(mockService),
     });
     await userEvent.click(screen.getByTestId('students-create-button'));
     await userEvent.click(screen.getByTestId('students-cancel-button'));
@@ -110,7 +118,7 @@ describe('StudentsPage', () => {
       error: signal('Error al cargar los alumnos.'),
     });
     await render(StudentsPage, {
-      providers: [{ provide: StudentsService, useValue: mockService }],
+      providers: providers(mockService),
     });
     expect(screen.getByText('Error al cargar los alumnos.')).toBeInTheDocument();
   });
@@ -120,8 +128,20 @@ describe('StudentsPage', () => {
       loading: signal(true),
     });
     await render(StudentsPage, {
-      providers: [{ provide: StudentsService, useValue: mockService }],
+      providers: providers(mockService),
     });
     expect(screen.getByText('Cargando alumnos…')).toBeInTheDocument();
+  });
+
+  describe('as an instructor', () => {
+    it('shows the roster read-only: no create, edit or delete', async () => {
+      const mockService = makeMockService({ students: signal([mockStudent]) });
+      await render(StudentsPage, { providers: providers(mockService, 'instructor') });
+      expect(screen.getByTestId('student-item-1')).toBeInTheDocument();
+      expect(screen.getByText('Consulta el padrón de alumnos del gimnasio.')).toBeInTheDocument();
+      expect(screen.queryByTestId('students-create-button')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('students-edit-button-1')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('students-delete-button-1')).not.toBeInTheDocument();
+    });
   });
 });
