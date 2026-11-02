@@ -2,7 +2,7 @@
 
 .contact {
   background-color: var(--gym-black);
-  padding-top: 6rem;
+  padding-top: var(--space-24);
 }
 
 // Stacked on mobile; on desktop the call to action and the details share the row,
@@ -12,13 +12,13 @@
   box-sizing: content-box;
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 0 var(--layout-gutter) 4rem;
+  padding: 0 var(--layout-gutter) var(--space-16);
   display: grid;
-  gap: 3rem;
+  gap: var(--space-12);
 
   @media (min-width: 960px) {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: clamp(3rem, 6vw, 6rem);
+    gap: clamp(var(--space-12), 6vw, var(--space-24));
     align-items: center;
   }
 }
@@ -27,20 +27,20 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2.5rem;
+  gap: var(--space-10);
 }
 
 .contact__whatsapp {
   display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: var(--space-3);
   font-family: var(--gym-font-body);
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
   color: var(--gym-whatsapp-ink);
   background-color: var(--gym-whatsapp);
-  padding: 1rem 2rem;
+  padding: var(--space-4) var(--space-8);
   border-radius: 4px;
   transition: background-color 0.2s ease, transform 0.2s ease;
 
@@ -71,10 +71,13 @@
 
 .contact__item {
   display: flex;
+  // A value that can't share the row with its label (the phone on a 320px screen)
+  // drops below it instead of running into the padding.
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1.25rem 1.75rem;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-5) var(--space-7);
   border-bottom: 1px solid var(--gym-border-subtle);
 
   &:last-child {
@@ -90,6 +93,7 @@
 }
 
 .contact__value {
+  margin-left: auto;
   font-size: 1rem;
   color: var(--gym-gray-light);
   text-decoration: none;
@@ -107,7 +111,7 @@
 
 .footer {
   border-top: 1px solid var(--gym-border-subtle);
-  padding: 1.5rem;
+  padding: var(--space-6);
   text-align: center;
 }
 

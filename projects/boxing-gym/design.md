@@ -58,4 +58,9 @@ The live page breaks these rules today. Each item names where it gets fixed.
 - [x] Replace the 2.8s splash with one tied to the data (`src/app/app.ts`)
 - [x] Move the PWA install banner into the authenticated shell
 - [x] Widen Classes, Schedule and Contact to the full container
-- [ ] Re-run the Hallmark lint on `localhost` and record the result here
+- [x] Re-run the Hallmark lint on `localhost` and record the result here. 2026-11-02, `sloplint --genre editorial --render`: **0 FAIL, 3 REFLEX, 1 WARN** (was 13 FAIL / 5 REFLEX on 2026-10-28). The REFLEX left:
+  - 49b ×2: the address link wraps at 320 and 375px. Kept: an address has to wrap on a phone, and `nowrap` would overflow.
+  - 77: "Nuestras clases" body reaches 69% at 1440px. The container is full width, but the `striped-list` rows hold short text. Open: see below.
+  - WARN F19: four weights in running use; the fourth (500) is the DS `page-nav` links. Open: see below.
+- [ ] Classes: give the `striped-list` rows mass at 1440px (REFLEX 77), a design-system change
+- [ ] Weights: DS `page-nav` links use 500 (F19), the panel uses 500 in places, and the Google Fonts link loads Inter 500/700 and Oswald 500, none of which the type rules above allow

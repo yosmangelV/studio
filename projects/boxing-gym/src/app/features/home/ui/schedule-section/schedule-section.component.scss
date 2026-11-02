@@ -2,7 +2,7 @@
 
 .schedule {
   background-color: var(--gym-dark);
-  padding: 6rem var(--layout-gutter);
+  padding: var(--space-24) var(--layout-gutter);
 }
 
 // Same container as the other sections: the body spans the page, not a centred column.
@@ -12,7 +12,7 @@
 }
 
 .schedule__header {
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-12);
 }
 
 .schedule__list {
@@ -34,9 +34,9 @@
 .schedule__row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.75rem;
+  gap: var(--space-3);
   min-width: 0;
-  padding: 1.5rem 1.75rem;
+  padding: var(--space-6) var(--space-7);
   // Right and bottom dividers; the ones on the list's outer edge fall under its
   // border and are clipped by overflow: hidden.
   box-shadow:
@@ -45,7 +45,7 @@
 
   @media (min-width: 640px) {
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-    gap: 2rem;
+    gap: var(--space-8);
     align-items: start;
   }
 
@@ -53,8 +53,8 @@
   @media (min-width: 960px) {
     grid-template-columns: 1fr;
     align-content: start;
-    gap: 1.5rem;
-    padding: 2rem;
+    gap: var(--space-6);
+    padding: var(--space-8);
   }
 }
 
@@ -79,24 +79,24 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 
   @media (min-width: 960px) {
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 }
 
 .schedule__session {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-4);
   font-family: var(--gym-font-body);
   font-size: 1rem;
 
   // In a column the label sits above its hours instead of competing for the width.
   @media (min-width: 960px) {
     flex-direction: column;
-    gap: 0.125rem;
+    gap: var(--space-0-5);
   }
 }
 
@@ -117,7 +117,7 @@
     white-space: normal;
     font-family: var(--gym-font-display);
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.2;
   }
 
