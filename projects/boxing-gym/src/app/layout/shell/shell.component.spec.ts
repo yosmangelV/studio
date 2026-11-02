@@ -25,6 +25,7 @@ const AUTH_SERVICE_MOCK = {
   isAdmin: () => false,
   isInstructor: () => false,
   isStudent: () => false,
+  isStaff: () => false,
 };
 
 const PROVIDERS = [

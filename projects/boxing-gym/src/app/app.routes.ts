@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './core/auth/admin.guard';
 import { authGuard } from './core/auth/auth.guard';
+import { staffGuard } from './core/auth/staff.guard';
 import { ShellComponent } from './layout/shell/shell.component';
 
 export const routes: Routes = [
@@ -19,6 +20,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'students',
+        canActivate: [staffGuard],
         loadChildren: () => import('./features/students/students.routes'),
       },
       {

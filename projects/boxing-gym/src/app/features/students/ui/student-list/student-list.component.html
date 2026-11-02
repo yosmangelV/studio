@@ -11,7 +11,9 @@
           <th class="student-list__th">Email</th>
           <th class="student-list__th">Nivel</th>
           <th class="student-list__th">Estado</th>
-          <th class="student-list__th student-list__th--actions">Acciones</th>
+          @if (canEdit()) {
+            <th class="student-list__th student-list__th--actions">Acciones</th>
+          }
         </tr>
       </thead>
       <tbody>
@@ -29,24 +31,26 @@
                 {{ student.is_active ? 'Activo' : 'Inactivo' }}
               </span>
             </td>
-            <td class="student-list__td student-list__td--actions">
-              <ds-button
-                variant="ghost"
-                size="sm"
-                [attr.data-testid]="'students-edit-button-' + student.id"
-                (click)="edit.emit(student)"
-              >
-                Editar
-              </ds-button>
-              <ds-button
-                variant="danger"
-                size="sm"
-                [attr.data-testid]="'students-delete-button-' + student.id"
-                (click)="deletedStudent.emit(student.id)"
-              >
-                Eliminar
-              </ds-button>
-            </td>
+            @if (canEdit()) {
+              <td class="student-list__td student-list__td--actions">
+                <ds-button
+                  variant="ghost"
+                  size="sm"
+                  [attr.data-testid]="'students-edit-button-' + student.id"
+                  (click)="edit.emit(student)"
+                >
+                  Editar
+                </ds-button>
+                <ds-button
+                  variant="danger"
+                  size="sm"
+                  [attr.data-testid]="'students-delete-button-' + student.id"
+                  (click)="deletedStudent.emit(student.id)"
+                >
+                  Eliminar
+                </ds-button>
+              </td>
+            }
           </tr>
         }
       </tbody>

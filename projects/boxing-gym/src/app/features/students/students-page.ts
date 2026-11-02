@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { ButtonComponent, PaginationComponent } from 'design-system';
 import { StudentResponse } from '../../core/api/students.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { StudentsService } from './data-access/students.service';
 import { StudentFormComponent, StudentFormPayload } from './ui/student-form/student-form.component';
 import { StudentListComponent } from './ui/student-list/student-list.component';
@@ -17,6 +18,11 @@ type PageMode = 'list' | 'create' | 'edit';
 })
 export default class StudentsPage {
   protected readonly service = inject(StudentsService);
+  /** Only admins create, edit or delete (the API rejects anyone else with 403). */
+  protected readonly canEdit = inject(AuthService).isAdmin;
+  protected readonly subtitle = computed(() =>
+    this.canEdit() ? 'Gestiona el padrón de alumnos del gimnasio.' : 'Consulta el padrón de alumnos del gimnasio.',
+  );
 
   protected readonly mode = signal<PageMode>('list');
   protected readonly selectedStudent = signal<StudentResponse | null>(null);

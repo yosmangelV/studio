@@ -79,7 +79,7 @@ describe('StudentListComponent', () => {
   it('emits edit output when edit button is clicked', async () => {
     const editSpy = vi.fn();
     await render(StudentListComponent, {
-      componentInputs: { students: [mockStudent] },
+      componentInputs: { students: [mockStudent], canEdit: true },
       componentOutputs: { edit: { emit: editSpy } as unknown as never },
     });
     await userEvent.click(screen.getByTestId('students-edit-button-1'));
@@ -89,10 +89,19 @@ describe('StudentListComponent', () => {
   it('emits deletedStudent output when delete button is clicked', async () => {
     const deleteSpy = vi.fn();
     await render(StudentListComponent, {
-      componentInputs: { students: [mockStudent] },
+      componentInputs: { students: [mockStudent], canEdit: true },
       componentOutputs: { deletedStudent: { emit: deleteSpy } as unknown as never },
     });
     await userEvent.click(screen.getByTestId('students-delete-button-1'));
     expect(deleteSpy).toHaveBeenCalledWith('1');
+  });
+
+  it('shows no actions column or buttons for a read-only roster', async () => {
+    await render(StudentListComponent, {
+      componentInputs: { students: [mockStudent] },
+    });
+    expect(screen.queryByText('Acciones')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('students-edit-button-1')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('students-delete-button-1')).not.toBeInTheDocument();
   });
 });
