@@ -35,6 +35,10 @@ const PROVIDERS = [
 ];
 
 describe('ShellComponent', () => {
+  // jsdom has no matchMedia; the install banner checks display-mode with it.
+  beforeEach(() => vi.stubGlobal('matchMedia', () => ({ matches: false })));
+  afterEach(() => vi.unstubAllGlobals());
+
   it('renders the menu toggle button', async () => {
     await render(ShellComponent, { providers: PROVIDERS });
     expect(screen.getByTestId('shell-menu-btn')).toBeInTheDocument();
@@ -43,6 +47,11 @@ describe('ShellComponent', () => {
   it('does not show overlay when sidebar is closed', async () => {
     await render(ShellComponent, { providers: PROVIDERS });
     expect(screen.queryByTestId('shell-overlay')).not.toBeInTheDocument();
+  });
+
+  it('hosts the PWA install banner (it is not on the public landing)', async () => {
+    const { container } = await render(ShellComponent, { providers: PROVIDERS });
+    expect(container.querySelector('app-pwa-install-banner')).not.toBeNull();
   });
 
   it('shows overlay after clicking the menu button', async () => {
