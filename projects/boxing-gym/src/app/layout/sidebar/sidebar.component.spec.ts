@@ -28,6 +28,7 @@ const AUTH_SERVICE_MOCK = {
   isAdmin: () => false,
   isInstructor: () => false,
   isStudent: () => false,
+  isStaff: () => false,
 };
 
 const PROVIDERS = [
@@ -45,12 +46,26 @@ describe('SidebarComponent', () => {
     expect(screen.getByTestId('sidebar-gym-name')).toHaveTextContent('Boxing Club');
   });
 
-  it('renders nav items visible to non-admin', async () => {
+  it('hides the student roster from users who are not staff', async () => {
     await render(SidebarComponent, {
       componentInputs: { open: false },
       providers: PROVIDERS,
     });
+    expect(screen.queryByText('Alumnos')).not.toBeInTheDocument();
+    expect(screen.queryByText('Pagos')).not.toBeInTheDocument();
+  });
+
+  it('shows the roster but not admin items to instructors', async () => {
+    const instructorProviders = [
+      ...PROVIDERS.slice(0, -1),
+      { provide: AuthService, useValue: { ...AUTH_SERVICE_MOCK, isInstructor: () => true, isStaff: () => true } },
+    ];
+    await render(SidebarComponent, {
+      componentInputs: { open: false },
+      providers: instructorProviders,
+    });
     expect(screen.getByText('Alumnos')).toBeInTheDocument();
+    expect(screen.queryByText('Datos del gimnasio')).not.toBeInTheDocument();
     expect(screen.getByText('Pedidos')).toBeInTheDocument();
     expect(screen.getByText('Clases')).toBeInTheDocument();
     expect(screen.queryByText('Pagos')).not.toBeInTheDocument();

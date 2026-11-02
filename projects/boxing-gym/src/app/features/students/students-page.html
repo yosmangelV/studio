@@ -2,9 +2,9 @@
   <header class="students-page__header">
     <div class="students-page__heading">
       <h1 class="students-page__title">Alumnos</h1>
-      <p class="students-page__subtitle">Gestiona el padrón de alumnos del gimnasio.</p>
+      <p class="students-page__subtitle">{{ subtitle() }}</p>
     </div>
-    @if (mode() === 'list') {
+    @if (mode() === 'list' && canEdit()) {
       <ds-button
         variant="primary"
         data-testid="students-create-button"
@@ -38,6 +38,7 @@
     } @else {
       <app-student-list
         [students]="service.students()"
+        [canEdit]="canEdit()"
         (edit)="onEdit($event)"
         (deletedStudent)="onDelete($event)"
       />

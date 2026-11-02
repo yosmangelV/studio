@@ -126,6 +126,22 @@ Elimina un alumno de la base de datos.
 
 ---
 
+## Autorización
+
+Permisos en `app_metadata.permissions` del JWT (ver `specs/user-management.md`).
+
+| Endpoint | `admin` | `instructor` | `student` / sin rol |
+|---|---|---|---|
+| `GET /students`, `GET /students/{id}` | ✅ | ✅ | 403 |
+| `POST /students`, `PATCH /students/{id}`, `DELETE /students/{id}` | ✅ | 403 | 403 |
+
+- Lectura con `require_instructor` a nivel de router (también admite admin); escritura con `require_admin` por endpoint.
+- **Las escrituras son solo de admin porque llevan `system_access.permissions`:** quien pueda crear o editar alumnos puede dar el rol `admin` a cualquiera, incluido a sí mismo.
+- Frontend: `/students` exige `staffGuard` (admin o instructor); los instructores ven el padrón en solo lectura. El frontend solo refleja los permisos: quien los aplica es la API.
+- Corregido el 2026-11-02: antes el router solo exigía sesión (`get_current_user`), así que un alumno con acceso al sistema podía listar, editar y borrar alumnos y escalar a admin. `tests/test_students_authorization.py` cubre la matriz y `tests/test_router_guards.py` falla si cualquier router se monta sin guard de rol.
+
+---
+
 ## Tabla en Supabase
 
 ```sql

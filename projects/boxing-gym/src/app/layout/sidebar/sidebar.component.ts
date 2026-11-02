@@ -11,6 +11,7 @@ interface NavItem {
   disabled?: boolean;
   badge?: string;
   adminOnly?: boolean;
+  staffOnly?: boolean;
 }
 
 @Component({
@@ -31,7 +32,7 @@ export class SidebarComponent {
   readonly close = output<void>();
 
   private readonly allNavItems: NavItem[] = [
-    { label: 'Alumnos', route: '/students' },
+    { label: 'Alumnos', route: '/students', staffOnly: true },
     { label: 'Pagos',   route: '/payments', adminOnly: true },
     { label: 'Pedidos', route: '/orders',   disabled: true, badge: 'Pronto' },
     { label: 'Clases',  route: '/classes',  disabled: true, badge: 'Pronto' },
@@ -39,7 +40,9 @@ export class SidebarComponent {
   ];
 
   protected readonly navItems = computed(() =>
-    this.allNavItems.filter(item => !item.adminOnly || this.auth.isAdmin()),
+    this.allNavItems.filter(item =>
+      (!item.adminOnly || this.auth.isAdmin()) && (!item.staffOnly || this.auth.isStaff()),
+    ),
   );
 
   protected async onSignOut(): Promise<void> {
