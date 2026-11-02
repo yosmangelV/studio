@@ -13,6 +13,8 @@ reviews:
     enabled: true
     # PRs open as drafts and only leave draft after review, so drafts must be reviewed.
     drafts: true
+    # Every push must be reviewed (PR_REVIEW_GUIDELINES.md), so never pause after N commits.
+    auto_pause_after_reviewed_commits: 0
     base_branches:
       - main
 
