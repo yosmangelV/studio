@@ -1,3 +1,5 @@
+@use '../../../../../../../design-system/src/styles/touch-target' as tt;
+
 :host { display: block; }
 
 .contact {
@@ -106,6 +108,11 @@
 
   &--nowrap {
     white-space: nowrap;
+  }
+
+  // 44px hit area on the links; the row keeps its height.
+  &:is(a) {
+    @include tt.hit-area;
   }
 }
 
