@@ -5,6 +5,9 @@
 
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
+    // Each card keeps its own height: without this the row stretches an
+    // unpaginated card to its paginated neighbour's 560px floor.
+    align-items: start;
   }
 
   &__skeleton,
