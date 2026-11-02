@@ -38,7 +38,7 @@
 
 @mixin native-control {
   width: 100%;
-  min-height: 44px;
+  min-height: var(--size-touch-target);
   padding: 0.5rem 0.875rem;
   background-color: var(--color-surface-raised);
   border: 1px solid var(--gym-border-strong);

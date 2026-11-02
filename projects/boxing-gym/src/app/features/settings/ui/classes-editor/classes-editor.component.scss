@@ -40,7 +40,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.625rem;
-    min-height: 44px;
+    min-height: var(--size-touch-target);
     font-size: 0.9375rem;
     color: var(--gym-text-secondary);
     cursor: pointer;

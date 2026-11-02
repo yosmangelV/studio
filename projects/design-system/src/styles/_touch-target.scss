@@ -1,0 +1,15 @@
+// Invisible hit area at least --size-touch-target tall, centred on the element,
+// so a small link reaches the 44px minimum without changing its own size (the
+// layout, an underline or a row height stay put). Sets position: relative.
+@mixin hit-area($pseudo: before, $inline: 0px) {
+  position: relative;
+
+  &::#{$pseudo} {
+    content: '';
+    position: absolute;
+    left: calc(-1 * #{$inline});
+    right: calc(-1 * #{$inline});
+    top: calc(50% - var(--size-touch-target, 44px) / 2);
+    bottom: calc(50% - var(--size-touch-target, 44px) / 2);
+  }
+}
