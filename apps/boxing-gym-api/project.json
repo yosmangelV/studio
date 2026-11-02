@@ -1,6 +1,9 @@
 {
   "name": "boxing-gym-api",
-  "tags": ["scope:api", "lang:python"],
+  "tags": [
+    "scope:api",
+    "lang:python"
+  ],
   "targets": {
     "serve": {
       "executor": "nx:run-commands",
@@ -20,6 +23,13 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "uv run pytest",
+        "cwd": "apps/boxing-gym-api"
+      }
+    },
+    "dump-schema": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "./scripts/dump_schema.sh",
         "cwd": "apps/boxing-gym-api"
       }
     }
