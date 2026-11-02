@@ -1,9 +1,15 @@
+// Sticky at the end of the content column instead of fixed over the page: it
+// takes its own space, so it never covers the last action or the sidebar, and
+// the mobile drawer (z-index 150+) still slides over it.
+:host {
+  display: block;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}
+
 .pwa-banner {
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  z-index: 9999;
+  margin: 0 1rem 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;

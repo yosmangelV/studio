@@ -16,7 +16,7 @@
         {{ analytics()!.total_amount | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
       </span>
       <span class="payment-analytics-view__total-count">
-        {{ analytics()!.total_payments }} pago{{ analytics()!.total_payments !== 1 ? 's' : '' }}
+        {{ analytics()!.total_payments | plural:'pago':'pagos' }}
       </span>
     </div>
 
@@ -33,7 +33,7 @@
               {{ method.data.amount | currency:'EUR':'symbol':'1.2-2':'es-ES' }}
             </span>
             <span class="payment-analytics-view__method-count">
-              {{ method.data.count }} pago{{ method.data.count !== 1 ? 's' : '' }}
+              {{ method.data.count | plural:'pago':'pagos' }}
             </span>
           } @else {
             <span class="payment-analytics-view__method-amount payment-analytics-view__method-amount--zero">

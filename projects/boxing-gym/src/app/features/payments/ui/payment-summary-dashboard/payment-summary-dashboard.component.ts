@@ -2,13 +2,14 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { BadgeComponent, ButtonComponent, PaginationComponent } from 'design-system';
 import { AtRiskStudentInfo, PaidStudentInfo, PaymentSummaryResponse, UnpaidStudentInfo } from '../../../../core/api/payments.service';
+import { PluralPipe } from '../../../../shared/pipes/plural.pipe';
 
 const PAGE_SIZE = 10;
 
 @Component({
   selector: 'app-payment-summary-dashboard',
   standalone: true,
-  imports: [BadgeComponent, ButtonComponent, CurrencyPipe, DatePipe, PaginationComponent],
+  imports: [BadgeComponent, ButtonComponent, CurrencyPipe, DatePipe, PaginationComponent, PluralPipe],
   templateUrl: './payment-summary-dashboard.component.html',
   styleUrl: './payment-summary-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
