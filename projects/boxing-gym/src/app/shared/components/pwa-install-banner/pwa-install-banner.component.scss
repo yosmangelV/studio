@@ -1,9 +1,16 @@
+// Sticky at the end of the content column instead of fixed over the page. While
+// scrolling it rides the bottom of the viewport; at the end of the page it takes
+// its own space, so the last action is always reachable and the sidebar is never
+// covered. Raised over content only: dropdowns and the mobile drawer stay above.
+:host {
+  display: block;
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-raised);
+}
+
 .pwa-banner {
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  z-index: 9999;
+  margin: 0 1rem 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;

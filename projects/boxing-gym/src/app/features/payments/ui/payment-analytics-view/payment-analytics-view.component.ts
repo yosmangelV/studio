@@ -1,11 +1,11 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, I18nPluralPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { PaymentAnalyticsResponse } from '../../../../core/api/payments.service';
 
 @Component({
   selector: 'app-payment-analytics-view',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, I18nPluralPipe],
   templateUrl: './payment-analytics-view.component.html',
   styleUrl: './payment-analytics-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } 
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { PaymentType } from '../../core/api/payments.service';
 import { PaymentsService } from './data-access/payments.service';
+import { currentPeriod, periodLabelFromKey } from './utils/period';
 import { PaymentAnalyticsViewComponent } from './ui/payment-analytics-view/payment-analytics-view.component';
 
 @Component({
@@ -15,14 +16,10 @@ import { PaymentAnalyticsViewComponent } from './ui/payment-analytics-view/payme
 export default class PaymentsAnalytics {
   protected readonly service = inject(PaymentsService);
 
-  protected readonly selectedPeriod = signal(this.currentMonthPeriod());
+  protected readonly selectedPeriod = signal(currentPeriod());
   protected readonly selectedType   = signal<PaymentType | ''>('');
 
-  protected readonly periodLabel = computed(() => {
-    const [y, m] = this.selectedPeriod().split('-');
-    const date = new Date(+y, +m - 1, 1);
-    return new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' }).format(date);
-  });
+  protected readonly periodLabel = computed(() => periodLabelFromKey(this.selectedPeriod()));
 
   protected readonly paymentTypes: Array<{ value: PaymentType | ''; label: string }> = [
     { value: '',            label: 'Todos los tipos' },
@@ -49,8 +46,4 @@ export default class PaymentsAnalytics {
     this.selectedType.set((event.target as HTMLSelectElement).value as PaymentType | '');
   }
 
-  private currentMonthPeriod(): string {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  }
 }
