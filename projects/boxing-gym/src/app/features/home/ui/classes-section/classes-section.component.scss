@@ -2,11 +2,11 @@
 
 .classes {
   background-color: var(--gym-black);
-  padding: 7rem clamp(1.5rem, 8vw, 9rem);
+  padding: 7rem var(--layout-gutter);
 }
 
 .classes__container {
-  max-width: 1300px;
+  max-width: var(--layout-max-width);
   margin: 0 auto;
 }
 

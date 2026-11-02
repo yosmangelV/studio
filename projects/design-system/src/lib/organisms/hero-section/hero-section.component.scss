@@ -9,7 +9,7 @@
   align-items: center;
   background-color: var(--color-surface);
   overflow-x: clip; // clips watermark without creating scroll container or clipping text glyphs vertically
-  padding: 0 clamp(1.5rem, 8vw, 9rem);
+  padding: 0 var(--layout-gutter);
 
   // ---- Background layers ---------------------------------------------------
   &__bg {
@@ -58,7 +58,7 @@
     z-index: var(--z-raised);
     padding-top: 6rem;
     padding-bottom: 4rem;
-    max-width: 1300px;
+    max-width: var(--layout-max-width);
     width: 100%;
   }
 
@@ -138,7 +138,7 @@
   &__scroll-hint {
     position: absolute;
     bottom: 2.5rem;
-    left: clamp(1.5rem, 8vw, 9rem);
+    left: var(--layout-gutter);
 
     span {
       display: block;

@@ -2,12 +2,12 @@
 
 .about {
   background-color: var(--gym-dark);
-  padding: 7rem clamp(1.5rem, 8vw, 9rem);
+  padding: 7rem var(--layout-gutter);
   overflow: hidden;
 }
 
 .about__container {
-  max-width: 1300px;
+  max-width: var(--layout-max-width);
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr); // minmax(0,1fr) prevents grid blowout from min-content

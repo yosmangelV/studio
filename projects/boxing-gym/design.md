@@ -36,7 +36,8 @@ An old-school boxing gym: raw, disciplined, close to the ring. Black rooms, crim
 ## Page rules
 
 - **Hero:** the gym's name as the headline, one sentence, and two actions (primary: WhatsApp; secondary: classes).
-- **No splash screen.** The logo is in the nav and the hero.
+- **Splash only while there is nothing to show:** on the public landing, on a visit with no cached copy, until the gym data arrives (at least 1.2s so the animation lands, at most 3s, no minimum with reduced motion). Repeat visits, `/login` and the panel never see it (root Floor 8 forbids fixed-duration splashes).
+- **Sections span the container:** every section below the hero uses the 1300px container; schedule groups become columns on desktop and contact puts the action beside the details.
 - **The install-app banner** is shown only to signed-in users, inside the app shell, never on the public page.
 - **Stats** are computed, never typed: active students (counted and rounded down to tens in the database, shown only above the threshold set in `/settings`), years since the founding date, and the number of active classes. A figure with no source is hidden.
 
@@ -54,7 +55,12 @@ The live page breaks these rules today. Each item names where it gets fixed.
 - [x] Payments styles use defined tokens (`--color-text`, `--color-text-muted`, `--color-primary` did not exist)
 - [x] Nav brand subtitle (9.3px) and locale switcher (10.9px) to 12px or more
 - [x] Inter labels, nav, buttons and table heads: sentence case, untracked (uppercase stays on Oswald only)
-- [ ] Remove the 2.8s splash (`src/app/app.ts`)
-- [ ] Move the PWA install banner into the authenticated shell
-- [ ] Widen Classes, Schedule and Contact to the full container
-- [ ] Re-run the Hallmark lint on `localhost` and record the result here
+- [x] Replace the 2.8s splash with one tied to the data (`src/app/app.ts`)
+- [x] Move the PWA install banner into the authenticated shell
+- [x] Widen Classes, Schedule and Contact to the full container
+- [x] Re-run the Hallmark lint on `localhost` and record the result here. 2026-11-02, `sloplint --genre editorial --render`: **0 FAIL, 3 REFLEX, 1 WARN** (was 13 FAIL / 5 REFLEX on 2026-10-28). The REFLEX left:
+  - 49b ×2: the address link wraps at 320 and 375px. Kept: an address has to wrap on a phone, and `nowrap` would overflow.
+  - 77: "Nuestras clases" body reaches 69% at 1440px. The container is full width, but the `striped-list` rows hold short text. Open: see below.
+  - WARN F19: four weights in running use; the fourth (500) is the DS `page-nav` links. Open: see below.
+- [ ] Classes: give the `striped-list` rows mass at 1440px (REFLEX 77), a design-system change
+- [ ] Weights: DS `page-nav` links use 500 (F19), the panel uses 500 in places, and the Google Fonts link loads Inter 500/700 and Oswald 500, none of which the type rules above allow
