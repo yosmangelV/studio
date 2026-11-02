@@ -28,7 +28,8 @@
     // Only a paginated card keeps a fixed floor, so its pager doesn't jump under
     // the finger between a full and a short page. Without one, the card hugs its
     // content: an empty month was a 560px empty box on a phone.
-    &:has(.payment-summary-dashboard__pagination) {
+    // Set from the template (not :has()) so it also holds on browsers without :has().
+    &--paginated {
       min-height: 560px;
     }
 

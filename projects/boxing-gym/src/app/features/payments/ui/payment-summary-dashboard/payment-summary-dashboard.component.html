@@ -10,7 +10,9 @@
   <div class="payment-summary-dashboard" data-testid="payments-summary">
 
     <!-- Pagados -->
-    <section class="payment-summary-dashboard__section payment-summary-dashboard__section--paid" data-testid="payments-section-paid">
+    <section class="payment-summary-dashboard__section payment-summary-dashboard__section--paid"
+      [class.payment-summary-dashboard__section--paginated]="paidPages() > 1"
+      data-testid="payments-section-paid">
       <header class="payment-summary-dashboard__section-header">
         <span class="payment-summary-dashboard__section-title">✓ Pagados</span>
         <ds-badge variant="success">{{ paid().length }}</ds-badge>
@@ -54,7 +56,9 @@
 
     <!-- Pendientes -->
     @if (pending().length > 0) {
-      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--pending" data-testid="payments-section-pending">
+      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--pending"
+      [class.payment-summary-dashboard__section--paginated]="pendingPages() > 1"
+      data-testid="payments-section-pending">
         <header class="payment-summary-dashboard__section-header">
           <span class="payment-summary-dashboard__section-title">⏳ Pendientes</span>
           <ds-badge variant="warning">{{ pending().length }}</ds-badge>
@@ -95,7 +99,9 @@
 
     <!-- Vencidos -->
     @if (overdue().length > 0) {
-      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--overdue" data-testid="payments-section-overdue">
+      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--overdue"
+      [class.payment-summary-dashboard__section--paginated]="overduePages() > 1"
+      data-testid="payments-section-overdue">
         <header class="payment-summary-dashboard__section-header">
           <span class="payment-summary-dashboard__section-title">⚠ Vencidos</span>
           <ds-badge variant="danger">{{ overdue().length }}</ds-badge>
@@ -136,7 +142,9 @@
 
     <!-- En riesgo de inactividad -->
     @if (atRisk().length > 0) {
-      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--at-risk" data-testid="payments-section-at-risk">
+      <section class="payment-summary-dashboard__section payment-summary-dashboard__section--at-risk"
+      [class.payment-summary-dashboard__section--paginated]="atRiskPages() > 1"
+      data-testid="payments-section-at-risk">
         <header class="payment-summary-dashboard__section-header">
           <span class="payment-summary-dashboard__section-title">
             🚨 En riesgo de inactividad
