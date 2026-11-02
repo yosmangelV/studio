@@ -1,14 +1,8 @@
 .settings-page {
+  // Full width like every panel page: the shell's main already pads the content.
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding: 1.5rem;
-  max-width: 960px;
-  margin: 0 auto;
-
-  @media (max-width: 640px) {
-    padding: 1rem;
-  }
 
   &__header {
     display: flex;

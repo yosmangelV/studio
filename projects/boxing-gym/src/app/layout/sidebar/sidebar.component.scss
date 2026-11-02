@@ -11,7 +11,7 @@
   z-index: 200;
   transform: translateX(-100%);
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--gym-shadow-drawer);
 
   &--open {
     transform: translateX(0);
@@ -124,11 +124,6 @@
         background: var(--gym-brand);
         border-radius: 0 2px 2px 0;
       }
-    }
-
-    &--disabled {
-      pointer-events: none;
-      opacity: 0.3;
     }
   }
 

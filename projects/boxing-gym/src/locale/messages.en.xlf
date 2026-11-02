@@ -39,8 +39,8 @@
     </unit>
     <unit id="login.back">
       <segment>
-        <source> ← Volver a la web </source>
-        <target> ← Back to website </target>
+        <source>Volver a la web</source>
+        <target>Back to website</target>
       </segment>
     </unit>
     <unit id="hero.cta.primary">

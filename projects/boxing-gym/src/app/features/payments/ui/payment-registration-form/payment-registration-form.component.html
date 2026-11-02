@@ -20,9 +20,9 @@
       formControlName="student_id"
       data-testid="payments-form-student"
     >
-      <option value="" disabled>Seleccionar alumno…</option>
+      <option [ngValue]="null" disabled>Seleccionar alumno…</option>
       @for (student of students(); track student.id) {
-        <option [value]="student.id">{{ student.full_name }}</option>
+        <option [ngValue]="student.id">{{ student.full_name }}</option>
       }
     </select>
   </ds-form-field>
@@ -94,9 +94,9 @@
       formControlName="payment_method"
       data-testid="payments-form-method"
     >
-      <option value="" disabled>Seleccionar método…</option>
+      <option [ngValue]="null" disabled>Seleccionar método…</option>
       @for (method of paymentMethods; track method) {
-        <option [value]="method">{{ methodLabels[method] }}</option>
+        <option [ngValue]="method">{{ methodLabels[method] }}</option>
       }
     </select>
   </ds-form-field>

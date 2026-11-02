@@ -47,7 +47,8 @@ export class StudentFormComponent {
     phone: ['', [Validators.maxLength(20), Validators.pattern(/^\+?[0-9\s]*$/)]],
     birth_date: ['', Validators.required],
     enrollment_date: ['', Validators.required],
-    level: ['' as StudentLevel, Validators.required],
+    // null = no level chosen yet; reset() also leaves it null, matching the prompt option.
+    level: [null as StudentLevel | null, Validators.required],
     is_active: [true],
     weight: [null as number | null, Validators.min(0.01)],
     permissions: this.fb.group({
@@ -90,7 +91,7 @@ export class StudentFormComponent {
       email: raw.email!,
       birth_date: raw.birth_date!,
       enrollment_date: raw.enrollment_date!,
-      level: raw.level as StudentLevel,
+      level: raw.level!,
       is_active: raw.is_active ?? true,
       phone: raw.phone || undefined,
       weight: raw.weight ?? undefined,

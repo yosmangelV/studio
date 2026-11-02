@@ -19,25 +19,13 @@
     <ul class="sidebar__list" role="list">
       @for (item of navItems(); track item.route) {
         <li class="sidebar__item">
-          @if (item.disabled) {
-            <span
-              class="sidebar__link sidebar__link--disabled"
-              [attr.data-testid]="'sidebar-nav-disabled-' + item.route.slice(1)"
-            >
-              {{ item.label }}
-              @if (item.badge) {
-                <ds-badge variant="warning">{{ item.badge }}</ds-badge>
-              }
-            </span>
-          } @else {
-            <a
-              class="sidebar__link"
-              [routerLink]="item.route"
-              routerLinkActive="sidebar__link--active"
-              [attr.data-testid]="'sidebar-nav-link-' + item.route.slice(1)"
-              (click)="close.emit()"
-            >{{ item.label }}</a>
-          }
+          <a
+            class="sidebar__link"
+            [routerLink]="item.route"
+            routerLinkActive="sidebar__link--active"
+            [attr.data-testid]="'sidebar-nav-link-' + item.route.slice(1)"
+            (click)="close.emit()"
+          >{{ item.label }}</a>
         </li>
       }
     </ul>

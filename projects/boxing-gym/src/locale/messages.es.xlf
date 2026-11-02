@@ -3,7 +3,7 @@
   <file id="ngi18n" original="ng.template">
     <unit id="schedule.closed">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:54</note>
+        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:44</note>
       </notes>
       <segment>
         <source>Cerrado</source>
@@ -11,7 +11,7 @@
     </unit>
     <unit id="about.highlight.students">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:61</note>
+        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:51</note>
       </notes>
       <segment>
         <source>Alumnos activos</source>
@@ -19,7 +19,7 @@
     </unit>
     <unit id="about.highlight.year">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:62</note>
+        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:52</note>
       </notes>
       <segment>
         <source>Año formando campeones</source>
@@ -27,7 +27,7 @@
     </unit>
     <unit id="about.highlight.years">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:63</note>
+        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:53</note>
       </notes>
       <segment>
         <source>Años formando campeones</source>
@@ -35,7 +35,7 @@
     </unit>
     <unit id="about.highlight.modalities">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:64</note>
+        <note category="location">projects/boxing-gym/src/app/core/gym-profile/gym-profile.service.ts:54</note>
       </notes>
       <segment>
         <source>Modalidades de entrenamiento</source>
@@ -91,10 +91,10 @@
     </unit>
     <unit id="login.back">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:85,88</note>
+        <note category="location">projects/boxing-gym/src/app/features/auth/login-page.html:86,89</note>
       </notes>
       <segment>
-        <source> ← Volver a la web </source>
+        <source>Volver a la web</source>
       </segment>
     </unit>
     <unit id="hero.cta.primary">
@@ -171,7 +171,7 @@
     </unit>
     <unit id="contact.whatsapp">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:18,22</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/ui/contact-section/contact-section.component.html:17,20</note>
       </notes>
       <segment>
         <source>Escríbenos por WhatsApp</source>

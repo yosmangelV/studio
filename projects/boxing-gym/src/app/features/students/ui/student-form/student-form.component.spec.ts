@@ -38,6 +38,14 @@ describe('StudentFormComponent', () => {
     expect(screen.getByTestId('students-cancel-button')).toBeInTheDocument();
   });
 
+  it('shows the level prompt instead of an empty select on create', async () => {
+    await render(StudentFormComponent, {
+      componentInputs: { student: null },
+    });
+    const select = screen.getByTestId('students-level-select') as HTMLSelectElement;
+    expect(select.selectedOptions[0]?.textContent?.trim()).toBe('Seleccionar nivel');
+  });
+
   it('pre-populates fields when editing a student', async () => {
     await render(StudentFormComponent, {
       componentInputs: { student: mockStudent },
@@ -79,7 +87,7 @@ describe('StudentFormComponent', () => {
     await userEvent.type(screen.getByTestId('students-email-input'), 'ana@test.com');
     fireEvent.input(screen.getByTestId('students-birthdate-input'), { target: { value: '1995-03-20' } });
     fireEvent.input(screen.getByTestId('students-enrollmentdate-input'), { target: { value: '2024-06-01' } });
-    await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'beginner');
+    await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'Principiante');
     // Use getByRole to target the inner <button> element, not the ds-button host
     await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
 
@@ -129,7 +137,7 @@ describe('StudentFormComponent', () => {
     await userEvent.type(screen.getByTestId('students-email-input'), 'roberto@gym.com');
     fireEvent.input(screen.getByTestId('students-birthdate-input'), { target: { value: '1980-01-01' } });
     fireEvent.input(screen.getByTestId('students-enrollmentdate-input'), { target: { value: '2024-01-01' } });
-    await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'advanced');
+    await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'Avanzado');
     await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
 
     const payload: StudentFormPayload = saveSpy.mock.calls[0][0];

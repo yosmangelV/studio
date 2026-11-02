@@ -1,19 +1,24 @@
 import { ChangeDetectionStrategy, Component, computed, inject, LOCALE_ID } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Languages, LucideAngularModule } from 'lucide-angular';
 
-const LOCALE_LABELS: Record<string, { flag: string; label: string }> = {
-  es: { flag: '🇪🇸', label: 'Español' },
-  en: { flag: '🇬🇧', label: 'English' },
+// A language is not a country: names and codes, no flags (and no emoji, Floor 7).
+const LOCALE_LABELS: Record<string, { code: string; label: string }> = {
+  es: { code: 'ES', label: 'Español' },
+  en: { code: 'EN', label: 'English' },
 };
 
 @Component({
   selector: 'app-locale-switcher',
   standalone: true,
+  imports: [LucideAngularModule],
   templateUrl: './locale-switcher.component.html',
   styleUrl: './locale-switcher.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LocaleSwitcherComponent {
+  protected readonly icons = { language: Languages };
+
   private readonly localeId = inject(LOCALE_ID);
   private readonly document  = inject(DOCUMENT);
 

@@ -81,8 +81,9 @@
         >{{ submitLabel() }}</ds-button>
       </form>
 
-      <a class="login__back" routerLink="/" data-testid="login-back-link" i18n="@@login.back">
-        ← Volver a la web
+      <a class="login__back" routerLink="/" data-testid="login-back-link">
+        <lucide-angular [img]="icons.back" [size]="14" aria-hidden="true" />
+        <span i18n="@@login.back">Volver a la web</span>
       </a>
 
     </div>

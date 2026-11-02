@@ -1,15 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { BadgeComponent, ButtonComponent } from 'design-system';
+import { ButtonComponent } from 'design-system';
 import { AuthService } from '../../core/auth/auth.service';
 import { InactivityService } from '../../core/auth/inactivity.service';
 import { GYM_CONFIG } from '../../core/config/gym-config.token';
 
+// Only screens that exist: no "coming soon" entries (root design.md, Floor 3).
 interface NavItem {
   label: string;
   route: string;
-  disabled?: boolean;
-  badge?: string;
   adminOnly?: boolean;
   staffOnly?: boolean;
 }
@@ -17,7 +16,7 @@ interface NavItem {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, BadgeComponent, ButtonComponent],
+  imports: [RouterLink, RouterLinkActive, ButtonComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,8 +33,6 @@ export class SidebarComponent {
   private readonly allNavItems: NavItem[] = [
     { label: 'Alumnos', route: '/students', staffOnly: true },
     { label: 'Pagos',   route: '/payments', adminOnly: true },
-    { label: 'Pedidos', route: '/orders',   disabled: true, badge: 'Pronto' },
-    { label: 'Clases',  route: '/classes',  disabled: true, badge: 'Pronto' },
     { label: 'Datos del gimnasio', route: '/settings', adminOnly: true },
   ];
 

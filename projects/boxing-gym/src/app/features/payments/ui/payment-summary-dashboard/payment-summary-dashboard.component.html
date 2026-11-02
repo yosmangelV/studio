@@ -14,7 +14,7 @@
       [class.payment-summary-dashboard__section--paginated]="paidPages() > 1"
       data-testid="payments-section-paid">
       <header class="payment-summary-dashboard__section-header">
-        <span class="payment-summary-dashboard__section-title">✓ Pagados</span>
+        <span class="payment-summary-dashboard__section-title"><lucide-angular [img]="icons.paid" [size]="16" aria-hidden="true" /> Pagados</span>
         <ds-badge variant="success">{{ paid().length }}</ds-badge>
       </header>
 
@@ -60,7 +60,7 @@
       [class.payment-summary-dashboard__section--paginated]="pendingPages() > 1"
       data-testid="payments-section-pending">
         <header class="payment-summary-dashboard__section-header">
-          <span class="payment-summary-dashboard__section-title">⏳ Pendientes</span>
+          <span class="payment-summary-dashboard__section-title"><lucide-angular [img]="icons.pending" [size]="16" aria-hidden="true" /> Pendientes</span>
           <ds-badge variant="warning">{{ pending().length }}</ds-badge>
         </header>
         <ul class="payment-summary-dashboard__list" role="list">
@@ -103,7 +103,7 @@
       [class.payment-summary-dashboard__section--paginated]="overduePages() > 1"
       data-testid="payments-section-overdue">
         <header class="payment-summary-dashboard__section-header">
-          <span class="payment-summary-dashboard__section-title">⚠ Vencidos</span>
+          <span class="payment-summary-dashboard__section-title"><lucide-angular [img]="icons.overdue" [size]="16" aria-hidden="true" /> Vencidos</span>
           <ds-badge variant="danger">{{ overdue().length }}</ds-badge>
         </header>
         <ul class="payment-summary-dashboard__list" role="list">
@@ -147,7 +147,7 @@
       data-testid="payments-section-at-risk">
         <header class="payment-summary-dashboard__section-header">
           <span class="payment-summary-dashboard__section-title">
-            🚨 En riesgo de inactividad
+            <lucide-angular [img]="icons.atRisk" [size]="16" aria-hidden="true" /> En riesgo de inactividad
           </span>
           <ds-badge variant="danger">{{ atRisk().length }}</ds-badge>
         </header>

@@ -66,7 +66,7 @@
   font-size: 4rem;
   line-height: 1;
   display: block;
-  filter: drop-shadow(0 0 12px rgba(196, 18, 48, 0.6));
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--gym-red) 60%, transparent));
 
   &--mirrored {
     transform: scaleX(-1);
@@ -79,7 +79,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(196, 18, 48, 0.8) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--gym-red) 80%, transparent) 0%, transparent 70%);
   animation: impact-flash 2.4s ease-out infinite;
 }
 
