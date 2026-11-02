@@ -77,20 +77,20 @@ func _c1_y_c8_derrota() -> void:
 
 func _c2_desvio() -> void:
 	await _cargar()
-	var baliza := _poner_baliza(200.0)
+	var baliza := _poner_baliza(Config.ENTRADA_X - 120.0) # Detras: obliga a invertir la marcha.
 	await _simular(2)
 	var monstruo: Monstruo = _juego.get_node("Monstruo")
 	_comprobar("2  entra en ATRAIDO", monstruo.estado == Monstruo.Estado.ATRAIDO and monstruo.baliza_objetivo == baliza)
-	await _simular(300)
+	await _simular(600)
 	_comprobar("2  destruye la baliza", not is_instance_valid(baliza))
 	_comprobar("2  retoma AVANZAR", monstruo.estado == Monstruo.Estado.AVANZAR)
-	await _simular(30)
-	_comprobar("2  retoma rumbo a la ciudad", monstruo.rumbo.y < 0.0 and monstruo.rumbo.x > 0.0, str(monstruo.rumbo))
+	await _simular(180)
+	_comprobar("2  retoma rumbo a la ciudad", monstruo.rumbo.x > 0.9, str(monstruo.rumbo))
 
 
 func _c3_fuera_de_radio() -> void:
 	await _cargar()
-	var baliza := _poner_baliza(60.0 + Config.radio_baliza + 300.0)
+	var baliza := _poner_baliza(Config.ENTRADA_X + Config.radio_baliza + 100.0)
 	await _simular(60)
 	var monstruo: Monstruo = _juego.get_node("Monstruo")
 	_comprobar("3  fuera de radio no hace nada", monstruo.estado == Monstruo.Estado.AVANZAR and is_instance_valid(baliza))
@@ -116,7 +116,6 @@ func _c4_giro() -> void:
 func _c5_espuma() -> void:
 	await _cargar()
 	var monstruo: Monstruo = _juego.get_node("Monstruo")
-	monstruo.position = Vector2(60.0, Config.BANDA_ALTA_Y) # A la altura del objetivo: rumbo constante.
 	await _simular(10)
 	var inicio := monstruo.position
 	await _simular(30)
@@ -171,10 +170,8 @@ func _c7_guia() -> void:
 
 func _c8_victoria() -> void:
 	await _cargar()
-	var x := 200.0
-	while x <= 1250.0: # La ultima cae dentro de la contencion: el monstruo toca la zona antes de alcanzarla.
-		_poner_baliza(x)
-		x += 150.0
+	_poner_baliza(150.0)
+	_poner_baliza(20.0) # Dentro de la contencion: el monstruo toca la zona antes de alcanzarla.
 	await _simular(2500)
 	_comprobar("8a contencion da victoria sin tocar edificios", _juego.terminado and is_equal_approx(_juego.integridad, Config.INTEGRIDAD_MAX), "integridad=%s" % _juego.integridad)
 
@@ -294,10 +291,10 @@ func _partida_con_disparos_reales() -> void:
 			break
 		var hay_delante := false
 		for baliza: Node in _juego.get_node("Balizas").get_children():
-			if baliza.position.x - monstruo.position.x > 110.0: # Sigue activa cuando llegue la siguiente.
+			if monstruo.position.x - baliza.position.x > 110.0: # Sigue activa cuando llegue la siguiente.
 				hay_delante = true
 		if not hay_delante and _juego.get_node("Proyectiles").get_child_count() == 0 and lanzador.recarga_restante <= 0.0:
-			_apuntar(monstruo.position.x + 200.0)
+			_apuntar(maxf(monstruo.position.x - 200.0, 30.0))
 			lanzador.lanzar()
 		await _simular(1)
 	_comprobar("V  ganable con disparos reales", _juego.terminado and _juego.integridad > 0.0, "integridad=%s balizas=%d duracion=%.1fs" % [_juego.integridad, _juego.disparos[Proyectil.Tipo.BALIZA], _juego.duracion])

@@ -7,25 +7,23 @@ signal valor_cambiado(nombre: String, valor: float)
 
 # --- Geometria fija (no se ajusta en el panel) ---
 const SUELO_Y := 600.0
-const BANDA_ALTA_Y := 480.0 # Linea de la base de los edificios: limite alto de la banda de profundidad.
 const MUNDO := Rect2(0.0, 0.0, 1280.0, 720.0)
-const ENTRADA_X := 60.0
-const LANZADOR_X := 870.0
+const ENTRADA_X := 320.0
+const LANZADOR_X := 1180.0
 const BOCA_LANZADOR := Vector2(0.0, -40.0)
-const CONTENCION_X_MIN := 1180.0
-const EDIFICIOS_X: Array[float] = [425.0, 570.0, 715.0]
+const CONTENCION_X_MAX := 110.0
+const EDIFICIOS_X: Array[float] = [800.0, 930.0, 1060.0]
 const TAMANO_MONSTRUO := Vector2(90.0, 110.0)
 const TAMANO_EDIFICIO := Vector2(90.0, 110.0)
 const RADIO_NUCLEO_BALIZA := 10.0
 const RADIO_PROYECTIL := 6.0
 const INTEGRIDAD_MAX := 100.0
 const ANGULO_INICIAL := 135.0
-const POTENCIA_INICIAL := 50.0
+const POTENCIA_INICIAL := 70.0
 const PASO_FIJO := 1.0 / 60.0
 
 # --- Paleta reducida ---
 const COLOR_FONDO := Color("#20242c")
-const COLOR_BANDA := Color("#3a404c")
 const COLOR_SUELO := Color("#14161b")
 const COLOR_CONTENCION := Color("#2f7d5b")
 const COLOR_EDIFICIO := Color("#c9ced8")
@@ -49,7 +47,7 @@ const AJUSTES: Array[Dictionary] = [
 	{"nombre": "dano_edificio", "min": 0.0, "max": 100.0, "paso": 1.0},
 ]
 
-var velocidad_monstruo: float = 40.0:
+var velocidad_monstruo: float = 20.0:
 	set(v):
 		velocidad_monstruo = v
 		valor_cambiado.emit("velocidad_monstruo", v)

@@ -24,7 +24,7 @@ func _ready() -> void:
 	var edificios := $Edificios.get_children()
 	for i in edificios.size():
 		var edificio: Edificio = edificios[i]
-		edificio.position = Vector2(Config.EDIFICIOS_X[i], Config.BANDA_ALTA_Y)
+		edificio.position = Vector2(Config.EDIFICIOS_X[i], Config.SUELO_Y)
 		edificio.destruido.connect(_al_destruir_edificio)
 	_configurar_zona_contencion()
 	_barra.max_value = Config.INTEGRIDAD_MAX
@@ -35,9 +35,8 @@ func _ready() -> void:
 func _draw() -> void:
 	var mundo := Config.MUNDO
 	draw_rect(mundo, Config.COLOR_FONDO)
-	draw_rect(Rect2(0.0, Config.BANDA_ALTA_Y, mundo.size.x, Config.SUELO_Y - Config.BANDA_ALTA_Y), Config.COLOR_BANDA)
 	draw_rect(Rect2(0.0, Config.SUELO_Y, mundo.size.x, mundo.end.y - Config.SUELO_Y), Config.COLOR_SUELO)
-	draw_rect(Rect2(Config.CONTENCION_X_MIN, 0.0, mundo.end.x - Config.CONTENCION_X_MIN, Config.SUELO_Y), Config.COLOR_CONTENCION)
+	draw_rect(Rect2(0.0, 0.0, Config.CONTENCION_X_MAX, Config.SUELO_Y), Config.COLOR_CONTENCION)
 
 
 func _physics_process(delta: float) -> void:
@@ -58,9 +57,9 @@ func _input(evento: InputEvent) -> void:
 func _configurar_zona_contencion() -> void:
 	var mundo := Config.MUNDO
 	var forma := RectangleShape2D.new()
-	forma.size = Vector2(mundo.end.x - Config.CONTENCION_X_MIN, mundo.size.y)
+	forma.size = Vector2(Config.CONTENCION_X_MAX, mundo.size.y)
 	$ZonaContencion/Colision.shape = forma
-	$ZonaContencion.position = Vector2(Config.CONTENCION_X_MIN + forma.size.x / 2.0, mundo.size.y / 2.0)
+	$ZonaContencion.position = Vector2(forma.size.x / 2.0, mundo.size.y / 2.0)
 
 
 func _al_disparar(tipo: Proyectil.Tipo) -> void:

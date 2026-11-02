@@ -74,6 +74,8 @@ Principal (Node2D)              principal.gd
 
 ## 4. Disposición del escenario
 
+> Sustituida tras la primera prueba: contención a la izquierda, ciudad y lanzador a la derecha. Ver `CLAUDE.md` y `scripts/config.gd`.
+
 Coordenadas en un mundo de 1280 de ancho, suelo a y=600.
 
 | Elemento | Posición x | Notas |

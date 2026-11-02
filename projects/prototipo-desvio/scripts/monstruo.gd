@@ -1,8 +1,8 @@
 class_name Monstruo
 extends Area2D
 ## Maquina de estados explicita. Frenado no es un estado: es un modificador que
-## solo afecta a la velocidad. Origen en los pies: `position` se mueve dentro de
-## la banda de profundidad, entre Config.BANDA_ALTA_Y y Config.SUELO_Y.
+## solo afecta a la velocidad. Origen en los pies: camina sobre Config.SUELO_Y, asi
+## que girar es frenar, detenerse y arrancar en sentido contrario.
 
 signal baliza_alcanzada(baliza: Baliza)
 signal edificio_golpeado(edificio: Edificio)
@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 		return # Sin edificios intactos no tiene objetivo: se queda quieto.
 	_girar_hacia(deseado, delta)
 	position += rumbo * velocidad_actual * delta
-	_limitar_a_la_banda()
+	_limitar_al_suelo()
 
 
 func frenar() -> void:
@@ -82,9 +82,9 @@ func _girar_hacia(deseado: Vector2, delta: float) -> void:
 	rumbo = rumbo.rotated(clampf(rumbo.angle_to(deseado), -maximo, maximo)).normalized()
 
 
-func _limitar_a_la_banda() -> void:
+func _limitar_al_suelo() -> void:
 	position.x = maxf(position.x, Config.TAMANO_MONSTRUO.x / 2.0)
-	position.y = clampf(position.y, Config.BANDA_ALTA_Y, Config.SUELO_Y)
+	position.y = Config.SUELO_Y
 
 
 func _baliza_en_radio_mas_cercana() -> Baliza:

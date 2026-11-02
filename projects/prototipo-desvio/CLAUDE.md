@@ -9,8 +9,9 @@ Fuente de verdad: `docs/spec-prototipo-minimo.md` (qué y por qué) y `docs/spec
 
 ## Decisiones tomadas por el autor (amplían la especificación)
 
-- **Banda de profundidad**: el monstruo se mueve en x e y entre `BANDA_ALTA_Y` (base de los edificios) y `SUELO_Y`. Las balizas caen en `SUELO_Y`; por ahí pasa bajo los edificios sin tocarlos.
-- **Objetivo por defecto**: en AVANZAR va al edificio intacto más cercano, también si ya ha cruzado la ciudad. A la contención solo se le lleva con balizas.
+- **Disposición (sustituye a la sección 4)**: de izquierda a derecha, contención, entrada del monstruo, ciudad y lanzador. Todos los números están en `config.gd`.
+- **Objetivo**: el monstruo camina sobre el suelo hacia el edificio intacto más cercano, hacia el jugador. Ganar es arrastrarlo con balizas hacia atrás hasta la contención.
+- **Entrada**: el monstruo aparece a la derecha de la contención, no a través de ella, para no dar la victoria al entrar.
 - **Sliders**: ángulo 0–180° y potencia 0–100, paso 1.
 - **Reinicio**: R siempre; el toque solo con la partida terminada.
 

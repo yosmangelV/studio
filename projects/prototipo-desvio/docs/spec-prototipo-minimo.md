@@ -53,6 +53,8 @@ Queda explícitamente fuera, aunque sea tentador:
 
 ### Escenario
 
+> Sustituido tras la primera prueba: contención a la izquierda, ciudad y lanzador a la derecha. Ver `CLAUDE.md`.
+
 Vista lateral 2D, todo el escenario visible de una vez. De izquierda a derecha:
 
 1. Zona de entrada del monstruo (borde izquierdo).
