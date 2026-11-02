@@ -21,10 +21,11 @@
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    // clip, not hidden: hidden makes this a scroll container, which breaks the
-    // sticky topbar and the sticky install banner (the body is what scrolls).
-    // hidden stays as the fallback for browsers without clip (iOS Safari < 16).
-    overflow-x: hidden;
+    // Never overflow-x: hidden here: it makes this a scroll container, which breaks
+    // the sticky topbar and install banner (the body is what scrolls). min-width
+    // lets the grid column shrink; body's overflow-x: hidden (styles.scss) already
+    // stops page-level sideways scroll, and clip adds local clipping where supported.
+    min-width: 0;
     overflow-x: clip;
   }
 
