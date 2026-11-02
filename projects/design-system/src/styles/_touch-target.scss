@@ -10,8 +10,8 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    width: max(calc(100% + 2 * #{$inline}), var(--size-touch-target, 44px));
-    height: max(100%, var(--size-touch-target, 44px));
+    width: max(calc(100% + 2 * #{$inline}), var(--size-touch-target));
+    height: max(100%, var(--size-touch-target));
     transform: translate(-50%, -50%);
   }
 }
