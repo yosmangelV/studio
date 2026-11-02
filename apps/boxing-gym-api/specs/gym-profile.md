@@ -209,6 +209,12 @@ Todos devuelven **200** con el perfil completo actualizado (mismo shape que `GET
 ### Servicio `GymProfileService` (`core/gym-profile/`)
 - `profile = resource(...)` que lee `public_gym_profile` por Supabase.
 - **Nunca bloquea el render:** la marca y los textos fijos se pintan al instante; los datos salen de la última respuesta guardada en `localStorage` (y del service worker) mientras llega la nueva, y se usa esa copia si Supabase falla. En la primera visita sin caché, las secciones aparecen en cuanto responde Supabase.
+- **Caché en `localStorage` (`gym-profile:v2`, `core/gym-profile/gym-profile.cache.ts`)** — decisión revisada:
+  - *Qué guarda:* solo la respuesta de la vista pública, lo mismo que la landing enseña a cualquiera. Nunca datos de alumnos, pagos ni nada por usuario; si algún día la vista expone algo privado, la caché se elimina.
+  - *Por qué:* las visitas repetidas pintan al instante y sin splash; el service worker no sirve para eso porque es asíncrono y solo existe en producción.
+  - *Caducidad:* una copia de más de 7 días se descarta y se espera a Supabase, para no enseñar un horario viejo indefinidamente si Supabase falla.
+  - *No se confía en ella:* cualquier script del origen puede escribir en `localStorage`, así que la forma se valida al leer y una copia malformada se borra. Angular escapa todo lo que pinta.
+  - *Coste aceptado:* tras un cambio del admin, quien vuelve ve la versión anterior hasta que llega la respuesta (cientos de ms).
 - Expone `computed()` ya listos para las plantillas (enlace `wa.me`, enlace de Instagram, enlace de Google Maps desde la dirección, horario agrupado y formateado por idioma, años desde `founded_on`, cifras visibles), sin llamadas a métodos en las plantillas (`CLAUDE.md`).
 - Escrituras del admin: a través del cliente generado de la API (`npm run generate:api`), como `students` y `payments`.
 

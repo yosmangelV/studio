@@ -5,6 +5,7 @@ import HomePage from './home-page';
 import { GYM_CONFIG } from '../../core/config/gym-config.token';
 import { SUPABASE_CLIENT } from '../../core/auth/supabase.token';
 import type { PublicGymProfile } from '../../core/gym-profile/gym-profile.model';
+import { CACHE_KEY, writeCache } from '../../core/gym-profile/gym-profile.cache';
 
 const GYM_CONFIG_MOCK = {
   name: 'El Arte del Guante',
@@ -66,7 +67,7 @@ describe('HomePage', () => {
   });
 
   it('falls back to the cached copy when Supabase fails', async () => {
-    localStorage.setItem('gym-profile:v1', JSON.stringify(ROW));
+    writeCache(localStorage, ROW, Date.now());
     await render(HomePage, { providers: providers(supabaseReturning({ data: null, error: new Error('offline') })) });
     expect(await screen.findByText('Boxeo')).toBeInTheDocument();
     expect(screen.getByTestId('contact-whatsapp')).toHaveAttribute('href', 'https://wa.me/34658078039');
@@ -75,6 +76,6 @@ describe('HomePage', () => {
   it('caches a successful response for the next visit', async () => {
     await render(HomePage, { providers: providers(supabaseReturning({ data: ROW, error: null })) });
     await screen.findByText('Boxeo');
-    expect(JSON.parse(localStorage.getItem('gym-profile:v1')!)).toEqual(ROW);
+    expect(JSON.parse(localStorage.getItem(CACHE_KEY)!).row).toEqual(ROW);
   });
 });
