@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/principal.gd" id="1"]
+[ext_resource type="PackedScene" path="res://escenas/edificio.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://escenas/monstruo.tscn" id="3"]
+[ext_resource type="Script" path="res://scripts/panel_depuracion.gd" id="4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="suelo"]
+
+[node name="Principal" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Suelo" type="StaticBody2D" parent="."]
+position = Vector2(640, 600)
+
+[node name="Colision" type="CollisionShape2D" parent="Suelo"]
+shape = SubResource("suelo")
+
+[node name="ZonaContencion" type="Area2D" parent="."]
+
+[node name="Colision" type="CollisionShape2D" parent="ZonaContencion"]
+
+[node name="Edificios" type="Node2D" parent="."]
+
+[node name="Edificio1" parent="Edificios" instance=ExtResource("2")]
+
+[node name="Edificio2" parent="Edificios" instance=ExtResource("2")]
+
+[node name="Edificio3" parent="Edificios" instance=ExtResource("2")]
+
+[node name="Monstruo" parent="." instance=ExtResource("3")]
+
+[node name="Interfaz" type="CanvasLayer" parent="."]
+
+[node name="BarraIntegridad" type="ProgressBar" parent="Interfaz"]
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 340.0
+offset_bottom = 48.0
+
+[node name="EtiquetaResultado" type="Label" parent="Interfaz"]
+visible = false
+offset_left = 360.0
+offset_top = 16.0
+offset_right = 1000.0
+offset_bottom = 48.0
+horizontal_alignment = 1
+
+[node name="BotonPanel" type="Button" parent="Interfaz"]
+offset_left = 1216.0
+offset_top = 8.0
+offset_right = 1272.0
+offset_bottom = 60.0
+text = "F1"
+
+[node name="PanelDepuracion" type="Panel" parent="Interfaz"]
+visible = false
+offset_left = 780.0
+offset_top = 68.0
+offset_right = 1272.0
+offset_bottom = 596.0
+script = ExtResource("4")
+
+[node name="Desplazamiento" type="ScrollContainer" parent="Interfaz/PanelDepuracion"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Lista" type="VBoxContainer" parent="Interfaz/PanelDepuracion/Desplazamiento"]
+layout_mode = 2
+size_flags_horizontal = 3
