@@ -1,5 +1,7 @@
 .pagination {
   display: flex;
+  // Wraps rather than shrinking the 44px buttons: seven pages need ~430px.
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
