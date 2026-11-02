@@ -1,11 +1,15 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from app.auth import get_current_user
+from app.auth import require_admin, require_instructor
 from app.students.schemas import StudentCreate, StudentUpdate, StudentResponse, PaginatedStudents
 from app.students import service
 from app.students.service import AuthUserCreationError, EmailAlreadyExistsError
 
-router = APIRouter(dependencies=[Depends(get_current_user)])
+# Reads: instructors and admins (require_instructor also admits admins).
+# Writes: admins only — they carry system_access.permissions, so a non-admin writer
+# could grant admin to anyone, themselves included.
+router = APIRouter(dependencies=[Depends(require_instructor)])
+admin_only = [Depends(require_admin)]
 
 
 @router.get("/", response_model=PaginatedStudents)
@@ -17,7 +21,7 @@ def list_students(
     return service.get_all_students(search=search, limit=limit, offset=offset)
 
 
-@router.post("/", response_model=StudentResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=StudentResponse, status_code=status.HTTP_201_CREATED, dependencies=admin_only)
 def create_student(payload: StudentCreate):
     try:
         return service.create_student(payload)
@@ -35,7 +39,7 @@ def get_student(student_id: str):
     return student
 
 
-@router.patch("/{student_id}", response_model=StudentResponse)
+@router.patch("/{student_id}", response_model=StudentResponse, dependencies=admin_only)
 def update_student(student_id: str, payload: StudentUpdate):
     student = service.update_student(student_id, payload)
     if not student:
@@ -43,7 +47,7 @@ def update_student(student_id: str, payload: StudentUpdate):
     return student
 
 
-@router.delete("/{student_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{student_id}", status_code=status.HTTP_204_NO_CONTENT, dependencies=admin_only)
 def delete_student(student_id: str):
     deleted = service.delete_student(student_id)
     if not deleted:
