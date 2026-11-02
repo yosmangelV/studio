@@ -2,11 +2,12 @@
 
 .schedule {
   background-color: var(--gym-dark);
-  padding: 6rem 1.5rem;
+  padding: 6rem clamp(1.5rem, 8vw, 9rem);
 }
 
+// Same container as the classes section: the body spans the page, not a centred column.
 .schedule__container {
-  max-width: 880px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -14,13 +15,23 @@
   margin-bottom: 3rem;
 }
 
+// Dividers come from the 1px gap over the list background, so they work for rows
+// (mobile) and columns (desktop) alike.
 .schedule__list {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: grid;
+  gap: 1px;
+  background-color: var(--gym-border-subtle);
   border: 1px solid var(--gym-border-muted);
   border-radius: 4px;
   overflow: hidden;
+
+  // One column per day group, however many the admin defines.
+  @media (min-width: 960px) {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
 }
 
 .schedule__row {
@@ -28,16 +39,18 @@
   grid-template-columns: 1fr;
   gap: 0.75rem;
   padding: 1.5rem 1.75rem;
-  border-bottom: 1px solid var(--gym-border-subtle);
+  background-color: var(--gym-dark);
 
-  &:last-child {
-    border-bottom: none;
-  }
-
-  @media (min-width: 640px) {
+  @media (min-width: 640px) and (max-width: 959.98px) {
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     gap: 2rem;
     align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    align-content: start;
+    gap: 1.5rem;
+    padding: 2rem;
   }
 }
 
@@ -63,6 +76,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  @media (min-width: 960px) {
+    gap: 0.75rem;
+  }
 }
 
 .schedule__session {
@@ -71,6 +88,12 @@
   gap: 1rem;
   font-family: var(--gym-font-body);
   font-size: 1rem;
+
+  // In a column the label sits above its hours, so neither wraps at any width.
+  @media (min-width: 960px) {
+    flex-direction: column;
+    gap: 0.125rem;
+  }
 }
 
 .schedule__label {
@@ -82,6 +105,15 @@
   color: var(--gym-text-high);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+
+  // On desktop the hours are the content of each column: set them at display size.
+  @media (min-width: 960px) {
+    margin-left: 0;
+    font-family: var(--gym-font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
 
   .schedule__row--closed & {
     color: var(--gym-text-muted);

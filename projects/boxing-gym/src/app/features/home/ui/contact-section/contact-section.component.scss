@@ -2,14 +2,23 @@
 
 .contact {
   background-color: var(--gym-black);
-  padding: 6rem 1.5rem 0;
+  padding: 6rem clamp(1.5rem, 8vw, 9rem) 0;
 }
 
+// Stacked on mobile; on desktop the call to action and the details share the row,
+// so the section spans the page like the others instead of a 640px column.
 .contact__container {
-  max-width: 640px;
+  max-width: 1300px;
   margin: 0 auto;
-  text-align: center;
   padding-bottom: 4rem;
+  display: grid;
+  gap: 3rem;
+
+  @media (min-width: 960px) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: center;
+  }
 }
 
 .contact__header {
@@ -28,7 +37,6 @@
   background-color: var(--gym-whatsapp);
   padding: 1rem 2rem;
   border-radius: 4px;
-  margin-bottom: 3rem;
   transition: background-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
@@ -54,7 +62,6 @@
   border: 1px solid var(--gym-border-muted);
   border-radius: 4px;
   overflow: hidden;
-  text-align: left;
 }
 
 .contact__item {
@@ -62,7 +69,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.1rem 1.75rem;
+  padding: 1.25rem 1.75rem;
   border-bottom: 1px solid var(--gym-border-subtle);
 
   &:last-child {
@@ -78,7 +85,7 @@
 }
 
 .contact__value {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--gym-gray-light);
   text-decoration: none;
   text-align: right;
