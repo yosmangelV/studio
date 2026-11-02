@@ -5,7 +5,7 @@ Product rules on top of the root `design.md`. Tokens live in `src/app/shared/sty
 ## Who and what for
 
 - **Audience:** family and friends who receive a private link (`/announcement/:code`), almost always on a phone, often opened from a chat app. Three segments (`special`, `friends`, `family`) share one design; only the content changes.
-- **The page's one job:** carry the reader from the first slide to the reveal, at their own pace. Everything on screen serves the current slide; there is no navigation, no header and no call to action besides "next".
+- **The page's one job:** carry the reader from the first slide to the reveal, at their own pace. Everything on screen serves the current slide: no global navigation (no site menu, no header) and no call to action besides the player's own previous and next.
 - **Context:** a one-off, emotional moment. It is read once, slowly, sometimes aloud to someone else. Legibility beats decoration.
 
 ## Voice
@@ -64,6 +64,14 @@ The deployed player breaks these rules today. Colour, type and motion fixes go i
 - [ ] Heart (❤️) and nav arrows (← → ↺) become SVG icons (Floor 7)
 - [ ] Remove the eyebrow from the intro and text slides (`eyebrow` field and `__eyebrow` styles)
 - [ ] Three weights: drop Playfair 900 and Dancing Script 700 from the font link and the styles
+- [ ] Body text in the body face: `.intro-slide__body` and `.text-slide__body` use `--ann-font-display` today, and should use `--ann-font-body`
+- [ ] The reveal title in the display face: `.final-reveal-slide__title` uses `--ann-font-script` today; the script stays for its emphasis line
+- [ ] Image slide: `[alt]` is bound to `title` instead of the model's `altText`
+- [ ] Image slide: the caption renders `{{ data() }}`, the whole slide object (`[object Object]`), instead of its text
+- [ ] Image slide: without an `image` it renders an empty `<img>` instead of falling back to the text layout
 - [ ] Delete `src/app/app.html`: the unused Angular starter page ("Congratulations! Your app is running. 🎉")
 - [ ] Decide what `/` shows: today it redirects to `DEMO-FRIENDS`, so anyone without a code sees demo content (Floor 3)
-- [ ] Run the Hallmark lint on a story route against a local API and record the result here
+- [ ] Run the Hallmark lint on every demo story against a local API and record the result here (FAIL, REFLEX and WARN counts, and the reason for each REFLEX kept):
+  1. `apps/announcement-api`: `npm run seed` (writes DEMO-SPECIAL, DEMO-FRIENDS, DEMO-FAMILY), then `npm run start:dev`
+  2. `npm run announcement` (dev server on 4200)
+  3. `node .claude/skills/hallmark/scripts/sloplint.mjs --url http://localhost:4200/announcement/<code> --genre editorial --render` for each of the three codes
