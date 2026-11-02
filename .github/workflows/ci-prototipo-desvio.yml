@@ -1,0 +1,39 @@
+name: CI — Prototipo Desvio
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/prototipo-desvio/**'
+      - '.github/workflows/ci-prototipo-desvio.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'projects/prototipo-desvio/**'
+      - '.github/workflows/ci-prototipo-desvio.yml'
+
+env:
+  GODOT_VERSION: 4.7.2-stable
+
+jobs:
+  criterios:
+    name: Criterios de aceptación
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Godot
+        run: |
+          curl -fsSL -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+          unzip -q godot.zip -d "$RUNNER_TEMP/godot"
+          echo "GODOT_BIN=$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}_linux.x86_64" >> "$GITHUB_ENV"
+
+      - name: Import project
+        run: node projects/prototipo-desvio/herramientas/godot.mjs --headless --import
+
+      - name: Run acceptance criteria
+        run: node projects/prototipo-desvio/herramientas/godot.mjs --headless --fixed-fps 60 res://pruebas/criterios.tscn

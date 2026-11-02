@@ -1,8 +1,10 @@
 extends Node2D
-## Orquesta la partida: integridad, senales y fin del intento.
+## Orquesta la partida: integridad, senales, fin del intento y registro.
 
 var integridad: float = Config.INTEGRIDAD_MAX
 var terminado := false
+var duracion: float = 0.0
+var disparos := {Proyectil.Tipo.BALIZA: 0, Proyectil.Tipo.ESPUMA: 0}
 
 @onready var _monstruo: Monstruo = $Monstruo
 @onready var _barra: ProgressBar = $Interfaz/BarraIntegridad
@@ -12,9 +14,13 @@ var terminado := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	_monstruo.process_mode = Node.PROCESS_MODE_PAUSABLE
+	for nodo: Node in [_monstruo, $Lanzador, $Proyectiles, $Balizas]:
+		nodo.process_mode = Node.PROCESS_MODE_PAUSABLE
+	Registro.iniciar_intento()
 	_monstruo.position = Vector2(Config.ENTRADA_X, Config.SUELO_Y)
 	_monstruo.edificio_golpeado.connect(_al_golpear_edificio)
+	_monstruo.contencion_alcanzada.connect(_terminar.bind("victoria"))
+	$Lanzador.disparo_realizado.connect(_al_disparar)
 	var edificios := $Edificios.get_children()
 	for i in edificios.size():
 		var edificio: Edificio = edificios[i]
@@ -32,6 +38,11 @@ func _draw() -> void:
 	draw_rect(Rect2(0.0, Config.BANDA_ALTA_Y, mundo.size.x, Config.SUELO_Y - Config.BANDA_ALTA_Y), Config.COLOR_BANDA)
 	draw_rect(Rect2(0.0, Config.SUELO_Y, mundo.size.x, mundo.end.y - Config.SUELO_Y), Config.COLOR_SUELO)
 	draw_rect(Rect2(Config.CONTENCION_X_MIN, 0.0, mundo.end.x - Config.CONTENCION_X_MIN, Config.SUELO_Y), Config.COLOR_CONTENCION)
+
+
+func _physics_process(delta: float) -> void:
+	if not terminado:
+		duracion += delta
 
 
 func _input(evento: InputEvent) -> void:
@@ -52,6 +63,10 @@ func _configurar_zona_contencion() -> void:
 	$ZonaContencion.position = Vector2(Config.CONTENCION_X_MIN + forma.size.x / 2.0, mundo.size.y / 2.0)
 
 
+func _al_disparar(tipo: Proyectil.Tipo) -> void:
+	disparos[tipo] += 1
+
+
 func _al_golpear_edificio(edificio: Edificio) -> void:
 	edificio.recibir_golpe()
 
@@ -63,10 +78,12 @@ func _al_destruir_edificio(_edificio: Edificio) -> void:
 		_terminar("derrota")
 
 
+## Escribe la fila al terminar, no al reiniciar: cerrar el juego tras perder no la pierde.
 func _terminar(resultado: String) -> void:
 	if terminado:
 		return
 	terminado = true
+	Registro.registrar(duracion, resultado, integridad, disparos[Proyectil.Tipo.BALIZA], disparos[Proyectil.Tipo.ESPUMA])
 	_resultado.text = "%s. Toca o pulsa R para reiniciar" % resultado.capitalize()
 	_resultado.visible = true
 	get_tree().paused = true

@@ -21,4 +21,5 @@ Desde la raíz del monorepo, con `godot` en el PATH o `GODOT_BIN` definido:
 ```bash
 npm run desvio:editor   # Abre el proyecto en el editor
 npm run desvio:jugar    # Lanza el juego
+npm run desvio:test     # Comprueba los criterios de la sección 7 en headless
 ```

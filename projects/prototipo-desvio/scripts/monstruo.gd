@@ -1,18 +1,25 @@
 class_name Monstruo
 extends Area2D
-## Maquina de estados explicita. Origen en los pies: `position` se mueve dentro
-## de la banda de profundidad, entre Config.BANDA_ALTA_Y y Config.SUELO_Y.
+## Maquina de estados explicita. Frenado no es un estado: es un modificador que
+## solo afecta a la velocidad. Origen en los pies: `position` se mueve dentro de
+## la banda de profundidad, entre Config.BANDA_ALTA_Y y Config.SUELO_Y.
 
+signal baliza_alcanzada(baliza: Baliza)
 signal edificio_golpeado(edificio: Edificio)
 signal contencion_alcanzada()
 
-enum Estado { AVANZAR }
+enum Estado { AVANZAR, ATRAIDO }
+
+const GRUPO := &"monstruo"
 
 var estado: Estado = Estado.AVANZAR
 var rumbo: Vector2 = Vector2.RIGHT
+var baliza_objetivo: Baliza = null
+var frenado_restante: float = 0.0
 
 
 func _ready() -> void:
+	add_to_group(GRUPO)
 	var forma := RectangleShape2D.new()
 	forma.size = Config.TAMANO_MONSTRUO
 	$Colision.shape = forma
@@ -26,16 +33,44 @@ func _draw() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_actualizar_estado()
+	var frenado := frenado_restante > 0.0
+	var velocidad_actual := Config.velocidad_monstruo * (Config.fuerza_frenado if frenado else 1.0)
+	frenado_restante = maxf(frenado_restante - delta, 0.0)
 	var deseado := _rumbo_deseado()
 	if deseado == Vector2.ZERO:
 		return # Sin edificios intactos no tiene objetivo: se queda quieto.
 	_girar_hacia(deseado, delta)
-	position += rumbo * Config.velocidad_monstruo * delta
+	position += rumbo * velocidad_actual * delta
 	_limitar_a_la_banda()
+
+
+func frenar() -> void:
+	frenado_restante = Config.duracion_frenado
+
+
+func rect_mundo() -> Rect2:
+	var tam := Config.TAMANO_MONSTRUO
+	return Rect2(global_position - Vector2(tam.x / 2.0, tam.y), tam)
+
+
+func _actualizar_estado() -> void:
+	if estado == Estado.ATRAIDO and overlaps_area(baliza_objetivo):
+		var alcanzada := baliza_objetivo
+		baliza_objetivo = null
+		estado = Estado.AVANZAR
+		alcanzada.destruir()
+		baliza_alcanzada.emit(alcanzada)
+	var cercana := _baliza_en_radio_mas_cercana()
+	if cercana:
+		baliza_objetivo = cercana
+		estado = Estado.ATRAIDO
 
 
 func _rumbo_deseado() -> Vector2:
 	match estado:
+		Estado.ATRAIDO:
+			return position.direction_to(baliza_objetivo.global_position)
 		Estado.AVANZAR:
 			var edificio := _edificio_intacto_mas_cercano()
 			return position.direction_to(edificio.global_position) if edificio else Vector2.ZERO
@@ -52,14 +87,26 @@ func _limitar_a_la_banda() -> void:
 	position.y = clampf(position.y, Config.BANDA_ALTA_Y, Config.SUELO_Y)
 
 
+func _baliza_en_radio_mas_cercana() -> Baliza:
+	var mejor: Baliza = null
+	var mejor_distancia := Config.radio_baliza
+	for nodo: Node in get_tree().get_nodes_in_group(Baliza.GRUPO):
+		var distancia := position.distance_to(nodo.global_position)
+		if distancia < mejor_distancia:
+			mejor = nodo as Baliza
+			mejor_distancia = distancia
+	return mejor
+
+
 func _edificio_intacto_mas_cercano() -> Edificio:
 	var mejor: Edificio = null
 	var mejor_distancia := INF
 	for nodo: Node in get_tree().get_nodes_in_group(Edificio.GRUPO):
 		var edificio := nodo as Edificio
-		if edificio.intacto and position.distance_to(edificio.global_position) < mejor_distancia:
+		var distancia := position.distance_to(edificio.global_position)
+		if edificio.intacto and distancia < mejor_distancia:
 			mejor = edificio
-			mejor_distancia = position.distance_to(edificio.global_position)
+			mejor_distancia = distancia
 	return mejor
 
 
