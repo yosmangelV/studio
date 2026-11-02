@@ -152,7 +152,7 @@
               <div class="payment-summary-dashboard__item-info">
                 <span class="payment-summary-dashboard__item-name">{{ student.student_name }}</span>
                 <span class="payment-summary-dashboard__item-months">
-                  {{ student.months_unpaid | plural:'mes':'meses' }} sin pagar
+                  {{ student.months_unpaid | i18nPlural: {'=1': '# mes', 'other': '# meses'} }} sin pagar
                 </span>
               </div>
               <div class="payment-summary-dashboard__item-actions">

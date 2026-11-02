@@ -2,6 +2,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { ButtonComponent } from 'design-system';
 import { PaymentMethod, PaymentResponse, PaymentType } from '../../../../core/api/payments.service';
+import { periodLabel } from '../../utils/period';
 
 const PAGE_SIZE = 20;
 
@@ -51,8 +52,7 @@ export class StudentPaymentHistoryComponent {
     if (payment.type !== 'monthly_fee' || !payment.period_year || !payment.period_month) {
       return '—';
     }
-    const date = new Date(payment.period_year, payment.period_month - 1, 1);
-    return new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' }).format(date);
+    return periodLabel(payment.period_year, payment.period_month);
   }
 
   protected onLoadMore(): void {

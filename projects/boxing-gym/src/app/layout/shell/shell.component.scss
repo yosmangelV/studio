@@ -23,6 +23,8 @@
     min-height: 100dvh;
     // clip, not hidden: hidden makes this a scroll container, which breaks the
     // sticky topbar and the sticky install banner (the body is what scrolls).
+    // hidden stays as the fallback for browsers without clip (iOS Safari < 16).
+    overflow-x: hidden;
     overflow-x: clip;
   }
 

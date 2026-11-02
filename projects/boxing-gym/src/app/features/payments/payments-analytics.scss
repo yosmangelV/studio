@@ -85,11 +85,6 @@
     font-weight: 600;
     color: var(--color-text-primary);
     margin: 0;
-
-    // "noviembre de 2026" → "Noviembre de 2026" (capitalize also raised "De").
-    &::first-letter {
-      text-transform: uppercase;
-    }
   }
 
   &__error {
