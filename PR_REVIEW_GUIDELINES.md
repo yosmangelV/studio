@@ -41,6 +41,24 @@ Reviews are collaborative, not personal. The goal is a better system, not a perf
 
 ---
 
+## Review Flow
+
+GitHub never lets a PR author approve their own PR, and this repo has a single
+maintainer, so approval is not the gate. Every PR passes two reviews instead:
+
+1. **Before opening** — the author (human or agent) runs `/code-review --branch`
+   and fixes what it finds; anything deliberately left is noted in the PR body.
+2. **Open as draft** — `gh pr create --draft`. A draft cannot be merged.
+3. **CodeRabbit** reviews automatically on open and on every push
+   (`.coderabbit.yaml`). Each comment is fixed or answered with a reason, then resolved.
+4. **Owner review** — the maintainer reads the CodeRabbit summary and the diff, and
+   marks the PR **Ready for review** only when satisfied. That click is the approval.
+5. **Merge** — once CI is green and no conversation is unresolved.
+
+Agents never mark a PR ready for review and never merge.
+
+---
+
 ## PR Structure Rules
 
 Prefer:
