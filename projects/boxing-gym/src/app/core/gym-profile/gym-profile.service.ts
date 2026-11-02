@@ -1,26 +1,8 @@
 import { Injectable, LOCALE_ID, computed, inject, resource } from '@angular/core';
 import { SUPABASE_CLIENT } from '../auth/supabase.token';
+import { readCache, writeCache } from './gym-profile.cache';
 import type { PublicGymProfile } from './gym-profile.model';
 import { groupSchedule, toClassViews, toContactView, toHighlights } from './gym-profile.view';
-
-const CACHE_KEY = 'gym-profile:v1';
-
-function readCache(): PublicGymProfile | null {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    return raw ? (JSON.parse(raw) as PublicGymProfile) : null;
-  } catch {
-    return null;
-  }
-}
-
-function writeCache(row: PublicGymProfile): void {
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify(row));
-  } catch {
-    // Storage full or blocked: the page still renders from the live response.
-  }
-}
 
 /**
  * Public gym data for the landing, read straight from Supabase (view `public_gym_profile`)
@@ -31,7 +13,7 @@ function writeCache(row: PublicGymProfile): void {
 export class GymProfileService {
   private readonly supabase = inject(SUPABASE_CLIENT);
   private readonly locale = inject(LOCALE_ID);
-  private readonly cached = readCache();
+  private readonly cached = readCache(localStorage, Date.now());
 
   /** A previous visit left a copy, so the landing can render without waiting. */
   readonly hasCache = this.cached !== null;
@@ -41,7 +23,7 @@ export class GymProfileService {
       const { data, error } = await this.supabase.from('public_gym_profile').select('*').single();
       if (error) throw error;
       const row = data as PublicGymProfile;
-      writeCache(row);
+      writeCache(localStorage, row, Date.now());
       return row;
     },
   });
