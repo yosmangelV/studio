@@ -2,15 +2,17 @@
 
 .contact {
   background-color: var(--gym-black);
-  padding: 6rem clamp(1.5rem, 8vw, 9rem) 0;
+  padding-top: 6rem;
 }
 
 // Stacked on mobile; on desktop the call to action and the details share the row,
 // so the section spans the page like the others instead of a 640px column.
+// The gutter lives here, not on .contact, so the footer rule below stays page-wide.
 .contact__container {
-  max-width: 1300px;
+  box-sizing: content-box;
+  max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding-bottom: 4rem;
+  padding: 0 var(--layout-gutter) 4rem;
   display: grid;
   gap: 3rem;
 
@@ -21,8 +23,11 @@
   }
 }
 
-.contact__header {
-  margin-bottom: 2.5rem;
+.contact__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.5rem;
 }
 
 .contact__whatsapp {

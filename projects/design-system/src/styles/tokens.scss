@@ -137,6 +137,13 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
   // ---------------------------------------------------------------------------
+  // Page layout — one container for heroes and sections across products.
+  // Breakpoints can't be custom properties (media queries don't read them).
+  // ---------------------------------------------------------------------------
+  --layout-max-width: 1300px;
+  --layout-gutter:    clamp(1.5rem, 8vw, 9rem);
+
+  // ---------------------------------------------------------------------------
   // Transitions & Animation
   // ---------------------------------------------------------------------------
   --duration-fast:   100ms;
