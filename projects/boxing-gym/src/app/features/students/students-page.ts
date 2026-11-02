@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import { I18nPluralPipe } from '@angular/common';
 import { ButtonComponent, PaginationComponent } from 'design-system';
 import { StudentResponse } from '../../core/api/students.service';
 import { AuthService } from '../../core/auth/auth.service';
@@ -11,7 +12,7 @@ type PageMode = 'list' | 'create' | 'edit';
 @Component({
   selector: 'app-students-page',
   standalone: true,
-  imports: [ButtonComponent, StudentListComponent, StudentFormComponent, PaginationComponent],
+  imports: [ButtonComponent, I18nPluralPipe, StudentListComponent, StudentFormComponent, PaginationComponent],
   templateUrl: './students-page.html',
   styleUrl: './students-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

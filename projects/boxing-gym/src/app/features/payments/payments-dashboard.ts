@@ -12,6 +12,7 @@ import { ButtonComponent } from 'design-system';
 import { PaymentCreate } from '../../core/api/payments.service';
 import { StudentsService } from '../students/data-access/students.service';
 import { PaymentsService } from './data-access/payments.service';
+import { currentPeriod, periodLabelFromKey } from './utils/period';
 import { PaymentRegistrationFormComponent } from './ui/payment-registration-form/payment-registration-form.component';
 import { PaymentSummaryDashboardComponent } from './ui/payment-summary-dashboard/payment-summary-dashboard.component';
 import { StudentPaymentHistoryComponent } from './ui/student-payment-history/student-payment-history.component';
@@ -43,13 +44,9 @@ export default class PaymentsDashboard {
   protected readonly prefilledStudentId = signal<string | null>(null);
   protected readonly historyOffset      = signal(0);
 
-  protected readonly selectedPeriod = signal(this.currentMonthPeriod());
+  protected readonly selectedPeriod = signal(currentPeriod());
 
-  protected readonly periodLabel = computed(() => {
-    const [y, m] = this.selectedPeriod().split('-');
-    const date = new Date(+y, +m - 1, 1);
-    return new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' }).format(date);
-  });
+  protected readonly periodLabel = computed(() => periodLabelFromKey(this.selectedPeriod()));
 
   constructor() {
     effect(() => {
@@ -116,8 +113,4 @@ export default class PaymentsDashboard {
     this.paymentsService.deletePayment(id);
   }
 
-  private currentMonthPeriod(): string {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  }
 }
