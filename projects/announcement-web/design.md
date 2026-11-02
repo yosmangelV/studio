@@ -46,7 +46,8 @@ Known failures today, fixed in the migration below:
 - **Progress** is shown by the dots and exposed as a progressbar (`aria-valuenow` / `aria-valuemax`); the dots themselves are decorative.
 - **Motion:** each slide gets one entrance, from `transform` and `opacity`, timed by the DS motion tokens. Under `prefers-reduced-motion` slides appear without animation, and the countdown still counts but its numerals don't animate.
 - **Images** always carry the API's `alt`; a slide without an image falls back to its text layout, never a placeholder picture.
-- **Errors** (`404` unknown code, `410` deactivated message) get a short, kind sentence in the product's voice, never a status code or a technical message.
+- **Errors** (`404` unknown code, `410` deactivated message) get a short, kind sentence in the product's voice, never a status code or a technical message. The API owns that copy today and meets this rule; the player's own fallback is "No pudimos cargar este mensaje."
+- **`/` redirects to `DEMO-FRIENDS`** (owner's decision, 2026-11-02). It is not placeholder content in the Floor 3 sense: the demo is served only if the API has that code, and otherwise the reader gets the 404 sentence above.
 - **No eyebrows.** A slide's first line is its heading; the small uppercase label above it goes (root anti-generated rules).
 - **Icons are SVG** (root Floor 7): the heart and the nav arrows included.
 
@@ -70,7 +71,6 @@ The deployed player breaks these rules today. Colour, type and motion fixes go i
 - [ ] Image slide: the caption renders `{{ data() }}`, the whole slide object (`[object Object]`), instead of its text
 - [ ] Image slide: without an `image` it renders an empty `<img>` instead of falling back to the text layout
 - [ ] Delete `src/app/app.html`: the unused Angular starter page ("Congratulations! Your app is running. 🎉")
-- [ ] Decide what `/` shows: today it redirects to `DEMO-FRIENDS`, so anyone without a code sees demo content (Floor 3)
 - [ ] Run the Hallmark lint on every demo story against a local API and record the result here (FAIL, REFLEX and WARN counts, and the reason for each REFLEX kept):
   1. `apps/announcement-api`: `npm run seed` (writes DEMO-SPECIAL, DEMO-FRIENDS, DEMO-FAMILY), then `npm run start:dev`
   2. `npm run announcement` (dev server on 4200)
