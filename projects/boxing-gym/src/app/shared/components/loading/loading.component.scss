@@ -1,3 +1,16 @@
+// The page renders underneath; the splash fades out over it once the data is in.
+:host {
+  display: block;
+}
+
+:host(.is-leaving) {
+  animation: loading-leave var(--duration-slow, 300ms) ease-out forwards;
+}
+
+@keyframes loading-leave {
+  to { opacity: 0; }
+}
+
 .loading {
   position: fixed;
   inset: 0;
@@ -213,6 +226,7 @@
 
 // Respect prefers-reduced-motion
 @media (prefers-reduced-motion: reduce) {
+  :host(.is-leaving),
   .loading__glove-wrap,
   .loading__impact,
   .loading__ring,

@@ -33,6 +33,9 @@ export class GymProfileService {
   private readonly locale = inject(LOCALE_ID);
   private readonly cached = readCache();
 
+  /** A previous visit left a copy, so the landing can render without waiting. */
+  readonly hasCache = this.cached !== null;
+
   private readonly remote = resource({
     loader: async () => {
       const { data, error } = await this.supabase.from('public_gym_profile').select('*').single();
@@ -46,6 +49,11 @@ export class GymProfileService {
   /** Live data once loaded; the cached copy while loading or if Supabase fails. */
   private readonly row = computed<PublicGymProfile | null>(() =>
     this.remote.error() ? this.cached : (this.remote.value() ?? this.cached),
+  );
+
+  /** True once there is something to render: the cached copy, or the first response or failure. */
+  readonly settled = computed(
+    () => this.hasCache || this.remote.hasValue() || this.remote.error() !== undefined,
   );
 
   readonly contact = computed(() => toContactView(this.row()?.profile ?? null));

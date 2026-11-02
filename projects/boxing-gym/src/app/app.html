@@ -1,6 +1,4 @@
-@if (isLoading()) {
-  <app-loading />
-} @else {
-  <router-outlet />
+<router-outlet />
+@if (showSplash()) {
+  <app-loading animate.leave="is-leaving" />
 }
-<app-pwa-install-banner />
