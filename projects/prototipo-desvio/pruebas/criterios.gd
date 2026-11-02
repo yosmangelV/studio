@@ -6,7 +6,12 @@ const PRINCIPAL := "res://escenas/principal.tscn"
 const ESCENA_BALIZA := preload("res://escenas/baliza.tscn")
 const ESCENA_PROYECTIL := preload("res://escenas/proyectil.tscn")
 
+## Un error de script aborta la prueba sin marcar fallo: contar las comprobaciones lo delata.
+const COMPROBACIONES_GUI := 5
+const COMPROBACIONES_ESPERADAS := 43
+
 var _fallos := 0
+var _comprobaciones := 0
 var _originales := {}
 var _juego: Node
 
@@ -20,13 +25,20 @@ func _ready() -> void:
 
 func _ejecutar() -> void:
 	get_tree().current_scene = null # Este nodo sobrevive a los cambios de escena.
-	for prueba: Callable in [_c1_y_c8_derrota, _c2_desvio, _c3_fuera_de_radio, _c4_giro, _c5_espuma, _c6_determinismo, _c7_guia, _c8_victoria, _c9_panel, _c10_registro]:
+	for prueba: Callable in [_c1_y_c8_derrota, _c2_desvio, _c3_fuera_de_radio, _c4_giro, _c5_espuma, _c6_determinismo, _c7_guia, _c8_victoria, _c9_panel, _c10_registro, _lanzamiento_real, _toques, _reinicio, _partida_con_disparos_reales]:
 		await prueba.call()
+	var esperadas := COMPROBACIONES_ESPERADAS - (COMPROBACIONES_GUI if _sin_ventana() else 0)
+	_comprobar("Todas las comprobaciones se ejecutaron", _comprobaciones == esperadas, "%d de %d" % [_comprobaciones, esperadas])
 	print("RESULTADO: %d fallos" % _fallos)
 	get_tree().quit(1 if _fallos > 0 else 0)
 
 
+func _sin_ventana() -> bool:
+	return DisplayServer.get_name() == "headless"
+
+
 func _comprobar(criterio: String, condicion: bool, detalle: String = "") -> void:
+	_comprobaciones += 1
 	print("%s %s %s" % ["OK   " if condicion else "FALLO", criterio, detalle])
 	if not condicion:
 		_fallos += 1
@@ -37,8 +49,7 @@ func _cargar() -> void:
 		Config.set(nombre, _originales[nombre])
 	get_tree().paused = false
 	get_tree().change_scene_to_file(PRINCIPAL)
-	await get_tree().process_frame
-	await get_tree().process_frame
+	await get_tree().scene_changed
 	_juego = get_tree().current_scene
 
 
@@ -175,6 +186,139 @@ func _c9_panel() -> void:
 		var slider: HSlider = panel._sliders[ajuste["nombre"]]
 		slider.value = ajuste["min"] + ajuste["paso"] * 2.0
 		_comprobar("9  " + ajuste["nombre"], is_equal_approx(Config.get(ajuste["nombre"]), slider.value))
+
+
+func _pulsar_en(punto: Vector2, soltar := true) -> void:
+	var toque := InputEventScreenTouch.new()
+	toque.position = punto
+	toque.pressed = true
+	Input.parse_input_event(toque)
+	Input.flush_buffered_events()
+	await get_tree().process_frame
+	if soltar:
+		var fin := InputEventScreenTouch.new()
+		fin.position = punto
+		fin.pressed = false
+		Input.parse_input_event(fin)
+		Input.flush_buffered_events()
+		await get_tree().process_frame
+
+
+func _centro(ruta: String) -> Vector2:
+	return (_juego.get_node(ruta) as Control).get_global_rect().get_center()
+
+
+func _lanzamiento_real() -> void:
+	await _cargar()
+	var lanzador := _juego.get_node("Lanzador")
+	var balizas := _juego.get_node("Balizas")
+	_juego.get_node("Interfaz/SliderAngulo").value = 135.0
+	_juego.get_node("Interfaz/SliderPotencia").value = 60.0
+	lanzador.lanzar()
+	lanzador.lanzar()
+	_comprobar("L  la recarga bloquea el segundo disparo", _juego.get_node("Proyectiles").get_child_count() == 1 and _juego.disparos[Proyectil.Tipo.BALIZA] == 1)
+	await _simular(180)
+	_comprobar("L  el proyectil crea una baliza en el suelo", balizas.get_child_count() == 1 and is_equal_approx(balizas.get_child(0).position.y, Config.SUELO_Y))
+	var duplicada: Vector2 = balizas.get_child(0).position
+	await _cargar()
+	_juego.get_node("Interfaz/SliderAngulo").value = 135.0
+	_juego.get_node("Interfaz/SliderPotencia").value = 60.0
+	_juego.get_node("Lanzador").lanzar()
+	await _simular(180)
+	_comprobar("L  misma caida con los mismos sliders", _juego.get_node("Balizas").get_child(0).position == duplicada, str(duplicada))
+	await _cargar()
+	_juego.get_node("Interfaz/SelectorArma/BotonEspuma").pressed.emit()
+	_juego.get_node("Lanzador").lanzar()
+	await _simular(180)
+	_comprobar("L  la espuma fallida no deja nada", _juego.get_node("Balizas").get_child_count() == 0 and _juego.get_node("Monstruo").frenado_restante == 0.0)
+	await _cargar()
+	var monstruo: Monstruo = _juego.get_node("Monstruo")
+	await _simular(30)
+	var inicio := monstruo.position
+	await _simular(10)
+	var lento := inicio.distance_to(monstruo.position)
+	Config.velocidad_monstruo = Config.velocidad_monstruo * 2.0
+	inicio = monstruo.position
+	await _simular(10)
+	_comprobar("9  el cambio afecta al juego en marcha", is_equal_approx(snappedf(inicio.distance_to(monstruo.position) / lento, 0.01), 2.0))
+
+
+func _toques() -> void:
+	if _sin_ventana():
+		print("OMITIDO toques en la interfaz: en headless no llegan; ejecutar con ventana")
+		return
+	await _cargar()
+	var slider: HSlider = _juego.get_node("Interfaz/SliderPotencia")
+	var previo := slider.value
+	var rect := slider.get_global_rect()
+	await _pulsar_en(rect.position + rect.size * Vector2(0.9, 0.5))
+	_comprobar("11 toque emulado mueve el slider", slider.value > previo, "%s -> %s" % [previo, slider.value])
+	await _pulsar_en(_centro("Interfaz/SelectorArma/BotonEspuma"))
+	_comprobar("11 toque emulado cambia de arma", _juego.get_node("Lanzador").arma == Proyectil.Tipo.ESPUMA)
+	await _pulsar_en(_centro("Interfaz/BotonLanzar"))
+	_comprobar("11 toque emulado lanza", _juego.disparos[Proyectil.Tipo.ESPUMA] == 1)
+	await _pulsar_en(_centro("Interfaz/BotonPanel"))
+	_comprobar("11 toque emulado abre el panel", _juego.get_node("Interfaz/PanelDepuracion").visible)
+	_comprobar("11 toque en partida no reinicia", _juego == get_tree().current_scene and not _juego.terminado)
+
+
+func _reinicio() -> void:
+	await _cargar()
+	var anterior := _juego
+	_juego._terminar("derrota")
+	await _pulsar_en(Vector2(640.0, 300.0), false)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_comprobar("R  toque al terminar reinicia", get_tree().current_scene != anterior and not get_tree().paused)
+	_juego = get_tree().current_scene
+	anterior = _juego
+	var tecla := InputEventKey.new()
+	tecla.physical_keycode = KEY_R
+	tecla.pressed = true
+	Input.parse_input_event(tecla)
+	Input.flush_buffered_events()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_comprobar("R  tecla R reinicia en partida", get_tree().current_scene != anterior)
+
+
+## Jugador automatico: solo usa sliders y lanzar. Demuestra que se puede ganar
+## con los valores de arranque, no que sea divertido.
+func _partida_con_disparos_reales() -> void:
+	await _cargar()
+	var monstruo: Monstruo = _juego.get_node("Monstruo")
+	var lanzador := _juego.get_node("Lanzador")
+	for _i in 6000:
+		if _juego.terminado:
+			break
+		var hay_delante := false
+		for baliza: Node in _juego.get_node("Balizas").get_children():
+			if baliza.position.x - monstruo.position.x > 110.0: # Sigue activa cuando llegue la siguiente.
+				hay_delante = true
+		if not hay_delante and _juego.get_node("Proyectiles").get_child_count() == 0 and lanzador.recarga_restante <= 0.0:
+			_apuntar(monstruo.position.x + 200.0)
+			lanzador.lanzar()
+		await _simular(1)
+	_comprobar("V  ganable con disparos reales", _juego.terminado and _juego.integridad > 0.0, "integridad=%s balizas=%d duracion=%.1fs" % [_juego.integridad, _juego.disparos[Proyectil.Tipo.BALIZA], _juego.duracion])
+
+
+func _apuntar(objetivo_x: float) -> void:
+	var boca := Vector2(Config.LANZADOR_X, Config.SUELO_Y) + Config.BOCA_LANZADOR
+	var angulo := 135.0 if objetivo_x < boca.x else 45.0
+	var mejor := 0.0
+	var error := INF
+	for potencia in 101:
+		var p := boca
+		var v := Proyectil.velocidad_inicial(angulo, potencia)
+		while p.y < Config.SUELO_Y:
+			v = Proyectil.velocidad_tras_paso(v, Config.PASO_FIJO)
+			p += v * Config.PASO_FIJO
+		if absf(p.x - objetivo_x) < error:
+			error = absf(p.x - objetivo_x)
+			mejor = potencia
+	_juego.get_node("Interfaz/SliderAngulo").value = angulo
+	_juego.get_node("Interfaz/SliderPotencia").value = mejor
 
 
 func _c10_registro() -> void:
