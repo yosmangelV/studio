@@ -8,6 +8,8 @@ Extends the root `CLAUDE.md`. These rules are specific to this application and t
 
 Personalized baby announcement app. Angular frontend that fetches a message by code from the Announcement API (NestJS + MongoDB) and renders an animated slideshow reveal. Three audience segments: special, friends, family.
 
+Visual rules (voice, colour roles, type, story rules) live in `design.md` in this folder, on top of the root `design.md`.
+
 ---
 
 ## Folder Structure
