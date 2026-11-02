@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+#
+# Automatic review on every PR. It is one of the two review gates; the other is
+# the owner marking the draft "Ready for review" (see PR_REVIEW_GUIDELINES.md).
+language: es-ES
+
+reviews:
+  profile: assertive
+  high_level_summary: true
+  review_status: true
+  poem: false
+  auto_review:
+    enabled: true
+    # PRs open as drafts and only leave draft after review, so drafts must be reviewed.
+    drafts: true
+    # Every push must be reviewed (PR_REVIEW_GUIDELINES.md), so never pause after N commits.
+    auto_pause_after_reviewed_commits: 0
+    base_branches:
+      - main
+
+  # Generated or lock files: reviewing them is noise.
+  path_filters:
+    - "!**/package-lock.json"
+    - "!**/uv.lock"
+    - "!skills-lock.json"
+    - "!projects/boxing-gym/src/app/core/api/*.service.ts"
+    - "!projects/boxing-gym/src/locale/*.xlf"
+    - "!apps/boxing-gym-api/schema/public.sql"
+    - "!.claude/skills/**"
+    - "!.agents/skills/**"
+
+  path_instructions:
+    - path: "projects/**/*.ts"
+      instructions: |
+        Angular 21: standalone components, inject(), OnPush, signals (signal, computed,
+        resource) over RxJS, input()/output(). No method calls or business logic in templates.
+        Flag `any`, nested subscriptions, components over ~300 lines and duplicated logic.
+        Tests use @testing-library/angular and data-testid; no TestBed.createComponent.
+    - path: "projects/**/*.{scss,html}"
+      instructions: |
+        Follow design.md (root) and the product's projects/<app>/design.md. Colours only
+        through text-role tokens, never literals or primitives as text colour. Never remove
+        focus outlines without an `// a11y-ok:` reason. WCAG 2.2 AA: contrast, labels,
+        44px touch targets, keyboard access. Uppercase only on the display font.
+    - path: "projects/design-system/src/lib/**"
+      instructions: |
+        Atomic design (atoms/molecules/organisms), BEM, tokens from tokens.scss, dark mode,
+        a Storybook story per variant, exported from public-api.ts.
+    - path: "apps/boxing-gym-api/app/**/*.py"
+      instructions: |
+        The API uses the Supabase service_role key, which bypasses RLS: every router must
+        declare a router-level require_* guard. Check role checks on each endpoint (who can
+        read vs write). Routers delegate to services; Pydantic schemas for every response;
+        no raw Supabase dicts returned. New endpoints need a spec in specs/.
+    - path: "apps/boxing-gym-api/migrations/*.sql"
+      instructions: |
+        Production is the schema of record (schema/public.sql). Each migration must enable
+        RLS on new tables, never grant writes to anon/authenticated, be self-contained (no
+        helpers from earlier migrations) and idempotent where it touches existing objects.
+        Personal data (students, payments) must never become readable with the anon key.
+    - path: ".github/workflows/**"
+      instructions: |
+        Job names are required status checks in branch protection: renaming a job blocks
+        merges until the protection is updated. Pin third-party actions; least-privilege
+        `permissions`.
+
+chat:
+  auto_reply: true
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "**/CLAUDE.md"
+      - "**/design.md"
+      - "ARCHITECTURE_PRINCIPLES.md"
+      - "FRONTEND_STANDARDS.md"
+      - "PR_REVIEW_GUIDELINES.md"
