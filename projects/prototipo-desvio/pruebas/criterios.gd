@@ -8,7 +8,7 @@ const ESCENA_PROYECTIL := preload("res://escenas/proyectil.tscn")
 
 ## Un error de script aborta la prueba sin marcar fallo: contar las comprobaciones lo delata.
 const COMPROBACIONES_GUI := 5
-const COMPROBACIONES_ESPERADAS := 43
+const COMPROBACIONES_ESPERADAS := 52
 
 var _fallos := 0
 var _comprobaciones := 0
@@ -25,7 +25,7 @@ func _ready() -> void:
 
 func _ejecutar() -> void:
 	get_tree().current_scene = null # Este nodo sobrevive a los cambios de escena.
-	for prueba: Callable in [_c1_y_c8_derrota, _c2_desvio, _c3_fuera_de_radio, _c4_giro, _c5_espuma, _c6_determinismo, _c7_guia, _c8_victoria, _c9_panel, _c10_registro, _lanzamiento_real, _toques, _reinicio, _partida_con_disparos_reales]:
+	for prueba: Callable in [_c1_y_c8_derrota, _c2_desvio, _c3_fuera_de_radio, _c4_giro, _c5_espuma, _c6_determinismo, _c7_guia, _c8_victoria, _c9_panel, _c10_registro, _baliza_se_apaga, _atraccion_por_distancia, _lanzador_en_ultimo_edificio, _lanzamiento_real, _toques, _reinicio, _partida_con_disparos_reales]:
 		await prueba.call()
 	var esperadas := COMPROBACIONES_ESPERADAS - (COMPROBACIONES_GUI if _sin_ventana() else 0)
 	_comprobar("Todas las comprobaciones se ejecutaron", _comprobaciones == esperadas, "%d de %d" % [_comprobaciones, esperadas])
@@ -67,7 +67,7 @@ func _poner_baliza(x: float) -> Baliza:
 
 func _c1_y_c8_derrota() -> void:
 	await _cargar()
-	await _simular(1500)
+	await _simular(1800)
 	_comprobar("1  avanza y destruye", _juego.integridad < Config.INTEGRIDAD_MAX, "integridad=%s" % _juego.integridad)
 	await _simular(6000)
 	_comprobar("8b integridad 0 da derrota", _juego.terminado and _juego.integridad <= 0.0)
@@ -77,6 +77,7 @@ func _c1_y_c8_derrota() -> void:
 
 func _c2_desvio() -> void:
 	await _cargar()
+	Config.duracion_baliza = 60.0 # Que la destruya el monstruo, no el tiempo.
 	var baliza := _poner_baliza(Config.ENTRADA_X - 120.0) # Detras: obliga a invertir la marcha.
 	await _simular(2)
 	var monstruo: Monstruo = _juego.get_node("Monstruo")
@@ -170,6 +171,7 @@ func _c7_guia() -> void:
 
 func _c8_victoria() -> void:
 	await _cargar()
+	Config.duracion_baliza = 60.0
 	_poner_baliza(150.0)
 	_poner_baliza(20.0) # Dentro de la contencion: el monstruo toca la zona antes de alcanzarla.
 	await _simular(2500)
@@ -183,6 +185,50 @@ func _c9_panel() -> void:
 		var slider: HSlider = panel._sliders[ajuste["nombre"]]
 		slider.value = ajuste["min"] + ajuste["paso"] * 2.0
 		_comprobar("9  " + ajuste["nombre"], is_equal_approx(Config.get(ajuste["nombre"]), slider.value))
+
+
+func _baliza_se_apaga() -> void:
+	await _cargar()
+	Config.duracion_baliza = 1.0
+	var monstruo: Monstruo = _juego.get_node("Monstruo")
+	var baliza := _poner_baliza(Config.ENTRADA_X - 200.0)
+	await _simular(30)
+	_comprobar("B  atrae mientras tiene energia", monstruo.estado == Monstruo.Estado.ATRAIDO)
+	await _simular(45)
+	_comprobar("B  se apaga sola y el monstruo retoma AVANZAR", not is_instance_valid(baliza) and monstruo.estado == Monstruo.Estado.AVANZAR)
+	await _simular(180)
+	_comprobar("B  retoma rumbo a la ciudad", monstruo.rumbo.x > 0.9, str(monstruo.rumbo))
+
+
+## Distancia recorrida en un tramo corto, ya orientado hacia la baliza.
+func _avance_atraido(distancia: float) -> float:
+	await _cargar()
+	var monstruo: Monstruo = _juego.get_node("Monstruo")
+	monstruo.rumbo = Vector2.LEFT
+	_poner_baliza(Config.ENTRADA_X - distancia)
+	await _simular(2)
+	var inicio := monstruo.position.x
+	await _simular(6)
+	return inicio - monstruo.position.x
+
+
+func _atraccion_por_distancia() -> void:
+	var lejos := await _avance_atraido(Config.radio_baliza - 5.0)
+	var cerca := await _avance_atraido(70.0)
+	var paso := Config.velocidad_monstruo * 6.0 / 60.0
+	_comprobar("A  el borde del radio atrae a la velocidad minima", absf(lejos / paso - 0.265) < 0.02, "%.3f" % (lejos / paso))
+	_comprobar("A  cerca del centro atrae mas", absf(cerca / paso - 0.79) < 0.02, "%.3f" % (cerca / paso))
+
+
+func _lanzador_en_ultimo_edificio() -> void:
+	await _cargar()
+	var edificios := _juego.get_node("Edificios").get_children()
+	_comprobar("E  el lanzador esta sobre el ultimo edificio", is_equal_approx(_juego.get_node("Lanzador").position.x, edificios[edificios.size() - 1].position.x))
+	Config.dano_edificio = 1.0
+	for edificio: Edificio in edificios:
+		edificio.recibir_golpe()
+	_comprobar("E  sin edificios hay derrota aunque quede integridad", _juego.terminado and _juego.integridad > 0.0)
+	get_tree().paused = false
 
 
 func _pulsar_en(punto: Vector2, soltar := true) -> void:

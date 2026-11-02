@@ -29,14 +29,17 @@ func _ready() -> void:
 
 func _draw() -> void:
 	var tam := Config.TAMANO_MONSTRUO
-	draw_rect(Rect2(-tam.x / 2.0, -tam.y, tam.x, tam.y), Config.COLOR_MONSTRUO)
+	var color := Config.COLOR_ESPUMA if frenado_restante > 0.0 else Config.COLOR_MONSTRUO
+	draw_rect(Rect2(-tam.x / 2.0, -tam.y, tam.x, tam.y), color)
 
 
 func _physics_process(delta: float) -> void:
 	_actualizar_estado()
 	var frenado := frenado_restante > 0.0
-	var velocidad_actual := Config.velocidad_monstruo * (Config.fuerza_frenado if frenado else 1.0)
+	var velocidad_actual := Config.velocidad_monstruo * (Config.fuerza_frenado if frenado else 1.0) * _factor_atraccion()
 	frenado_restante = maxf(frenado_restante - delta, 0.0)
+	if frenado and frenado_restante <= 0.0:
+		queue_redraw()
 	var deseado := _rumbo_deseado()
 	if deseado == Vector2.ZERO:
 		return # Sin edificios intactos no tiene objetivo: se queda quieto.
@@ -47,6 +50,7 @@ func _physics_process(delta: float) -> void:
 
 func frenar() -> void:
 	frenado_restante = Config.duracion_frenado
+	queue_redraw()
 
 
 func rect_mundo() -> Rect2:
@@ -55,7 +59,10 @@ func rect_mundo() -> Rect2:
 
 
 func _actualizar_estado() -> void:
-	if estado == Estado.ATRAIDO and overlaps_area(baliza_objetivo):
+	if estado == Estado.ATRAIDO and _baliza_apagada():
+		baliza_objetivo = null
+		estado = Estado.AVANZAR
+	elif estado == Estado.ATRAIDO and overlaps_area(baliza_objetivo):
 		var alcanzada := baliza_objetivo
 		baliza_objetivo = null
 		estado = Estado.AVANZAR
@@ -65,6 +72,19 @@ func _actualizar_estado() -> void:
 	if cercana:
 		baliza_objetivo = cercana
 		estado = Estado.ATRAIDO
+
+
+## La baliza se apaga en su propio paso: puede seguir valida hasta el final del frame.
+func _baliza_apagada() -> bool:
+	return not is_instance_valid(baliza_objetivo) or baliza_objetivo.is_queued_for_deletion()
+
+
+## 1 en el centro de la baliza, `atraccion_minima` en el borde del radio. Sin atraccion, 1.
+func _factor_atraccion() -> float:
+	if estado != Estado.ATRAIDO or Config.radio_baliza <= 0.0:
+		return 1.0
+	var cercania := 1.0 - position.distance_to(baliza_objetivo.global_position) / Config.radio_baliza
+	return lerpf(Config.atraccion_minima, 1.0, clampf(cercania, 0.0, 1.0))
 
 
 func _rumbo_deseado() -> Vector2:

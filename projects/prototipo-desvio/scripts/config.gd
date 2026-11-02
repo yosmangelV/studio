@@ -10,12 +10,16 @@ const SUELO_Y := 600.0
 const MUNDO := Rect2(0.0, 0.0, 1280.0, 720.0)
 const ENTRADA_X := 320.0
 const LANZADOR_X := 1180.0
-const BOCA_LANZADOR := Vector2(0.0, -40.0)
+const ALTO_LANZADOR := 40.0
+## El lanzador va sobre el tejado del ultimo edificio: su origen sigue en el suelo.
+const BOCA_LANZADOR := Vector2(0.0, -150.0)
 const CONTENCION_X_MAX := 110.0
-const EDIFICIOS_X: Array[float] = [800.0, 930.0, 1060.0]
+const EDIFICIOS_X: Array[float] = [920.0, 1050.0, LANZADOR_X]
 const TAMANO_MONSTRUO := Vector2(90.0, 110.0)
 const TAMANO_EDIFICIO := Vector2(90.0, 110.0)
 const RADIO_NUCLEO_BALIZA := 10.0
+const ANILLOS_BALIZA := 4
+const ALFA_ANILLO_BALIZA := 0.1
 const RADIO_PROYECTIL := 6.0
 const INTEGRIDAD_MAX := 100.0
 const ANGULO_INICIAL := 135.0
@@ -36,7 +40,9 @@ const COLOR_LANZADOR := Color("#c9ced8")
 ## Metadatos del panel de depuracion: rangos de edicion, no recomendaciones.
 const AJUSTES: Array[Dictionary] = [
 	{"nombre": "velocidad_monstruo", "min": 0.0, "max": 300.0, "paso": 1.0},
-	{"nombre": "radio_baliza", "min": 0.0, "max": 1000.0, "paso": 5.0},
+	{"nombre": "radio_baliza", "min": 0.0, "max": 1000.0, "paso": 1.0},
+	{"nombre": "duracion_baliza", "min": 0.5, "max": 60.0, "paso": 0.5},
+	{"nombre": "atraccion_minima", "min": 0.0, "max": 1.0, "paso": 0.05},
 	{"nombre": "giro_monstruo", "min": 1.0, "max": 720.0, "paso": 1.0},
 	{"nombre": "fuerza_frenado", "min": 0.0, "max": 1.0, "paso": 0.01},
 	{"nombre": "duracion_frenado", "min": 0.0, "max": 20.0, "paso": 0.1},
@@ -51,10 +57,19 @@ var velocidad_monstruo: float = 20.0:
 	set(v):
 		velocidad_monstruo = v
 		valor_cambiado.emit("velocidad_monstruo", v)
-var radio_baliza: float = 250.0:
+var radio_baliza: float = 249.0:
 	set(v):
 		radio_baliza = v
 		valor_cambiado.emit("radio_baliza", v)
+var duracion_baliza: float = 8.0:
+	set(v):
+		duracion_baliza = v
+		valor_cambiado.emit("duracion_baliza", v)
+## Fraccion de la velocidad con la que atrae el borde del radio; el centro atrae al 100 %.
+var atraccion_minima: float = 0.25:
+	set(v):
+		atraccion_minima = v
+		valor_cambiado.emit("atraccion_minima", v)
 var giro_monstruo: float = 90.0:
 	set(v):
 		giro_monstruo = v

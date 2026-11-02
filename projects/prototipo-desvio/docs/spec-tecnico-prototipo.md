@@ -157,6 +157,8 @@ Ambos se destruyen al salir de los límites del mundo.
 
 ### 5.4 `baliza.gd`
 
+> Sustituida tras la segunda prueba: la baliza tiene duración y su atracción depende de la distancia. Ver `CLAUDE.md`.
+
 `Area2D` en la posición de impacto. Permanece activa indefinidamente hasta que el monstruo la alcanza y la destruye. No tiene duración temporal: es un recurso consumible por contacto, no por tiempo.
 
 Dibuja un círculo de radio `config.radio_baliza` con relleno translúcido, para que el jugador vea su alcance. Esto es deliberado: el riesgo debe ser calculable, no opaco.

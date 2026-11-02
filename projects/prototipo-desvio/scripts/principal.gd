@@ -73,8 +73,13 @@ func _al_golpear_edificio(edificio: Edificio) -> void:
 func _al_destruir_edificio(_edificio: Edificio) -> void:
 	integridad = maxf(integridad - Config.dano_edificio, 0.0)
 	_barra.value = integridad
-	if integridad <= 0.0:
+	if integridad <= 0.0 or not _quedan_edificios():
 		_terminar("derrota")
+
+
+## El lanzador esta sobre el ultimo edificio: sin edificios no hay arma, sea cual sea el dano.
+func _quedan_edificios() -> bool:
+	return $Edificios.get_children().any(func(edificio: Edificio) -> bool: return edificio.intacto)
 
 
 ## Escribe la fila al terminar, no al reiniciar: cerrar el juego tras perder no la pierde.

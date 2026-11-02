@@ -33,7 +33,7 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-14.0, Config.BOCA_LANZADOR.y, 28.0, -Config.BOCA_LANZADOR.y), Config.COLOR_LANZADOR)
+	draw_rect(Rect2(-14.0, Config.BOCA_LANZADOR.y, 28.0, Config.ALTO_LANZADOR), Config.COLOR_LANZADOR)
 
 
 func _physics_process(delta: float) -> void:

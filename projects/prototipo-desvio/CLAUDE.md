@@ -14,6 +14,10 @@ Fuente de verdad: `docs/spec-prototipo-minimo.md` (qué y por qué) y `docs/spec
 - **Entrada**: el monstruo aparece a la derecha de la contención, no a través de ella, para no dar la victoria al entrar.
 - **Sliders**: ángulo 0–180° y potencia 0–100, paso 1.
 - **Reinicio**: R siempre; el toque solo con la partida terminada.
+- **Duración de la baliza (sustituye a la sección 5.4)**: se apaga sola al agotar `duracion_baliza`, si antes no la alcanza el monstruo.
+- **Atracción por distancia**: al 100 % de la velocidad en el centro, y a `atraccion_minima` en el borde del radio. Lineal entre ambos.
+- **Lanzador**: va sobre el tejado del último edificio. Perder ese edificio es perder el arma, así que no quedar edificios siempre da derrota.
+- **Espuma**: el monstruo se pinta del color de la espuma mientras dura el frenado.
 
 ## Comandos
 
