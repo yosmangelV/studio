@@ -68,6 +68,7 @@
   }
 
   &__search {
+    min-height: var(--size-touch-target);
     width: 100%;
     padding: 0.625rem 0.75rem;
     border-radius: 6px;

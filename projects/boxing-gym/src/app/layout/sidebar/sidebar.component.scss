@@ -97,12 +97,11 @@
     transition: background 0.15s, color 0.15s;
     cursor: pointer;
     position: relative;
-    min-height: 44px;
+    min-height: var(--size-touch-target);
 
     @media (min-width: 769px) {
       padding: 0.625rem 0.75rem;
       font-size: 0.875rem;
-      min-height: unset;
     }
 
     &:hover {

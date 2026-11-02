@@ -93,6 +93,7 @@
 }
 
 .contact__value {
+  position: relative;
   margin-left: auto;
   font-size: 1rem;
   color: var(--gym-gray-light);
@@ -106,6 +107,16 @@
 
   &--nowrap {
     white-space: nowrap;
+  }
+
+  // Invisible 44px touch target: the row keeps its height.
+  &:is(a)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(50% - var(--size-touch-target) / 2);
+    bottom: calc(50% - var(--size-touch-target) / 2);
   }
 }
 

@@ -149,7 +149,10 @@
 // ── Back link ───────────────────────────────────────────────────────
 
 .login__back {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-touch-target);
   font-family: var(--gym-font-body);
   font-size: 0.75rem;
   font-weight: 500;
