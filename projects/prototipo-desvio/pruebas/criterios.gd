@@ -385,6 +385,10 @@ func _apuntar(objetivo_x: float) -> void:
 func _c10_registro() -> void:
 	await _cargar()
 	var filas_antes := FileAccess.get_file_as_string(Registro.ruta).strip_edges().split("\n").size()
+	# Valores distintos entre si: un cambio de columnas o un valor fijo no pasaria.
+	_juego.disparos[Proyectil.Tipo.BALIZA] = 3
+	_juego.disparos[Proyectil.Tipo.ESPUMA] = 5
+	_juego.integridad = 66.0
 	# Leidos antes de terminar: no dependen del orden de las pruebas anteriores.
 	var esperado := PackedStringArray([
 		Registro._id_sesion,
@@ -402,5 +406,9 @@ func _c10_registro() -> void:
 	_comprobar("10 una fila por intento", lineas.size() == filas_antes + 1, lineas[lineas.size() - 1])
 	_comprobar("10 ocho columnas", campos.size() == 8)
 	_comprobar("10 contenido registrado", campos == esperado, "%s vs %s" % [",".join(campos), ",".join(esperado)])
-	_comprobar("10 reinicio_tras encadena el intento anterior", Registro._ultimo_resultado == "derrota")
+	await _cargar()
+	_juego._terminar("victoria")
+	var siguiente := FileAccess.get_file_as_string(Registro.ruta).strip_edges().split("\n")
+	var fila_siguiente := siguiente[siguiente.size() - 1].split(",")
+	_comprobar("10 la fila siguiente registra reinicio_tras=derrota", siguiente.size() == lineas.size() + 1 and fila_siguiente[7] == "derrota", ",".join(fila_siguiente))
 	get_tree().paused = false
