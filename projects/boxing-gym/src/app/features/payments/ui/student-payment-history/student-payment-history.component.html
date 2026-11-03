@@ -9,9 +9,10 @@
     <ds-button
       variant="ghost"
       size="sm"
+      [iconLeft]="icons.close"
       data-testid="payments-history-close"
       (click)="close.emit()"
-    >✕ Cerrar</ds-button>
+    >Cerrar</ds-button>
   </header>
 
   @if (loading()) {

@@ -9,7 +9,7 @@
     height: 200px;
     font-size: 0.875rem;
     color: var(--gym-text-muted);
-    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border: 1px dashed var(--gym-border-muted);
     border-radius: 8px;
     margin: 0;
   }
@@ -20,7 +20,7 @@
   }
 
   &__head {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--gym-border-muted);
   }
 
   &__th {
@@ -36,11 +36,11 @@
   }
 
   &__row {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--gym-border-subtle);
     transition: background-color 0.15s ease;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.03);
+      background-color: var(--gym-surface-subtle);
     }
 
     &:last-child {

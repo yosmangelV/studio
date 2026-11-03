@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  background-color: var(--gym-black);
+  background-color: var(--gym-surface-app);
   z-index: 9999;
 }
 
@@ -29,7 +29,7 @@
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  border: 2px solid var(--gym-red);
+  border: 2px solid var(--gym-brand);
   opacity: 0.15;
   animation: ring-pulse 2.4s ease-in-out infinite;
 }
@@ -66,7 +66,7 @@
   font-size: 4rem;
   line-height: 1;
   display: block;
-  filter: drop-shadow(0 0 12px rgba(196, 18, 48, 0.6));
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--gym-brand) 60%, transparent));
 
   &--mirrored {
     transform: scaleX(-1);
@@ -79,7 +79,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(196, 18, 48, 0.8) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--gym-brand) 80%, transparent) 0%, transparent 70%);
   animation: impact-flash 2.4s ease-out infinite;
 }
 
@@ -98,7 +98,7 @@
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--gym-white);
+  color: var(--gym-text-primary);
 }
 
 .loading__name-bottom {

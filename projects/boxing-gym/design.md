@@ -64,3 +64,21 @@ The live page breaks these rules today. Each item names where it gets fixed.
   - WARN F19: four weights in running use; the fourth (500) is the DS `page-nav` links. Open: see below.
 - [ ] Classes: give the `striped-list` rows mass at 1440px (REFLEX 77), a design-system change
 - [ ] Weights: DS `page-nav` links use 500 (F19), the panel uses 500 in places, and the Google Fonts link loads Inter 500/700 and Oswald 500, none of which the type rules above allow
+
+## Panel audit, 2026-11-02
+
+The signed-in panel (login, students, student form, payments, analytics, settings, mobile drawer) was read-only audited at 390 and 1440px with axe-core (WCAG 2.2 AA), touch-target, text-size and keyboard-focus checks, using a test admin account. No form was submitted.
+
+Clean from the start: no horizontal scroll, no text under 12px, a visible focus ring on every control, no `any`, no component over 300 lines.
+
+- [x] Mobile topbar scrolled away with the page (`.shell__body` was a scroll container) — #29
+- [x] Install banner covered the last action of forms and the sidebar sign-out — #29
+- [x] Payment cards were 560px tall when empty; month label read "Noviembre De 2026"; plurals in templates — #29
+- [x] Controls between 18 and 41px tall; every control now reaches `--size-touch-target` (44px) — #30
+- [x] "Pedidos" and "Clases" ("Pronto") removed from the sidebar: 1.6:1 contrast and screens that don't exist (Floor 3)
+- [x] Every panel page is full width, aligned with the students page
+- [x] Emoji and glyph icons (✓ ⏳ ⚠ 🚨 ✕ + ← and the 🇪🇸/🇬🇧 flags) are Lucide SVGs; the locale switcher shows a language icon and the code or name (Floor 7)
+- [x] The student level select and the payment selects show their prompt instead of rendering empty
+- [x] No literal colours left in panel stylesheets; three undefined tokens (`--gym-surface-alt`, `--gym-primary`, `--gym-error`) that only worked through their fallbacks are gone
+- [x] Payment rows let the actions wrap, so a student's name is no longer cut short on a phone
+- [ ] The splash gloves are the 🥊 emoji: an illustration, not an icon, but still emoji (Floor 7). Needs a drawn SVG glove

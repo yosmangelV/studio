@@ -9,7 +9,7 @@
   font-size: 0.75rem;
   font-weight: 600;
   min-height: var(--size-touch-target);
-  min-width: var(--size-touch-target); // flag only, below 640px
+  min-width: var(--size-touch-target); // icon and code only, below 640px
   justify-content: center;
   padding: 0.3rem 0.65rem;
   cursor: pointer;
@@ -27,9 +27,11 @@
     outline-offset: 2px;
   }
 
-  &__flag {
-    font-size: 0.9rem;
-    line-height: 1;
+  // Phones show the code, wider screens the full name.
+  &__code {
+    @media (min-width: 640px) {
+      display: none;
+    }
   }
 
   &__label {

@@ -8,6 +8,7 @@ import {
   untracked,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Plus } from 'lucide-angular';
 import { ButtonComponent } from 'design-system';
 import { PaymentCreate } from '../../core/api/payments.service';
 import { StudentsService } from '../students/data-access/students.service';
@@ -35,6 +36,8 @@ type DashboardMode = 'summary' | 'form' | 'history';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class PaymentsDashboard {
+  protected readonly icons = { add: Plus };
+
   protected readonly paymentsService = inject(PaymentsService);
   protected readonly studentsService = inject(StudentsService);
 
