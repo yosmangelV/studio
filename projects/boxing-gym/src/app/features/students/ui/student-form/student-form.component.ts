@@ -48,7 +48,7 @@ export class StudentFormComponent {
     birth_date: ['', Validators.required],
     enrollment_date: ['', Validators.required],
     // null = no level chosen yet; reset() also leaves it null, matching the prompt option.
-    level: [null as StudentLevel | null, Validators.required],
+    level: this.fb.control<StudentLevel | null>(null, Validators.required),
     is_active: [true],
     weight: [null as number | null, Validators.min(0.01)],
     permissions: this.fb.group({

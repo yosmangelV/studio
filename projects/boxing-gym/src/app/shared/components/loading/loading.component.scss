@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  background-color: var(--gym-black);
+  background-color: var(--gym-surface-app);
   z-index: 9999;
 }
 
@@ -98,7 +98,7 @@
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--gym-white);
+  color: var(--gym-text-primary);
 }
 
 .loading__name-bottom {

@@ -57,11 +57,11 @@ export class PaymentRegistrationFormComponent implements OnInit {
 
   readonly form = this.fb.group({
     // null = nothing chosen yet, matching the [ngValue]="null" prompt options.
-    student_id:     [null as string | null, Validators.required],
+    student_id:     this.fb.control<string | null>(null, Validators.required),
     type:           ['monthly_fee' as PaymentType, Validators.required],
     period:         [this.defaultPeriod, Validators.required],
     amount:         [null as number | null, [Validators.required, Validators.min(0.01)]],
-    payment_method: [null as PaymentMethod | null, Validators.required],
+    payment_method: this.fb.control<PaymentMethod | null>(null, Validators.required),
     notes:          [''],
   });
 

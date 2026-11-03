@@ -42,18 +42,15 @@ describe('StudentFormComponent', () => {
     await render(StudentFormComponent, {
       componentInputs: { student: null },
     });
-    const select = screen.getByRole('combobox', { name: 'Nivel' }) as HTMLSelectElement;
-    expect(select.selectedOptions[0]?.textContent?.trim()).toBe('Seleccionar nivel');
+    expect(screen.getByRole('combobox', { name: 'Nivel' })).toHaveDisplayValue('Seleccionar nivel');
   });
 
   it('pre-populates fields when editing a student', async () => {
     await render(StudentFormComponent, {
       componentInputs: { student: mockStudent },
     });
-    const nameInput = screen.getByTestId('students-fullname-input') as HTMLInputElement;
-    const emailInput = screen.getByTestId('students-email-input') as HTMLInputElement;
-    expect(nameInput.value).toBe('Juan Pérez');
-    expect(emailInput.value).toBe('juan@test.com');
+    expect(screen.getByTestId('students-fullname-input')).toHaveValue('Juan Pérez');
+    expect(screen.getByTestId('students-email-input')).toHaveValue('juan@test.com');
   });
 
   it('emits cancel when cancel button is clicked', async () => {
@@ -116,14 +113,14 @@ describe('StudentFormComponent', () => {
 
   it('pre-checks estudiante permission on create', async () => {
     await render(StudentFormComponent, { componentInputs: { student: null } });
-    expect((screen.getByTestId('perm-student') as HTMLInputElement).checked).toBe(true);
+    expect(screen.getByTestId('perm-student')).toBeChecked();
   });
 
   it('populates student/instructor permissions from existing student on edit', async () => {
     const studentWithPerms: StudentResponse = { ...mockStudent, permissions: ['instructor'] };
     await render(StudentFormComponent, { componentInputs: { student: studentWithPerms } });
-    expect((screen.getByTestId('perm-student') as HTMLInputElement).checked).toBe(false);
-    expect((screen.getByTestId('perm-instructor') as HTMLInputElement).checked).toBe(true);
+    expect(screen.getByTestId('perm-student')).not.toBeChecked();
+    expect(screen.getByTestId('perm-instructor')).toBeChecked();
   });
 
   it('includes system_access with student permission in payload on create', async () => {

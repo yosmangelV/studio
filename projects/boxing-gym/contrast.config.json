@@ -34,6 +34,7 @@
           "min": 4.5,
           "fg": [
             "--gym-text-primary",
+            "--gym-text-high",
             "--gym-text-secondary",
             "--gym-text-muted",
             "--gym-brand-on-dark",
@@ -49,6 +50,7 @@
             "--gym-surface-app",
             "--gym-surface-panel",
             "--gym-dark",
+            "--gym-surface-raised",
             "--gym-surface-elevated",
             "--color-surface-raised"
           ]
@@ -87,6 +89,7 @@
             "--gym-surface-app",
             "--gym-surface-panel",
             "--gym-dark",
+            "--gym-surface-raised",
             "--gym-surface-elevated"
           ]
         }
@@ -124,8 +127,21 @@
             "--gym-surface-app",
             "--gym-surface-panel",
             "--gym-dark",
+            "--gym-surface-raised",
             "--gym-surface-elevated",
             "--color-surface-raised"
+          ]
+        },
+        {
+          "label": "gym text on raised surface",
+          "min": 4.5,
+          "fg": [
+            "--gym-text-primary",
+            "--gym-text-high",
+            "--gym-text-secondary"
+          ],
+          "bg": [
+            "--gym-surface-raised"
           ]
         },
         {
@@ -138,6 +154,7 @@
             "--gym-surface-app",
             "--gym-surface-panel",
             "--gym-dark",
+            "--gym-surface-raised",
             "--gym-surface-elevated"
           ]
         }
