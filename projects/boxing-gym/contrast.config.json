@@ -92,6 +92,18 @@
             "--gym-surface-raised",
             "--gym-surface-elevated"
           ]
+        },
+        {
+          "label": "control borders",
+          "min": 3,
+          "fg": [
+            "--gym-border-control"
+          ],
+          "bg": [
+            "--gym-surface-app",
+            "--gym-surface-panel",
+            "--gym-surface-raised"
+          ]
         }
       ]
     },

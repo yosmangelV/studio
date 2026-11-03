@@ -73,7 +73,7 @@
   // ---------------------------------------------------------------------------
   --gym-border-subtle: rgba(255, 255, 255, 0.06);  // hairlines, dividers
   --gym-border-muted:  rgba(255, 255, 255, 0.08);  // cards, inputs
-  --gym-border-control: rgba(255, 255, 255, 0.12); // native selects, search, floating banner
+  --gym-border-control: rgba(255, 255, 255, 0.35); // input, select and search outlines: 3:1 on every gym surface
   --gym-border-strong: rgba(255, 255, 255, 0.18);  // prominent outlines
 
   // Semantic — Layout measures
