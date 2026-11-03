@@ -1,0 +1,38 @@
+{
+  "name": "diversion-prototype",
+  "root": "projects/diversion-prototype",
+  "projectType": "application",
+  "tags": [
+    "type:prototype",
+    "lang:gdscript"
+  ],
+  "targets": {
+    "editor": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node projects/diversion-prototype/tools/godot.mjs -e"
+      }
+    },
+    "play": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node projects/diversion-prototype/tools/godot.mjs --headless --import",
+          "node projects/diversion-prototype/tools/godot.mjs"
+        ],
+        "parallel": false
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "cache": false,
+      "options": {
+        "commands": [
+          "node projects/diversion-prototype/tools/godot.mjs --headless --import",
+          "node projects/diversion-prototype/tools/godot.mjs --headless --fixed-fps 60 res://tests/acceptance.tscn"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}

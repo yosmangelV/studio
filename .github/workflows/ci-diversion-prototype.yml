@@ -1,16 +1,16 @@
-name: CI — Prototipo Desvio
+name: CI — Diversion Prototype
 
 on:
   push:
     branches: [main]
     paths:
-      - 'projects/prototipo-desvio/**'
-      - '.github/workflows/ci-prototipo-desvio.yml'
+      - 'projects/diversion-prototype/**'
+      - '.github/workflows/ci-diversion-prototype.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'projects/prototipo-desvio/**'
-      - '.github/workflows/ci-prototipo-desvio.yml'
+      - 'projects/diversion-prototype/**'
+      - '.github/workflows/ci-diversion-prototype.yml'
 
 permissions:
   contents: read
@@ -23,8 +23,8 @@ env:
   GODOT_SHA512: 9aa00f7a605200940bce3027a567b782f49bd8e940dd06ae9e987bd65aee1b1467edd56ed84fcdcbdd44354bf613bdbb4e5d2913e925850368e150c59ed54c65
 
 jobs:
-  criterios:
-    name: Criterios de aceptación
+  acceptance:
+    name: Acceptance criteria
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -41,11 +41,11 @@ jobs:
           echo "GODOT_BIN=$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}_linux.x86_64" >> "$GITHUB_ENV"
 
       - name: Import project
-        run: node projects/prototipo-desvio/herramientas/godot.mjs --headless --import
+        run: node projects/diversion-prototype/tools/godot.mjs --headless --import
 
       - name: Run acceptance criteria
-        run: node projects/prototipo-desvio/herramientas/godot.mjs --headless --fixed-fps 60 res://pruebas/criterios.tscn
+        run: node projects/diversion-prototype/tools/godot.mjs --headless --fixed-fps 60 res://tests/acceptance.tscn
 
       # Headless skips the touch checks; a virtual display runs the full suite.
       - name: Run acceptance criteria with a window
-        run: xvfb-run -a node projects/prototipo-desvio/herramientas/godot.mjs --audio-driver Dummy --fixed-fps 60 res://pruebas/criterios.tscn
+        run: xvfb-run -a node projects/diversion-prototype/tools/godot.mjs --audio-driver Dummy --fixed-fps 60 res://tests/acceptance.tscn

@@ -119,19 +119,21 @@ Todas expuestas en el panel de depuración y modificables sin recompilar. El val
 
 | Variable | Descripción |
 |---|---|
-| `velocidad_monstruo` | Velocidad base de avance |
-| `radio_baliza` | Distancia a la que la baliza atrae al monstruo |
-| `giro_monstruo` | Velocidad de cambio de rumbo al ser atraído |
-| `fuerza_frenado` | Multiplicador de velocidad al recibir espuma |
-| `duracion_frenado` | Segundos que dura el frenado |
-| `gravedad_proyectil` | Caída del proyectil |
-| `recarga` | Segundos entre disparos |
-| `longitud_guia` | Metros de arco visibles en la guía corta |
-| `dano_edificio` | Integridad que se pierde por edificio destruido |
+| `monster_speed` | Velocidad base de avance |
+| `beacon_radius` | Distancia a la que la baliza atrae al monstruo |
+| `beacon_lifetime` | Segundos que la baliza permanece activa |
+| `min_attraction` | Fracción de la velocidad con la que atrae el borde del radio |
+| `monster_turn_rate` | Velocidad de cambio de rumbo al ser atraído |
+| `slow_factor` | Multiplicador de velocidad al recibir espuma |
+| `slow_duration` | Segundos que dura el frenado |
+| `projectile_gravity` | Caída del proyectil |
+| `reload_time` | Segundos entre disparos |
+| `guide_length` | Metros de arco visibles en la guía corta |
+| `building_damage` | Integridad que se pierde por edificio destruido |
 
 Los valores iniciales se fijan en la primera sesión de ajuste, no antes. Ponerlos ahora sería inventar.
 
-Nota de método para `radio_baliza`: empezar con un valor exagerado e irlo bajando hasta que falle, en lugar de subirlo desde cero. El punto de ruptura se encuentra antes.
+Nota de método para `beacon_radius`: empezar con un valor exagerado e irlo bajando hasta que falle, en lugar de subirlo desde cero. El punto de ruptura se encuentra antes.
 
 ## 6. Instrumentación
 
