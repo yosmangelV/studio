@@ -53,15 +53,16 @@ Queda explícitamente fuera, aunque sea tentador:
 
 ### Escenario
 
-> Sustituido tras la primera prueba: contención a la izquierda, ciudad y lanzador a la derecha. Ver `CLAUDE.md`.
+> Actualizado tras las primeras pruebas. Ver `CLAUDE.md`.
 
 Vista lateral 2D, todo el escenario visible de una vez. De izquierda a derecha:
 
-1. Zona de entrada del monstruo (borde izquierdo).
-2. Zona urbana con tres edificios.
-3. Zona de contención (borde derecho).
+1. Zona de contención (borde izquierdo).
+2. Zona de entrada del monstruo.
+3. Zona urbana con tres edificios.
+4. Lanzador, en posición fija sobre el último edificio.
 
-El lanzador está en posición fija.
+El monstruo camina hacia la ciudad y el jugador lo arrastra hacia atrás, hasta la contención.
 
 Dimensiones a fijar en la primera sesión, pero con dos restricciones firmes: todo cabe en una pantalla de móvil en horizontal sin scroll, y el monstruo mide aproximadamente lo mismo que un edificio para que la amenaza se lea de inmediato.
 

@@ -8,7 +8,7 @@ const ESCENA_PROYECTIL := preload("res://escenas/proyectil.tscn")
 
 ## Un error de script aborta la prueba sin marcar fallo: contar las comprobaciones lo delata.
 const COMPROBACIONES_GUI := 5
-const COMPROBACIONES_ESPERADAS := 55
+const COMPROBACIONES_ESPERADAS := 56
 
 var _fallos := 0
 var _comprobaciones := 0
@@ -181,7 +181,9 @@ func _proyectil_inmovil_caduca() -> void:
 	Config.gravedad_proyectil = 0.0
 	_juego.get_node("Interfaz/SliderPotencia").value = 0.0
 	_juego.get_node("Lanzador").lanzar()
-	await _simular(int(Config.VIDA_MAX_PROYECTIL * 60.0) + 5)
+	await _simular(int(Config.VIDA_MAX_PROYECTIL * 60.0) - 10)
+	_comprobar("P  el proyectil inmovil sigue vivo antes de caducar", _juego.get_node("Proyectiles").get_child_count() == 1)
+	await _simular(15)
 	_comprobar("P  un proyectil inmovil se elimina", _juego.get_node("Proyectiles").get_child_count() == 0)
 
 

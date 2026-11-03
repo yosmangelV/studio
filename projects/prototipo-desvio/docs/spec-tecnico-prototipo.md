@@ -74,16 +74,16 @@ Principal (Node2D)              principal.gd
 
 ## 4. Disposición del escenario
 
-> Sustituida tras la primera prueba: contención a la izquierda, ciudad y lanzador a la derecha. Ver `CLAUDE.md` y `scripts/config.gd`.
+> Actualizada tras las primeras pruebas: contención a la izquierda, ciudad y lanzador a la derecha. La fuente de los números es `scripts/config.gd`; ver también `CLAUDE.md`.
 
-Coordenadas en un mundo de 1280 de ancho, suelo a y=600.
+Coordenadas en un mundo de 1280 de ancho, suelo a y=600, de izquierda a derecha.
 
 | Elemento | Posición x | Notas |
 |---|---|---|
-| Entrada del monstruo | 60 | Punto de aparición |
-| Zona urbana | de 380 a 760 | Tres edificios repartidos dentro |
-| Lanzador | 870 | Posición fija |
-| Zona contención | de 1180 a 1280 | Area2D que dispara la victoria |
+| Zona contención | de 0 a 110 | Area2D que dispara la victoria |
+| Entrada del monstruo | 320 | Punto de aparición, fuera de la contención |
+| Zona urbana | de 875 a 1225 | Edificios centrados en 920, 1050 y 1180 |
+| Lanzador | 1180 | Fijo, sobre el tejado del último edificio |
 
 El monstruo mide aproximadamente lo mismo que un edificio: 90 de ancho por 110 de alto como punto de partida.
 
