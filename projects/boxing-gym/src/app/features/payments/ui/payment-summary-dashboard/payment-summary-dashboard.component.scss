@@ -82,7 +82,7 @@
 
   &__at-risk-warning {
     font-size: 0.8125rem;
-    color: var(--color-error);
+    color: var(--gym-text-danger);
     margin-bottom: 0.75rem;
     font-weight: 500;
   }
@@ -150,7 +150,7 @@
 
   &__item-months {
     font-size: 0.8125rem;
-    color: var(--color-error);
+    color: var(--gym-text-danger);
     font-weight: 500;
   }
 }

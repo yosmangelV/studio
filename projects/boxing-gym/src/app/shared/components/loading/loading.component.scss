@@ -29,7 +29,7 @@
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  border: 2px solid var(--gym-red);
+  border: 2px solid var(--gym-brand);
   opacity: 0.15;
   animation: ring-pulse 2.4s ease-in-out infinite;
 }
@@ -66,7 +66,7 @@
   font-size: 4rem;
   line-height: 1;
   display: block;
-  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--gym-red) 60%, transparent));
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--gym-brand) 60%, transparent));
 
   &--mirrored {
     transform: scaleX(-1);
@@ -79,7 +79,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--gym-red) 80%, transparent) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--gym-brand) 80%, transparent) 0%, transparent 70%);
   animation: impact-flash 2.4s ease-out infinite;
 }
 

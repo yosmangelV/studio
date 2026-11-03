@@ -61,6 +61,7 @@
   --gym-surface-app:      var(--gym-black);            // main app background
   --gym-surface-panel:    var(--gym-neutral-900);      // sidebar, sheet panels
   --gym-surface-elevated: var(--gym-mid);              // cards, dropdowns
+  --gym-surface-raised:   var(--gym-dark);             // floating banner, native option lists
   --gym-surface-subtle:   rgba(255, 255, 255, 0.04);   // barely-there bg
   --gym-surface-hover:    rgba(255, 255, 255, 0.05);   // hover state on dark
   --gym-surface-active:   rgba(255, 255, 255, 0.08);   // active / pressed
