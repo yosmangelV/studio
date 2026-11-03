@@ -1,5 +1,6 @@
 import { CurrencyPipe, DatePipe, I18nPluralPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { CircleCheck, Hourglass, LucideAngularModule, Siren, TriangleAlert } from 'lucide-angular';
 import { BadgeComponent, ButtonComponent, PaginationComponent } from 'design-system';
 import { AtRiskStudentInfo, PaidStudentInfo, PaymentSummaryResponse, UnpaidStudentInfo } from '../../../../core/api/payments.service';
 
@@ -8,12 +9,14 @@ const PAGE_SIZE = 10;
 @Component({
   selector: 'app-payment-summary-dashboard',
   standalone: true,
-  imports: [BadgeComponent, ButtonComponent, CurrencyPipe, DatePipe, I18nPluralPipe, PaginationComponent],
+  imports: [BadgeComponent, ButtonComponent, CurrencyPipe, DatePipe, I18nPluralPipe, LucideAngularModule, PaginationComponent],
   templateUrl: './payment-summary-dashboard.component.html',
   styleUrl: './payment-summary-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentSummaryDashboardComponent {
+  protected readonly icons = { paid: CircleCheck, pending: Hourglass, overdue: TriangleAlert, atRisk: Siren };
+
   readonly summary = input<PaymentSummaryResponse | null>(null);
   readonly loading = input(false);
 

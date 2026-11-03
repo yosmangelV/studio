@@ -51,8 +51,8 @@
 
   &__error {
     color: var(--gym-text-danger);
-    background-color: rgba(248, 113, 113, 0.08);
-    border: 1px solid rgba(248, 113, 113, 0.2);
+    background-color: color-mix(in srgb, var(--color-error) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-error) 20%, transparent);
   }
 
   &__toolbar {
@@ -72,8 +72,8 @@
     width: 100%;
     padding: 0.625rem 0.75rem;
     border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--gym-border-control);
+    background: var(--gym-surface-hover);
     color: var(--gym-text-primary);
     font-size: 1rem;
     transition: border-color 0.15s;

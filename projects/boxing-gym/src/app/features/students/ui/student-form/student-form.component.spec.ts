@@ -33,19 +33,24 @@ describe('StudentFormComponent', () => {
     expect(screen.getByTestId('students-phone-input')).toBeInTheDocument();
     expect(screen.getByTestId('students-birthdate-input')).toBeInTheDocument();
     expect(screen.getByTestId('students-enrollmentdate-input')).toBeInTheDocument();
-    expect(screen.getByTestId('students-level-select')).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Nivel' })).toBeInTheDocument();
     expect(screen.getByTestId('students-submit-button')).toBeInTheDocument();
     expect(screen.getByTestId('students-cancel-button')).toBeInTheDocument();
+  });
+
+  it('shows the level prompt instead of an empty select on create', async () => {
+    await render(StudentFormComponent, {
+      componentInputs: { student: null },
+    });
+    expect(screen.getByRole('combobox', { name: 'Nivel' })).toHaveDisplayValue('Seleccionar nivel');
   });
 
   it('pre-populates fields when editing a student', async () => {
     await render(StudentFormComponent, {
       componentInputs: { student: mockStudent },
     });
-    const nameInput = screen.getByTestId('students-fullname-input') as HTMLInputElement;
-    const emailInput = screen.getByTestId('students-email-input') as HTMLInputElement;
-    expect(nameInput.value).toBe('Juan Pérez');
-    expect(emailInput.value).toBe('juan@test.com');
+    expect(screen.getByTestId('students-fullname-input')).toHaveValue('Juan Pérez');
+    expect(screen.getByTestId('students-email-input')).toHaveValue('juan@test.com');
   });
 
   it('emits cancel when cancel button is clicked', async () => {
@@ -79,7 +84,7 @@ describe('StudentFormComponent', () => {
     await userEvent.type(screen.getByTestId('students-email-input'), 'ana@test.com');
     fireEvent.input(screen.getByTestId('students-birthdate-input'), { target: { value: '1995-03-20' } });
     fireEvent.input(screen.getByTestId('students-enrollmentdate-input'), { target: { value: '2024-06-01' } });
-    await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'beginner');
+    await userEvent.selectOptions(screen.getByRole('combobox', { name: 'Nivel' }), 'Principiante');
     // Use getByRole to target the inner <button> element, not the ds-button host
     await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
 
@@ -108,14 +113,14 @@ describe('StudentFormComponent', () => {
 
   it('pre-checks estudiante permission on create', async () => {
     await render(StudentFormComponent, { componentInputs: { student: null } });
-    expect((screen.getByTestId('perm-student') as HTMLInputElement).checked).toBe(true);
+    expect(screen.getByTestId('perm-student')).toBeChecked();
   });
 
   it('populates student/instructor permissions from existing student on edit', async () => {
     const studentWithPerms: StudentResponse = { ...mockStudent, permissions: ['instructor'] };
     await render(StudentFormComponent, { componentInputs: { student: studentWithPerms } });
-    expect((screen.getByTestId('perm-student') as HTMLInputElement).checked).toBe(false);
-    expect((screen.getByTestId('perm-instructor') as HTMLInputElement).checked).toBe(true);
+    expect(screen.getByTestId('perm-student')).not.toBeChecked();
+    expect(screen.getByTestId('perm-instructor')).toBeChecked();
   });
 
   it('includes system_access with student permission in payload on create', async () => {
@@ -129,7 +134,7 @@ describe('StudentFormComponent', () => {
     await userEvent.type(screen.getByTestId('students-email-input'), 'roberto@gym.com');
     fireEvent.input(screen.getByTestId('students-birthdate-input'), { target: { value: '1980-01-01' } });
     fireEvent.input(screen.getByTestId('students-enrollmentdate-input'), { target: { value: '2024-01-01' } });
-    await userEvent.selectOptions(screen.getByTestId('students-level-select'), 'advanced');
+    await userEvent.selectOptions(screen.getByRole('combobox', { name: 'Nivel' }), 'Avanzado');
     await userEvent.click(screen.getByRole('button', { name: /guardar/i }));
 
     const payload: StudentFormPayload = saveSpy.mock.calls[0][0];

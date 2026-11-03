@@ -34,28 +34,28 @@
     }
 
     &--paid {
-      border-left: 4px solid var(--color-success, #22c55e);
+      border-left: 4px solid var(--color-success);
     }
 
     &--pending {
-      border-left: 4px solid var(--color-warning, #f59e0b);
+      border-left: 4px solid var(--color-warning);
     }
 
     &--overdue {
-      border-left: 4px solid var(--color-error, #ef4444);
+      border-left: 4px solid var(--color-error);
     }
 
     &--at-risk {
-      border-left: 4px solid var(--color-error, #ef4444);
-      background: color-mix(in srgb, var(--color-error, #ef4444) 5%, var(--color-surface));
+      border-left: 4px solid var(--color-error);
+      background: color-mix(in srgb, var(--color-error) 5%, var(--color-surface));
 
       @media (prefers-color-scheme: dark) {
-        background: color-mix(in srgb, var(--color-error, #ef4444) 10%, var(--color-surface));
+        background: color-mix(in srgb, var(--color-error) 10%, var(--color-surface));
       }
     }
 
     .dark &--at-risk {
-      background: color-mix(in srgb, var(--color-error, #ef4444) 10%, var(--color-surface));
+      background: color-mix(in srgb, var(--color-error) 10%, var(--color-surface));
     }
   }
 
@@ -67,6 +67,9 @@
   }
 
   &__section-title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     font-weight: 600;
     font-size: 0.9375rem;
     color: var(--color-text-primary);
@@ -79,7 +82,7 @@
 
   &__at-risk-warning {
     font-size: 0.8125rem;
-    color: var(--color-error, #ef4444);
+    color: var(--gym-text-danger);
     margin-bottom: 0.75rem;
     font-weight: 500;
   }
@@ -102,6 +105,8 @@
 
   &__item {
     display: flex;
+    // On a phone the actions drop below the name instead of squeezing it to an ellipsis.
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
@@ -118,6 +123,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
+    flex: 1 1 var(--gym-row-label-min);
     min-width: 0;
   }
 
@@ -125,6 +131,7 @@
     display: flex;
     gap: 0.25rem;
     flex-shrink: 0;
+    margin-left: auto;
   }
 
   &__item-name {
@@ -143,7 +150,7 @@
 
   &__item-months {
     font-size: 0.8125rem;
-    color: var(--color-error, #ef4444);
+    color: var(--gym-text-danger);
     font-weight: 500;
   }
 }

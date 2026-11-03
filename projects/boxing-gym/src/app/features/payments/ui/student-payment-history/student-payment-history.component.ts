@@ -1,5 +1,6 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { X } from 'lucide-angular';
 import { ButtonComponent } from 'design-system';
 import { PaymentMethod, PaymentResponse, PaymentType } from '../../../../core/api/payments.service';
 import { periodLabel } from '../../utils/period';
@@ -19,6 +20,8 @@ interface DisplayPayment extends PaymentResponse {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentPaymentHistoryComponent {
+  protected readonly icons = { close: X };
+
   readonly payments      = input<PaymentResponse[]>([]);
   readonly total         = input(0);
   readonly loading       = input(false);

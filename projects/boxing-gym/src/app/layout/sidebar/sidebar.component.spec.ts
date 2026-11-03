@@ -66,8 +66,6 @@ describe('SidebarComponent', () => {
     });
     expect(screen.getByText('Alumnos')).toBeInTheDocument();
     expect(screen.queryByText('Datos del gimnasio')).not.toBeInTheDocument();
-    expect(screen.getByText('Pedidos')).toBeInTheDocument();
-    expect(screen.getByText('Clases')).toBeInTheDocument();
     expect(screen.queryByText('Pagos')).not.toBeInTheDocument();
   });
 
@@ -83,13 +81,14 @@ describe('SidebarComponent', () => {
     expect(screen.getByText('Pagos')).toBeInTheDocument();
   });
 
-  it('renders "Pronto" badges on disabled nav items', async () => {
+  it('lists only screens that exist (no "coming soon" entries)', async () => {
     await render(SidebarComponent, {
       componentInputs: { open: false },
       providers: PROVIDERS,
     });
-    const badges = screen.getAllByText('Pronto');
-    expect(badges).toHaveLength(2);
+    expect(screen.queryByText('Pedidos')).not.toBeInTheDocument();
+    expect(screen.queryByText('Clases')).not.toBeInTheDocument();
+    expect(screen.queryByText('Pronto')).not.toBeInTheDocument();
   });
 
   it('calls auth.signOut when sign-out button is clicked', async () => {

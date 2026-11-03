@@ -17,6 +17,7 @@ import {
   PaymentType,
 } from '../../../../core/api/payments.service';
 import { StudentResponse } from '../../../../core/api/students.service';
+import { currentPeriod } from '../../utils/period';
 
 @Component({
   selector: 'app-payment-registration-form',
@@ -52,17 +53,15 @@ export class PaymentRegistrationFormComponent implements OnInit {
   protected readonly selectedType = signal<PaymentType>('monthly_fee');
   protected readonly isMonthlyFee = computed(() => this.selectedType() === 'monthly_fee');
 
-  protected readonly defaultPeriod = (() => {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  })();
+  protected readonly defaultPeriod = currentPeriod();
 
   readonly form = this.fb.group({
-    student_id:     ['', Validators.required],
+    // null = nothing chosen yet, matching the [ngValue]="null" prompt options.
+    student_id:     this.fb.control<string | null>(null, Validators.required),
     type:           ['monthly_fee' as PaymentType, Validators.required],
     period:         [this.defaultPeriod, Validators.required],
     amount:         [null as number | null, [Validators.required, Validators.min(0.01)]],
-    payment_method: ['' as PaymentMethod, Validators.required],
+    payment_method: this.fb.control<PaymentMethod | null>(null, Validators.required),
     notes:          [''],
   });
 

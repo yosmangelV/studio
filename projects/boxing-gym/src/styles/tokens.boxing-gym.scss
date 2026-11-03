@@ -61,6 +61,7 @@
   --gym-surface-app:      var(--gym-black);            // main app background
   --gym-surface-panel:    var(--gym-neutral-900);      // sidebar, sheet panels
   --gym-surface-elevated: var(--gym-mid);              // cards, dropdowns
+  --gym-surface-raised:   var(--gym-dark);             // raised panels: login form, floating banner, option lists
   --gym-surface-subtle:   rgba(255, 255, 255, 0.04);   // barely-there bg
   --gym-surface-hover:    rgba(255, 255, 255, 0.05);   // hover state on dark
   --gym-surface-active:   rgba(255, 255, 255, 0.08);   // active / pressed
@@ -72,7 +73,15 @@
   // ---------------------------------------------------------------------------
   --gym-border-subtle: rgba(255, 255, 255, 0.06);  // hairlines, dividers
   --gym-border-muted:  rgba(255, 255, 255, 0.08);  // cards, inputs
+  --gym-border-control: rgba(255, 255, 255, 0.35); // input, select and search outlines: 3:1 on every gym surface
   --gym-border-strong: rgba(255, 255, 255, 0.18);  // prominent outlines
+
+  // Semantic — Layout measures
+  --gym-row-label-min: 10rem;  // a list row's label keeps this much width before its actions wrap
+
+  // Semantic — Shadows (dark UI: deep, soft, black)
+  --gym-shadow-drawer: 4px 0 24px rgba(0, 0, 0, 0.5);   // mobile sidebar
+  --gym-shadow-float:  0 8px 32px rgba(0, 0, 0, 0.6);   // floating banners
 
   // ---------------------------------------------------------------------------
   // Semantic — Text

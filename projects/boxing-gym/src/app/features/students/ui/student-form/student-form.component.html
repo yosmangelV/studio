@@ -94,9 +94,9 @@
         data-testid="students-level-select"
         formControlName="level"
       >
-        <option value="" disabled>Seleccionar nivel</option>
+        <option [ngValue]="null" disabled>Seleccionar nivel</option>
         @for (level of levels; track level) {
-          <option [value]="level">{{ levelLabels[level] }}</option>
+          <option [ngValue]="level">{{ levelLabels[level] }}</option>
         }
       </select>
     </ds-form-field>

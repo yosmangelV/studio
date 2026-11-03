@@ -5,6 +5,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
+import { LucideAngularModule, X } from 'lucide-angular';
 
 const DISMISSED_KEY = 'pwa-install-dismissed';
 
@@ -18,6 +19,7 @@ type BannerMode = 'ios' | 'android';
 @Component({
   selector: 'app-pwa-install-banner',
   standalone: true,
+  imports: [LucideAngularModule],
   template: `
     @if (visible()) {
       <div class="pwa-banner" role="banner" aria-live="polite">
@@ -50,7 +52,7 @@ type BannerMode = 'ios' | 'android';
           class="pwa-banner__close"
           aria-label="Cerrar sugerencia de instalación"
           (click)="dismiss()"
-        >✕</button>
+        ><lucide-angular [img]="icons.close" [size]="16" aria-hidden="true" /></button>
       </div>
     }
   `,
@@ -58,6 +60,8 @@ type BannerMode = 'ios' | 'android';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PwaInstallBannerComponent implements OnInit, OnDestroy {
+  protected readonly icons = { close: X };
+
   protected readonly visible = signal(false);
   protected readonly mode = signal<BannerMode>('ios');
 
