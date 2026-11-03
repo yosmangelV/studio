@@ -16,7 +16,7 @@ El prototipo es desechable por diseño. No es la base del juego final.
 
 Este prototipo corresponde al nivel 3 (Desvío) de la estructura de 5 fases. El objetivo nunca es que el monstruo desaparezca, sino sacarlo de la zona urbana hacia terreno abierto donde el equipo pueda contenerlo.
 
-Esto importa para la condición de victoria: el borde derecho del escenario es la **zona de contención**, el punto de entrega, no una huida. Por eso no hace falta vida del monstruo ni mecánica de captura en el prototipo.
+Esto importa para la condición de victoria: el borde izquierdo del escenario es la **zona de contención**, el punto de entrega, no una huida. Por eso no hace falta vida del monstruo ni mecánica de captura en el prototipo.
 
 ## 3. Alcance
 
@@ -107,9 +107,8 @@ Tres rectángulos estáticos. Si el monstruo entra en contacto con uno, el edifi
 
 ### Condiciones
 
-- **Victoria**: el monstruo alcanza la zona de contención en el borde derecho.
-- **Derrota**: la integridad de la ciudad llega a cero.
-- **Borde izquierdo**: no es salida. Si el monstruo llega ahí, retoma rumbo hacia la ciudad.
+- **Victoria**: el monstruo alcanza la zona de contención en el borde izquierdo.
+- **Derrota**: la integridad de la ciudad llega a cero o no queda ningún edificio en pie (el lanzador está sobre el último).
 
 Reinicio inmediato con una tecla o un toque. Sin pantallas intermedias.
 

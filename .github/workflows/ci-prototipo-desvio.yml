@@ -12,23 +12,31 @@ on:
       - 'projects/prototipo-desvio/**'
       - '.github/workflows/ci-prototipo-desvio.yml'
 
+permissions:
+  contents: read
+
 env:
   GODOT_VERSION: 4.7.2-stable
+  # SHA-512 of Godot_v4.7.2-stable_linux.x86_64.zip. It matches the release's
+  # SHA512-SUMS.txt, and its SHA-256 matches the digest GitHub reports for the asset.
+  # Update both lines together.
+  GODOT_SHA512: 9aa00f7a605200940bce3027a567b782f49bd8e940dd06ae9e987bd65aee1b1467edd56ed84fcdcbdd44354bf613bdbb4e5d2913e925850368e150c59ed54c65
 
 jobs:
   criterios:
     name: Criterios de aceptación
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
 
       - name: Install Godot
         run: |
           curl -fsSL -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+          echo "${GODOT_SHA512}  godot.zip" | sha512sum --check --strict
           unzip -q godot.zip -d "$RUNNER_TEMP/godot"
           echo "GODOT_BIN=$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}_linux.x86_64" >> "$GITHUB_ENV"
 

@@ -14,15 +14,26 @@ var _archivo: FileAccess
 
 
 func _ready() -> void:
-	_id_sesion = str(int(Time.get_unix_time_from_system()))
-	ruta = "%s/sesion_%s.csv" % [CARPETA, _id_sesion]
 	DirAccess.make_dir_recursive_absolute(CARPETA)
+	# El id de proceso evita que dos arranques en el mismo segundo compartan archivo,
+	# incluso a la vez; el sufijo cubre que el sistema reutilice un id.
+	var base := "%d_%d" % [int(Time.get_unix_time_from_system()), OS.get_process_id()]
+	_id_sesion = base
+	var sufijo := 1
+	while FileAccess.file_exists(_ruta_de(_id_sesion)):
+		sufijo += 1
+		_id_sesion = "%s_%d" % [base, sufijo]
+	ruta = _ruta_de(_id_sesion)
 	_archivo = FileAccess.open(ruta, FileAccess.WRITE)
 	if _archivo == null:
 		push_error("No se pudo abrir %s: %s" % [ruta, FileAccess.get_open_error()])
 		return
 	_archivo.store_line(CABECERA)
 	_archivo.flush()
+
+
+func _ruta_de(id_sesion: String) -> String:
+	return "%s/sesion_%s.csv" % [CARPETA, id_sesion]
 
 
 func iniciar_intento() -> void:

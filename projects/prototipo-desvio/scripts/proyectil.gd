@@ -11,6 +11,8 @@ var tipo: Tipo = Tipo.BALIZA
 var posicion: Vector2
 var velocidad: Vector2
 var contenedor_balizas: Node
+## Con gravedad y potencia a cero desde el panel, un proyectil no sale nunca del mundo.
+var edad: float = 0.0
 
 
 static func velocidad_inicial(angulo_grados: float, potencia: float) -> Vector2:
@@ -35,7 +37,10 @@ func _physics_process(delta: float) -> void:
 	velocidad = velocidad_tras_paso(velocidad, delta)
 	posicion += velocidad * delta
 	position = posicion
-	if tipo == Tipo.ESPUMA and _impactar_monstruo():
+	edad += delta
+	if edad >= Config.VIDA_MAX_PROYECTIL:
+		queue_free()
+	elif tipo == Tipo.ESPUMA and _impactar_monstruo():
 		queue_free()
 	elif posicion.y >= Config.SUELO_Y:
 		_al_tocar_suelo()

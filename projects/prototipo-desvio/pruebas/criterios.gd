@@ -8,7 +8,7 @@ const ESCENA_PROYECTIL := preload("res://escenas/proyectil.tscn")
 
 ## Un error de script aborta la prueba sin marcar fallo: contar las comprobaciones lo delata.
 const COMPROBACIONES_GUI := 5
-const COMPROBACIONES_ESPERADAS := 52
+const COMPROBACIONES_ESPERADAS := 55
 
 var _fallos := 0
 var _comprobaciones := 0
@@ -25,7 +25,7 @@ func _ready() -> void:
 
 func _ejecutar() -> void:
 	get_tree().current_scene = null # Este nodo sobrevive a los cambios de escena.
-	for prueba: Callable in [_c1_y_c8_derrota, _c2_desvio, _c3_fuera_de_radio, _c4_giro, _c5_espuma, _c6_determinismo, _c7_guia, _c8_victoria, _c9_panel, _c10_registro, _baliza_se_apaga, _atraccion_por_distancia, _lanzador_en_ultimo_edificio, _lanzamiento_real, _toques, _reinicio, _partida_con_disparos_reales]:
+	for prueba: Callable in [_c1_y_c8_derrota, _c2_desvio, _c3_fuera_de_radio, _c4_giro, _c5_espuma, _c6_determinismo, _c7_guia, _proyectil_inmovil_caduca, _c8_victoria, _c9_panel, _c10_registro, _baliza_se_apaga, _atraccion_por_distancia, _lanzador_en_ultimo_edificio, _lanzamiento_real, _toques, _reinicio, _partida_con_disparos_reales]:
 		await prueba.call()
 	var esperadas := COMPROBACIONES_ESPERADAS - (COMPROBACIONES_GUI if _sin_ventana() else 0)
 	_comprobar("Todas las comprobaciones se ejecutaron", _comprobaciones == esperadas, "%d de %d" % [_comprobaciones, esperadas])
@@ -167,6 +167,22 @@ func _c7_guia() -> void:
 	_comprobar("7  no llega al suelo", guia.points[guia.points.size() - 1].y < 0.0)
 	_juego.get_node("Interfaz/SliderPotencia").value = 80.0
 	_comprobar("7  reacciona al slider", guia.points[1].length() > 0.0)
+	_juego.get_node("Interfaz/SliderPotencia").value = 5.0
+	var final_bajo := guia.points[guia.points.size() - 1]
+	_comprobar("7  con potencia baja se corta lejos del suelo", -final_bajo.y > -Config.BOCA_LANZADOR.y / 2.0, str(final_bajo))
+	_juego.get_node("Interfaz/SliderPotencia").value = 60.0
+	Config.longitud_guia = 1000.0
+	var final_largo := guia.points[guia.points.size() - 1]
+	_comprobar("7  una guia larga no llega al impacto", -final_largo.y > -Config.BOCA_LANZADOR.y / 2.0, str(final_largo))
+
+
+func _proyectil_inmovil_caduca() -> void:
+	await _cargar()
+	Config.gravedad_proyectil = 0.0
+	_juego.get_node("Interfaz/SliderPotencia").value = 0.0
+	_juego.get_node("Lanzador").lanzar()
+	await _simular(int(Config.VIDA_MAX_PROYECTIL * 60.0) + 5)
+	_comprobar("P  un proyectil inmovil se elimina", _juego.get_node("Proyectiles").get_child_count() == 0)
 
 
 func _c8_victoria() -> void:

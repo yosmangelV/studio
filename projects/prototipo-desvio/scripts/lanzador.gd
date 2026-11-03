@@ -4,7 +4,6 @@ extends Node2D
 signal disparo_realizado(tipo: Proyectil.Tipo)
 
 const ESCENA_PROYECTIL := preload("res://escenas/proyectil.tscn")
-const MAX_PASOS_GUIA := 600
 
 var arma: Proyectil.Tipo = Proyectil.Tipo.BALIZA
 var recarga_restante: float = 0.0
@@ -33,7 +32,7 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-14.0, Config.BOCA_LANZADOR.y, 28.0, Config.ALTO_LANZADOR), Config.COLOR_LANZADOR)
+	draw_rect(Rect2(-Config.ANCHO_LANZADOR / 2.0, Config.BOCA_LANZADOR.y, Config.ANCHO_LANZADOR, Config.ALTO_LANZADOR), Config.COLOR_LANZADOR)
 
 
 func _physics_process(delta: float) -> void:
@@ -64,22 +63,34 @@ func _al_cambiar_slider(_valor: float) -> void:
 	_actualizar_guia()
 
 
-## Primeros `longitud_guia` pixeles del arco; se corta antes de tocar el suelo.
+## Primeros `longitud_guia` pixeles del arco, sin pasar de `FRACCION_MAX_GUIA` del arco
+## completo: con potencia baja o una guia larga, el final no delata el impacto.
 func _actualizar_guia() -> void:
+	var arco := _arco_hasta_suelo()
+	var longitud_arco := 0.0
+	for i in range(1, arco.size()):
+		longitud_arco += arco[i - 1].distance_to(arco[i])
+	var restante := minf(Config.longitud_guia, longitud_arco * Config.FRACCION_MAX_GUIA)
+	var puntos := PackedVector2Array([arco[0]])
+	for i in range(1, arco.size()):
+		var tramo := arco[i - 1].distance_to(arco[i])
+		if tramo >= restante:
+			puntos.append(arco[i - 1].move_toward(arco[i], restante))
+			break
+		puntos.append(arco[i])
+		restante -= tramo
+	_guia.points = puntos
+
+
+## Misma integracion que el proyectil real, en coordenadas locales (suelo en y=0).
+func _arco_hasta_suelo() -> PackedVector2Array:
 	var punto := Config.BOCA_LANZADOR
 	var velocidad := Proyectil.velocidad_inicial(_slider_angulo.value, _slider_potencia.value)
-	var puntos := PackedVector2Array([punto])
-	var restante := Config.longitud_guia
-	for _i in MAX_PASOS_GUIA:
+	var arco := PackedVector2Array([punto])
+	for _i in Config.MAX_PASOS_GUIA:
 		velocidad = Proyectil.velocidad_tras_paso(velocidad, Config.PASO_FIJO)
-		var siguiente := punto + velocidad * Config.PASO_FIJO
-		var tramo := punto.distance_to(siguiente)
-		if siguiente.y >= 0.0 or restante <= 0.0:
+		punto += velocidad * Config.PASO_FIJO
+		if punto.y >= 0.0:
 			break
-		if tramo > restante:
-			puntos.append(punto.move_toward(siguiente, restante))
-			break
-		puntos.append(siguiente)
-		restante -= tramo
-		punto = siguiente
-	_guia.points = puntos
+		arco.append(punto)
+	return arco

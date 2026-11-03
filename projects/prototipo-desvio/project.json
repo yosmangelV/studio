@@ -16,7 +16,11 @@
     "jugar": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node projects/prototipo-desvio/herramientas/godot.mjs"
+        "commands": [
+          "node projects/prototipo-desvio/herramientas/godot.mjs --headless --import",
+          "node projects/prototipo-desvio/herramientas/godot.mjs"
+        ],
+        "parallel": false
       }
     },
     "test": {

@@ -11,6 +11,11 @@ const MUNDO := Rect2(0.0, 0.0, 1280.0, 720.0)
 const ENTRADA_X := 320.0
 const LANZADOR_X := 1180.0
 const ALTO_LANZADOR := 40.0
+const ANCHO_LANZADOR := 28.0
+const MAX_PASOS_GUIA := 600
+## La guia nunca cubre mas de esta fraccion del arco: asi no revela el impacto.
+const FRACCION_MAX_GUIA := 0.4
+const VIDA_MAX_PROYECTIL := 10.0
 ## El lanzador va sobre el tejado del ultimo edificio: su origen sigue en el suelo.
 const BOCA_LANZADOR := Vector2(0.0, -150.0)
 const CONTENCION_X_MAX := 110.0

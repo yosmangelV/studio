@@ -180,9 +180,9 @@ Un edificio destruido no vuelve a restar integridad.
 Orquesta la partida. Mantiene `integridad` (0 a 100). Conecta señales. Resuelve victoria y derrota:
 
 - Victoria: `contencion_alcanzada()`.
-- Derrota: `integridad <= 0`.
+- Derrota: `integridad <= 0` o ningún edificio intacto.
 
-El borde izquierdo no es condición de nada. Si el monstruo llega ahí, el rumbo deseado se invierte y vuelve hacia la ciudad.
+El borde izquierdo es la zona de contención: tocarla da la victoria. Ver `CLAUDE.md`.
 
 Reinicio inmediato con tecla R o toque en pantalla. Sin pantalla intermedia: recarga la escena y escribe el registro del intento.
 
