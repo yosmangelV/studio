@@ -110,7 +110,7 @@ func _c4_giro() -> void:
 		maximo = maxf(maximo, absf(previo.angle_to(monstruo.rumbo)))
 		if monstruo.rumbo.dot(Vector2.LEFT) < 0.99:
 			pasos_hasta_girar += 1
-	_comprobar("4  giro limitado por paso", maximo <= deg_to_rad(Config.giro_monstruo) / 60.0 + 0.0001, "max=%f rad" % maximo)
+	_comprobar("4  giro limitado por paso", maximo <= deg_to_rad(Config.giro_monstruo) / Engine.physics_ticks_per_second + 0.0001, "max=%f rad" % maximo)
 	_comprobar("4  el giro dura frames", pasos_hasta_girar > 60, "%d pasos" % pasos_hasta_girar)
 
 
@@ -181,7 +181,7 @@ func _proyectil_inmovil_caduca() -> void:
 	Config.gravedad_proyectil = 0.0
 	_juego.get_node("Interfaz/SliderPotencia").value = 0.0
 	_juego.get_node("Lanzador").lanzar()
-	await _simular(int(Config.VIDA_MAX_PROYECTIL * 60.0) - 10)
+	await _simular(int(Config.VIDA_MAX_PROYECTIL * Engine.physics_ticks_per_second) - 10)
 	_comprobar("P  el proyectil inmovil sigue vivo antes de caducar", _juego.get_node("Proyectiles").get_child_count() == 1)
 	await _simular(15)
 	_comprobar("P  un proyectil inmovil se elimina", _juego.get_node("Proyectiles").get_child_count() == 0)
@@ -233,7 +233,7 @@ func _avance_atraido(distancia: float) -> float:
 func _atraccion_por_distancia() -> void:
 	var lejos := await _avance_atraido(Config.radio_baliza - 5.0)
 	var cerca := await _avance_atraido(70.0)
-	var paso := Config.velocidad_monstruo * 6.0 / 60.0
+	var paso := Config.velocidad_monstruo * 6.0 / Engine.physics_ticks_per_second
 	_comprobar("A  el borde del radio atrae a la velocidad minima", absf(lejos / paso - 0.265) < 0.02, "%.3f" % (lejos / paso))
 	_comprobar("A  cerca del centro atrae mas", absf(cerca / paso - 0.79) < 0.02, "%.3f" % (cerca / paso))
 
