@@ -159,9 +159,11 @@ Ambos se destruyen al salir de los límites del mundo.
 
 > Sustituida tras la segunda prueba: la baliza tiene duración y su atracción depende de la distancia. Ver `CLAUDE.md`.
 
-`Area2D` en la posición de impacto. Permanece activa indefinidamente hasta que el monstruo la alcanza y la destruye. No tiene duración temporal: es un recurso consumible por contacto, no por tiempo.
+`Area2D` en la posición de impacto. Permanece activa hasta que el monstruo la alcanza y la destruye, o hasta agotar `config.duracion_baliza`, lo que ocurra primero. Es un recurso consumible: una baliza, un desvío como máximo.
 
-Dibuja un círculo de radio `config.radio_baliza` con relleno translúcido, para que el jugador vea su alcance. Esto es deliberado: el riesgo debe ser calculable, no opaco.
+Atrae al 100 % de la velocidad del monstruo en el centro y a `config.atraccion_minima` en el borde del radio, de forma lineal.
+
+Dibuja un círculo de radio `config.radio_baliza` con relleno translúcido, para que el jugador vea su alcance. Los anillos concéntricos indican que atrae más cerca del centro, y su opacidad baja a medida que se agota. Esto es deliberado: el riesgo debe ser calculable, no opaco.
 
 ### 5.5 `lanzador.gd`
 

@@ -8,7 +8,7 @@ const ESCENA_PROYECTIL := preload("res://escenas/proyectil.tscn")
 
 ## Un error de script aborta la prueba sin marcar fallo: contar las comprobaciones lo delata.
 const COMPROBACIONES_GUI := 5
-const COMPROBACIONES_ESPERADAS := 56
+const COMPROBACIONES_ESPERADAS := 58
 
 var _fallos := 0
 var _comprobaciones := 0
@@ -385,8 +385,22 @@ func _apuntar(objetivo_x: float) -> void:
 func _c10_registro() -> void:
 	await _cargar()
 	var filas_antes := FileAccess.get_file_as_string(Registro.ruta).strip_edges().split("\n").size()
+	# Leidos antes de terminar: no dependen del orden de las pruebas anteriores.
+	var esperado := PackedStringArray([
+		Registro._id_sesion,
+		str(Registro._n_intento),
+		"%.2f" % _juego.duracion,
+		"derrota",
+		"%.0f" % _juego.integridad,
+		str(_juego.disparos[Proyectil.Tipo.BALIZA]),
+		str(_juego.disparos[Proyectil.Tipo.ESPUMA]),
+		Registro._ultimo_resultado,
+	])
 	_juego._terminar("derrota")
 	var lineas := FileAccess.get_file_as_string(Registro.ruta).strip_edges().split("\n")
+	var campos := lineas[lineas.size() - 1].split(",")
 	_comprobar("10 una fila por intento", lineas.size() == filas_antes + 1, lineas[lineas.size() - 1])
-	_comprobar("10 ocho columnas", lineas[lineas.size() - 1].split(",").size() == 8)
+	_comprobar("10 ocho columnas", campos.size() == 8)
+	_comprobar("10 contenido registrado", campos == esperado, "%s vs %s" % [",".join(campos), ",".join(esperado)])
+	_comprobar("10 reinicio_tras encadena el intento anterior", Registro._ultimo_resultado == "derrota")
 	get_tree().paused = false
