@@ -70,7 +70,7 @@ func _c1_y_c8_derrota() -> void:
 	await _simular(1800)
 	_comprobar("1  avanza y destruye", _juego.integridad < Config.INTEGRIDAD_MAX, "integridad=%s" % _juego.integridad)
 	await _simular(6000)
-	_comprobar("8b integridad 0 da derrota", _juego.terminado and _juego.integridad <= 0.0)
+	_comprobar("8b integridad 0 da derrota", _juego.resultado == "derrota" and _juego.integridad <= 0.0)
 	var destruidos := _juego.get_node("Edificios").get_children().filter(func(e: Edificio) -> bool: return not e.intacto)
 	_comprobar("1  un edificio resta una sola vez", is_equal_approx(destruidos.size() * Config.dano_edificio, 102.0))
 
@@ -193,7 +193,7 @@ func _c8_victoria() -> void:
 	_poner_baliza(150.0)
 	_poner_baliza(20.0) # Dentro de la contencion: el monstruo toca la zona antes de alcanzarla.
 	await _simular(2500)
-	_comprobar("8a contencion da victoria sin tocar edificios", _juego.terminado and is_equal_approx(_juego.integridad, Config.INTEGRIDAD_MAX), "integridad=%s" % _juego.integridad)
+	_comprobar("8a contencion da victoria sin tocar edificios", _juego.resultado == "victoria" and is_equal_approx(_juego.integridad, Config.INTEGRIDAD_MAX), "integridad=%s" % _juego.integridad)
 
 
 func _c9_panel() -> void:
@@ -245,7 +245,7 @@ func _lanzador_en_ultimo_edificio() -> void:
 	Config.dano_edificio = 1.0
 	for edificio: Edificio in edificios:
 		edificio.recibir_golpe()
-	_comprobar("E  sin edificios hay derrota aunque quede integridad", _juego.terminado and _juego.integridad > 0.0)
+	_comprobar("E  sin edificios hay derrota aunque quede integridad", _juego.resultado == "derrota" and _juego.integridad > 0.0)
 	get_tree().paused = false
 
 
@@ -361,7 +361,7 @@ func _partida_con_disparos_reales() -> void:
 			_apuntar(maxf(monstruo.position.x - 200.0, 30.0))
 			lanzador.lanzar()
 		await _simular(1)
-	_comprobar("V  ganable con disparos reales", _juego.terminado and _juego.integridad > 0.0, "integridad=%s balizas=%d duracion=%.1fs" % [_juego.integridad, _juego.disparos[Proyectil.Tipo.BALIZA], _juego.duracion])
+	_comprobar("V  ganable con disparos reales", _juego.resultado == "victoria" and _juego.integridad > 0.0, "resultado=%s integridad=%s balizas=%d duracion=%.1fs" % [_juego.resultado, _juego.integridad, _juego.disparos[Proyectil.Tipo.BALIZA], _juego.duracion])
 
 
 func _apuntar(objetivo_x: float) -> void:

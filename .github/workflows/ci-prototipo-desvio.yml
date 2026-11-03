@@ -45,3 +45,7 @@ jobs:
 
       - name: Run acceptance criteria
         run: node projects/prototipo-desvio/herramientas/godot.mjs --headless --fixed-fps 60 res://pruebas/criterios.tscn
+
+      # Headless skips the touch checks; a virtual display runs the full suite.
+      - name: Run acceptance criteria with a window
+        run: xvfb-run -a node projects/prototipo-desvio/herramientas/godot.mjs --fixed-fps 60 res://pruebas/criterios.tscn

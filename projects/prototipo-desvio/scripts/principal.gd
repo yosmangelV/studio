@@ -3,6 +3,7 @@ extends Node2D
 
 var integridad: float = Config.INTEGRIDAD_MAX
 var terminado := false
+var resultado := "" # "victoria" o "derrota" al terminar.
 var duracion: float = 0.0
 var disparos := {Proyectil.Tipo.BALIZA: 0, Proyectil.Tipo.ESPUMA: 0}
 
@@ -83,10 +84,11 @@ func _quedan_edificios() -> bool:
 
 
 ## Escribe la fila al terminar, no al reiniciar: cerrar el juego tras perder no la pierde.
-func _terminar(resultado: String) -> void:
+func _terminar(nuevo_resultado: String) -> void:
 	if terminado:
 		return
 	terminado = true
+	resultado = nuevo_resultado
 	Registro.registrar(duracion, resultado, integridad, disparos[Proyectil.Tipo.BALIZA], disparos[Proyectil.Tipo.ESPUMA])
 	_resultado.text = "%s. Toca o pulsa R para reiniciar" % resultado.capitalize()
 	_resultado.visible = true
