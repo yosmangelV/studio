@@ -25,6 +25,7 @@ func _ready() -> void:
 	for node: Node in [_monster, $Launcher, $Projectiles, $Beacons]:
 		node.process_mode = Node.PROCESS_MODE_PAUSABLE
 	SessionLog.start_attempt()
+	$Ground.position = Vector2(Config.WORLD.get_center().x, Config.GROUND_Y)
 	_monster.position = Vector2(Config.SPAWN_X, Config.GROUND_Y)
 	_monster.building_hit.connect(_on_building_hit)
 	_monster.containment_reached.connect(_finish.bind(RESULT_WIN))

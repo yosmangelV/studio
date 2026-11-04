@@ -17,7 +17,6 @@ const LAUNCHER_MUZZLE := Vector2(0.0, -150.0)
 const GUIDE_MAX_STEPS := 600
 ## The guide never covers more than this fraction of the arc, so it cannot reveal the impact.
 const GUIDE_MAX_ARC_FRACTION := 0.4
-const PROJECTILE_MAX_LIFETIME := 10.0
 const CONTAINMENT_MAX_X := 110.0
 const BUILDINGS_X: Array[float] = [920.0, 1050.0, LAUNCHER_X]
 const MONSTER_SIZE := Vector2(90.0, 110.0)

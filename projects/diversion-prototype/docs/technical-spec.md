@@ -193,7 +193,7 @@ Orquesta la partida. Mantiene `integrity` (0 a 100). Conecta señales. Resuelve 
 
 El borde izquierdo es la zona de contención: tocarla da la victoria. Ver `CLAUDE.md`.
 
-Reinicio inmediato con tecla R o toque en pantalla. Sin pantalla intermedia: recarga la escena y escribe el registro del intento.
+Reinicio inmediato, sin pantalla intermedia: la tecla R reinicia siempre, y un toque en pantalla solo cuando la partida ha terminado. La fila del registro se escribe al terminar el intento, no al reiniciar.
 
 ### 5.8 `debug_panel.gd`
 

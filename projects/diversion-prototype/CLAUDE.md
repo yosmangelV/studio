@@ -5,7 +5,7 @@ Source of truth: `docs/prototype-spec.md` (what and why) and `docs/technical-spe
 - Godot 4, GDScript, no plugins. Throwaway prototype. The root's Angular and design system rules do not apply here; the code-quality rules do.
 - Follow section 8 of the technical spec without exceptions: no art, sound, menus, camera, monster health, physics engine for projectiles, final balance or randomness.
 - If a decision affects the feel and neither the spec nor this file settles it, stop and ask.
-- Every number lives in `scripts/config.gd`.
+- Every gameplay and world number (tuning, geometry, palette) lives in `scripts/config.gd`. UI layout sizes stay with the scene or script that lays them out, as named constants.
 
 ## Conventions
 

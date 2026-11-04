@@ -10,6 +10,8 @@ const POWER_LABEL := "Potencia %d"
 
 var weapon: Projectile.Kind = Projectile.Kind.BEACON
 var reload_remaining: float = 0.0
+## Derived from the time since the last shot, so a `reload_time` change applies to a reload in progress.
+var _since_last_shot: float = INF
 
 @onready var _guide: Line2D = $TrajectoryGuide
 @onready var _angle_slider: HSlider = $"../UI/AngleSlider"
@@ -39,14 +41,15 @@ func _draw() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	reload_remaining = maxf(reload_remaining - delta, 0.0)
-	_fire_button.disabled = reload_remaining > 0.0
+	_since_last_shot += delta
+	_update_reload()
 
 
 func fire() -> void:
 	if reload_remaining > 0.0 or get_tree().paused:
 		return
-	reload_remaining = Config.reload_time
+	_since_last_shot = 0.0
+	_update_reload()
 	var projectile: Projectile = PROJECTILE_SCENE.instantiate()
 	projectile.kind = weapon
 	projectile.pos = position + Config.LAUNCHER_MUZZLE
@@ -56,7 +59,13 @@ func fire() -> void:
 	shot_fired.emit(weapon)
 
 
+func _update_reload() -> void:
+	reload_remaining = maxf(Config.reload_time - _since_last_shot, 0.0)
+	_fire_button.disabled = reload_remaining > 0.0
+
+
 func _on_config_changed(_name: String, _value: float) -> void:
+	_update_reload()
 	_update_guide()
 
 

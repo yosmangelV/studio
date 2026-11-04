@@ -8,7 +8,7 @@ const PROJECTILE_SCENE := preload("res://scenes/projectile.tscn")
 
 ## A script error aborts the run without failing a check: counting the checks exposes it.
 const GUI_CHECKS := 5
-const EXPECTED_CHECKS := 58
+const EXPECTED_CHECKS := 60
 
 var _failures := 0
 var _checks := 0
@@ -25,7 +25,7 @@ func _ready() -> void:
 
 func _run() -> void:
 	get_tree().current_scene = null # This node survives scene changes.
-	for test: Callable in [_c1_and_c8_loss, _c2_diversion, _c3_out_of_radius, _c4_turn, _c5_foam, _c6_determinism, _c7_guide, _immobile_projectile_expires, _c8_win, _c9_panel, _c10_session_log, _beacon_expires, _attraction_by_distance, _launcher_on_last_building, _real_launch, _touches, _restart, _game_with_real_shots]:
+	for test: Callable in [_c1_and_c8_loss, _c2_diversion, _c3_out_of_radius, _c4_turn, _c5_foam, _c6_determinism, _c7_guide, _immobile_projectile_expires, _fast_foam_hits, _reload_change_applies_live, _c8_win, _c9_panel, _c10_session_log, _beacon_expires, _attraction_by_distance, _launcher_on_last_building, _real_launch, _touches, _restart, _game_with_real_shots]:
 		await test.call()
 	var expected := EXPECTED_CHECKS - (GUI_CHECKS if _headless() else 0)
 	_check("All checks ran", _checks == expected, "%d of %d" % [_checks, expected])
@@ -79,8 +79,11 @@ func _c1_and_c8_loss() -> void:
 	_check("1  advances and destroys", _game.integrity < Config.MAX_INTEGRITY, "integrity=%s" % _game.integrity)
 	await _simulate(6000)
 	_check("8b zero integrity is a loss", _game.result == Main.RESULT_LOSS and _game.integrity <= 0.0)
-	var destroyed := _game.get_node("Buildings").get_children().filter(func(b: Building) -> bool: return not b.intact)
-	_check("1  each building costs integrity once", is_equal_approx(destroyed.size() * Config.building_damage, 102.0))
+	var buildings := _game.get_node("Buildings").get_children()
+	var destroyed := buildings.filter(func(b: Building) -> bool: return not b.intact).size()
+	var expected_destroyed := mini(ceili(Config.MAX_INTEGRITY / Config.building_damage), buildings.size())
+	var expected_integrity := maxf(Config.MAX_INTEGRITY - destroyed * Config.building_damage, 0.0)
+	_check("1  each building costs integrity once", destroyed == expected_destroyed and is_equal_approx(_game.integrity, expected_integrity), "destroyed=%d integrity=%s" % [destroyed, _game.integrity])
 
 
 func _c2_diversion() -> void:
@@ -187,12 +190,38 @@ func _c7_guide() -> void:
 func _immobile_projectile_expires() -> void:
 	await _load()
 	Config.projectile_gravity = 0.0
-	_game.get_node("UI/PowerSlider").value = 0.0
-	_game.get_node("Launcher").fire()
-	await _simulate(_seconds_to_steps(Config.PROJECTILE_MAX_LIFETIME) - 10)
-	_check("P  an immobile projectile is alive before it expires", _game.get_node("Projectiles").get_child_count() == 1)
-	await _simulate(15)
+	_aim_and_fire(90.0, 0.0)
+	await _simulate(2)
 	_check("P  an immobile projectile is removed", _game.get_node("Projectiles").get_child_count() == 0)
+	await _load()
+	Config.projectile_gravity = 10.0
+	Config.power_scale = 40.0
+	_aim_and_fire(90.0, 1.0)
+	await _simulate(_seconds_to_steps(10.0))
+	_check("P  a slow projectile in flight is kept", _game.get_node("Projectiles").get_child_count() == 1)
+
+
+func _fast_foam_hits() -> void:
+	await _load()
+	var rect := _monster().world_rect()
+	var projectile: Projectile = PROJECTILE_SCENE.instantiate()
+	projectile.kind = Projectile.Kind.FOAM
+	projectile.pos = Vector2(rect.position.x - 10.0, rect.get_center().y)
+	# One step jumps from left of the monster to right of it, with no point inside.
+	projectile.velocity = Vector2((rect.size.x + 40.0) * Engine.physics_ticks_per_second, 0.0)
+	Config.projectile_gravity = 0.0
+	_game.get_node("Projectiles").add_child(projectile)
+	await _simulate(2)
+	_check("5  a fast foam shot that crosses the monster still slows it", _monster().slow_remaining > 0.0)
+
+
+func _reload_change_applies_live() -> void:
+	await _load()
+	var launcher := _game.get_node("Launcher")
+	Config.reload_time = 10.0
+	launcher.fire()
+	Config.reload_time = 0.0
+	_check("L  lowering reload_time applies to a reload in progress", launcher.reload_remaining == 0.0 and not _game.get_node("UI/FireButton").disabled)
 
 
 func _c8_win() -> void:
