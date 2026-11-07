@@ -37,13 +37,73 @@ RULES = [
 ]
 
 
+def _blank(text: str) -> str:
+    """Replace everything but line breaks with spaces."""
+    return re.sub(r"[^\n]", " ", text)
+
+
+def _quoted_end(sql: str, start: int, quote: str, backslash: bool) -> int:
+    """Index just past the literal opened at `start`; a doubled quote is an escaped one."""
+    i = start + 1
+    while i < len(sql):
+        if backslash and sql[i] == "\\":
+            i += 2
+        elif sql[i] == quote:
+            if sql[i + 1 : i + 2] != quote:
+                return i + 1
+            i += 2
+        else:
+            i += 1
+    return len(sql)
+
+
 def strip_comments(sql: str) -> str:
-    """Blank out comments, keeping line breaks so line numbers stay right."""
-    sql = re.sub(r"/\*.*?\*/", lambda m: re.sub(r"[^\n]", " ", m.group()), sql, flags=re.DOTALL)
-    return re.sub(r"--[^\n]*", "", sql)
+    """Blank out comments, keeping line breaks so line numbers stay right.
+
+    String literals and quoted identifiers are kept as they are, so a `--` or
+    `/*` inside them does not hide the code after it. Dollar-quoted bodies
+    ($$ ... $$) are left as code on purpose: a function body that writes user
+    rows is still a write.
+    """
+    out = []
+    i = 0
+    while i < len(sql):
+        two = sql[i : i + 2]
+        if two == "--":
+            end = sql.find("\n", i)
+            end = len(sql) if end == -1 else end
+            out.append(_blank(sql[i:end]))
+            i = end
+        elif two == "/*":
+            # Postgres block comments nest.
+            depth, j = 1, i + 2
+            while j < len(sql) and depth:
+                if sql[j : j + 2] == "/*":
+                    depth, j = depth + 1, j + 2
+                elif sql[j : j + 2] == "*/":
+                    depth, j = depth - 1, j + 2
+                else:
+                    j += 1
+            out.append(_blank(sql[i:j]))
+            i = j
+        elif sql[i] in "'\"":
+            # E'...' strings take backslash escapes; `type'x'` does not.
+            escape_string = (
+                sql[i] == "'"
+                and sql[i - 1 : i] in ("e", "E")
+                and not re.match(r"[\w$]", sql[i - 2 : i - 1])
+            )
+            end = _quoted_end(sql, i, sql[i], backslash=escape_string)
+            out.append(sql[i:end])
+            i = end
+        else:
+            out.append(sql[i])
+            i += 1
+    return "".join(out)
 
 
 def check(path: Path) -> list[str]:
+    """List every rule violation in one migration as `file:line: reason: match`."""
     sql = strip_comments(path.read_text(encoding="utf-8"))
     problems = []
     for pattern, reason in RULES:
@@ -54,6 +114,7 @@ def check(path: Path) -> list[str]:
 
 
 def main(argv: list[str]) -> int:
+    """Check the given files, or every migration; return the process exit code."""
     files = [Path(a) for a in argv] or sorted(MIGRATIONS.glob("*.sql"))
     problems = [p for f in files for p in check(f)]
     for problem in problems:

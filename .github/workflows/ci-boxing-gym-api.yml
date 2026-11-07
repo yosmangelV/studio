@@ -17,8 +17,10 @@ jobs:
     outputs:
       relevant: ${{ steps.filter.outputs.relevant }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: dorny/paths-filter@0e4a8c6effa4802afeda77dc8d303f8176d7dfad # v3.0.4
         id: filter
         with:
           filters: |
@@ -34,9 +36,11 @@ jobs:
       run:
         working-directory: apps/boxing-gym-api
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
           enable-cache: true
           cache-dependency-glob: apps/boxing-gym-api/uv.lock
@@ -46,5 +50,11 @@ jobs:
 
       - run: uv sync --locked
 
+      # app.config reads these at import time. Tests mock Supabase, so
+      # placeholders are enough and nothing reaches a real project.
       - name: Test boxing-gym-api
         run: uv run pytest
+        env:
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: placeholder-service-role-key
+          SUPABASE_JWKS_URL: https://placeholder.supabase.co/auth/v1/.well-known/jwks.json
