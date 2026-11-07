@@ -69,6 +69,7 @@ Before writing code for any new feature:
 - **No new endpoints without a spec** in `specs/`
 - **Production is the schema of record** — after running a migration in Supabase, regenerate `schema/public.sql` (`./scripts/dump_schema.sh`) and commit it with the migration. The diff must show exactly what the migration intended; anything else is drift and gets its own converging migration. Never change the schema from the dashboard without a migration
 - **Migrations are self-contained and idempotent where they touch existing objects** — production has drifted before (see 004), so do not rely on helpers from earlier migrations
+- **Migrations change schema, never user data** — users, students and payments are created and updated on demand outside the repo (the panel, or by hand in Supabase). No migration, script or seed in the repo inserts, updates or deletes those rows or touches `app_metadata`. CI enforces it with `scripts/check_migrations.py`
 
 ---
 
@@ -84,6 +85,7 @@ Supabase JWT from the Angular frontend is forwarded via `Authorization: Bearer <
 uv sync                                      # Install dependencies
 uv run uvicorn app.main:app --reload         # Dev server → http://localhost:8000
 uv run pytest                                # Tests
+python3 scripts/check_migrations.py          # No user data written by migrations (runs in CI)
 ./scripts/dump_schema.sh                     # Refresh schema/public.sql from prod (read-only; needs SUPABASE_DB_URL in .env and any psql)
 # Docs: http://localhost:8000/docs
 # OpenAPI JSON: http://localhost:8000/openapi.json

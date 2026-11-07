@@ -58,6 +58,9 @@ reviews:
         RLS on new tables, never grant writes to anon/authenticated, be self-contained (no
         helpers from earlier migrations) and idempotent where it touches existing objects.
         Personal data (students, payments) must never become readable with the anon key.
+        Migrations never insert, update or delete users, students or payments, nor touch
+        app_metadata: those are created on demand outside the repo. Flag any seed or script
+        that does.
     - path: ".github/workflows/**"
       instructions: |
         Job names are required status checks in branch protection: renaming a job blocks
