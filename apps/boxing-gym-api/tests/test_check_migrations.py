@@ -17,6 +17,9 @@ from scripts.check_migrations import MIGRATIONS, check, main
         "insert into auth.users (email) values ('x');",
         "update auth.users set email = 'x';",
         "update auth . identities set provider = 'x';",
+        'insert into "students" (full_name) values (\'x\');',
+        'delete from "public"."payments" where true;',
+        'update "auth"."users" set email = \'x\';',
         "select raw_app_meta_data from x;",
         "select jsonb_set(app_metadata, '{permissions}', '[]');",
     ],
@@ -38,6 +41,9 @@ def test_rejects_user_writes(tmp_path, sql):
         "-- update students set level = 'x'\nselect 1;",
         "/* insert into payments\n values (1) */ select 1;",
         "create table students_archive (id uuid);",
+        "grant select, update on students to service_role;",
+        "create policy p on payments for update to service_role using (true);",
+        "insert into gym_classes (name) values ('x') on conflict (name) do update set name = excluded.name;",
     ],
 )
 def test_allows_schema_changes(tmp_path, sql):

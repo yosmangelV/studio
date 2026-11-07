@@ -17,16 +17,17 @@ from pathlib import Path
 
 MIGRATIONS = Path(__file__).resolve().parent.parent / "migrations"
 
-PERSONAL_TABLES = r"(?:public\s*\.\s*)?(?:students|payments)"
+# Identifiers may be quoted ("public"."students").
+PERSONAL_TABLES = r'(?:"?public"?\s*\.\s*)?"?(?:students|payments)\b'
 DML = r"(?:insert\s+into|update(?:\s+only)?|delete\s+from(?:\s+only)?|truncate(?:\s+table)?(?:\s+only)?|merge\s+into|copy)"
 
 RULES = [
     (
-        re.compile(rf"\b{DML}\s+{PERSONAL_TABLES}\b", re.IGNORECASE),
+        re.compile(rf"\b{DML}\s+{PERSONAL_TABLES}", re.IGNORECASE),
         "writes rows to students/payments",
     ),
     (
-        re.compile(rf"\b{DML}\s+auth\s*\.", re.IGNORECASE),
+        re.compile(rf'\b{DML}\s+"?auth"?\s*\.', re.IGNORECASE),
         "writes rows to the auth schema",
     ),
     (
