@@ -10,6 +10,9 @@
     "storybook:build": "ng run design-system:build-storybook",
     "build:ds": "ng build design-system",
     "test": "ng test",
+    "diversion:editor": "nx run diversion-prototype:editor",
+    "diversion:play": "nx run diversion-prototype:play",
+    "diversion:test": "nx run diversion-prototype:test",
     "test:contrast": "node projects/design-system/scripts/check-contrast.mjs projects/design-system/contrast.config.json projects/boxing-gym/contrast.config.json",
     "generate:api": "orval --config projects/boxing-gym/orval.config.ts"
   },

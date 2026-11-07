@@ -1,0 +1,3 @@
+# Editor cache and imports
+.godot/
+*.import
