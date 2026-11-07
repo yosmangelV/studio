@@ -1,0 +1,50 @@
+name: CI — Boxing Gym API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/boxing-gym-api/**'
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      relevant: ${{ steps.filter.outputs.relevant }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            relevant:
+              - 'apps/boxing-gym-api/**'
+
+  test:
+    name: Boxing Gym API test
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/boxing-gym-api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: apps/boxing-gym-api/uv.lock
+
+      - name: Migrations never write user data
+        run: python3 scripts/check_migrations.py
+
+      - run: uv sync --locked
+
+      - name: Test boxing-gym-api
+        run: uv run pytest
