@@ -36,7 +36,11 @@ These places repeat the school's name instead of reading it from configuration, 
 | `apps/boxing-gym-api/migrations/003_create_gym_profile.sql` | Seeds this school's phone, address, opening date, schedule and classes |
 | `render.yaml` | One Render blueprint for both APIs in the monorepo, including the unrelated announcement API |
 
-Once these are separated, onboarding a school should come down to a config file, a tokens file, its logos, its own seed data, and a new Vercel, Render and Supabase project. Two of those need work first: the migration has to stop carrying one school's data (a migration should create the schema, and each school's data should be entered from its panel or a per-school seed), and a school needs a Render blueprint with only the Boxing Gym API.
+Once these are separated, onboarding a school should come down to a config file, a tokens file, its logos, its own seed data, and a new Vercel, Render and Supabase project. Three things need work first:
+
+- **Choosing a school at build time.** `app.config.ts` provides the single `gym.config.ts` through the `GYM_CONFIG` token, and `scripts/set-env.js` only generates the connection variables. Two deployments of the same code would show the same brand, so a build needs a way to pick a school's config, tokens and assets without a fork. The token keeps that change in one place.
+- **Seed data per school.** The migration has to stop carrying one school's data: a migration should create the schema, and each school's data should be entered from its panel or a per-school seed.
+- **A Render blueprint per school,** with only the Boxing Gym API.
 
 ## The cost of this approach
 
