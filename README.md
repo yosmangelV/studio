@@ -176,11 +176,15 @@ npx nx test boxing-gym --watch=false
 # Announcement Web
 npx nx test announcement-web --watch=false
 
-# Boxing Gym API
-cd apps/boxing-gym-api && uv run pytest
+# Boxing Gym API (its settings require the Supabase variables; placeholders are enough, as in CI)
+(cd apps/boxing-gym-api && \
+  SUPABASE_URL=https://placeholder.supabase.co \
+  SUPABASE_SERVICE_ROLE_KEY=placeholder-service-role-key \
+  SUPABASE_JWKS_URL=https://placeholder.supabase.co/auth/v1/.well-known/jwks.json \
+  uv run pytest)
 
 # Announcement API
-cd apps/announcement-api && npm test
+(cd apps/announcement-api && npm test)
 
 # Diversion Prototype (needs `godot` on the PATH or GODOT_BIN set)
 npm run diversion:test
