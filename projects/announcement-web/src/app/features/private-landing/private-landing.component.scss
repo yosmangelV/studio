@@ -1,0 +1,26 @@
+.private-landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 100dvh;
+  padding: var(--space-6);
+  background-color: var(--ann-bg-cream);
+  text-align: center;
+
+  &__title {
+    font-family: var(--ann-font-display);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--ann-text-dark);
+    line-height: var(--leading-tight);
+  }
+
+  &__body {
+    font-family: var(--ann-font-body);
+    color: var(--ann-text-soft);
+    max-width: 280px;
+    line-height: var(--leading-relaxed);
+  }
+}
