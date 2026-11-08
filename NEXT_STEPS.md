@@ -14,12 +14,11 @@ Handoff note, updated 2026-11-08. Update it as items close, and delete it when t
 
 ## 1. Waiting on others
 
-- [ ] **GitHub Support ticket** (sent 2026-11-08) to purge the cached views of the history rewritten below. When they reply, these old SHAs should return 404:
+- [ ] **GitHub Support ticket** (sent 2026-11-08) to purge the cached views of the history rewritten below. The old commit SHAs are listed in the ticket only, not here, so this public file does not point at them. When Support replies, each of those SHAs should return 404:
   ```bash
-  for c in d711eee a799b9a c2fb1d3; do gh api repos/yosmangelV/studio/commits/$c --jq .sha 2>&1 | tail -1; done
-  gh api repos/yosmangelV/studio/git/refs/pull/19/head --jq .object.sha
+  gh api repos/yosmangelV/studio/commits/<old-sha> --jq .sha   # expect "Not Found"
   ```
-  Before Support acts, all three resolve and `refs/pull/19` points at `d711eee`.
+  Also ask Support to clear the refs of #39: an early commit of this note named the old SHAs (pointers only, not the data).
 
 ## 2. History purge (done 2026-11-08), follow-ups
 
@@ -36,7 +35,7 @@ New `main` after the rewrite: `e9f3068`.
 
 ## 3. Next PRs, in order
 
-1. **Make `Boxing Gym API test` a required check on `main`.** It has passed on `main` (runs on `c2fb1d3` and `e9f3068`). This is a repo settings change, so the owner confirms it first. Keep the existing checks, and keep CodeRabbit's `app_id` 347564.
+1. **Make `Boxing Gym API test` a required check on `main`**, but first fix the `changes` gate in every CI workflow. Each test job `needs: changes` and runs only when the path filter matched. If `changes` itself fails, the test is skipped, and GitHub accepts a skipped required check as passing, so a PR could merge without its tests running. Add a final job per workflow with `if: always()` that fails when `changes` failed or the test failed, and passes only when the test succeeded or the filter succeeded with no relevant changes. Then make those final jobs the required checks (renaming required checks needs a protection update in the same step). This is a repo settings change, so the owner confirms it first. Keep CodeRabbit's `app_id` 347564. The API job has already passed on `main`.
 2. **Announcement-web colour, type and motion fixes.** The checklist is in `projects/announcement-web/design.md`, under "Migration from the 2026-11-02 review".
 3. **Remaining boxing-gym items** (`projects/boxing-gym/design.md`):
    - REFLEX 77: the "Nuestras clases" `striped-list` reaches 69% at 1440px.
