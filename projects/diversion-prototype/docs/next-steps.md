@@ -30,9 +30,9 @@ Las dos personas jugaron en el móvil, **en vertical**, con la versión web.
 1. Preparar el entorno desde cero (sección 1).
 2. Crear los presets de exportación de iOS y Android (cambio de código 2). Sin ellos, los comandos de exportación fallan.
 3. Compilar para iOS e instalar en el iPhone del autor (sección 3).
-4. Comprobar los controles en horizontal con el hermano o el sobrino. Si siguen siendo pequeños, hacer el cambio de código 1.
-5. Compilar para Android y repartir el APK.
-6. Hacer la validación con tres personas nuevas (sección 4).
+4. Comprobar los controles en horizontal con el hermano o el sobrino. Si siguen siendo pequeños, hacer el cambio de código 1, volver a compilar e instalar en el iPhone (sección 3) y repetir la comprobación: la app instalada no se actualiza sola.
+5. Compilar para Android, a partir del mismo código que la versión de iOS, y repartir el APK.
+6. Hacer la validación con tres personas nuevas (sección 4), con la última versión instalada en el iPhone.
 
 ## 1. Entorno desde cero (macOS)
 
@@ -70,14 +70,11 @@ rm templates.tpz
 
 1. **Xcode:** instalarlo desde la App Store (unos 15 GB) y abrirlo una vez para que instale sus componentes.
 2. **Apple ID:** en Xcode, Settings y después Accounts, añadir el Apple ID. La cuenta gratuita basta: firma como "Personal Team".
-3. **Identificador del equipo:** Godot lo exige antes de exportar (`application/app_store_team_id`); elegir el equipo en Xcode después no basta. Para obtenerlo:
-   - En Xcode, Settings, Accounts, Manage Certificates, pulsar + y crear un certificado "Apple Development".
-   - Leer el identificador, que es el `OU` de diez caracteres:
-     ```bash
-     security find-certificate -c "Apple Development" -p | openssl x509 -noout -subject
-     ```
-   - Ponerlo en el preset de iOS desde Godot (Project, Export, iOS). Es un dato personal: no se sube al repo si el preset va a ser compartido.
-4. **iPhone:** activar Ajustes, Privacidad y seguridad, Modo desarrollador, y reiniciar.
+3. **Certificado de desarrollo:** en Xcode, Settings, Accounts, Manage Certificates, pulsar + y crear un certificado "Apple Development". Hace falta para obtener el identificador del equipo en la sección 3.
+4. **iPhone:**
+   - Conectarlo al Mac por cable, abrir Xcode y aceptar "Confiar en este ordenador" en el iPhone para emparejarlo. Hasta entonces, la opción de modo desarrollador no aparece.
+   - Activar Ajustes, Privacidad y seguridad, Modo desarrollador, y reiniciar.
+   - Tras el reinicio, confirmar la activación en el aviso que muestra el iPhone.
 5. **Límite de la cuenta gratuita:** la app caduca a los 7 días y solo se instala por cable desde el Mac. Para renovarla se vuelve a instalar. TestFlight requiere la cuenta de pago (99 $/año) y solo tiene sentido si el prototipo pasa la validación.
 
 ### Android
@@ -110,7 +107,7 @@ Cada uno va en su propio PR, con su comprobación en `tests/acceptance.gd`.
 2. **Presets de exportación en el repo:** `export_presets.cfg` con iOS y Android.
    - **Orientación:** solo horizontal (`window/handheld/orientation=0` ya está en `project.godot`; comprobar que el preset lo respeta).
    - **Filtro de exportación:** excluir `tests/*`, `docs/*`, `tools/*` y `logs/*`.
-   - **iOS:** identificador de paquete propio, `user_data/accessible_from_files_app=true` para sacar el CSV desde la app Archivos, y `application/export_project_only=true` para que Godot genere solo el proyecto de Xcode y la firma se haga en Xcode.
+   - **iOS:** identificador de paquete propio, `user_data/accessible_from_files_app=true` y `user_data/accessible_from_itunes_sharing=true` (Apple exige las dos para que los CSV aparezcan en la app Archivos), y `application/export_project_only=true` para que Godot genere solo el proyecto de Xcode y la firma se haga en Xcode.
    - **Secretos:** ni contraseñas ni claves en el repo. Godot guarda las credenciales en `.godot/export_credentials.cfg`, que ya está ignorado.
 3. **Registro accesible en Android:** ahora `SessionLog` escribe en `user://logs`, dentro del almacenamiento privado de la app. Para que los testers puedan mandar el CSV, escribir también en una carpeta accesible o añadir un botón para compartirlo. Por decidir.
 4. **APK en CI:** un paso en `ci-diversion-prototype.yml` que genere el APK de depuración y lo publique como artefacto en cada push a `main`. El paso de Godot ya verifica su hash; el de las plantillas tendría que verificar el suyo igual.
@@ -118,7 +115,15 @@ Cada uno va en su propio PR, con su comprobación en `tests/acceptance.gd`.
 
 ## 3. Compilar e instalar
 
-Desde la raíz del repo. Godot resuelve las rutas de salida relativas desde la carpeta del proyecto, así que los archivos quedan en `projects/diversion-prototype/build/`.
+**Antes de exportar iOS por primera vez:** el preset de iOS (cambio de código 2) necesita el identificador del equipo en `application/app_store_team_id`. Godot lo exige para exportar; elegir el equipo en Xcode después no basta.
+
+- Leer el identificador, que es el `OU` de diez caracteres del certificado creado en la sección 1:
+  ```bash
+  security find-certificate -c "Apple Development" -p | openssl x509 -noout -subject
+  ```
+- Ponerlo en el preset desde Godot (Project, Export, iOS). Es un dato personal: no se sube al repo si el preset va a ser compartido.
+
+Los comandos se ejecutan desde la raíz del repo. Godot resuelve las rutas de salida relativas desde la carpeta del proyecto, así que los archivos quedan en `projects/diversion-prototype/build/`.
 
 ```bash
 P=projects/diversion-prototype
@@ -145,6 +150,6 @@ node $P/tools/godot.mjs --headless --export-debug "Android" build/android/divers
   - Si repiten tras perder sin que se les pida (criterio 2), y en qué momento.
   - Si verbalizan intención espacial, del tipo "si lo pongo ahí, lo llevo hacia allá" (criterio 3).
   - Si preguntan cómo se juega (criterio de fallo).
-  - Si intentan dañar al monstruo (criterio de fallo).
+  - Si intentan dañar al monstruo y se frustran al ver que no pasa nada (criterio de fallo). Apuntar las dos cosas por separado: solo cuenta como fallo si se dan juntas.
   - Si lo resuelven a la primera sin pensar (criterio de fallo: falta tensión).
 - **Después:** sacar los CSV desde la app Archivos y cruzarlos con las notas. El CSV solo escribe `restarted_after` cuando termina el intento siguiente: si alguien reinicia tras perder y abandona antes de terminar, ese reinicio no aparece en el archivo. Por eso cada reinicio tras una derrota se apunta en las notas, aunque la persona lo deje a medias.
