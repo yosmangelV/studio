@@ -50,7 +50,6 @@ New `main` after the rewrite: `e9f3068`.
 
 ## 4. Housekeeping
 
-- [ ] `projects/diversion-prototype/export_presets.cfg` (Godot web export config, no secrets) exists only in the previous user's working copy. Decide whether to commit it or add it to that project's `.gitignore`.
 - [ ] When audits are over: delete the Supabase audit account and the `AUDIT_EMAIL` / `AUDIT_PASSWORD` lines from `apps/boxing-gym-api/.env`.
 
 ## Reference
