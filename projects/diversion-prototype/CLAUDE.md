@@ -2,6 +2,8 @@
 
 Source of truth: `docs/prototype-spec.md` (what and why) and `docs/technical-spec.md` (how). Both are in Spanish, the product's language.
 
+**Current work: read `docs/next-steps.md` first.** It holds the playtest feedback, the from-scratch setup for native iOS and Android builds, the pending code changes and the validation protocol. Update it as steps are closed.
+
 - Godot 4, GDScript, no plugins. Throwaway prototype. The root's Angular and design system rules do not apply here; the code-quality rules do.
 - Follow section 8 of the technical spec without exceptions: no art, sound, menus, camera, monster health, physics engine for projectiles, final balance or randomness.
 - If a decision affects the feel and neither the spec nor this file settles it, stop and ask.
