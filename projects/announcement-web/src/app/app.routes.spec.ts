@@ -23,3 +23,20 @@ describe('routes without a message code', () => {
     });
   }
 });
+
+describe('route with a message code', () => {
+  it('loads that message instead of the private landing', async () => {
+    const { navigate } = await render('<router-outlet />', {
+      imports: [RouterOutlet],
+      routes,
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    });
+
+    await navigate('/announcement/SOME-CODE');
+
+    TestBed.inject(HttpTestingController).expectOne((req) =>
+      req.url.endsWith('/messages/SOME-CODE'),
+    );
+    expect(screen.queryByTestId('announcement-private-title')).toBeNull();
+  });
+});

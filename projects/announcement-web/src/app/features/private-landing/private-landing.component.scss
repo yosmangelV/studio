@@ -11,8 +11,8 @@
 
   &__title {
     font-family: var(--ann-font-display);
-    font-size: clamp(1.5rem, 6vw, 2rem);
-    font-weight: 700;
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
     color: var(--ann-text-dark);
     line-height: var(--leading-tight);
   }
