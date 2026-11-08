@@ -42,6 +42,8 @@ Once these are separated, onboarding a school should come down to a config file,
 - **Seed data per school.** The migration has to stop carrying one school's data: a migration should create the schema, and each school's data should be entered from its panel or a per-school seed.
 - **A Render blueprint per school,** with only the Boxing Gym API.
 
+Onboarding also has a manual step that stays manual on purpose: the school's first admin is created by hand in its Supabase project, with `admin` in `app_metadata.permissions` (see [`specs/user-management.md`](../../apps/boxing-gym-api/specs/user-management.md)). Without that user nobody can open the settings or create other users, and no migration or seed in the repo may create users.
+
 ## The cost of this approach
 
 Every release has to reach every school: one deploy per Vercel and Render project, and the migrations, which are run by hand today, once per Supabase project. With one school that is free; with several it is the main operational cost of this design, and the first thing to automate as schools are added.
