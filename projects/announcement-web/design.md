@@ -47,7 +47,7 @@ Known failures today, fixed in the migration below:
 - **Motion:** each slide gets one entrance, from `transform` and `opacity`, timed by the DS motion tokens. Under `prefers-reduced-motion` slides appear without animation, and the countdown still counts but its numerals don't animate.
 - **Images** always carry the API's `alt`; a slide without an image falls back to its text layout, never a placeholder picture.
 - **Errors** (`404` unknown code, `410` deactivated message) get a short, kind sentence in the product's voice, never a status code or a technical message. The API owns that copy today and meets this rule; the player's own fallback is "No pudimos cargar este mensaje."
-- **`/` redirects to `DEMO-FRIENDS`** (owner's decision, 2026-11-02). It is not placeholder content in the Floor 3 sense: the demo is served only if the API has that code, and otherwise the reader gets the 404 sentence above.
+- **Without a code, the page stays private** (owner's decision, 2026-11-08, replacing the `DEMO-FRIENDS` redirect). `/` and any unknown path show a short "this announcement is private" page that never calls the API, so a visitor without a link sees nothing of what is shared and no error.
 - **No eyebrows.** A slide's first line is its heading; the small uppercase label above it goes (root anti-generated rules).
 - **Icons are SVG** (root Floor 7): the heart and the nav arrows included.
 
