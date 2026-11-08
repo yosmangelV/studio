@@ -1,39 +1,51 @@
 # Studio Monorepo
 
-A personal monorepo containing a design system, multiple Angular applications, and their supporting APIs. Built as an open portfolio — all code is public and production-deployed.
+My personal monorepo: Angular apps with their APIs, the component library they share, and a few prototypes. All the code is public. Start with a project below; each one links to its code and, where there is one, its live version.
 
 [![CI — Design System](https://github.com/yosmangelV/studio/actions/workflows/ci-design-system.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-design-system.yml)
 [![CI — Boxing Gym](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym.yml)
+[![CI — Boxing Gym API](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym-api.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym-api.yml)
 [![CI — Announcement Web](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-web.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-web.yml)
-[![Chromatic](https://img.shields.io/badge/Storybook-Chromatic-FF4785?logo=storybook&logoColor=white)](https://www.chromatic.com/library?appId=6aa5a635a53be81ff5ff530b)
+[![Storybook](https://img.shields.io/badge/Storybook-Chromatic-FF4785?logo=storybook&logoColor=white)](https://main--6aa5a635a53be81ff5ff530b.chromatic.com)
 
 ---
 
 ## Projects
 
-### Design System
-A component library built with Angular, Tailwind v4, and SCSS/BEM following Atomic Design principles. Tokens-first approach with full dark mode and WCAG 2.2 AA accessibility support.
+### Boxing Gym
+A website and management app for boxing schools: students, payments and classes. It runs today at El Arte del Guante. It is meant as a template: each school deploys its own copy, with its own landing page and domain, rather than sharing one central app.
 
-- **Storybook:** [chromatic.com/library?appId=6aa5a635a53be81ff5ff530b](https://www.chromatic.com/library?appId=6aa5a635a53be81ff5ff530b)
-- **Path:** `projects/design-system/`
-
----
-
-### Boxing Gym App
-Management platform for a boxing gym. Handles student management, authentication via Supabase, and class scheduling.
-
-- **Frontend:** Angular 21 — [boxing-gym-ten.vercel.app](https://boxing-gym-ten.vercel.app)
-- **API:** Python + FastAPI + Supabase — deployed on Render
-- **Paths:** `projects/boxing-gym/` · `apps/boxing-gym-api/`
+- **Live:** [boxing-gym-ten.vercel.app](https://boxing-gym-ten.vercel.app)
+- **Frontend:** Angular 21, on Vercel · [`projects/boxing-gym/`](projects/boxing-gym)
+- **API:** Python, FastAPI and Supabase, on Render · [`apps/boxing-gym-api/`](apps/boxing-gym-api)
 
 ---
 
 ### Announcement Web
-Personalized baby announcement app with animated reveal and multi-segment experience.
+A personalized baby announcement told as an animated story, in three versions for different audiences. It is private by design: only the people who receive a link with their own code can open it, so there is no public demo.
 
-- **Frontend:** Angular 21 — [announcement-web-seven.vercel.app](https://announcement-web-seven.vercel.app)
-- **API:** NestJS + MongoDB — deployed on Render
-- **Paths:** `projects/announcement-web/` · `apps/announcement-api/`
+- **Frontend:** Angular 21, on Vercel · [`projects/announcement-web/`](projects/announcement-web)
+- **API:** NestJS and MongoDB, on Render · [`apps/announcement-api/`](apps/announcement-api)
+
+---
+
+### Design System
+The Angular component library the apps build on: Tailwind v4 and SCSS/BEM, organised with Atomic Design, with design tokens, dark mode and WCAG 2.2 AA. Colour contrast is checked in CI.
+
+- **Storybook:** [main--6aa5a635a53be81ff5ff530b.chromatic.com](https://main--6aa5a635a53be81ff5ff530b.chromatic.com)
+- **Path:** [`projects/design-system/`](projects/design-system)
+
+---
+
+### Diversion Prototype
+A throwaway Godot 4 prototype that tests one game mechanic: luring a monster away from a city with beacons. Its acceptance criteria run against the real game in CI.
+
+- **Path:** [`projects/diversion-prototype/`](projects/diversion-prototype)
+
+---
+
+### Ideas in specification
+`projects/baby-guide/` and `projects/kids-anxiety/` hold only a spec for now.
 
 ---
 
@@ -182,7 +194,10 @@ studio/
 │   │       ├── molecules/
 │   │       └── organisms/
 │   ├── boxing-gym/           ← Angular app
-│   └── announcement-web/     ← Angular app
+│   ├── announcement-web/     ← Angular app
+│   ├── diversion-prototype/  ← Godot 4 prototype
+│   ├── baby-guide/           ← spec only
+│   └── kids-anxiety/         ← spec only
 ├── .github/workflows/        ← CI pipelines
 ├── .storybook/               ← Storybook config
 └── render.yaml               ← Render deployment config
@@ -197,11 +212,13 @@ studio/
 | `ci-design-system` | Changes in `projects/design-system/` | Runs unit tests |
 | `ci-boxing-gym` | Changes in `projects/boxing-gym/` | Runs unit tests |
 | `ci-announcement-web` | Changes in `projects/announcement-web/` | Runs unit tests |
+| `ci-boxing-gym-api` | Changes in `apps/boxing-gym-api/` | Runs pytest and checks that migrations never write user data |
 | `ci-announcement-api` | Changes in `apps/announcement-api/` | Runs Jest tests |
-| `chromatic` | Changes in `projects/design-system/` or `.storybook/` | Publishes Storybook to Chromatic |
+| `ci-diversion-prototype` | Changes in `projects/diversion-prototype/` | Runs the acceptance criteria in Godot |
+| `chromatic` | Changes in `projects/design-system/` | Publishes Storybook to Chromatic |
 
 ---
 
 ## License
 
-MIT — feel free to use, fork, or learn from any of the code here.
+[MIT](LICENSE) — feel free to use, fork, or learn from any of the code here.

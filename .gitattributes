@@ -1,0 +1,4 @@
+# Agent skills installed from skills-lock.json are third-party tooling, not project code:
+# keep them out of GitHub's language stats.
+.claude/skills/** linguist-vendored
+.agents/skills/** linguist-vendored
