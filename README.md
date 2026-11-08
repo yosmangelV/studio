@@ -24,7 +24,7 @@ A website and management app for boxing schools: students, payments and classes.
 ---
 
 ### Announcement Web
-A personalized baby announcement told as an animated story, in three versions for different audiences. It is private by design: only the people who receive a link with their own code can open it, so there is no public demo.
+A personalized baby announcement told as an animated story, in three versions for different audiences. It is meant to be private: each person opens it from a link with their own code, so there is no public demo.
 
 - **Frontend:** Angular 21, on Vercel · [`projects/announcement-web/`](projects/announcement-web)
 - **API:** NestJS and MongoDB, on Render · [`apps/announcement-api/`](apps/announcement-api)
@@ -47,7 +47,7 @@ A throwaway Godot 4 prototype that tests one game mechanic: luring a monster awa
 ---
 
 ### Ideas in specification
-`projects/baby-guide/` and `projects/kids-anxiety/` hold only a spec for now.
+[`baby-guide`](projects/baby-guide/SPEC.md) and [`kids-anxiety`](projects/kids-anxiety/SPEC.md) hold only a spec for now.
 
 ---
 
@@ -223,7 +223,7 @@ studio/
 | `ci-boxing-gym-api` | Changes in `apps/boxing-gym-api/` | Runs pytest and checks that migrations never write user data |
 | `ci-announcement-api` | Changes in `apps/announcement-api/` | Runs Jest tests |
 | `ci-diversion-prototype` | Changes in `projects/diversion-prototype/` | Runs the acceptance criteria in Godot |
-| `chromatic` | Changes in `projects/design-system/`, `.storybook/` or `package.json` | Publishes Storybook to Chromatic |
+| `chromatic` | Changes in `projects/design-system/`, `.storybook/` or `package.json`, or a manual run | Publishes Storybook to Chromatic |
 
 ---
 
