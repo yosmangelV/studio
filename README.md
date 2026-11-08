@@ -6,6 +6,8 @@ My personal monorepo: Angular apps with their APIs, the component library they s
 [![CI — Boxing Gym](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym.yml)
 [![CI — Boxing Gym API](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym-api.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym-api.yml)
 [![CI — Announcement Web](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-web.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-web.yml)
+[![CI — Announcement API](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-api.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-api.yml)
+[![CI — Diversion Prototype](https://github.com/yosmangelV/studio/actions/workflows/ci-diversion-prototype.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-diversion-prototype.yml)
 [![Storybook](https://img.shields.io/badge/Storybook-Chromatic-FF4785?logo=storybook&logoColor=white)](https://main--6aa5a635a53be81ff5ff530b.chromatic.com)
 
 ---
@@ -174,8 +176,14 @@ npx nx test boxing-gym --watch=false
 # Announcement Web
 npx nx test announcement-web --watch=false
 
+# Boxing Gym API
+cd apps/boxing-gym-api && uv run pytest
+
 # Announcement API
 cd apps/announcement-api && npm test
+
+# Diversion Prototype (needs `godot` on the PATH or GODOT_BIN set)
+npm run diversion:test
 ```
 
 ---
@@ -209,13 +217,13 @@ studio/
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `ci-design-system` | Changes in `projects/design-system/` | Runs unit tests |
-| `ci-boxing-gym` | Changes in `projects/boxing-gym/` | Runs unit tests |
-| `ci-announcement-web` | Changes in `projects/announcement-web/` | Runs unit tests |
+| `ci-design-system` | Changes in `projects/design-system/`, `package.json` or the lockfile | Checks colour contrast and token usage, then runs unit tests |
+| `ci-boxing-gym` | Changes in `projects/boxing-gym/`, `projects/design-system/`, `package.json` or the lockfile | Checks colour contrast, then runs unit tests |
+| `ci-announcement-web` | Changes in `projects/announcement-web/`, `package.json` or the lockfile | Runs unit tests |
 | `ci-boxing-gym-api` | Changes in `apps/boxing-gym-api/` | Runs pytest and checks that migrations never write user data |
 | `ci-announcement-api` | Changes in `apps/announcement-api/` | Runs Jest tests |
 | `ci-diversion-prototype` | Changes in `projects/diversion-prototype/` | Runs the acceptance criteria in Godot |
-| `chromatic` | Changes in `projects/design-system/` | Publishes Storybook to Chromatic |
+| `chromatic` | Changes in `projects/design-system/`, `.storybook/` or `package.json` | Publishes Storybook to Chromatic |
 
 ---
 
