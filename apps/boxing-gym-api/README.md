@@ -110,3 +110,5 @@ La documentación OpenAPI se genera automáticamente. Con el servidor corriendo:
 ## Deploy
 
 Render despliega la API desde `render.yaml`, en la raíz del monorepo: imagen Docker construida desde `apps/boxing-gym-api`, health check en `/health` y plan gratuito, así que la primera petición tras un rato inactivo tarda de 30 a 60 s. Las variables `sync: false` se configuran en el panel de Render. El blueprint describe también `announcement-api`: si se sincroniza entero, Render crea los dos servicios, que comparten las horas del plan gratuito.
+
+El plan gratuito da [750 horas de instancia al mes por workspace](https://render.com/docs/free), compartidas por todos sus servicios gratuitos. Un servicio dormido (tras 15 minutos sin tráfico) no consume horas. Si se agotan, Render suspende todos los servicios gratuitos del workspace hasta el inicio del mes siguiente, y con ellos esta API: el panel deja de funcionar, aunque la landing sigue mostrando los datos públicos, que lee directamente de Supabase. Las variables de cada servicio están en la sección *Environment Variables* del README de la raíz.

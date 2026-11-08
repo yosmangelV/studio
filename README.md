@@ -51,6 +51,13 @@ A throwaway Godot 4 prototype that tests one game mechanic: luring a monster awa
 
 ---
 
+## Decisions and case studies
+
+- [Architecture decisions](docs/decisions/README.md): why Boxing Gym is deployed once per school, and why each API uses its stack.
+- [Turning Boxing Gym into a template](docs/case-studies/boxing-gym-template.md): what already varies per school and what is left.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
