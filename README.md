@@ -228,7 +228,7 @@ studio/
 
 The frontends deploy to Vercel. Both APIs are described in one Render blueprint, `render.yaml`, on the free plan.
 
-The free plan gives [750 instance hours per month per workspace](https://render.com/docs/free), shared by every free service in it. A service that has gone to sleep (after 15 minutes without traffic) uses no hours. If the hours run out, Render suspends all the free services in the workspace, both APIs included, until the start of the next month.
+The free plan gives [750 instance hours per month per workspace](https://render.com/docs/free), shared by every free web service in it (static sites use none). A web service that has gone to sleep (after 15 minutes without traffic) uses no hours. If the hours run out, Render suspends all the free web services in the workspace, both APIs included, until the start of the next month.
 
 ---
 
