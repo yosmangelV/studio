@@ -51,6 +51,13 @@ A throwaway Godot 4 prototype that tests one game mechanic: luring a monster awa
 
 ---
 
+## Decisions and case studies
+
+- [Architecture decisions](docs/decisions/README.md): why Boxing Gym is deployed once per school, and why each API uses its stack.
+- [Turning Boxing Gym into a template](docs/case-studies/boxing-gym-template.md): what already varies per school and what is left.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -214,6 +221,14 @@ studio/
 ├── .storybook/               ← Storybook config
 └── render.yaml               ← Render deployment config
 ```
+
+---
+
+## Deploy
+
+The frontends deploy to Vercel. Both APIs are described in one Render blueprint, `render.yaml`, on the free plan.
+
+The free plan gives [750 instance hours per month per workspace](https://render.com/docs/free), shared by every free web service in it (static sites use none). A web service that has gone to sleep (after 15 minutes without traffic) uses no hours. If the hours run out, Render suspends all the free web services in the workspace, both APIs included, until the start of the next month.
 
 ---
 
