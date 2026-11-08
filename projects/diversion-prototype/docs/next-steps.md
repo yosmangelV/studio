@@ -117,10 +117,15 @@ Cada uno va en su propio PR, con su comprobación en `tests/acceptance.gd`.
 
 **Antes de exportar iOS por primera vez:** el preset de iOS (cambio de código 2) necesita el identificador del equipo en `application/app_store_team_id`. Godot lo exige para exportar; elegir el equipo en Xcode después no basta.
 
-- Leer el identificador, que es el `OU` de diez caracteres del certificado creado en la sección 1:
+- Leer el identificador, que es el `OU` de diez caracteres del certificado creado en la sección 1. El llavero puede tener certificados de varios equipos, así que se listan todos:
   ```bash
-  security find-certificate -c "Apple Development" -p | openssl x509 -noout -subject
+  tmp=$(mktemp -d)
+  security find-certificate -a -c "Apple Development" -p \
+    | awk -v d="$tmp" '/BEGIN CERTIFICATE/{n++} {print > (d "/cert" n ".pem")}'
+  for f in "$tmp"/cert*.pem; do openssl x509 -in "$f" -noout -subject -enddate; echo; done
+  rm -rf "$tmp"
   ```
+- Elegir el del equipo personal: su `O` es el nombre de la cuenta y, si se acaba de crear, es el de `notAfter` más lejano. En caso de duda, Xcode lo muestra en Settings, Accounts, en el equipo marcado como "(Personal Team)".
 - Ponerlo en el preset desde Godot (Project, Export, iOS). Es un dato personal: no se sube al repo si el preset va a ser compartido.
 
 Los comandos se ejecutan desde la raíz del repo. Godot resuelve las rutas de salida relativas desde la carpeta del proyecto, así que los archivos quedan en `projects/diversion-prototype/build/`.
