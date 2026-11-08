@@ -1,6 +1,6 @@
 # Boxing Gym API
 
-Backend de gestión para una escuela de boxeo. Construido con FastAPI + Supabase, desplegado en Railway.
+Backend de gestión para una escuela de boxeo. Construido con FastAPI + Supabase, desplegado en Render.
 
 ---
 
@@ -12,7 +12,7 @@ Backend de gestión para una escuela de boxeo. Construido con FastAPI + Supabase
 | Validación       | Pydantic v2                         |
 | Base de datos    | Supabase (PostgreSQL + Auth + RLS)  |
 | Gestor de paquetes | [uv](https://docs.astral.sh/uv)   |
-| Deploy           | [Railway](https://railway.app)      |
+| Deploy           | [Render](https://render.com) (`render.yaml`) |
 | Cliente frontend | `@hey-api/openapi-ts` (generado)    |
 
 ---
@@ -109,4 +109,4 @@ La documentación OpenAPI se genera automáticamente. Con el servidor corriendo:
 
 ## Deploy
 
-> Sección pendiente — se completa al configurar Railway.
+Render despliega la API desde `render.yaml`, en la raíz del monorepo: imagen Docker construida desde `apps/boxing-gym-api`, health check en `/health` y plan gratuito, así que la primera petición tras un rato inactivo tarda de 30 a 60 s. Las variables `sync: false` se configuran en el panel de Render. El blueprint describe también `announcement-api`: si se sincroniza entero, Render crea los dos servicios, que comparten las horas del plan gratuito.

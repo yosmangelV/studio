@@ -1,5 +1,7 @@
 # Sesión 02 — Explicación de cambios: JWT Auth
 
+> **Nota:** este documento recoge la sesión tal como se hizo, cuando la API se desplegaba en Railway. Hoy corre en Render (`render.yaml`); donde dice Railway, léase Render.
+
 Guía de aprendizaje de los cambios aplicados en la segunda sesión de desarrollo.
 Esta sesión tiene un solo objetivo: **proteger la API para que solo usuarios autenticados puedan usarla**.
 

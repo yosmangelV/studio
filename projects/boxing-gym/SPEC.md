@@ -45,7 +45,7 @@ Dueño de una escuela de boxeo. Proyecto en fases — arranca como herramienta d
 | Base de datos | Supabase (PostgreSQL + Auth + RLS) |
 | Auth | Supabase Auth |
 | Hosting web | Vercel |
-| Backend hosting | Railway |
+| Backend hosting | Render |
 | Móvil (Fase 2+) | Ionic + Capacitor |
 
 ## Plataforma
