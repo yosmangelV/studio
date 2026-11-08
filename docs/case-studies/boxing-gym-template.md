@@ -15,8 +15,8 @@ The rest of this page follows from that decision. Isolation is solved by the inf
 ## What already varies per school without code changes
 
 - **Contact, schedule, classes and the figures on the landing page** live in Supabase (`gym_profile` and related tables), and the school's admin edits them from the panel. See [`specs/gym-profile.md`](../../apps/boxing-gym-api/specs/gym-profile.md).
-- **The figures are computed, never typed in**: active students are counted and rounded in Postgres, years are derived from the opening date, and the number of disciplines from the active classes.
-- **The landing page works while the API sleeps.** Render's free plan takes 30 to 60 seconds to wake up, so the public data is read straight from Supabase through a read-only `security_invoker` view (`public_gym_profile`), under RLS. All writes still go through FastAPI with an admin guard, and personal data (students, payments) is only ever read through the API.
+- **The figures are derived, not typed as numbers**: active students are counted and rounded in Postgres, the number of disciplines comes from the active classes, and the years since opening are calculated in the frontend from `founded_on`. That date is still entered by hand, so the years figure is only as right as it is.
+- **The landing page works while the API sleeps.** Render's free plan takes 30 to 60 seconds to wake up, so the public data is read straight from Supabase with the anon key. `gym_profile`, `gym_classes` and `gym_schedule_slots` have a read-only RLS policy for anon, and the site reads them through the `public_gym_profile` view (`security_invoker`), which returns only the fields the page shows. The tables themselves are readable too, so nothing in them should be treated as private. All writes go through FastAPI with an admin guard, and personal data (students, payments) is only ever read through the API.
 
 ## What is in configuration, but still in code
 
@@ -32,8 +32,11 @@ These places repeat the school's name instead of reading it from configuration, 
 | `projects/boxing-gym/public/manifest.webmanifest` | App name and description of the installable app |
 | `projects/boxing-gym/src/app/shared/components/loading/loading.component.html` | The name shown on the loading screen |
 | `projects/boxing-gym/design.md` | The product's design rules, written for this school's brand |
+| `projects/boxing-gym/public/assets/logo.svg` | The logo, which spells part of the name as text |
+| `apps/boxing-gym-api/migrations/003_create_gym_profile.sql` | Seeds this school's phone, address, opening date, schedule and classes |
+| `render.yaml` | One Render blueprint for both APIs in the monorepo, including the unrelated announcement API |
 
-Once these read from configuration, onboarding a school should come down to a config file, a tokens file, its logos, and a new Vercel, Render and Supabase project with the migrations applied.
+Once these are separated, onboarding a school should come down to a config file, a tokens file, its logos, its own seed data, and a new Vercel, Render and Supabase project. Two of those need work first: the migration has to stop carrying one school's data (a migration should create the schema, and each school's data should be entered from its panel or a per-school seed), and a school needs a Render blueprint with only the Boxing Gym API.
 
 ## The cost of this approach
 

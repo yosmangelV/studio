@@ -23,4 +23,5 @@ Boxing Gym is a template, not a central platform. Each school gets its own deplo
 - **No tenancy in the code.** Tables, RLS policies and endpoints stay single-school, as they are today.
 - **Each school owns its domain and brand** without routing logic in the app.
 - **Every release is rolled out once per school.** Code ships through each school's Vercel and Render projects, and migrations are run by hand in each Supabase project, so the operational cost grows with the number of schools.
+- **Deployment config has to be per school too.** Today `render.yaml` describes both APIs of the monorepo in one blueprint, and migration `003` seeds El Arte del Guante's own data; both need a per-school form before a second school.
 - **The template has to be configurable without forking the code.** What changes per school must live in configuration and data, not in components. See the [case study](../case-studies/boxing-gym-template.md) for where that stands.
