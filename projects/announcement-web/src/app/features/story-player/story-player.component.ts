@@ -42,6 +42,7 @@ export class StoryPlayerComponent implements OnInit {
     this.storyService.load(code);
   }
 
+  /** Advances one slide; on the last slide it restarts the story (design.md, story rules). */
   next(): void {
     if (this.isLast()) {
       this.currentIndex.set(0);
@@ -50,6 +51,7 @@ export class StoryPlayerComponent implements OnInit {
     this.currentIndex.update((i) => i + 1);
   }
 
+  /** Goes back one slide; on the first slide it does nothing, like the disabled button. */
   previous(): void {
     if (!this.isFirst()) {
       this.currentIndex.update((i) => i - 1);
