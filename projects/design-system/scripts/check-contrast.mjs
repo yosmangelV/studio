@@ -144,7 +144,10 @@ function maskComments(css) {
       continue;
     }
     if (c === '"' || c === "'") { quote = c; out += c; continue; }
-    if (!inUrl && css.startsWith('url(', i)) { inUrl = true; out += 'url('; i += 3; continue; }
+    // `url(` only as a whole function name: not the tail of `my-url(`; CSS is case-insensitive.
+    if (!inUrl && css.slice(i, i + 4).toLowerCase() === 'url(' && !/[\w-]/.test(css[i - 1] ?? '')) {
+      inUrl = true; out += css.slice(i, i + 4); i += 3; continue;
+    }
     if (inUrl) { out += c; if (c === ')') inUrl = false; continue; }
     if (css.startsWith('/*', i)) {
       const close = css.indexOf('*/', i + 2);
@@ -183,24 +186,24 @@ function usageViolations(sources, forbiddenText = [], forbiddenTokens = []) {
       const raw = readFileSync(file, 'utf8');
       const masked = maskComments(raw);
       const rawLines = raw.split('\n');
-      masked.split('\n').forEach((code, i) => {
-        const where = `${file}:${i + 1}`;
-        const color = code.match(/(?:^|[\s{;])color:\s*([^;]+);/);
-        if (color) {
-          const value = color[1].trim();
-          const token = value.match(/^var\(\s*(--[\w-]+)/)?.[1];
-          if (LITERAL_COLOR.test(value)) out.push({ where, why: `literal text colour "${value}": use a text-role token` });
-          else if (token && forbiddenText.includes(token)) out.push({ where, why: `${token} is not a text token` });
+      const lineAt = (index) => masked.slice(0, index).split('\n').length;
+      // Whole-file scans, so a declaration split across lines still matches.
+      for (const m of masked.matchAll(/(?:^|[\s{;])color:\s*([^;{}]+);/g)) {
+        const where = `${file}:${lineAt(m.index + m[0].indexOf('color'))}`;
+        const value = m[1].trim();
+        const token = value.match(/^var\(\s*(--[\w-]+)/)?.[1];
+        if (LITERAL_COLOR.test(value)) out.push({ where, why: `literal text colour "${value.replace(/\s+/g, ' ')}": use a text-role token` });
+        else if (token && forbiddenText.includes(token)) out.push({ where, why: `${token} is not a text token` });
+      }
+      for (const m of masked.matchAll(/outline:\s*(none|0)\b/g)) {
+        const line = lineAt(m.index);
+        if (!rawLines[line - 1].includes('a11y-ok')) {
+          out.push({ where: `${file}:${line}`, why: 'focus outline removed (add a visible :focus-visible style, then mark the line "a11y-ok: <reason>")' });
         }
-        if (/outline:\s*(none|0)\b/.test(code) && !rawLines[i].includes('a11y-ok')) {
-          out.push({ where, why: 'focus outline removed (add a visible :focus-visible style, then mark the line "a11y-ok: <reason>")' });
-        }
-      });
-      // Whole-file scan, so a var( and its name on different lines still match.
+      }
       for (const m of masked.matchAll(/var\(\s*(--[\w-]+)/g)) {
         if (!forbiddenTokens.includes(m[1]) || inTokenDeclaration(masked, m.index)) continue;
-        const line = masked.slice(0, m.index).split('\n').length;
-        out.push({ where: `${file}:${line}`, why: `${m[1]} is a primitive: use the role token that maps it` });
+        out.push({ where: `${file}:${lineAt(m.index)}`, why: `${m[1]} is a primitive: use the role token that maps it` });
       }
     }
   }
