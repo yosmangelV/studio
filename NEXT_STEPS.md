@@ -38,10 +38,10 @@ New `main` after the rewrite: `e9f3068`.
 1. **Announcement-web colour, type and motion fixes.** The checklist is in `projects/announcement-web/design.md`, under "Migration from the 2026-11-02 review".
 2. **Remaining boxing-gym items** (`projects/boxing-gym/design.md`):
    - ~~REFLEX 77: the "Nuestras clases" `striped-list` reaches 69% at 1440px.~~ Done in #50.
-   - F19: four font weights in use; the fourth (500) comes from the DS `page-nav`.
+   - ~~F19: four font weights in use; the fourth (500) comes from the DS `page-nav`.~~ Done in #46, #50 and #53.
    - The splash gloves are the 🥊 emoji; replace them with a drawn SVG glove.
    - ~~DS input border contrast: `--color-border-strong` is 1.7:1, below 3:1.~~ Done in #46.
-   - Pre-existing primitive tokens used directly in components outside the audited panel.
+   - ~~Pre-existing primitive tokens used directly in components outside the audited panel.~~ Done in #53; `test:contrast` now rejects them (`forbiddenTokens`, #50).
 3. **Design-system follow-ups**, deferred from the #50 review:
    - **Tracking and measure tokens.** `letter-spacing` is a literal in 4 DS components (striped-list, typography, page-nav, hero-section; 7 different values), and the `striped-list` columns use `14rem` and `30rem`. `tokens.scss` has no scale for either. Add a small tracking scale (and named measures if they repeat), then move every component to it in one PR, since the values change together.
    - **Compact page-nav menu below 768px.** Under 768px the nav shows no links, and boxing-gym projects no other menu, so phones reach the sections only by scrolling or through the hero actions. Add a disclosure menu to the organism: a button with `aria-expanded`, Escape to close, focus returned to the button, and closing on link click.
