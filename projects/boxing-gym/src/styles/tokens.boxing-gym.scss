@@ -128,6 +128,7 @@
 
   --color-surface:         var(--gym-surface-app);
   --color-surface-raised:  var(--gym-surface-subtle);   // ds-input default bg
+  --color-surface-overlay: var(--gym-surface-elevated);  // ds-badge default, ds-button secondary hover
   --color-surface-sunken:  rgba(0, 0, 0, 0.20);         // ds-input disabled bg
   --color-surface-nav:     var(--gym-surface-nav);
   --color-border:          var(--gym-border-subtle);

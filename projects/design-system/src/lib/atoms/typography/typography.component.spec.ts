@@ -26,7 +26,7 @@ describe('TypographyComponent', () => {
 
   // One <ng-content> per @case only projects into one of them: every variant
   // but the default rendered an empty element.
-  it.each(['display', 'h1', 'h3', 'label', 'caption', 'body'] as const)('projects its text in the %s variant', async (variant) => {
+  it.each(['display', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'label', 'caption', 'body'] as const)('projects its text in the %s variant', async (variant) => {
     const { container } = await render(`<ds-text variant="${variant}">Projected</ds-text>`, { imports: [TypographyComponent] });
     expect(container.querySelector('ds-text > *')).toHaveTextContent('Projected');
   });

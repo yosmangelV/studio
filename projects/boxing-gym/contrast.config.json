@@ -149,6 +149,16 @@
           "bg": [
             "--color-error-subtle"
           ]
+        },
+        {
+          "label": "badge default",
+          "min": 4.5,
+          "fg": [
+            "--color-text-secondary"
+          ],
+          "bg": [
+            "--color-surface-overlay"
+          ]
         }
       ]
     },
@@ -213,6 +223,16 @@
             "--gym-dark",
             "--gym-surface-raised",
             "--gym-surface-elevated"
+          ]
+        },
+        {
+          "label": "badge default",
+          "min": 4.5,
+          "fg": [
+            "--color-text-secondary"
+          ],
+          "bg": [
+            "--color-surface-overlay"
           ]
         }
       ]
