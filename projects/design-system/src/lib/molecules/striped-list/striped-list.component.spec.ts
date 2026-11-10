@@ -30,17 +30,11 @@ describe('StripedListComponent', () => {
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
   });
 
-  it('shows arrow indicators by default', async () => {
+  it('renders no arrow: rows are not links', async () => {
     const { container } = await render(StripedListComponent, {
       componentInputs: { items: ITEMS },
     });
-    expect(container.querySelectorAll('.striped-list__arrow')).toHaveLength(2);
-  });
-
-  it('hides arrow indicators when showArrow is false', async () => {
-    const { container } = await render(StripedListComponent, {
-      componentInputs: { items: ITEMS, showArrow: false },
-    });
-    expect(container.querySelector('.striped-list__arrow')).not.toBeInTheDocument();
+    expect(container.textContent).not.toContain('→');
+    expect(screen.queryAllByRole('link')).toHaveLength(0);
   });
 });

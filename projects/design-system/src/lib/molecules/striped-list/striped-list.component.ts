@@ -15,5 +15,4 @@ export interface StripedListItem {
 })
 export class StripedListComponent {
   readonly items = input.required<StripedListItem[]>();
-  readonly showArrow = input<boolean>(true);
 }

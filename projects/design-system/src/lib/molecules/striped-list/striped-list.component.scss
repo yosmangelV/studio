@@ -1,7 +1,13 @@
 :host {
   display: block;
+  // The layout follows the list's own width, not the viewport: the same list can sit
+  // in a full-width section or in a narrow column.
+  container-type: inline-size;
 }
 
+// Rows are content, not links: no hover state and no arrow, which read as clickable.
+// On wide lists the name is set large on the left and the description runs to the
+// right edge, so each row spans the container (Hallmark gate 77).
 .striped-list {
   list-style: none;
   padding: 0;
@@ -10,30 +16,26 @@
 
   &__item {
     display: grid;
-    grid-template-columns: 2.5rem 1fr;
+    grid-template-columns: var(--space-10) minmax(0, 1fr);
     grid-template-areas:
       'index name'
       'index desc';
-    column-gap: 1.5rem;
-    row-gap: 0.35rem;
-    padding: 2rem 0;
+    column-gap: var(--space-6);
+    row-gap: var(--space-2);
+    padding: var(--space-8) 0;
     border-bottom: 1px solid var(--color-border);
-    transition: background-color var(--duration-normal) var(--ease-default);
 
-    @media (min-width: 768px) {
-      grid-template-columns: 3.5rem 14rem 1fr 1.5rem;
-      grid-template-areas: 'index name desc arrow';
-      align-items: center;
-      column-gap: 2.5rem;
-      padding: 2rem 1rem;
-      margin: 0 -1rem;
+    @container (min-width: 640px) {
+      grid-template-columns: var(--space-12) minmax(0, 14rem) minmax(0, 1fr);
+      grid-template-areas: 'index name desc';
+      align-items: baseline;
+      column-gap: var(--space-10);
+    }
 
-      &:hover {
-        background-color: var(--color-primary-50);
-
-        .striped-list__name  { color: var(--color-text-accent); }
-        .striped-list__arrow { opacity: 1; transform: translateX(4px); }
-      }
+    @container (min-width: 900px) {
+      grid-template-columns: var(--space-12) minmax(0, 1fr) minmax(0, 30rem);
+      column-gap: var(--space-12);
+      padding: var(--space-10) 0;
     }
   }
 
@@ -41,52 +43,43 @@
     grid-area: index;
     align-self: start;
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     font-weight: var(--font-bold);
     letter-spacing: 0.05em;
     color: var(--color-text-accent);
-    padding-top: 3px;
+    padding-top: var(--space-1);
 
-    @media (min-width: 768px) {
-      align-self: center;
-      font-size: 0.9rem;
+    @container (min-width: 640px) {
+      align-self: baseline;
+      padding-top: 0;
+      font-size: var(--text-base);
     }
   }
 
   &__name {
     grid-area: name;
     font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-size: var(--text-xl);
     font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
     text-transform: uppercase;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    letter-spacing: 0.03em;
     color: var(--color-text-primary);
-    letter-spacing: 0.04em;
-    transition: color var(--duration-normal) var(--ease-default);
 
-    @media (min-width: 768px) {
-      font-size: 1.05rem;
+    @container (min-width: 900px) {
+      font-size: var(--text-3xl);
+      letter-spacing: 0.02em;
     }
   }
 
   &__description {
     grid-area: desc;
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     line-height: var(--leading-relaxed);
     color: var(--color-text-secondary);
+    text-wrap: pretty;
     margin: 0;
-  }
-
-  &__arrow {
-    display: none;
-    grid-area: arrow;
-    color: var(--color-text-secondary);
-    font-size: 1.1rem;
-    opacity: 0;
-    transition: opacity var(--duration-normal) var(--ease-default),
-                transform var(--duration-normal) var(--ease-default);
-
-    @media (min-width: 768px) {
-      display: block;
-    }
   }
 }

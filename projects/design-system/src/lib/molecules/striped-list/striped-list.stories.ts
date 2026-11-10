@@ -16,48 +16,30 @@ const meta: Meta<StripedListComponent> = {
     docs: {
       description: {
         component: `
-Lista con borde exterior y separadores de fila. Cada ítem muestra un índice numérico, nombre y descripción.
-En desktop incluye un área de flecha con animación de hover.
+Lista de filas con separadores. Cada ítem muestra un índice, un nombre y una descripción.
 
-**showArrow:** controla si se renderiza el indicador \`→\` al final de cada fila.
+Por debajo de 768px el nombre va sobre la descripción. Desde 1024px el nombre se compone en grande a la
+izquierda y la descripción ocupa una columna a la derecha, así cada fila llena el contenedor.
+Las filas son contenido, no enlaces: no tienen estado hover ni flecha.
         `,
       },
     },
   },
-  argTypes: {
-    showArrow: { control: 'boolean' },
-  },
   render: (args) => ({
     props: { ...args, items: SAMPLE_ITEMS },
-    template: `<ds-striped-list [items]="items" [showArrow]="showArrow" />`,
+    template: `<ds-striped-list [items]="items" />`,
   }),
 };
 
 export default meta;
 type Story = StoryObj<StripedListComponent>;
 
-export const Default: Story = {
-  args: { showArrow: true },
-};
+export const Default: Story = {};
 
-export const WithoutArrow: Story = {
-  args: { showArrow: false },
-};
-
-export const AllVariants: Story = {
-  render: (_args) => ({
+export const Mobile: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile1' } },
+  render: () => ({
     props: { items: SAMPLE_ITEMS },
-    template: `
-      <div style="display: flex; flex-direction: column; gap: 3rem;">
-        <div>
-          <p style="margin-bottom: 1rem; font-size: 0.75rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.1em;">Con flecha</p>
-          <ds-striped-list [items]="items" [showArrow]="true" />
-        </div>
-        <div>
-          <p style="margin-bottom: 1rem; font-size: 0.75rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.1em;">Sin flecha</p>
-          <ds-striped-list [items]="items" [showArrow]="false" />
-        </div>
-      </div>
-    `,
+    template: `<div style="max-width: 360px"><ds-striped-list [items]="items" /></div>`,
   }),
 };
