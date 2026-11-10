@@ -23,7 +23,7 @@ An old-school boxing gym: raw, disciplined, close to the ring. Black rooms, crim
 | Brand fill | `--gym-brand` (`--color-primary-500`) | Button fills, rules, bars. Never text. White text on it gives 6.0:1 |
 | Brand on dark | `--gym-brand-on-dark` (`--color-text-accent`, `--color-border-focus`) | Red text, red figures, links and focus rings |
 | Danger | `--gym-text-danger` / `--color-error-solid` | Error text / danger button fill |
-| WhatsApp | `--gym-whatsapp` + `--gym-whatsapp-ink` | The WhatsApp button: dark ink on green (9.8:1; white was 1.9:1) |
+| WhatsApp | `--gym-whatsapp` + `--gym-whatsapp-ink` | The contact section's WhatsApp button, with its logo: dark ink on green (9.8:1; white was 1.9:1). The hero's WhatsApp action uses the brand fill |
 
 `--gym-red-500` gives 2.38–3.22:1 as text on the gym surfaces and `--gym-gray` 3.6:1, so both are forbidden as text in `contrast.config.json`. Components use only the roles above: the palette primitives at the top of the token file (`--gym-black`, `--gym-dark`, `--gym-white`, `--gym-gray-light`, the reds and golds and their legacy aliases) are listed in `forbiddenTokens`, so a component that references one fails. Every pair above is checked by `npm run test:contrast`.
 
@@ -35,7 +35,7 @@ An old-school boxing gym: raw, disciplined, close to the ring. Black rooms, crim
 
 ## Page rules
 
-- **Hero:** the gym's name as the headline, one sentence, and two actions (primary: WhatsApp; secondary: classes).
+- **Hero:** the gym's name as the headline, one sentence, and two actions (primary: WhatsApp; secondary: classes). The primary keeps the brand fill even though it opens WhatsApp: the hero holds one crimson action, and the green WhatsApp colours belong to the contact section's button, the one with the WhatsApp logo.
 - **Splash only while there is nothing to show:** on the public landing, on a visit with no cached copy, until the gym data arrives (at least 1.2s so the animation lands, at most 3s, no minimum with reduced motion). Repeat visits, `/login` and the panel never see it (root Floor 8 forbids fixed-duration splashes).
 - **Sections span the container:** every section below the hero uses the 1300px container; schedule groups become columns on desktop and contact puts the action beside the details.
 - **The install-app banner** is shown only to signed-in users, inside the app shell, never on the public page.
