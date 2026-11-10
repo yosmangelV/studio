@@ -77,18 +77,23 @@ describe('HomePage', () => {
 
   it('makes WhatsApp the hero primary action and classes the secondary', async () => {
     await render(HomePage, { providers: providers(supabaseReturning({ data: ROW, error: null })) });
-    // The hero and the contact section both offer it, with the same label.
-    const whatsappLinks = await screen.findAllByRole('link', { name: 'Escríbenos por WhatsApp' });
-    expect(whatsappLinks).toHaveLength(2);
-    whatsappLinks.forEach((link) => expect(link).toHaveAttribute('href', 'https://wa.me/34658078039'));
-    expect(screen.getByRole('link', { name: 'Ver clases' })).toHaveAttribute('href', '#classes');
+    const primary = await screen.findByTestId('ds-hero-cta-primary');
+    await screen.findByText('Boxeo');
+    expect(primary).toHaveTextContent('Escríbenos por WhatsApp');
+    expect(primary).toHaveAttribute('href', 'https://wa.me/34658078039');
+    const secondary = screen.getByTestId('ds-hero-cta-secondary');
+    expect(secondary).toHaveTextContent('Ver clases');
+    expect(secondary).toHaveAttribute('href', '#classes');
   });
 
   it('points the hero primary action at the contact section when there is no WhatsApp', async () => {
     await render(HomePage, { providers: providers(supabaseReturning({ data: { ...ROW, profile: { ...PROFILE, whatsapp: null } }, error: null })) });
     await screen.findByText('Boxeo');
+    const primary = screen.getByTestId('ds-hero-cta-primary');
+    expect(primary).toHaveTextContent('Contáctanos');
+    expect(primary).toHaveAttribute('href', '#contact');
+    expect(screen.getByTestId('ds-hero-cta-secondary')).toHaveAttribute('href', '#classes');
     expect(screen.queryByRole('link', { name: 'Escríbenos por WhatsApp' })).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Contáctanos' })).toHaveAttribute('href', '#contact');
   });
 
   it('caches a successful response for the next visit', async () => {
