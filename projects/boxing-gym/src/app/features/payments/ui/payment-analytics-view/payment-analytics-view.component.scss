@@ -30,7 +30,7 @@
 
   &__total-amount {
     font-size: 2.25rem;
-    font-weight: var(--font-bold);
+    font-weight: var(--font-semibold); // Inter: 400 and 600 only
     color: var(--color-text-primary);
     line-height: 1.1;
   }
@@ -68,7 +68,7 @@
 
   &__method-amount {
     font-size: 1.375rem;
-    font-weight: var(--font-bold);
+    font-weight: var(--font-semibold); // Inter: 400 and 600 only
     color: var(--color-text-primary);
 
     &--zero {
