@@ -92,7 +92,7 @@
 .about__highlight-value {
   font-family: var(--gym-font-display);
   font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  font-weight: 700;
+  font-weight: var(--font-bold);
   color: var(--gym-brand-on-dark);
   line-height: 1;
 }
@@ -100,7 +100,7 @@
 .about__highlight-label {
   font-family: var(--gym-font-body);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   color: var(--gym-text-secondary);
   overflow-wrap: break-word;
 }

@@ -7,7 +7,7 @@
   color: var(--gym-text-secondary);
   font-family: var(--gym-font-body);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   min-height: var(--size-touch-target);
   min-width: var(--size-touch-target); // icon and code only, below 640px
   justify-content: center;

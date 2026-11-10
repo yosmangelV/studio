@@ -38,7 +38,7 @@
   gap: var(--space-3);
   font-family: var(--gym-font-body);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   text-decoration: none;
   color: var(--gym-whatsapp-ink);
   background-color: var(--gym-whatsapp);
@@ -89,7 +89,7 @@
 
 .contact__label {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   color: var(--gym-text-secondary);
   min-width: 80px;
 }

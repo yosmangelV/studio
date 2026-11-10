@@ -95,7 +95,7 @@
 .loading__name-top {
   font-family: var(--gym-font-display);
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: var(--font-bold);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--gym-text-primary);
