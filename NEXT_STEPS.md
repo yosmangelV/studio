@@ -1,6 +1,6 @@
 # Next steps
 
-Handoff note, updated 2026-11-08. Update it as items close, and delete it when the list is empty.
+Handoff note, updated 2026-11-10. Update it as items close, and delete it when the list is empty.
 
 ## How we work
 
@@ -35,17 +35,16 @@ New `main` after the rewrite: `e9f3068`.
 
 ## 3. Next PRs, in order
 
-1. **Make `Boxing Gym API test` a required check on `main`**, but first fix the `changes` gate in every CI workflow. Each test job `needs: changes` and runs only when the path filter matched. If `changes` itself fails, the test is skipped, and GitHub accepts a skipped required check as passing, so a PR could merge without its tests running. Add a final job per workflow with `if: always()` that fails when `changes` failed or the test failed, and passes only when the test succeeded or the filter succeeded with no relevant changes. Then make those final jobs the required checks (renaming required checks needs a protection update in the same step). This is a repo settings change, so the owner confirms it first. Keep CodeRabbit's `app_id` 347564. The API job has already passed on `main`.
-2. **Announcement-web colour, type and motion fixes.** The checklist is in `projects/announcement-web/design.md`, under "Migration from the 2026-11-02 review".
-3. **Remaining boxing-gym items** (`projects/boxing-gym/design.md`):
+1. **Announcement-web colour, type and motion fixes.** The checklist is in `projects/announcement-web/design.md`, under "Migration from the 2026-11-02 review".
+2. **Remaining boxing-gym items** (`projects/boxing-gym/design.md`):
    - REFLEX 77: the "Nuestras clases" `striped-list` reaches 69% at 1440px.
    - F19: four font weights in use; the fourth (500) comes from the DS `page-nav`.
    - The splash gloves are the 🥊 emoji; replace them with a drawn SVG glove.
    - DS input border contrast: `--color-border-strong` is 1.7:1, below 3:1.
    - Pre-existing primitive tokens used directly in components outside the audited panel.
-4. Optional, from the zizmor auditor persona: workflow `concurrency` (cancel superseded PR runs) and a GitHub environment for the Chromatic secret.
-5. Optional: Dependabot for `github-actions`, so the SHAs pinned in #34 get bumped.
-6. Optional: CodeRabbit `chill` profile for some paths (offered, not decided).
+3. Optional, from the zizmor auditor persona: workflow `concurrency` (cancel superseded PR runs) and a GitHub environment for the Chromatic secret.
+4. Optional: Dependabot for `github-actions`, so the SHAs pinned in #34 get bumped.
+5. Optional: CodeRabbit `chill` profile for some paths (offered, not decided).
 
 ## 4. Housekeeping
 
@@ -53,6 +52,6 @@ New `main` after the rewrite: `e9f3068`.
 
 ## Reference
 
-- Required checks on `main`: Boxing Gym test, Design System test, Announcement Web test, Announcement API test, CodeRabbit. `enforce_admins` on, force push off, PRs required (ruleset "Main PR Restrictions").
+- Required checks on `main`: Boxing Gym test, Design System test, Announcement Web test, Announcement API test, Boxing Gym API test (GitHub Actions, `app_id` 15368), CodeRabbit (`app_id` 347564). Each GitHub Actions check is its workflow's `gate` job, which always runs and passes only when the tests passed or the `changes` filter found nothing relevant; the test job itself is `<name> (run)` and is not required (#45). `enforce_admins` on, force push off, PRs required (ruleset "Main PR Restrictions").
 - All workflow actions are pinned to commit SHAs, with `persist-credentials: false` and `permissions: contents: read` (#34).
 - Agent rules per project: `CLAUDE.md` at the root, `apps/boxing-gym-api/CLAUDE.md`, and each project's `design.md`.
