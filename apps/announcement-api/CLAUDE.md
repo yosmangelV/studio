@@ -73,5 +73,6 @@ GET /messages/:code
 npm ci                        # Install dependencies
 npm test                      # Run tests
 npm run start:dev             # Dev server with hot reload
-npx ts-node scripts/seed.ts   # Seed demo data
+npm run seed                  # Write seed-data.local.json to the DB in .env (owner only)
+npm run seed:export           # Rebuild seed-data.local.json from the DB (read only)
 ```

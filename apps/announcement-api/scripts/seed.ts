@@ -5,6 +5,7 @@ import { LOCAL_SEED_FILE, MessageModel, readSeedFile, requireMongoUri } from './
 
 // Writes the stories in seed-data.local.json (or the file passed as the first
 // argument), replacing only the messages whose codes are in that file.
+/** Replaces the codes in the seed file with its messages, after the whole file passes its checks. */
 async function seed() {
   const messages = readSeedFile(process.argv[2] ?? LOCAL_SEED_FILE);
   await mongoose.connect(requireMongoUri(), { dbName: 'announcement' });

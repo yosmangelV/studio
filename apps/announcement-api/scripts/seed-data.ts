@@ -29,8 +29,45 @@ export type SeedMessage = {
 };
 
 const MESSAGE_TYPES = new Set<string>(Object.values(MessageType));
+const AUDIENCE_TYPES = new Set<string>(['special', 'friends', 'family']);
 
-/** Reads and checks a seed file, failing with the file and slide that is wrong. */
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const isOptionalString = (value: unknown): boolean => value === undefined || typeof value === 'string';
+
+function isSeedSlide(value: unknown): value is SeedSlide {
+  return (
+    isRecord(value) &&
+    typeof value['title'] === 'string' &&
+    typeof value['body'] === 'string' &&
+    typeof value['footer'] === 'string' &&
+    typeof value['messageType'] === 'string' &&
+    MESSAGE_TYPES.has(value['messageType']) &&
+    isOptionalString(value['image']) &&
+    isOptionalString(value['altText'])
+  );
+}
+
+function isSeedMessage(value: unknown): value is SeedMessage {
+  return (
+    isRecord(value) &&
+    typeof value['code'] === 'string' &&
+    value['code'].trim() !== '' &&
+    typeof value['audienceType'] === 'string' &&
+    AUDIENCE_TYPES.has(value['audienceType']) &&
+    (value['recipientName'] === null || typeof value['recipientName'] === 'string') &&
+    (value['isActive'] === undefined || typeof value['isActive'] === 'boolean') &&
+    Array.isArray(value['slides']) &&
+    value['slides'].every(isSeedSlide)
+  );
+}
+
+/**
+ * Reads and checks a seed file before anything touches the database: a bad
+ * message, slide or duplicate code fails here with the file and the position,
+ * instead of after `seed.ts` has already deleted the codes it replaces.
+ */
 export function readSeedFile(path: string): SeedMessage[] {
   if (!existsSync(path)) {
     throw new Error(
@@ -38,20 +75,31 @@ export function readSeedFile(path: string): SeedMessage[] {
         'Run `npm run seed:export` to rebuild it from the database, or copy seed-data.example.json.',
     );
   }
-  const messages: unknown = JSON.parse(readFileSync(path, 'utf8'));
-  if (!Array.isArray(messages)) throw new Error(`${path}: expected an array of messages`);
 
-  messages.forEach((message: SeedMessage, i) => {
-    if (!message?.code || !Array.isArray(message.slides)) {
-      throw new Error(`${path}: message ${i} needs a code and a slides array`);
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(readFileSync(path, 'utf8'));
+  } catch (err) {
+    throw new Error(`${path}: not valid JSON (${err instanceof Error ? err.message : String(err)})`);
+  }
+  if (!Array.isArray(parsed)) throw new Error(`${path}: expected an array of messages`);
+
+  const messages: SeedMessage[] = [];
+  const seen = new Set<string>();
+  parsed.forEach((entry: unknown, i) => {
+    if (!isSeedMessage(entry)) {
+      throw new Error(
+        `${path}: message ${i} needs a code, an audienceType (special, friends or family), ` +
+          'a recipientName (string or null) and slides with title, body, footer and a known messageType',
+      );
     }
-    message.slides.forEach((slide, j) => {
-      if (!MESSAGE_TYPES.has(slide.messageType)) {
-        throw new Error(`${path}: ${message.code} slide ${j} has an unknown messageType "${slide.messageType}"`);
-      }
-    });
+    // The schema stores codes in upper case, so "abc" and "ABC" are the same message.
+    const code = entry.code.toUpperCase();
+    if (seen.has(code)) throw new Error(`${path}: code ${code} appears more than once`);
+    seen.add(code);
+    messages.push(entry);
   });
-  return messages as SeedMessage[];
+  return messages;
 }
 
 export const MessageSchema = new mongoose.Schema(
@@ -67,6 +115,7 @@ export const MessageSchema = new mongoose.Schema(
 
 export const MessageModel = mongoose.model('Message', MessageSchema, 'messages');
 
+/** The connection string from `.env`; exits with a message when it is missing. */
 export function requireMongoUri(): string {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
