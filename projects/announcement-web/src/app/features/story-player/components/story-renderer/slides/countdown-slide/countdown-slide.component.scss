@@ -8,7 +8,7 @@
   &__number {
     font-family: var(--ann-font-script);
     font-size: clamp(8rem, 40vw, 14rem);
-    font-weight: 700;
+    font-weight: var(--font-semibold);
     color: var(--ann-text-script);
     line-height: 1;
     animation: countdown-pop var(--duration-xslow) var(--ease-spring) both;

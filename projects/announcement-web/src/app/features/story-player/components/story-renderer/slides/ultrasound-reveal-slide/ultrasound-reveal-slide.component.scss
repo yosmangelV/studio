@@ -54,7 +54,7 @@
     background-color: var(--ann-fill-emphasis);
     color: var(--ann-text-inverse);
     font-family: var(--ann-font-body);
-    font-weight: 600;
+    font-weight: var(--font-semibold);
     font-size: var(--text-sm);
     padding: var(--space-2) var(--space-5);
     border-radius: var(--radius-full);
@@ -73,7 +73,7 @@
     font-family: var(--ann-font-script);
     font-size: clamp(2rem, 8vw, 3rem);
     color: var(--ann-text-script);
-    font-weight: 700;
+    font-weight: var(--font-semibold);
     animation: fade-up var(--duration-cinematic) var(--ease-out) var(--stagger-5) both;
     margin-bottom: var(--space-4);
   }

@@ -34,9 +34,10 @@ Fixed by the migration below (2026-11-10): the script colour was 2.8:1, the coun
 ## Type
 
 - **Display:** Playfair Display (`--ann-font-display`) for slide headings and the reveal title.
+- **Slide anatomy (intro and text):** `title` is the slide's `h1`, `body` is a paragraph in the body face, and `footer` is the one emphasis line in the script face. A part the API leaves empty is not rendered.
 - **Script:** Dancing Script (`--ann-font-script`) for one emphasised line per slide, at 24px or more, never for body text or anything functional. *Exception to the root rule of one display and one body family:* the script is the product's voice (the handwritten card); it is kept to emphasis so the page still reads as two faces.
 - **Body and everything functional:** Nunito (`--ann-font-body`), sentence case, untracked. Labels and badges included.
-- **Weights:** three at most across all faces: 400 and 600 (Nunito, Dancing Script) and 700 (Playfair). Today 400, 600, 700 and 900 are in use and the font link loads six weights.
+- **Weights:** three at most across all faces: 400 and 600 (Nunito, Dancing Script) and 700 (Playfair). The font link loads exactly these four files, and every component sets its weight with the DS tokens (`--font-normal`, `--font-semibold`, `--font-bold`).
 
 ## Story rules
 
@@ -63,10 +64,10 @@ The deployed player breaks these rules today. Colour, type and motion fixes go i
 - [x] `prefers-reduced-motion` fallback for every slide animation: no stylesheet in the app has one today (Floor 5)
 - [x] Arrow-key navigation in the story player
 - [x] Heart (❤️) and nav arrows (← → ↺) become SVG icons (Floor 7)
-- [ ] Remove the eyebrow from the intro and text slides (`eyebrow` field and `__eyebrow` styles)
-- [ ] Three weights: drop Playfair 900 and Dancing Script 700 from the font link and the styles
-- [ ] Body text in the body face: `.intro-slide__body` and `.text-slide__body` use `--ann-font-display` today, and should use `--ann-font-body`
-- [ ] The reveal title in the display face: `.final-reveal-slide__title` uses `--ann-font-script` today; the script stays for its emphasis line
+- [x] Remove the eyebrow from the intro and text slides (`eyebrow` field and `__eyebrow` styles)
+- [x] Three weights: drop Playfair 900 and Dancing Script 700 from the font link and the styles
+- [x] Body text in the body face: `.intro-slide__body` and `.text-slide__body` use `--ann-font-display` today, and should use `--ann-font-body`
+- [x] The reveal title in the display face: `.final-reveal-slide__title` uses `--ann-font-script` today; the script stays for its emphasis line
 - [x] Image slide: `[alt]` is bound to `title` instead of the model's `altText`
 - [x] Image slide: the caption renders `{{ data() }}`, the whole slide object (`[object Object]`), instead of its text
 - [x] Image slide: without an `image` it renders an empty `<img>` instead of falling back to the text layout
