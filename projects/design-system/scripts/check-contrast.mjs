@@ -127,9 +127,9 @@ function undefinedReferences(sources, tokenFiles) {
 const LITERAL_COLOR = /^(#[0-9a-f]{3,8}|rgba?\(|hsla?\(|white$|black$)/i;
 
 /**
- * The stylesheet with comments blanked out, newlines kept so offsets map to the same
- * lines. `//` only starts a comment outside strings and `url(...)`, so a URL such as
- * `url(https://x/a.png)` survives.
+ * The stylesheet with comments and string contents blanked out, newlines kept so
+ * offsets map to the same lines. `//` only starts a comment outside strings and
+ * `url(...)`, so a URL such as `url(https://x/a.png)` survives.
  */
 function maskComments(css) {
   let out = '';
@@ -138,9 +138,10 @@ function maskComments(css) {
   for (let i = 0; i < css.length; i++) {
     const c = css[i];
     if (quote) {
-      out += c;
-      if (c === '\\') { out += css[++i] ?? ''; continue; }
-      if (c === quote) quote = null;
+      // String contents are literal text (content: "var(--x)"), never a reference.
+      if (c === '\\') { out += ' ' + (css[i + 1] === '\n' ? '\n' : ' '); i++; continue; }
+      if (c === quote) { quote = null; out += c; continue; }
+      out += c === '\n' ? '\n' : ' ';
       continue;
     }
     if (c === '"' || c === "'") { quote = c; out += c; continue; }
