@@ -22,7 +22,7 @@
 
     &:hover:not(:disabled) {
       background-color: var(--ann-text-dark);
-      color: var(--ann-bg-cream);
+      color: var(--ann-text-inverse);
       transform: scale(1.05);
     }
 
@@ -38,7 +38,7 @@
 
     &--next {
       background-color: var(--ann-text-dark);
-      color: var(--ann-bg-cream);
+      color: var(--ann-text-inverse);
 
       &:hover:not(:disabled) {
         background-color: var(--ann-text-soft);

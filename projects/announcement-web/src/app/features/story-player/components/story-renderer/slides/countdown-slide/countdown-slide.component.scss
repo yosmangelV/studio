@@ -9,7 +9,7 @@
     font-family: var(--ann-font-script);
     font-size: clamp(8rem, 40vw, 14rem);
     font-weight: 700;
-    color: color-mix(in srgb, var(--ann-text-script) 60%, white);
+    color: var(--ann-text-script);
     line-height: 1;
     animation: countdown-pop var(--duration-xslow) var(--ease-spring) both;
     user-select: none;

@@ -14,22 +14,22 @@ Tender and quiet: a handwritten card, not a party invitation. Warm cream paper, 
 
 ## Colour roles
 
-Ratios are measured on cream (`--ann-bg-cream`), the surface every slide uses today.
+Ratios are measured on cream (`--ann-bg-cream`), the surface every slide uses. `contrast.config.json` checks every pair below in CI (`npm run test:contrast`).
+
+**One theme, cream, also when the OS is in dark mode.** The page is a paper card read once; a dark version would be a second design to maintain for no reader need. The DS tokens still switch with the OS, so the product remaps the one it uses, `--color-border-focus`, to `--ann-text-dark` (the DS dark ring is 2.6:1 on cream). A component that starts using another `--color-*` token adds it to the dark-mode theme in `contrast.config.json`.
 
 | Role | Token | Use | Ratio on cream |
 |---|---|---|---|
 | Ground | `--ann-bg-cream` | Every slide and the player | — |
 | Mood grounds | `--ann-bg-lavender`, `--ann-bg-mist` | Decorative washes only. Not a text surface today; using one under text adds its pairs to `contrast.config.json` first (`--ann-text-soft` on lavender is 4.2:1 and fails) | — |
-| Text | `--ann-text-dark` | Headings, body, nav buttons, focus ring | 13.5:1 |
+| Text | `--ann-text-dark` | Headings, body, nav buttons, focus ring (also as `--color-border-focus`) | 13.5:1 |
 | Supporting text | `--ann-text-soft` | Captions, secondary lines | 7.0:1 |
-| Script emphasis | `--ann-text-script` | The one emphasised line per slide, in the script face | **2.8:1 — fails** (needs 3:1 even as large text) |
+| Script emphasis | `--ann-text-script` | The one emphasised line per slide, in the script face, and the countdown numeral | 4.6:1 |
+| Inverse text | `--ann-text-inverse` | Text on the dark nav buttons and on the badge fill | 13.5:1 on `--ann-text-dark`, 7.0:1 on `--ann-text-soft`, 4.6:1 on `--ann-fill-emphasis` |
+| Emphasis fill | `--ann-fill-emphasis` | The ultrasound badge. A fill, never text | — |
 | Accents | `--ann-accent-gold`, `--ann-accent-sage`, `--ann-accent-pink` | Borders and ornaments only. Never text (2.0, 2.2 and 1.3:1) | — |
-| Pastel blue | `--ann-text-accent` | Defined, unused, and 1.95:1: it is not a text colour despite its name | — |
 
-Known failures today, fixed in the migration below:
-
-- The countdown numeral mixes `--ann-text-script` with 40% white (`countdown-slide`): **1.7:1**, and the number is the slide's whole content.
-- The ultrasound badge sets literal white on `--ann-text-script`: **3.2:1** at `--text-sm`, and the literal breaks Floor 2.
+Fixed by the migration below (2026-11-10): the script colour was 2.8:1, the countdown numeral mixed it with 40% white (1.7:1), the ultrasound badge set literal white on it (3.2:1), and `--ann-text-accent` (1.95:1, unused) was removed.
 
 ## Type
 
@@ -55,11 +55,11 @@ Known failures today, fixed in the migration below:
 
 The deployed player breaks these rules today. Colour, type and motion fixes go in their own PR after this file.
 
-- [ ] Script emphasis passes 3:1 as large text on cream (darken `--ann-text-script`, or move emphasis to `--ann-text-dark` in the script face)
-- [ ] Countdown numeral uses a text role that passes 3:1 (it is display-size), not a mix with white
-- [ ] Ultrasound badge: a text-role token on a fill that passes 4.5:1, no literal `#fff`
-- [ ] Remove `--ann-text-accent` or rename it to an accent: it is not a text colour
-- [ ] Add `contrast.config.json` for announcement-web and wire it into `test:contrast` and CI
+- [x] Script emphasis passes 3:1 as large text on cream (darken `--ann-text-script`, or move emphasis to `--ann-text-dark` in the script face)
+- [x] Countdown numeral uses a text role that passes 3:1 (it is display-size), not a mix with white
+- [x] Ultrasound badge: a text-role token on a fill that passes 4.5:1, no literal `#fff`
+- [x] Remove `--ann-text-accent` or rename it to an accent: it is not a text colour
+- [x] Add `contrast.config.json` for announcement-web and wire it into `test:contrast` and CI
 - [ ] `prefers-reduced-motion` fallback for every slide animation: no stylesheet in the app has one today (Floor 5)
 - [ ] Arrow-key navigation in the story player
 - [ ] Heart (❤️) and nav arrows (← → ↺) become SVG icons (Floor 7)

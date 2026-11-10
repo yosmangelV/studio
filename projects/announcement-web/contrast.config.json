@@ -1,0 +1,99 @@
+{
+  "name": "announcement-web",
+  "sources": [
+    "projects/announcement-web/src"
+  ],
+  "forbiddenTextTokens": [
+    "--ann-bg-cream",
+    "--ann-bg-lavender",
+    "--ann-bg-mist",
+    "--ann-fill-emphasis",
+    "--ann-accent-pink",
+    "--ann-accent-gold",
+    "--ann-accent-sage",
+    "--color-primary-500"
+  ],
+  "themes": [
+    {
+      "name": "announcement-web",
+      "layers": [
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": ":root"
+        },
+        {
+          "file": "projects/announcement-web/src/app/shared/styles/announcement-tokens.scss",
+          "block": ":root"
+        }
+      ],
+      "canvas": "--ann-bg-cream",
+      "checks": [
+        {
+          "label": "text on cream",
+          "min": 4.5,
+          "fg": [
+            "--ann-text-dark",
+            "--ann-text-soft",
+            "--ann-text-script"
+          ],
+          "bg": [
+            "--ann-bg-cream"
+          ]
+        },
+        {
+          "label": "inverse text on fills (nav buttons, ultrasound badge)",
+          "min": 4.5,
+          "fg": [
+            "--ann-text-inverse"
+          ],
+          "bg": [
+            "--ann-text-dark",
+            "--ann-text-soft",
+            "--ann-fill-emphasis"
+          ]
+        },
+        {
+          "label": "focus ring",
+          "min": 3,
+          "fg": [
+            "--color-border-focus",
+            "--ann-text-dark"
+          ],
+          "bg": [
+            "--ann-bg-cream"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "announcement-web (OS in dark mode)",
+      "layers": [
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": ":root"
+        },
+        {
+          "file": "projects/design-system/src/styles/tokens.scss",
+          "block": "@mixin dark-tokens"
+        },
+        {
+          "file": "projects/announcement-web/src/app/shared/styles/announcement-tokens.scss",
+          "block": ":root"
+        }
+      ],
+      "canvas": "--ann-bg-cream",
+      "checks": [
+        {
+          "label": "focus ring (the DS ring switches with the OS; the page stays cream)",
+          "min": 3,
+          "fg": [
+            "--color-border-focus"
+          ],
+          "bg": [
+            "--ann-bg-cream"
+          ]
+        }
+      ]
+    }
+  ]
+}
