@@ -72,7 +72,7 @@ The deployed player breaks these rules today. Colour, type and motion fixes go i
 - [x] Image slide: the caption renders `{{ data() }}`, the whole slide object (`[object Object]`), instead of its text
 - [x] Image slide: without an `image` it renders an empty `<img>` instead of falling back to the text layout
 - [x] Delete `src/app/app.html`: the unused Angular starter page ("Congratulations! Your app is running. 🎉")
-- [ ] Run the Hallmark lint on every demo story against a local API and record the result here (FAIL, REFLEX and WARN counts, and the reason for each REFLEX kept):
-  1. `apps/announcement-api`: `npm run seed` (writes DEMO-SPECIAL, DEMO-FRIENDS, DEMO-FAMILY), then `npm run start:dev`
+- [ ] Run the Hallmark lint on the stories against a local API and record the result here (FAIL, REFLEX and WARN counts, and the reason for each REFLEX kept). The DEMO codes no longer exist, and the real codes are private, so the result names slide types, never codes:
+  1. `apps/announcement-api`: `npm run start:dev` (reads the database in `.env`; do not seed)
   2. `npm run announcement` (dev server on 4200)
-  3. `node .claude/skills/hallmark/scripts/sloplint.mjs --url http://localhost:4200/announcement/<code> --genre editorial --render` for each of the three codes
+  3. `node .claude/skills/hallmark/scripts/sloplint.mjs --url http://localhost:4200/announcement/<code> --genre editorial --render` for one story per audience segment, with codes from `seed-data.local.json`
