@@ -27,7 +27,10 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
+          # Full history and the PR's own head commit (not GitHub's synthetic merge
+          # commit), so TurboSnap can find the baseline build and diff against it.
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -41,3 +44,10 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: storybook:build
+          # TurboSnap: snapshot only the stories whose module graph a change touches
+          # (needs statsJson in angular.json's build-storybook target).
+          onlyChanged: true
+          # Global styles and SCSS partials are not imported by any story (they enter
+          # as angular.json styles or are inlined by @use), so a change there
+          # re-snapshots every story.
+          externals: projects/design-system/src/styles/**
