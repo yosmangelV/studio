@@ -1,0 +1,51 @@
+[
+  {
+    "code": "EXAMPLE",
+    "audienceType": "friends",
+    "recipientName": null,
+    "slides": [
+      {
+        "title": "Hola",
+        "body": "Hace tiempo que quería contarte algo.",
+        "messageType": "intro",
+        "footer": "Y quería hacerlo de una forma especial."
+      },
+      {
+        "title": "Gracias por estar",
+        "body": "Has estado en los momentos importantes.",
+        "messageType": "text",
+        "footer": "Eso no se olvida."
+      },
+      {
+        "title": "Un recuerdo",
+        "body": "Una foto de un día cualquiera.",
+        "image": "/assets/stories/example.jpg",
+        "altText": "Dos personas sonriendo en un parque",
+        "messageType": "text-image",
+        "footer": ""
+      },
+      {
+        "title": "",
+        "body": "",
+        "messageType": "countdown",
+        "footer": ""
+      },
+      {
+        "title": "Tenemos una noticia",
+        "body": "Viene alguien nuevo.",
+        "image": "/assets/stories/example-ultrasound.jpg",
+        "altText": "Ecografía de doce semanas",
+        "messageType": "ultrasound-reveal",
+        "footer": "Semana 12"
+      },
+      {
+        "title": "Gracias por compartirlo con nosotros",
+        "body": "Queríamos que fueras de los primeros en saberlo.",
+        "image": "/assets/stories/example.jpg",
+        "altText": "Dos personas sonriendo en un parque",
+        "messageType": "final-reveal",
+        "footer": "Con cariño."
+      }
+    ]
+  }
+]

@@ -34,8 +34,14 @@ src/
         └── message-response.dto.ts  ← API response contract
 
 scripts/
-└── seed.ts                  ← Seeds demo data (DEMO-SPECIAL, DEMO-FRIENDS, DEMO-FAMILY)
+├── seed.ts                  ← Writes the stories in seed-data.local.json (replaces only those codes)
+├── seed-export.ts           ← Read-only: rebuilds seed-data.local.json from the database
+├── seed-data.ts             ← Seed file shape, reader and checks, Mongoose model
+├── seed-data.example.json   ← Committed: one invented story with every slide type
+└── seed-data.local.json     ← Gitignored: the real stories (names, photos). Never commit it
 ```
+
+The real stories are private: recipients' names and their photos never go into the repo, a commit, a PR or a comment. They live in `seed-data.local.json` on the owner's machine; `npm run seed:export` rebuilds it from the database if it is lost. `npm run seed` writes to the database the `.env` points at, so only the owner runs it.
 
 ---
 
@@ -67,5 +73,6 @@ GET /messages/:code
 npm ci                        # Install dependencies
 npm test                      # Run tests
 npm run start:dev             # Dev server with hot reload
-npx ts-node scripts/seed.ts   # Seed demo data
+npm run seed                  # Write seed-data.local.json to the DB in .env (owner only)
+npm run seed:export           # Rebuild seed-data.local.json from the DB (read only)
 ```

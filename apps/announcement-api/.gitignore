@@ -3,3 +3,4 @@
 /.env
 /.nx
 *.tsbuildinfo
+/scripts/seed-data.local.json
