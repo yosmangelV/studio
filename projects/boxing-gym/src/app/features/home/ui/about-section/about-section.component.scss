@@ -1,7 +1,7 @@
 :host { display: block; }
 
 .about {
-  background-color: var(--gym-dark);
+  background-color: var(--gym-surface-raised);
   padding: 7rem var(--layout-gutter);
   overflow: hidden;
 }
@@ -63,7 +63,7 @@
   font-family: var(--gym-font-body);
   font-size: 1rem;
   line-height: 1.9;
-  color: var(--gym-gray-light);
+  color: var(--gym-text-high);
   margin-bottom: 3rem;
 }
 
