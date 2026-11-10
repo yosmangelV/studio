@@ -77,8 +77,8 @@ describe('HomePage', () => {
 
   it('makes WhatsApp the hero primary action and classes the secondary', async () => {
     await render(HomePage, { providers: providers(supabaseReturning({ data: ROW, error: null })) });
-    const primary = await screen.findByTestId('ds-hero-cta-primary');
-    await screen.findByText('Boxeo');
+    await screen.findByTestId('contact-whatsapp'); // the profile has loaded
+    const primary = screen.getByTestId('ds-hero-cta-primary');
     expect(primary).toHaveTextContent('Escríbenos por WhatsApp');
     expect(primary).toHaveAttribute('href', 'https://wa.me/34658078039');
     const secondary = screen.getByTestId('ds-hero-cta-secondary');
@@ -88,7 +88,7 @@ describe('HomePage', () => {
 
   it('points the hero primary action at the contact section when there is no WhatsApp', async () => {
     await render(HomePage, { providers: providers(supabaseReturning({ data: { ...ROW, profile: { ...PROFILE, whatsapp: null } }, error: null })) });
-    await screen.findByText('Boxeo');
+    await screen.findByTestId('contact-phone'); // the profile has loaded (no WhatsApp link to wait for)
     const primary = screen.getByTestId('ds-hero-cta-primary');
     expect(primary).toHaveTextContent('Contáctanos');
     expect(primary).toHaveAttribute('href', '#contact');
