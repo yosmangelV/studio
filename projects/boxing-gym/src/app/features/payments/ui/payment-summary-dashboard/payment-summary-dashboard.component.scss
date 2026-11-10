@@ -84,7 +84,7 @@
     font-size: 0.8125rem;
     color: var(--gym-text-danger);
     margin-bottom: 0.75rem;
-    font-weight: 500;
+    font-weight: var(--font-semibold);
   }
 
   &__list {
@@ -136,7 +136,7 @@
 
   &__item-name {
     font-size: 0.9375rem;
-    font-weight: 500;
+    font-weight: var(--font-semibold);
     color: var(--color-text-primary);
     white-space: nowrap;
     overflow: hidden;
@@ -151,6 +151,6 @@
   &__item-months {
     font-size: 0.8125rem;
     color: var(--gym-text-danger);
-    font-weight: 500;
+    font-weight: var(--font-semibold);
   }
 }

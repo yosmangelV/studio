@@ -24,7 +24,7 @@
 
   &__total-label {
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: var(--font-semibold);
     color: var(--color-text-secondary);
   }
 
@@ -62,7 +62,7 @@
 
   &__method-label {
     font-size: 0.8125rem;
-    font-weight: 500;
+    font-weight: var(--font-semibold);
     color: var(--color-text-secondary);
   }
 

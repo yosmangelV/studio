@@ -74,7 +74,7 @@
 .login__brand-headline-top {
   display: block;
   font-size: clamp(1.5rem, 3.5vw, 3rem);
-  font-weight: 300;
+  font-weight: var(--font-semibold); // Oswald loads 600 and 700 only
   color: var(--gym-text-primary);
   letter-spacing: 0.06em;
 }
@@ -156,7 +156,7 @@
   min-height: var(--size-touch-target);
   font-family: var(--gym-font-body);
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: var(--font-normal);
   color: var(--gym-text-secondary);
   text-decoration: none;
   text-align: center;

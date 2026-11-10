@@ -104,7 +104,7 @@
 .loading__name-bottom {
   font-family: var(--gym-font-body);
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: var(--font-semibold);
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--gym-brand-on-dark);
