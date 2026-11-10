@@ -52,3 +52,15 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+// Reduced motion: the spinner pulses in place instead of rotating.
+@media (prefers-reduced-motion: reduce) {
+  .story-player__spinner {
+    animation: spinner-pulse var(--duration-cinematic) var(--ease-default) infinite alternate;
+  }
+}
+
+@keyframes spinner-pulse {
+  from { opacity: 1; }
+  to   { opacity: 0.4; }
+}

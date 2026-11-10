@@ -44,7 +44,7 @@ Fixed by the migration below (2026-11-10): the script colour was 2.8:1, the coun
 - **The reader sets the pace.** Only the countdown advances by itself (three seconds, and "next" still skips it). No other slide auto-advances: WCAG 2.2.1 gives the reader control over timing.
 - **Navigation is always reachable:** previous and next buttons of at least 44px (today 48px) with visible labels for assistive tech, and the arrow keys. On the last slide "next" restarts.
 - **Progress** is shown by the dots and exposed as a progressbar (`aria-valuenow` / `aria-valuemax`); the dots themselves are decorative.
-- **Motion:** each slide gets one entrance, from `transform` and `opacity`, timed by the DS motion tokens. Under `prefers-reduced-motion` slides appear without animation, and the countdown still counts but its numerals don't animate.
+- **Motion:** each slide gets one entrance, from `transform` and `opacity`, timed by the DS motion tokens. Under `prefers-reduced-motion` slides appear without animation. The countdown still counts and each numeral fades in, without the scale: it is the effect that gives the story its life, so it keeps a visible beat (owner's decision, 2026-11-10). Hover and progress dots drop their scale, and the loading spinner pulses instead of rotating.
 - **Images** always carry the API's `alt`; a slide without an image falls back to its text layout, never a placeholder picture.
 - **Errors** (`404` unknown code, `410` deactivated message) get a short, kind sentence in the product's voice, never a status code or a technical message. The API owns that copy today and meets this rule; the player's own fallback is "No pudimos cargar este mensaje."
 - **Without a code, the page stays private** (owner's decision, 2026-11-08, replacing the `DEMO-FRIENDS` redirect). `/` and any unknown path show a short "this announcement is private" page that never calls the API, so a visitor without a link sees nothing of what is shared and no error.
@@ -60,9 +60,9 @@ The deployed player breaks these rules today. Colour, type and motion fixes go i
 - [x] Ultrasound badge: a text-role token on a fill that passes 4.5:1, no literal `#fff`
 - [x] Remove `--ann-text-accent` or rename it to an accent: it is not a text colour
 - [x] Add `contrast.config.json` for announcement-web and wire it into `test:contrast` and CI
-- [ ] `prefers-reduced-motion` fallback for every slide animation: no stylesheet in the app has one today (Floor 5)
-- [ ] Arrow-key navigation in the story player
-- [ ] Heart (❤️) and nav arrows (← → ↺) become SVG icons (Floor 7)
+- [x] `prefers-reduced-motion` fallback for every slide animation: no stylesheet in the app has one today (Floor 5)
+- [x] Arrow-key navigation in the story player
+- [x] Heart (❤️) and nav arrows (← → ↺) become SVG icons (Floor 7)
 - [ ] Remove the eyebrow from the intro and text slides (`eyebrow` field and `__eyebrow` styles)
 - [ ] Three weights: drop Playfair 900 and Dancing Script 700 from the font link and the styles
 - [ ] Body text in the body face: `.intro-slide__body` and `.text-slide__body` use `--ann-font-display` today, and should use `--ann-font-body`

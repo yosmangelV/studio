@@ -26,3 +26,18 @@
     transform: scale(1);
   }
 }
+
+// Reduced motion: the countdown keeps counting and each numeral still fades in,
+// without the scale (owner's decision, 2026-11-10: the countdown is the effect
+// that gives the story its life, so it keeps a visible beat).
+@media (prefers-reduced-motion: reduce) {
+  .countdown-slide__number {
+    animation-name: countdown-fade;
+    animation-timing-function: var(--ease-out);
+  }
+}
+
+@keyframes countdown-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

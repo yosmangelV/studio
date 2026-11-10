@@ -14,7 +14,6 @@
     border: 2px solid var(--ann-text-dark);
     background: transparent;
     color: var(--ann-text-dark);
-    font-size: var(--text-xl);
     cursor: pointer;
     transition: background-color var(--duration-normal) var(--ease-default),
                 opacity var(--duration-normal) var(--ease-default),
@@ -43,6 +42,18 @@
       &:hover:not(:disabled) {
         background-color: var(--ann-text-soft);
       }
+    }
+  }
+}
+
+// Reduced motion: colours still change on hover, the button does not grow.
+@media (prefers-reduced-motion: reduce) {
+  .story-nav__btn {
+    transition: background-color var(--duration-normal) var(--ease-default),
+                opacity var(--duration-normal) var(--ease-default);
+
+    &:hover:not(:disabled) {
+      transform: none;
     }
   }
 }

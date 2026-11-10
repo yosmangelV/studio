@@ -1,18 +1,22 @@
 <nav class="story-nav">
   <button
+    type="button"
     class="story-nav__btn story-nav__btn--prev"
+    data-testid="announcement-nav-previous"
     [disabled]="isFirst()"
     (click)="previous.emit()"
     aria-label="Diapositiva anterior"
   >
-    ←
+    <lucide-angular [img]="icons.previous" [size]="iconSize" aria-hidden="true" />
   </button>
 
   <button
+    type="button"
     class="story-nav__btn story-nav__btn--next"
+    data-testid="announcement-nav-next"
     (click)="next.emit()"
-    [attr.aria-label]="isLast() ? 'Ver desde el principio' : 'Siguiente diapositiva'"
+    [attr.aria-label]="nextLabel()"
   >
-    {{ isLast() ? '↺' : '→' }}
+    <lucide-angular [img]="nextIcon()" [size]="iconSize" aria-hidden="true" />
   </button>
 </nav>

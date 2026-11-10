@@ -55,3 +55,10 @@
     transform: translateY(0);
   }
 }
+
+// Reduced motion: the slide appears without its entrance.
+@media (prefers-reduced-motion: reduce) {
+  .text-slide {
+    animation: none;
+  }
+}
