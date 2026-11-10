@@ -7,28 +7,32 @@
   gap: 0.25rem;
 
   &__btn {
-    min-width: var(--size-touch-target, 44px);
-    height: var(--size-touch-target, 44px);
-    padding: 0 0.5rem;
-    border-radius: var(--radius-md, 6px);
-    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    min-width: var(--size-touch-target);
+    height: var(--size-touch-target);
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
     background: transparent;
-    color: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
-    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    transition:
+      background-color var(--duration-fast) var(--ease-default),
+      border-color var(--duration-fast) var(--ease-default),
+      color var(--duration-fast) var(--ease-default);
 
+    // Same hover/active fills as the ghost button; checked in contrast.config.json.
     &:hover:not(:disabled) {
-      background: var(--color-surface-hover, rgba(255, 255, 255, 0.08));
-      border-color: var(--color-border-strong, rgba(255, 255, 255, 0.2));
-      color: var(--color-text-primary, #fff);
+      background-color: var(--color-primary-50);
+      border-color: var(--color-border-strong);
+      color: var(--color-text-primary);
     }
 
     &--active {
-      background: var(--color-surface-active, rgba(255, 255, 255, 0.12));
-      border-color: var(--color-border-strong, rgba(255, 255, 255, 0.3));
-      color: var(--color-text-primary, #fff);
-      font-weight: 600;
+      background-color: var(--color-primary-100);
+      border-color: var(--color-border-strong);
+      color: var(--color-text-primary);
+      font-weight: var(--font-semibold);
       pointer-events: none;
     }
 
@@ -40,13 +44,13 @@
   }
 
   &__ellipsis {
-    min-width: var(--size-touch-target, 44px);
-    height: var(--size-touch-target, 44px);
+    min-width: var(--size-touch-target);
+    height: var(--size-touch-target);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-tertiary, rgba(255, 255, 255, 0.3));
-    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-text-tertiary);
+    font-size: var(--text-sm);
     user-select: none;
   }
 }

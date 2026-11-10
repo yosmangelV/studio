@@ -97,12 +97,27 @@
           "label": "control borders",
           "min": 3,
           "fg": [
-            "--gym-border-control"
+            "--gym-border-control",
+            "--color-border-strong"
           ],
           "bg": [
             "--gym-surface-app",
             "--gym-surface-panel",
-            "--gym-surface-raised"
+            "--gym-surface-raised",
+            "--gym-dark",
+            "--gym-surface-elevated"
+          ]
+        },
+        {
+          "label": "text on DS hover/active fills",
+          "min": 4.5,
+          "fg": [
+            "--color-text-primary",
+            "--color-text-link"
+          ],
+          "bg": [
+            "--color-primary-50",
+            "--color-primary-100"
           ]
         }
       ]
