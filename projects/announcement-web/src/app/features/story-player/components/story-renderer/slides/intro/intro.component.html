@@ -1,15 +1,11 @@
 <div class="intro-slide">
   @if (slide().title) {
-    <p class="intro-slide__eyebrow">{{slide().title }}</p>
+    <h1 class="intro-slide__title">{{ slide().title }}</h1>
   }
-  <p class="intro-slide__body">
-    <em class="intro-slide__emphasis">{{slide().body }}</em>
-  </p>
-  
+  @if (slide().body) {
+    <p class="intro-slide__body">{{ slide().body }}</p>
+  }
   @if (slide().footer) {
-    <h4 class="intro-slide__footer">{{slide().footer }}</h4>
+    <p class="intro-slide__emphasis">{{ slide().footer }}</p>
   }
-  
 </div>
-
-

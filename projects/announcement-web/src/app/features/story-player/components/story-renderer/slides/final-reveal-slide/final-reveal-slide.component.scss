@@ -42,9 +42,9 @@
   }
 
   &__title {
-    font-family: var(--ann-font-script);
+    font-family: var(--ann-font-display);
     font-size: clamp(1.75rem, 7vw, 2.5rem);
-    font-weight: 700;
+    font-weight: var(--font-bold);
     color: var(--ann-text-dark);
   }
 
@@ -57,9 +57,11 @@
     animation: fade-up var(--duration-cinematic) var(--ease-out) var(--stagger-3) both;
   }
 
+  // The one emphasised line: script face, 24px or more (design.md, Type)
   &__message {
     font-family: var(--ann-font-script);
-    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    font-size: clamp(1.5rem, 6vw, 1.75rem);
+    font-weight: var(--font-semibold);
     color: var(--ann-text-script);
     animation: fade-up var(--duration-cinematic) var(--ease-out) var(--stagger-4) both;
   }

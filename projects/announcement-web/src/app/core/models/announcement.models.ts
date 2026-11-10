@@ -28,7 +28,6 @@ type BaseSlide = {
 
 export type IntroSlide = BaseSlide & {
   type: 'intro';
-  eyebrow?: string;
   title?: string;
   body: string;
   emphasis?: string;
@@ -36,7 +35,6 @@ export type IntroSlide = BaseSlide & {
 
 export type TextSlide = BaseSlide & {
   type: 'text';
-  eyebrow?: string;
   title?: string;
   body: string;
   emphasis?: string;
