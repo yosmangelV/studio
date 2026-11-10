@@ -15,10 +15,21 @@
   // ---------------------------------------------------------------------------
   // Text
   // ---------------------------------------------------------------------------
-  --ann-text-dark:   #2D1F3D;
-  --ann-text-soft:   #5C4A6E;
-  --ann-text-accent: #7BB4E3;   // Pastel blue
-  --ann-text-script: #9B7BFF;   // Handwriting font emphasis
+  --ann-text-dark:    #2D1F3D;
+  --ann-text-soft:    #5C4A6E;
+  --ann-text-script:  #7454DB;   // Handwriting font emphasis (4.6:1 on cream)
+  --ann-text-inverse: #F5F0E8;   // Text on the dark and emphasis fills (nav, badge)
+
+  // ---------------------------------------------------------------------------
+  // Fills — never text (contrast.config.json forbids them as text)
+  // ---------------------------------------------------------------------------
+  --ann-fill-emphasis: var(--ann-text-script);   // Ultrasound badge
+
+  // ---------------------------------------------------------------------------
+  // DS remaps — the page is always cream, so the DS focus ring must not follow
+  // the OS into dark mode (its dark value is 2.6:1 on cream)
+  // ---------------------------------------------------------------------------
+  --color-border-focus: var(--ann-text-dark);
 
   // ---------------------------------------------------------------------------
   // Accents

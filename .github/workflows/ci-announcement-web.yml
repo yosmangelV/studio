@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'projects/announcement-web/**'
+      - 'projects/design-system/src/styles/tokens.scss'
+      - 'projects/design-system/scripts/check-contrast.mjs'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/ci-announcement-web.yml'
@@ -29,6 +31,8 @@ jobs:
           filters: |
             relevant:
               - 'projects/announcement-web/**'
+              - 'projects/design-system/src/styles/tokens.scss'
+              - 'projects/design-system/scripts/check-contrast.mjs'
               - 'package.json'
               - 'package-lock.json'
               - '.github/workflows/ci-announcement-web.yml'
@@ -52,6 +56,9 @@ jobs:
 
       - name: Test announcement-web
         run: npx nx test announcement-web --watch=false
+
+      - name: Check announcement-web contrast and token usage
+        run: node projects/design-system/scripts/check-contrast.mjs projects/announcement-web/contrast.config.json
 
   # Required status check. GitHub accepts a skipped required check as passing,
   # so `test` (skipped when nothing relevant changed, or when `changes` fails)
