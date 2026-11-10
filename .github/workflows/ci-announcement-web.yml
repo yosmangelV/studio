@@ -7,6 +7,7 @@ on:
       - 'projects/announcement-web/**'
       - 'package.json'
       - 'package-lock.json'
+      - '.github/workflows/ci-announcement-web.yml'
   pull_request:
     branches: [main]
 
@@ -30,9 +31,10 @@ jobs:
               - 'projects/announcement-web/**'
               - 'package.json'
               - 'package-lock.json'
+              - '.github/workflows/ci-announcement-web.yml'
 
   test:
-    name: Announcement Web test
+    name: Announcement Web test (run)
     needs: changes
     if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest
@@ -50,3 +52,34 @@ jobs:
 
       - name: Test announcement-web
         run: npx nx test announcement-web --watch=false
+
+  # Required status check. GitHub accepts a skipped required check as passing,
+  # so `test` (skipped when nothing relevant changed, or when `changes` fails)
+  # cannot be the required check itself. This job always runs and keeps the
+  # name branch protection requires: renaming it blocks merges.
+  gate:
+    name: Announcement Web test
+    needs: [changes, test]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Require the tests to pass or to be unneeded
+        env:
+          CHANGES: ${{ needs.changes.result }}
+          RELEVANT: ${{ needs.changes.outputs.relevant }}
+          TEST: ${{ needs.test.result }}
+        run: |
+          if [ "$CHANGES" != "success" ]; then
+            echo "::error::The changes filter did not succeed (result: $CHANGES)."
+            exit 1
+          fi
+          if [ "$RELEVANT" = "true" ] && [ "$TEST" = "success" ]; then
+            exit 0
+          fi
+          if [ "$RELEVANT" = "false" ] && [ "$TEST" = "skipped" ]; then
+            echo "No relevant changes; tests not needed."
+            exit 0
+          fi
+          echo "::error::Unexpected state (relevant: $RELEVANT, test: $TEST)."
+          exit 1
