@@ -33,7 +33,7 @@
   &__spinner {
     width: 40px;
     height: 40px;
-    border: 3px solid var(--ann-accent-sage);
+    border: 3px solid var(--ann-text-dark); // UI part: 3:1 on cream (sage is 2.2:1)
     border-top-color: transparent;
     border-radius: var(--radius-full);
     animation: spin var(--duration-slow) linear infinite;
@@ -62,5 +62,5 @@
 
 @keyframes spinner-pulse {
   from { opacity: 1; }
-  to   { opacity: 0.4; }
+  to   { opacity: 0.6; } // --ann-text-dark at 60% on cream is 4.0:1, above the 3:1 for UI parts
 }
