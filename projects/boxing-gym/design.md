@@ -83,4 +83,4 @@ Clean from the start: no horizontal scroll, no text under 12px, a visible focus 
 - [x] The student level select and the payment selects show their prompt instead of rendering empty
 - [x] No literal colours left in panel stylesheets; three undefined tokens (`--gym-surface-alt`, `--gym-primary`, `--gym-error`) that only worked through their fallbacks are gone
 - [x] Payment rows let the actions wrap, so a student's name is no longer cut short on a phone
-- [ ] The splash gloves are the 🥊 emoji: an illustration, not an icon, but still emoji (Floor 7). Needs a drawn SVG glove
+- [x] The splash gloves are the 🥊 emoji: an illustration, not an icon, but still emoji (Floor 7). They are a drawn SVG glove painted with the brand fill tokens; the decorative glow around them is gone, "Boxing E.Bote" is sentence case and untracked (Inter), and under reduced motion the impact flash is hidden

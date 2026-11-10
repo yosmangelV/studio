@@ -63,14 +63,42 @@
 }
 
 .loading__glove {
-  font-size: 4rem;
-  line-height: 1;
   display: block;
-  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--gym-brand) 60%, transparent));
+  width: var(--space-16);
+  height: var(--space-16);
 
   &--mirrored {
     transform: scaleX(-1);
   }
+}
+
+// Fill tokens only: the glove is a picture, not text.
+.loading__glove-body,
+.loading__glove-thumb {
+  fill: var(--gym-brand);
+}
+
+.loading__glove-thumb {
+  stroke: var(--gym-surface-app);
+  stroke-width: 1.4;
+  stroke-opacity: 0.55;
+}
+
+.loading__glove-cuff {
+  fill: var(--gym-brand-dark);
+}
+
+.loading__glove-shine {
+  fill: var(--gym-brand-light);
+  opacity: 0.75;
+}
+
+.loading__glove-line {
+  fill: none;
+  stroke: var(--gym-surface-app);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.55;
 }
 
 // Impact flash that appears at collision
@@ -105,8 +133,6 @@
   font-family: var(--gym-font-body);
   font-size: 0.75rem;
   font-weight: var(--font-semibold);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
   color: var(--gym-brand-on-dark);
 }
 
@@ -237,4 +263,6 @@
   .loading__glove-wrap--left  { transform: translateX(16px); opacity: 1; }
   .loading__glove-wrap--right { transform: translateX(-16px); opacity: 1; }
   .loading__name { opacity: 1; }
+  // Without motion there is no collision to mark: the flash would sit still as a glow.
+  .loading__impact { opacity: 0; }
 }
