@@ -35,7 +35,7 @@ New `main` after the rewrite: `e9f3068`.
 
 ## 3. Next PRs, in order
 
-1. **Announcement-web colour, type and motion fixes.** The checklist is in `projects/announcement-web/design.md`, under "Migration from the 2026-11-02 review".
+1. **Announcement history purge (owner).** #52 took the stories (real names) and the ultrasound details out of the tree, but the old versions of `apps/announcement-api/scripts/seed.ts`, `semana12.jpg` and `ultrasound.jpg` are still in the public history. The steps are in the #52 description: `git filter-repo --strip-blobs-with-ids` with the old blobs (this keeps the current files), then a force push with protection opened briefly, a GitHub Support ticket and deleting the old Vercel deployments. The other photos in `public/assets/stories/` are personal too; moving them out of the repo is not decided.
 2. **Remaining boxing-gym items** (`projects/boxing-gym/design.md`):
    - REFLEX 77: the "Nuestras clases" `striped-list` reaches 69% at 1440px.
    - F19: four font weights in use; the fourth (500) comes from the DS `page-nav`.

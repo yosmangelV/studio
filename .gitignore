@@ -57,3 +57,6 @@ projects/announcement-web/public/assets/stories/_backup/
 projects/boxing-gym/src/environments/environment.ts
 projects/boxing-gym/src/environments/environment.prod.ts
 projects/boxing-gym/.env
+
+# Hallmark lint screenshots: they capture real story content
+.hallmark/
