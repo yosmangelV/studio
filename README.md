@@ -127,7 +127,7 @@ cp .env.example .env  # fill in Supabase credentials
 
 uv sync
 uv run uvicorn app.main:app --reload
-# → http://localhost:8080
+# → http://localhost:8000
 ```
 
 ### Announcement API (NestJS)
