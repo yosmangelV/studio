@@ -10,7 +10,8 @@
   gap: var(--space-6);
 
   &__heart {
-    font-size: 3rem;
+    display: inline-flex;
+    color: var(--ann-text-script);
     animation: heart-beat var(--duration-xslow) var(--ease-spring) both;
   }
 
@@ -107,4 +108,20 @@
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(var(--slide-md)); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+// Reduced motion: the heart, banner, photo and lines appear without their entrances.
+@media (prefers-reduced-motion: reduce) {
+  .final-reveal-slide__heart,
+  .final-reveal-slide__banner,
+  .final-reveal-slide__subtitle,
+  .final-reveal-slide__message,
+  .final-reveal-slide__photo,
+  .final-reveal-slide__photo.is-loading {
+    animation: none;
+  }
+
+  .final-reveal-slide__photo img {
+    transition: none;
+  }
 }

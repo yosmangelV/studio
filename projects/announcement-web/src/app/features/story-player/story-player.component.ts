@@ -13,6 +13,10 @@ import { SlideRendererComponent } from './components/story-renderer/slide-render
   imports: [SlideRendererComponent, ProgressDotsComponent, StoryNavComponent],
   templateUrl: './story-player.component.html',
   styleUrl: './story-player.component.scss',
+  host: {
+    '(document:keydown.arrowright)': 'onArrowKey($event, "next")',
+    '(document:keydown.arrowleft)': 'onArrowKey($event, "previous")',
+  },
 })
 export class StoryPlayerComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -38,20 +42,35 @@ export class StoryPlayerComponent implements OnInit {
     this.storyService.load(code);
   }
 
+  /** Advances one slide; on the last slide it restarts the story (design.md, story rules). */
   next(): void {
     if (this.isLast()) {
       this.currentIndex.set(0);
       return;
     }
-    if (!this.isLast()) {
-      this.currentIndex.update((i) => i + 1);
-    }
-    
+    this.currentIndex.update((i) => i + 1);
   }
 
+  /** Goes back one slide; on the first slide it does nothing, like the disabled button. */
   previous(): void {
     if (!this.isFirst()) {
       this.currentIndex.update((i) => i - 1);
+    }
+  }
+
+  /** Arrow keys mirror the nav buttons once a story is on screen (design.md, story rules). */
+  protected onArrowKey(event: Event, direction: 'next' | 'previous'): void {
+    if (!(event instanceof KeyboardEvent) || this.status() !== StoryStatus.SUCCESS) {
+      return;
+    }
+    if (event.altKey || event.ctrlKey || event.metaKey) {
+      return;
+    }
+    event.preventDefault();
+    if (direction === 'next') {
+      this.next();
+    } else {
+      this.previous();
     }
   }
 }

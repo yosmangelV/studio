@@ -19,3 +19,10 @@
     }
   }
 }
+
+// Reduced motion: the active dot changes at once instead of animating.
+@media (prefers-reduced-motion: reduce) {
+  .progress-dots__dot {
+    transition: none;
+  }
+}

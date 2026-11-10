@@ -111,3 +111,18 @@
   from { opacity: 0; transform: translateY(var(--slide-md)); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+// Reduced motion: the photo, badge and lines appear without their entrances.
+@media (prefers-reduced-motion: reduce) {
+  .ultrasound-slide__photo,
+  .ultrasound-slide__photo.is-loading,
+  .ultrasound-slide__footer,
+  .ultrasound-slide__title,
+  .ultrasound-slide__body {
+    animation: none;
+  }
+
+  .ultrasound-slide__photo img {
+    transition: none;
+  }
+}
