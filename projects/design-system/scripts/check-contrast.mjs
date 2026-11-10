@@ -126,7 +126,9 @@ function undefinedReferences(sources, tokenFiles) {
 
 const LITERAL_COLOR = /^(#[0-9a-f]{3,8}|rgba?\(|hsla?\(|white$|black$)/i;
 
-function usageViolations(sources, forbiddenText = []) {
+// `forbiddenTokens` are tokens a component may not reference at all, as text or fill:
+// raw palette values (primitives) that only the token files map onto roles.
+function usageViolations(sources, forbiddenText = [], forbiddenTokens = []) {
   const out = [];
   for (const dir of sources) {
     for (const file of walk(dir)) {
@@ -140,6 +142,9 @@ function usageViolations(sources, forbiddenText = []) {
           const token = value.match(/^var\(\s*(--[\w-]+)/)?.[1];
           if (LITERAL_COLOR.test(value)) out.push({ where, why: `literal text colour "${value}": use a text-role token` });
           else if (token && forbiddenText.includes(token)) out.push({ where, why: `${token} is not a text token` });
+        }
+        for (const [, name] of code.matchAll(/var\(\s*(--[\w-]+)/g)) {
+          if (forbiddenTokens.includes(name)) out.push({ where, why: `${name} is a primitive: use the role token that maps it` });
         }
         if (/outline:\s*(none|0)\b/.test(code) && !line.includes('a11y-ok')) {
           out.push({ where, why: 'focus outline removed (add a visible :focus-visible style, then mark the line "a11y-ok: <reason>")' });
@@ -207,13 +212,13 @@ for (const configPath of process.argv.slice(2)) {
     console.log(`✓ ${config.name}: no undefined token references`);
   }
 
-  const misuse = usageViolations(config.sources ?? [], config.forbiddenTextTokens);
+  const misuse = usageViolations(config.sources ?? [], config.forbiddenTextTokens, config.forbiddenTokens);
   if (misuse.length) {
     failures += misuse.length;
     console.log(`✗ ${config.name}: ${misuse.length} component styles bypass the tokens`);
     for (const m of misuse) console.log(`    ${m.where}: ${m.why}`);
   } else {
-    console.log(`✓ ${config.name}: components use text and focus tokens`);
+    console.log(`✓ ${config.name}: components use role, text and focus tokens`);
   }
 }
 
