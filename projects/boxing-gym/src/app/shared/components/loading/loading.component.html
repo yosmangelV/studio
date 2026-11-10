@@ -3,13 +3,13 @@
 
   <div class="loading__arena">
     <div class="loading__glove-wrap loading__glove-wrap--left">
-      <span class="loading__glove loading__glove--mirrored" aria-hidden="true">🥊</span>
+      <ng-container [ngTemplateOutlet]="glove" />
     </div>
 
     <div class="loading__impact" aria-hidden="true"></div>
 
     <div class="loading__glove-wrap loading__glove-wrap--right">
-      <span class="loading__glove" aria-hidden="true">🥊</span>
+      <ng-container [ngTemplateOutlet]="glove" [ngTemplateOutletContext]="{ mirrored: true }" />
     </div>
   </div>
 
@@ -18,3 +18,22 @@
     <span class="loading__name-bottom">Boxing E.Bote</span>
   </p>
 </div>
+
+<!-- A drawn glove, facing right; the right-hand one is mirrored to face it. -->
+<ng-template #glove let-mirrored="mirrored">
+  <svg
+    class="loading__glove"
+    [class.loading__glove--mirrored]="mirrored"
+    viewBox="0 0 64 64"
+    aria-hidden="true"
+    focusable="false"
+    data-testid="loading-glove"
+  >
+    <path class="loading__glove-cuff" d="M3 27 Q3 24 6 24 L22 23 L22 51 L6 50 Q3 50 3 47 Z" />
+    <path class="loading__glove-line" d="M8 29 L17 36 M17 29 L8 36 M8 38 L17 45 M17 38 L8 45" />
+    <path class="loading__glove-body" d="M20 22 C20 12 29 6 40 6 C53 6 62 15 62 29 C62 44 52 55 37 55 C29 55 23 53 20 50 Z" />
+    <path class="loading__glove-thumb" d="M20 30 C21 22 29 18 38 19 C46 20 51 26 50 32 C49 37 43 38 38 35 C33 32 26 32 20 36 Z" />
+    <path class="loading__glove-shine" d="M36 10 C44 9 52 13 56 20 C51 17 44 15 38 15 Z" />
+    <path class="loading__glove-line" d="M27 44 C33 47 42 47 49 43" />
+  </svg>
+</ng-template>
