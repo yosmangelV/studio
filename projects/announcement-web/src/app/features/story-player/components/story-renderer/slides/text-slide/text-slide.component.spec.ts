@@ -33,9 +33,10 @@ describe.each(cases)('%s', (_name, component) => {
   });
 
   it('omits the parts the slide does not have', async () => {
-    await render(component, { inputs: { slide: { ...slide, title: '', footer: '' } } });
+    const { container } = await render(component, { inputs: { slide: { ...slide, title: '', footer: '' } } });
 
     expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+    expect(container.querySelector('[class*="__emphasis"]')).toBeNull();
     expect(screen.getByText('Has cuidado de mi familia.')).toBeInTheDocument();
   });
 });
