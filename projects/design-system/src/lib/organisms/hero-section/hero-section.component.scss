@@ -73,7 +73,7 @@
   &__headline-top {
     display: block;
     font-size: clamp(2rem, 6.5vw, 5.5rem);
-    font-weight: var(--font-normal);
+    font-weight: var(--font-semibold); // display faces stay at two weights, 600 and 700
     color: var(--color-text-primary);
     letter-spacing: 0.08em;
     animation: hero-enter var(--duration-slow) 100ms var(--ease-default) both;
