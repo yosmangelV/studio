@@ -4,7 +4,8 @@
 // (see striped-list).
 $breakpoints: (
   sm: 480px,  // large phones: roomier button padding
-  lg: 1024px, // the page nav has room for its links
+  md: 768px,  // tablets: the page nav shows its links, tightly spaced
+  lg: 1024px, // desktop: the page nav links get their full spacing
 );
 
 @mixin up($name) {

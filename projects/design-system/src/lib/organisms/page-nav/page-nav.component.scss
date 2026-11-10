@@ -63,13 +63,18 @@
   &__links {
     display: none;
     list-style: none;
-    gap: 2.5rem;
+    gap: var(--space-5);
     margin: 0;
     padding: 0;
 
-    // From 768px the links touched the brand and the actions (1px apart); 1024px leaves room.
-    @include bp.up(lg) {
+    // At 768px a 2.5rem gap left the links 1px from the brand and the actions; the
+    // tighter gap leaves 30px. The 44px hit areas (link + 0.5rem a side) still do not overlap.
+    @include bp.up(md) {
       display: flex;
+    }
+
+    @include bp.up(lg) {
+      gap: var(--space-10);
     }
   }
 
