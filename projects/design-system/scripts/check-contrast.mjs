@@ -126,16 +126,65 @@ function undefinedReferences(sources, tokenFiles) {
 
 const LITERAL_COLOR = /^(#[0-9a-f]{3,8}|rgba?\(|hsla?\(|white$|black$)/i;
 
+/**
+ * The stylesheet with comments blanked out, newlines kept so offsets map to the same
+ * lines. `//` only starts a comment outside strings and `url(...)`, so a URL such as
+ * `url(https://x/a.png)` survives.
+ */
+function maskComments(css) {
+  let out = '';
+  let quote = null;
+  let inUrl = false;
+  for (let i = 0; i < css.length; i++) {
+    const c = css[i];
+    if (quote) {
+      out += c;
+      if (c === '\\') { out += css[++i] ?? ''; continue; }
+      if (c === quote) quote = null;
+      continue;
+    }
+    if (c === '"' || c === "'") { quote = c; out += c; continue; }
+    if (!inUrl && css.startsWith('url(', i)) { inUrl = true; out += 'url('; i += 3; continue; }
+    if (inUrl) { out += c; if (c === ')') inUrl = false; continue; }
+    if (css.startsWith('/*', i)) {
+      const close = css.indexOf('*/', i + 2);
+      const stop = close === -1 ? css.length : close + 2;
+      out += css.slice(i, stop).replace(/[^\n]/g, ' ');
+      i = stop - 1;
+      continue;
+    }
+    if (css.startsWith('//', i)) {
+      const nl = css.indexOf('\n', i);
+      const stop = nl === -1 ? css.length : nl;
+      out += ' '.repeat(stop - i);
+      i = stop - 1;
+      continue;
+    }
+    out += c;
+  }
+  return out;
+}
+
+/** True when the `var()` at `index` is inside a custom property declaration (`--x: var(--y)`). */
+function inTokenDeclaration(css, index) {
+  const start = Math.max(css.lastIndexOf(';', index), css.lastIndexOf('{', index), css.lastIndexOf('}', index)) + 1;
+  return /^\s*--[\w-]+\s*:/.test(css.slice(start, index));
+}
+
 // `forbiddenTokens` are tokens a component may not reference at all, as text or fill:
-// raw palette values (primitives) that only the token files map onto roles.
+// raw palette values (primitives) that only the token files map onto roles. Mapping
+// one onto another custom property (`--role: var(--primitive)`) is what token files
+// do, so declarations are exempt.
 function usageViolations(sources, forbiddenText = [], forbiddenTokens = []) {
   const out = [];
   for (const dir of sources) {
     for (const file of walk(dir)) {
       if (extname(file) !== '.scss' && extname(file) !== '.css') continue;
-      readFileSync(file, 'utf8').split('\n').forEach((line, i) => {
+      const raw = readFileSync(file, 'utf8');
+      const masked = maskComments(raw);
+      const rawLines = raw.split('\n');
+      masked.split('\n').forEach((code, i) => {
         const where = `${file}:${i + 1}`;
-        const code = line.replace(/\/\/.*$/, '');
         const color = code.match(/(?:^|[\s{;])color:\s*([^;]+);/);
         if (color) {
           const value = color[1].trim();
@@ -143,13 +192,16 @@ function usageViolations(sources, forbiddenText = [], forbiddenTokens = []) {
           if (LITERAL_COLOR.test(value)) out.push({ where, why: `literal text colour "${value}": use a text-role token` });
           else if (token && forbiddenText.includes(token)) out.push({ where, why: `${token} is not a text token` });
         }
-        for (const [, name] of code.matchAll(/var\(\s*(--[\w-]+)/g)) {
-          if (forbiddenTokens.includes(name)) out.push({ where, why: `${name} is a primitive: use the role token that maps it` });
-        }
-        if (/outline:\s*(none|0)\b/.test(code) && !line.includes('a11y-ok')) {
+        if (/outline:\s*(none|0)\b/.test(code) && !rawLines[i].includes('a11y-ok')) {
           out.push({ where, why: 'focus outline removed (add a visible :focus-visible style, then mark the line "a11y-ok: <reason>")' });
         }
       });
+      // Whole-file scan, so a var( and its name on different lines still match.
+      for (const m of masked.matchAll(/var\(\s*(--[\w-]+)/g)) {
+        if (!forbiddenTokens.includes(m[1]) || inTokenDeclaration(masked, m.index)) continue;
+        const line = masked.slice(0, m.index).split('\n').length;
+        out.push({ where: `${file}:${line}`, why: `${m[1]} is a primitive: use the role token that maps it` });
+      }
     }
   }
   return out;
