@@ -37,9 +37,7 @@ describe('ImageSlideComponent', () => {
   });
 
   it('falls back to the text layout without an empty img when there is no image', async () => {
-    const { image, ...withoutImage } = baseSlide;
-    void image;
-    await renderSlide(withoutImage);
+    await renderSlide({ ...baseSlide, image: undefined });
 
     expect(screen.queryByTestId('announcement-slide-image')).not.toBeInTheDocument();
     expect(document.querySelector('img')).toBeNull();
