@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 import { InputComponent } from './input.component';
@@ -7,6 +7,8 @@ const meta: Meta<InputComponent> = {
   title: 'Atoms/Input',
   component: InputComponent,
   tags: ['autodocs'],
+  // ds-input is disabled through its form control (ControlValueAccessor), not an input.
+  decorators: [moduleMetadata({ imports: [ReactiveFormsModule] })],
   args: {
     inputId: 'demo-input',
     type: 'text',
@@ -42,8 +44,8 @@ export const Password: Story = {
 export const Disabled: Story = {
   args: { placeholder: 'Campo deshabilitado' },
   render: (args) => ({
-    props: args,
-    template: `<ds-input [inputId]="inputId" [type]="type" [placeholder]="placeholder" [disabled]="true" />`,
+    props: { ...args, ctrl: new FormControl({ value: '', disabled: true }) },
+    template: `<ds-input [inputId]="inputId" [type]="type" [placeholder]="placeholder" [formControl]="ctrl" />`,
   }),
 };
 
@@ -72,12 +74,13 @@ export const WithReactiveForm: Story = {
 
 export const AllVariants: Story = {
   render: (_args) => ({
+    props: { disabledCtrl: new FormControl({ value: '', disabled: true }) },
     template: `
       <div style="display:flex;flex-direction:column;gap:16px;max-width:320px">
         <ds-input inputId="v1" placeholder="Default" />
         <ds-input inputId="v2" placeholder="Con error" [hasError]="true" />
         <ds-input inputId="v3" type="password" placeholder="Password" />
-        <ds-input inputId="v4" placeholder="Disabled" [disabled]="true" />
+        <ds-input inputId="v4" placeholder="Disabled" [formControl]="disabledCtrl" />
       </div>
     `,
   }),

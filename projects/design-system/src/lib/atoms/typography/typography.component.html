@@ -1,11 +1,14 @@
+<!-- Projected once: an <ng-content> inside each @case would only fill one of them. -->
+<ng-template #content><ng-content /></ng-template>
+
 @switch (tag()) {
-  @case ('h1') { <h1 [class]="classes()"><ng-content /></h1> }
-  @case ('h2') { <h2 [class]="classes()"><ng-content /></h2> }
-  @case ('h3') { <h3 [class]="classes()"><ng-content /></h3> }
-  @case ('h4') { <h4 [class]="classes()"><ng-content /></h4> }
-  @case ('h5') { <h5 [class]="classes()"><ng-content /></h5> }
-  @case ('h6') { <h6 [class]="classes()"><ng-content /></h6> }
-  @case ('label') { <label [class]="classes()"><ng-content /></label> }
-  @case ('span') { <span [class]="classes()"><ng-content /></span> }
-  @default { <p [class]="classes()"><ng-content /></p> }
+  @case ('h1') { <h1 [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></h1> }
+  @case ('h2') { <h2 [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></h2> }
+  @case ('h3') { <h3 [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></h3> }
+  @case ('h4') { <h4 [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></h4> }
+  @case ('h5') { <h5 [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></h5> }
+  @case ('h6') { <h6 [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></h6> }
+  @case ('label') { <label [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></label> }
+  @case ('span') { <span [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></span> }
+  @default { <p [class]="classes()"><ng-container [ngTemplateOutlet]="content" /></p> }
 }

@@ -1,4 +1,5 @@
-import { Component, input, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, computed } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 /**
  * The typographic scale of the design system. Use `ds-text` instead of raw HTML
@@ -51,6 +52,8 @@ const DEFAULT_TAGS: Record<TypographyVariant, TypographyTag> = {
 @Component({
   selector: 'ds-text',
   standalone: true,
+  imports: [NgTemplateOutlet],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './typography.component.html',
   styleUrl: './typography.component.scss',
 })

@@ -24,6 +24,13 @@ describe('TypographyComponent', () => {
     expect(container.querySelector(tag)).toBeInTheDocument();
   });
 
+  // One <ng-content> per @case only projects into one of them: every variant
+  // but the default rendered an empty element.
+  it.each(['display', 'h1', 'h3', 'label', 'caption', 'body'] as const)('projects its text in the %s variant', async (variant) => {
+    const { container } = await render(`<ds-text variant="${variant}">Projected</ds-text>`, { imports: [TypographyComponent] });
+    expect(container.querySelector('ds-text > *')).toHaveTextContent('Projected');
+  });
+
   it('overrides tag via the "as" input', async () => {
     const { container } = await render(`<ds-text variant="h2" as="h3">Title</ds-text>`, { imports: [TypographyComponent] });
     expect(container.querySelector('h3')).toBeInTheDocument();
