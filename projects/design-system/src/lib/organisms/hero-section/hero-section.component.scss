@@ -65,6 +65,14 @@
   }
 
   // ---- Headline ------------------------------------------------------------
+  // One entrance for the headline, tagline and actions; each sets only its delay.
+  &__headline-top,
+  &__headline-main,
+  &__tagline,
+  &__actions {
+    animation: hero-enter var(--duration-slow) var(--ease-default) both;
+  }
+
   &__headline {
     font-family: var(--font-display);
     text-transform: uppercase;
@@ -78,7 +86,7 @@
     font-weight: var(--font-semibold); // display faces stay at two weights, 600 and 700
     color: var(--color-text-primary);
     letter-spacing: 0.08em;
-    animation: hero-enter var(--duration-slow) 100ms var(--ease-default) both;
+    animation-delay: var(--stagger-1);
   }
 
   &__headline-main {
@@ -88,7 +96,7 @@
     color: var(--color-text-primary);
     letter-spacing: -0.01em;
     line-height: 0.88;
-    animation: hero-enter var(--duration-slow) 150ms var(--ease-default) both;
+    animation-delay: var(--stagger-2);
   }
 
   // ---- Tagline -------------------------------------------------------------
@@ -97,7 +105,7 @@
     color: var(--color-text-secondary);
     margin-bottom: 3rem;
     max-width: 44ch;
-    animation: hero-enter var(--duration-slow) 280ms var(--ease-default) both;
+    animation-delay: var(--stagger-3);
   }
 
   // ---- Actions -------------------------------------------------------------
@@ -105,7 +113,7 @@
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    animation: hero-enter var(--duration-slow) 400ms var(--ease-default) both;
+    animation-delay: var(--stagger-4);
   }
 
   &__cta {
@@ -119,12 +127,14 @@
     text-align: center;
     text-wrap: balance;
     padding: var(--space-3) var(--space-6);
+    transition: background-color var(--duration-normal) var(--ease-default),
+                border-color var(--duration-normal) var(--ease-default);
 
     @include bp.up(sm) {
       padding-inline: var(--space-10);
     }
-    transition: background-color var(--duration-normal) var(--ease-default),
-                border-color var(--duration-normal) var(--ease-default);
+
+    &:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; }
 
     &--primary {
       background-color: var(--color-primary-500);
@@ -132,7 +142,6 @@
       border: 2px solid var(--color-primary-500);
 
       &:hover { background-color: var(--color-primary-600); border-color: var(--color-primary-600); }
-      &:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; }
     }
 
     &--ghost {
@@ -141,7 +150,6 @@
       border: 2px solid var(--color-border-strong);
 
       &:hover { border-color: var(--color-text-secondary); }
-      &:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 2px; }
     }
   }
 
@@ -156,6 +164,7 @@
       width: 1px;
       height: 64px;
       background: linear-gradient(to bottom, transparent, var(--color-primary-500));
+      transform-origin: top;
       animation: scroll-hint 2s var(--ease-default) infinite;
     }
   }
@@ -188,15 +197,15 @@
 }
 
 @keyframes scroll-hint {
-  0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
-  50%       { opacity: 1; transform: scaleY(1); transform-origin: top; }
+  0%, 100% { opacity: 0; transform: scaleY(0); }
+  50%       { opacity: 1; transform: scaleY(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero__headline-top,
   .hero__headline-main,
   .hero__tagline,
-  .hero__actions { animation: none; opacity: 1; }
+  .hero__actions { animation: none; } // opacity falls back to 1 without the animation
 
   .hero__scroll-hint span { animation: none; opacity: 0.4; }
 }
