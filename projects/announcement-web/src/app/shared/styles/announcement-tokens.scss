@@ -18,7 +18,7 @@
   --ann-text-dark:    #2D1F3D;
   --ann-text-soft:    #5C4A6E;
   --ann-text-script:  #7454DB;   // Handwriting font emphasis (4.6:1 on cream)
-  --ann-text-inverse: #F5F0E8;   // Text on the dark and emphasis fills (nav, badge)
+  --ann-text-inverse: var(--ann-bg-cream);   // Text on the dark and emphasis fills (nav, badge)
 
   // ---------------------------------------------------------------------------
   // Fills — never text (contrast.config.json forbids them as text)
