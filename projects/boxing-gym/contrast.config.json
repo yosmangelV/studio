@@ -119,6 +119,36 @@
             "--color-primary-50",
             "--color-primary-100"
           ]
+        },
+        {
+          "label": "badge success",
+          "min": 4.5,
+          "fg": [
+            "--color-success"
+          ],
+          "bg": [
+            "--color-success-subtle"
+          ]
+        },
+        {
+          "label": "badge warning",
+          "min": 4.5,
+          "fg": [
+            "--color-warning"
+          ],
+          "bg": [
+            "--color-warning-subtle"
+          ]
+        },
+        {
+          "label": "badge danger",
+          "min": 4.5,
+          "fg": [
+            "--color-error"
+          ],
+          "bg": [
+            "--color-error-subtle"
+          ]
         }
       ]
     },

@@ -105,6 +105,10 @@
   --gym-brand-hover:    rgba(196, 18, 48, 0.12);    // hovered tinted surface
   --gym-brand-glow:     rgba(196, 18, 48, 0.30);    // drop-shadows, glows
   --gym-text-danger:    #f87171;                     // danger text on dark (red-400)
+  --gym-text-success:   #4ade80;                     // success text on dark (green-400)
+  --gym-text-warning:   #fbbf24;                     // warning text on dark (amber-400)
+  --gym-success-subtle: rgba(74, 222, 128, 0.12);    // success-tinted surface
+  --gym-warning-subtle: rgba(251, 191, 36, 0.12);    // warning-tinted surface
 
   // ---------------------------------------------------------------------------
   // Semantic — Grid overlay (hero / login backgrounds)
@@ -129,8 +133,12 @@
   --color-border:          var(--gym-border-subtle);
   --color-border-strong:   var(--gym-border-control);  // ds-input, pagination: 3:1 control boundary
 
-  // Error tokens remapped for dark context (DS defaults are light-mode reds)
+  // Status tokens remapped for dark context (DS defaults are light-mode colours)
   --color-error:        var(--gym-text-danger);   // #f87171 — readable on dark
+  --color-success:        var(--gym-text-success);
+  --color-success-subtle: var(--gym-success-subtle);  // ds-badge success
+  --color-warning:        var(--gym-text-warning);
+  --color-warning-subtle: var(--gym-warning-subtle);  // ds-badge warning
   --color-error-solid:  var(--gym-red-500);       // danger buttons: white text passes
   --color-error-subtle: var(--gym-brand-hover);   // red-tinted surface (12%)
   --color-grid-line:    var(--gym-grid-line);
