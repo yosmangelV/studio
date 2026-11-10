@@ -96,10 +96,10 @@
           "label": "badge default",
           "min": 4.5,
           "fg": [
-            "--color-neutral-600"
+            "--color-text-secondary"
           ],
           "bg": [
-            "--color-neutral-100"
+            "--color-surface-overlay"
           ]
         },
         {
@@ -107,6 +107,18 @@
           "min": 3,
           "fg": [
             "--color-border-focus"
+          ],
+          "bg": [
+            "--color-surface",
+            "--color-surface-raised",
+            "--color-surface-overlay"
+          ]
+        },
+        {
+          "label": "control boundaries",
+          "min": 3,
+          "fg": [
+            "--color-border-strong"
           ],
           "bg": [
             "--color-surface",
@@ -205,10 +217,32 @@
           ]
         },
         {
+          "label": "badge default",
+          "min": 4.5,
+          "fg": [
+            "--color-text-secondary"
+          ],
+          "bg": [
+            "--color-surface-overlay"
+          ]
+        },
+        {
           "label": "focus ring",
           "min": 3,
           "fg": [
             "--color-border-focus"
+          ],
+          "bg": [
+            "--color-surface",
+            "--color-surface-raised",
+            "--color-surface-overlay"
+          ]
+        },
+        {
+          "label": "control boundaries",
+          "min": 3,
+          "fg": [
+            "--color-border-strong"
           ],
           "bg": [
             "--color-surface",

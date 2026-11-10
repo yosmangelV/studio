@@ -97,12 +97,67 @@
           "label": "control borders",
           "min": 3,
           "fg": [
-            "--gym-border-control"
+            "--gym-border-control",
+            "--color-border-strong"
           ],
           "bg": [
             "--gym-surface-app",
             "--gym-surface-panel",
-            "--gym-surface-raised"
+            "--gym-surface-raised",
+            "--gym-dark",
+            "--gym-surface-elevated"
+          ]
+        },
+        {
+          "label": "text on DS hover/active fills",
+          "min": 4.5,
+          "fg": [
+            "--color-text-primary",
+            "--color-text-link"
+          ],
+          "bg": [
+            "--color-primary-50",
+            "--color-primary-100"
+          ]
+        },
+        {
+          "label": "badge success",
+          "min": 4.5,
+          "fg": [
+            "--color-success"
+          ],
+          "bg": [
+            "--color-success-subtle"
+          ]
+        },
+        {
+          "label": "badge warning",
+          "min": 4.5,
+          "fg": [
+            "--color-warning"
+          ],
+          "bg": [
+            "--color-warning-subtle"
+          ]
+        },
+        {
+          "label": "badge danger",
+          "min": 4.5,
+          "fg": [
+            "--color-error"
+          ],
+          "bg": [
+            "--color-error-subtle"
+          ]
+        },
+        {
+          "label": "badge default",
+          "min": 4.5,
+          "fg": [
+            "--color-text-secondary"
+          ],
+          "bg": [
+            "--color-surface-overlay"
           ]
         }
       ]
@@ -168,6 +223,16 @@
             "--gym-dark",
             "--gym-surface-raised",
             "--gym-surface-elevated"
+          ]
+        },
+        {
+          "label": "badge default",
+          "min": 4.5,
+          "fg": [
+            "--color-text-secondary"
+          ],
+          "bg": [
+            "--color-surface-overlay"
           ]
         }
       ]

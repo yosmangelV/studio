@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Component, signal } from '@angular/core';
+import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormFieldComponent } from './form-field.component';
 import { InputComponent } from '../../atoms/input/input.component';
 
@@ -8,6 +8,8 @@ const meta: Meta<FormFieldComponent> = {
   title: 'Molecules/FormField',
   component: FormFieldComponent,
   tags: ['autodocs'],
+  // render() templates compose ds-input; Storybook ignores an `imports` field there.
+  decorators: [moduleMetadata({ imports: [InputComponent] })],
 };
 
 export default meta;
@@ -20,7 +22,6 @@ export const Default: Story = {
         <ds-input inputId="s-email" type="email" placeholder="tu@email.com" autocomplete="email" />
       </ds-form-field>
     `,
-    imports: [FormFieldComponent, InputComponent],
   }),
 };
 
@@ -31,7 +32,6 @@ export const WithHint: Story = {
         <ds-input inputId="s-pw" type="password" placeholder="••••••••" autocomplete="new-password" />
       </ds-form-field>
     `,
-    imports: [FormFieldComponent, InputComponent],
   }),
 };
 
@@ -42,57 +42,6 @@ export const WithError: Story = {
         <ds-input inputId="s-email-err" type="email" placeholder="tu@email.com" [hasError]="true" />
       </ds-form-field>
     `,
-    imports: [FormFieldComponent, InputComponent],
-  }),
-};
-
-@Component({
-  selector: 'story-login-form',
-  standalone: true,
-  imports: [FormFieldComponent, InputComponent, ReactiveFormsModule],
-  template: `
-    <form [formGroup]="form" (ngSubmit)="submit()" novalidate
-      style="display:flex;flex-direction:column;gap:20px;max-width:320px">
-      <ds-form-field label="Email" inputId="sf-email"
-        [hasError]="emailInvalid()" errorMessage="Introduce un email válido">
-        <ds-input inputId="sf-email" type="email" placeholder="tu@email.com"
-          autocomplete="email" formControlName="email" [hasError]="emailInvalid()" />
-      </ds-form-field>
-      <ds-form-field label="Contraseña" inputId="sf-pw"
-        [hasError]="passwordInvalid()" errorMessage="Mínimo 6 caracteres" hint="Mínimo 6 caracteres">
-        <ds-input inputId="sf-pw" type="password" placeholder="••••••••"
-          autocomplete="current-password" formControlName="password" [hasError]="passwordInvalid()" />
-      </ds-form-field>
-      <button type="submit" style="padding:8px 16px">Enviar</button>
-    </form>
-  `,
-})
-class LoginFormStory {
-  readonly form = new FormControl({}) as unknown as ReturnType<typeof this._buildForm>;
-  private _buildForm() {
-    return {
-      controls: {
-        email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      },
-      markAllAsTouched: () => {},
-    };
-  }
-
-  readonly emailInvalid    = signal(false);
-  readonly passwordInvalid = signal(false);
-
-  submit() {
-    this.emailInvalid.set(true);
-    this.passwordInvalid.set(true);
-  }
-}
-
-// Simpler reactive form story without the class complexity
-export const ReactiveFormIntegration: Story = {
-  render: (_args) => ({
-    template: `<story-reactive-ff />`,
-    imports: [ReactiveFormStoryComponent],
   }),
 };
 
@@ -100,38 +49,33 @@ export const ReactiveFormIntegration: Story = {
   selector: 'story-reactive-ff',
   standalone: true,
   imports: [FormFieldComponent, InputComponent, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <form [formGroup]="form" (ngSubmit)="submit()" novalidate
+    <form [formGroup]="form" (ngSubmit)="submitted.set(true)" novalidate
       style="display:flex;flex-direction:column;gap:20px;max-width:320px">
       <ds-form-field label="Email" inputId="rf-email"
-        [hasError]="emailInvalid" errorMessage="Introduce un email válido">
+        [hasError]="submitted() && form.controls.email.invalid" errorMessage="Introduce un email válido">
         <ds-input inputId="rf-email" type="email" placeholder="tu@email.com"
-          autocomplete="email" formControlName="email" [hasError]="emailInvalid" />
+          autocomplete="email" formControlName="email" [hasError]="submitted() && form.controls.email.invalid" />
       </ds-form-field>
       <ds-form-field label="Contraseña" inputId="rf-pw"
-        [hasError]="passwordInvalid" errorMessage="Mínimo 6 caracteres" hint="Mínimo 6 caracteres">
+        [hasError]="submitted() && form.controls.password.invalid" errorMessage="Mínimo 6 caracteres" hint="Mínimo 6 caracteres">
         <ds-input inputId="rf-pw" type="password" placeholder="••••••••"
-          autocomplete="current-password" formControlName="password" [hasError]="passwordInvalid" />
+          autocomplete="current-password" formControlName="password" [hasError]="submitted() && form.controls.password.invalid" />
       </ds-form-field>
-      <button type="submit" style="padding:8px 16px;cursor:pointer">Enviar (prueba errores)</button>
-      <p style="font-size:0.75rem;color:#64748b">Email: {{ form.value.email }}</p>
+      <button type="submit" style="min-height:44px;cursor:pointer">Enviar (prueba errores)</button>
     </form>
   `,
 })
 class ReactiveFormStoryComponent {
-  form = new (class {
-    controls = {
-      email:    new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    };
-    value = { email: '' };
-    markAllAsTouched() {
-      Object.values(this.controls).forEach(c => c.markAsTouched());
-    }
-  })();
-
-  get emailInvalid()    { return this.form.controls.email.touched    && this.form.controls.email.invalid; }
-  get passwordInvalid() { return this.form.controls.password.touched && this.form.controls.password.invalid; }
-
-  submit() { this.form.markAllAsTouched(); }
+  protected readonly form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  });
+  protected readonly submitted = signal(false);
 }
+
+export const ReactiveFormIntegration: Story = {
+  decorators: [moduleMetadata({ imports: [ReactiveFormStoryComponent] })],
+  render: () => ({ template: `<story-reactive-ff />` }),
+};

@@ -1,9 +1,7 @@
+// The variant classes sit on the host element (see `host` in the component), so
+// every rule targets :host. A plain `.badge` selector is scoped to the template
+// and never matched: the badge rendered unstyled.
 :host {
-  display: inline-flex;
-  align-items: center;
-}
-
-.badge {
   display: inline-flex;
   align-items: center;
   padding: 0.2em 0.6em;
@@ -12,24 +10,24 @@
   font-weight: var(--font-semibold);
   line-height: 1;
   white-space: nowrap;
+}
 
-  &--default {
-    background: var(--color-neutral-100);
-    color: var(--color-neutral-600);
-  }
+:host(.badge--default) {
+  background: var(--color-surface-overlay);
+  color: var(--color-text-secondary);
+}
 
-  &--success {
-    background: var(--color-success-subtle);
-    color: var(--color-success);
-  }
+:host(.badge--success) {
+  background: var(--color-success-subtle);
+  color: var(--color-success);
+}
 
-  &--warning {
-    background: var(--color-warning-subtle);
-    color: var(--color-warning);
-  }
+:host(.badge--warning) {
+  background: var(--color-warning-subtle);
+  color: var(--color-warning);
+}
 
-  &--danger {
-    background: var(--color-error-subtle);
-    color: var(--color-error);
-  }
+:host(.badge--danger) {
+  background: var(--color-error-subtle);
+  color: var(--color-error);
 }

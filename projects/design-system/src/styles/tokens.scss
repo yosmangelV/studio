@@ -75,7 +75,7 @@
   // Border (light mode)
   // ---------------------------------------------------------------------------
   --color-border:       #e2e8f0;
-  --color-border-strong: #cbd5e1;
+  --color-border-strong: var(--color-neutral-500);  // control boundaries (inputs, pagination, outlined buttons): 3:1 on every surface
   --color-border-focus:  var(--color-primary-500);
 
   // ---------------------------------------------------------------------------
@@ -219,7 +219,7 @@
 
   // Border
   --color-border:        #1e293b;
-  --color-border-strong: #334155;
+  --color-border-strong: var(--color-neutral-400);  // control boundaries: 3:1 on every dark surface
   --color-border-focus:  var(--color-primary-400);
 
   // Semantic text colours lightened for dark surfaces

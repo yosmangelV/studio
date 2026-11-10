@@ -6,7 +6,7 @@
   // Every size, sm included, keeps a 44px touch target; size only changes type and padding.
   min-height: var(--size-touch-target);
   min-width: var(--size-touch-target);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-semibold);
   border: 1px solid transparent;
   cursor: pointer;
   user-select: none;

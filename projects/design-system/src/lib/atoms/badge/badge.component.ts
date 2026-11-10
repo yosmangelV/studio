@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, input, computed, HostBinding } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
 
 export type BadgeVariant = 'default' | 'success' | 'warning' | 'danger';
 
@@ -8,11 +8,10 @@ export type BadgeVariant = 'default' | 'success' | 'warning' | 'danger';
   template: `<ng-content />`,
   styleUrl: './badge.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[class]': 'hostClass()' },
 })
 export class BadgeComponent {
   readonly variant = input<BadgeVariant>('default');
 
-  @HostBinding('class') get hostClass() {
-    return `badge badge--${this.variant()}`;
-  }
+  protected readonly hostClass = computed(() => `badge badge--${this.variant()}`);
 }
