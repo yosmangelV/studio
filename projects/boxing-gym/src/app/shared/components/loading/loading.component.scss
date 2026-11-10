@@ -64,8 +64,8 @@
 
 .loading__glove {
   display: block;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: var(--space-16);
+  height: var(--space-16);
 
   &--mirrored {
     transform: scaleX(-1);
