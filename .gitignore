@@ -42,6 +42,9 @@ __screenshots__/
 # Nx
 .nx/
 
+# Git worktrees for parallel branches (git worktree add .worktrees/<name>)
+/.worktrees/
+
 # System files
 .DS_Store
 Thumbs.db
