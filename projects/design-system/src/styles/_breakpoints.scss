@@ -1,0 +1,18 @@
+// Viewport breakpoints. CSS custom properties cannot be read inside @media, so
+// they live here as SCSS values: `@include bp.up(lg) { ... }`.
+// Components that should follow their own width use container queries instead
+// (see striped-list).
+$breakpoints: (
+  sm: 480px,  // large phones: roomier button padding
+  md: 768px,  // tablets: the page nav shows its links, tightly spaced
+  lg: 1024px, // desktop: the page nav links get their full spacing
+);
+
+@mixin up($name) {
+  @if not map-has-key($breakpoints, $name) {
+    @error "Unknown breakpoint `#{$name}`. Use one of: #{map-keys($breakpoints)}.";
+  }
+  @media (min-width: map-get($breakpoints, $name)) {
+    @content;
+  }
+}

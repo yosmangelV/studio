@@ -35,6 +35,7 @@ Never shipped, in any product, with no waiver.
 - a text-role token misses 4.5:1, or the focus token misses 3:1, on any surface of any theme (light, dark, and each product layered over both);
 - a stylesheet references a `var(--token)` that no token file defines;
 - a component sets a literal text colour or uses a forbidden token (a fill colour) as text;
+- a component references a primitive listed in the config's `forbiddenTokens` (a raw palette value that only token files map onto roles);
 - a component removes the focus outline without an `a11y-ok` note.
 
 A new surface, text role or product adds its pairs to the matching `contrast.config.json`. Rules 3, 4, 5, 7 and 8 are checked by review and by the Hallmark lint below.

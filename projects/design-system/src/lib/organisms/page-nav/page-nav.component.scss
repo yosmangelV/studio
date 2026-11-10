@@ -1,4 +1,5 @@
 @use '../../../styles/touch-target' as tt;
+@use '../../../styles/breakpoints' as bp;
 
 :host {
   display: block;
@@ -62,12 +63,25 @@
   &__links {
     display: none;
     list-style: none;
-    gap: 2.5rem;
+    gap: var(--space-5);
     margin: 0;
     padding: 0;
 
-    @media (min-width: 768px) {
+    // Each item reserves a full touch target and centres its link, so the 44px hit
+    // areas of two short labels never overlap across the gap.
+    > li {
+      min-width: var(--size-touch-target);
+      text-align: center;
+    }
+
+    // At 768px a 2.5rem gap left the links 1px from the brand and the actions; the
+    // tighter gap leaves 30px. The 44px hit areas (link + 0.5rem a side) still do not overlap.
+    @include bp.up(md) {
       display: flex;
+    }
+
+    @include bp.up(lg) {
+      gap: var(--space-10);
     }
   }
 

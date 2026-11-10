@@ -126,25 +126,86 @@ function undefinedReferences(sources, tokenFiles) {
 
 const LITERAL_COLOR = /^(#[0-9a-f]{3,8}|rgba?\(|hsla?\(|white$|black$)/i;
 
-function usageViolations(sources, forbiddenText = []) {
+/**
+ * The stylesheet with comments and string contents blanked out, newlines kept so
+ * offsets map to the same lines. `//` only starts a comment outside strings and
+ * `url(...)`, so a URL such as `url(https://x/a.png)` survives.
+ */
+function maskComments(css) {
+  let out = '';
+  let quote = null;
+  let inUrl = false;
+  for (let i = 0; i < css.length; i++) {
+    const c = css[i];
+    if (quote) {
+      // String contents are literal text (content: "var(--x)"), never a reference.
+      if (c === '\\') { out += ' ' + (css[i + 1] === '\n' ? '\n' : ' '); i++; continue; }
+      if (c === quote) { quote = null; out += c; continue; }
+      out += c === '\n' ? '\n' : ' ';
+      continue;
+    }
+    if (c === '"' || c === "'") { quote = c; out += c; continue; }
+    // `url(` only as a whole function name: not the tail of `my-url(`; CSS is case-insensitive.
+    if (!inUrl && css.slice(i, i + 4).toLowerCase() === 'url(' && !/[\w-]/.test(css[i - 1] ?? '')) {
+      inUrl = true; out += css.slice(i, i + 4); i += 3; continue;
+    }
+    if (inUrl) { out += c; if (c === ')') inUrl = false; continue; }
+    if (css.startsWith('/*', i)) {
+      const close = css.indexOf('*/', i + 2);
+      const stop = close === -1 ? css.length : close + 2;
+      out += css.slice(i, stop).replace(/[^\n]/g, ' ');
+      i = stop - 1;
+      continue;
+    }
+    if (css.startsWith('//', i)) {
+      const nl = css.indexOf('\n', i);
+      const stop = nl === -1 ? css.length : nl;
+      out += ' '.repeat(stop - i);
+      i = stop - 1;
+      continue;
+    }
+    out += c;
+  }
+  return out;
+}
+
+/** True when the `var()` at `index` is inside a custom property declaration (`--x: var(--y)`). */
+function inTokenDeclaration(css, index) {
+  const start = Math.max(css.lastIndexOf(';', index), css.lastIndexOf('{', index), css.lastIndexOf('}', index)) + 1;
+  return /^\s*--[\w-]+\s*:/.test(css.slice(start, index));
+}
+
+// `forbiddenTokens` are tokens a component may not reference at all, as text or fill:
+// raw palette values (primitives) that only the token files map onto roles. Mapping
+// one onto another custom property (`--role: var(--primitive)`) is what token files
+// do, so declarations are exempt.
+function usageViolations(sources, forbiddenText = [], forbiddenTokens = []) {
   const out = [];
   for (const dir of sources) {
     for (const file of walk(dir)) {
       if (extname(file) !== '.scss' && extname(file) !== '.css') continue;
-      readFileSync(file, 'utf8').split('\n').forEach((line, i) => {
-        const where = `${file}:${i + 1}`;
-        const code = line.replace(/\/\/.*$/, '');
-        const color = code.match(/(?:^|[\s{;])color:\s*([^;]+);/);
-        if (color) {
-          const value = color[1].trim();
-          const token = value.match(/^var\(\s*(--[\w-]+)/)?.[1];
-          if (LITERAL_COLOR.test(value)) out.push({ where, why: `literal text colour "${value}": use a text-role token` });
-          else if (token && forbiddenText.includes(token)) out.push({ where, why: `${token} is not a text token` });
+      const raw = readFileSync(file, 'utf8');
+      const masked = maskComments(raw);
+      const rawLines = raw.split('\n');
+      const lineAt = (index) => masked.slice(0, index).split('\n').length;
+      // Whole-file scans, so a declaration split across lines still matches.
+      for (const m of masked.matchAll(/(?:^|[\s{;])color:\s*([^;{}]+);/g)) {
+        const where = `${file}:${lineAt(m.index + m[0].indexOf('color'))}`;
+        const value = m[1].trim();
+        const token = value.match(/^var\(\s*(--[\w-]+)/)?.[1];
+        if (LITERAL_COLOR.test(value)) out.push({ where, why: `literal text colour "${value.replace(/\s+/g, ' ')}": use a text-role token` });
+        else if (token && forbiddenText.includes(token)) out.push({ where, why: `${token} is not a text token` });
+      }
+      for (const m of masked.matchAll(/outline:\s*(none|0)\b/g)) {
+        const line = lineAt(m.index);
+        if (!rawLines[line - 1].includes('a11y-ok')) {
+          out.push({ where: `${file}:${line}`, why: 'focus outline removed (add a visible :focus-visible style, then mark the line "a11y-ok: <reason>")' });
         }
-        if (/outline:\s*(none|0)\b/.test(code) && !line.includes('a11y-ok')) {
-          out.push({ where, why: 'focus outline removed (add a visible :focus-visible style, then mark the line "a11y-ok: <reason>")' });
-        }
-      });
+      }
+      for (const m of masked.matchAll(/var\(\s*(--[\w-]+)/g)) {
+        if (!forbiddenTokens.includes(m[1]) || inTokenDeclaration(masked, m.index)) continue;
+        out.push({ where: `${file}:${lineAt(m.index)}`, why: `${m[1]} is a primitive: use the role token that maps it` });
+      }
     }
   }
   return out;
@@ -207,13 +268,13 @@ for (const configPath of process.argv.slice(2)) {
     console.log(`✓ ${config.name}: no undefined token references`);
   }
 
-  const misuse = usageViolations(config.sources ?? [], config.forbiddenTextTokens);
+  const misuse = usageViolations(config.sources ?? [], config.forbiddenTextTokens, config.forbiddenTokens);
   if (misuse.length) {
     failures += misuse.length;
     console.log(`✗ ${config.name}: ${misuse.length} component styles bypass the tokens`);
     for (const m of misuse) console.log(`    ${m.where}: ${m.why}`);
   } else {
-    console.log(`✓ ${config.name}: components use text and focus tokens`);
+    console.log(`✓ ${config.name}: components use role, text and focus tokens`);
   }
 }
 
