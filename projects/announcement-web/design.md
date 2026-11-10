@@ -67,10 +67,10 @@ The deployed player breaks these rules today. Colour, type and motion fixes go i
 - [ ] Three weights: drop Playfair 900 and Dancing Script 700 from the font link and the styles
 - [ ] Body text in the body face: `.intro-slide__body` and `.text-slide__body` use `--ann-font-display` today, and should use `--ann-font-body`
 - [ ] The reveal title in the display face: `.final-reveal-slide__title` uses `--ann-font-script` today; the script stays for its emphasis line
-- [ ] Image slide: `[alt]` is bound to `title` instead of the model's `altText`
-- [ ] Image slide: the caption renders `{{ data() }}`, the whole slide object (`[object Object]`), instead of its text
-- [ ] Image slide: without an `image` it renders an empty `<img>` instead of falling back to the text layout
-- [ ] Delete `src/app/app.html`: the unused Angular starter page ("Congratulations! Your app is running. 🎉")
+- [x] Image slide: `[alt]` is bound to `title` instead of the model's `altText`
+- [x] Image slide: the caption renders `{{ data() }}`, the whole slide object (`[object Object]`), instead of its text
+- [x] Image slide: without an `image` it renders an empty `<img>` instead of falling back to the text layout
+- [x] Delete `src/app/app.html`: the unused Angular starter page ("Congratulations! Your app is running. 🎉")
 - [ ] Run the Hallmark lint on every demo story against a local API and record the result here (FAIL, REFLEX and WARN counts, and the reason for each REFLEX kept):
   1. `apps/announcement-api`: `npm run seed` (writes DEMO-SPECIAL, DEMO-FRIENDS, DEMO-FAMILY), then `npm run start:dev`
   2. `npm run announcement` (dev server on 4200)

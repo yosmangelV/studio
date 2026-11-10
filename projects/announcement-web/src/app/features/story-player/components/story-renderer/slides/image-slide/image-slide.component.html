@@ -1,6 +1,16 @@
-<figure class="image-slide" [class.is-loading]="!imageLoaded()">
-  <img class="image-slide__img" [src]="data().image" [alt]="data().title" (load)="imageLoaded.set(true)" />
-  @if (data()) {
-    <figcaption class="image-slide__caption">{{ data() }}</figcaption>
-  }
-</figure>
+@if (imageUrl(); as src) {
+  <figure class="image-slide" [class.is-loading]="!imageLoaded()">
+    <img
+      class="image-slide__img"
+      data-testid="announcement-slide-image"
+      [src]="src"
+      [alt]="altText()"
+      (load)="imageLoaded.set(true)"
+    />
+    @if (caption(); as text) {
+      <figcaption class="image-slide__caption" data-testid="announcement-slide-caption">{{ text }}</figcaption>
+    }
+  </figure>
+} @else {
+  <app-text-slide [slide]="slide()" />
+}
