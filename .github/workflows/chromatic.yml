@@ -9,6 +9,8 @@ on:
       - 'projects/design-system/**'
       - '.storybook/**'
       - 'package.json'
+      - 'angular.json'
+      - '.github/workflows/chromatic.yml'
   pull_request:
     branches:
       - main
@@ -16,6 +18,8 @@ on:
       - 'projects/design-system/**'
       - '.storybook/**'
       - 'package.json'
+      - 'angular.json'
+      - '.github/workflows/chromatic.yml'
 
 permissions:
   contents: read
@@ -39,13 +43,19 @@ jobs:
 
       - run: npm ci
 
+      # Built here rather than through buildScriptName: with TurboSnap the action
+      # appends --stats-json <dir>, which the Angular builder does not accept as a
+      # path, so preview-stats.json was never written. statsJson comes from
+      # angular.json and lands in dist/storybook.
+      - run: npm run storybook:build
+
       - name: Publish to Chromatic
         uses: chromaui/action@6ac4c49524e1b1358b8c593c5eea877604228268 # v18.14.2
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: storybook:build
+          storybookBuildDir: dist/storybook
           # TurboSnap: snapshot only the stories whose module graph a change touches
-          # (needs statsJson in angular.json's build-storybook target).
+          # (reads dist/storybook/preview-stats.json).
           onlyChanged: true
           # Global styles and SCSS partials are not imported by any story (they enter
           # as angular.json styles or are inlined by @use), so a change there
