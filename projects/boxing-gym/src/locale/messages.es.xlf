@@ -97,20 +97,12 @@
         <source>Volver a la web</source>
       </segment>
     </unit>
-    <unit id="hero.cta.primary">
-      <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:42</note>
-      </notes>
-      <segment>
-        <source>Ver clases</source>
-      </segment>
-    </unit>
-    <unit id="hero.cta.secondary">
+    <unit id="hero.cta.classes">
       <notes>
         <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:44</note>
       </notes>
       <segment>
-        <source>Contáctanos</source>
+        <source>Ver clases</source>
       </segment>
     </unit>
     <unit id="nav.about">
@@ -143,6 +135,22 @@
       </notes>
       <segment>
         <source>Contacto</source>
+      </segment>
+    </unit>
+    <unit id="hero.cta.whatsapp">
+      <notes>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:80</note>
+      </notes>
+      <segment>
+        <source>Escríbenos por WhatsApp</source>
+      </segment>
+    </unit>
+    <unit id="hero.cta.contact">
+      <notes>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:81</note>
+      </notes>
+      <segment>
+        <source>Contáctanos</source>
       </segment>
     </unit>
     <unit id="about.title">

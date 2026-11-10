@@ -20,16 +20,18 @@ const GYM_CONFIG_MOCK = {
   copyright: '© 2025 El Arte del Guante',
 };
 
+const PROFILE: NonNullable<PublicGymProfile['profile']> = {
+  phone: '+34658078039',
+  whatsapp: '34658078039',
+  email: null,
+  address: 'C. de Lope de Vega, 10, 28350 Ciempozuelos, Madrid',
+  instagram: null,
+  founded_on: '2024-01-01',
+  updated_at: '2026-10-31T10:00:00Z',
+};
+
 const ROW: PublicGymProfile = {
-  profile: {
-    phone: '+34658078039',
-    whatsapp: '34658078039',
-    email: null,
-    address: 'C. de Lope de Vega, 10, 28350 Ciempozuelos, Madrid',
-    instagram: null,
-    founded_on: '2024-01-01',
-    updated_at: '2026-10-31T10:00:00Z',
-  },
+  profile: PROFILE,
   schedule: [
     { day_from: 1, day_to: 5, opens_at: '18:30:00', closes_at: '19:30:00', label: { es: 'Adultos' }, sort_order: 0 },
   ],
@@ -71,6 +73,22 @@ describe('HomePage', () => {
     await render(HomePage, { providers: providers(supabaseReturning({ data: null, error: new Error('offline') })) });
     expect(await screen.findByText('Boxeo')).toBeInTheDocument();
     expect(screen.getByTestId('contact-whatsapp')).toHaveAttribute('href', 'https://wa.me/34658078039');
+  });
+
+  it('makes WhatsApp the hero primary action and classes the secondary', async () => {
+    await render(HomePage, { providers: providers(supabaseReturning({ data: ROW, error: null })) });
+    // The hero and the contact section both offer it, with the same label.
+    const whatsappLinks = await screen.findAllByRole('link', { name: 'Escríbenos por WhatsApp' });
+    expect(whatsappLinks).toHaveLength(2);
+    whatsappLinks.forEach((link) => expect(link).toHaveAttribute('href', 'https://wa.me/34658078039'));
+    expect(screen.getByRole('link', { name: 'Ver clases' })).toHaveAttribute('href', '#classes');
+  });
+
+  it('points the hero primary action at the contact section when there is no WhatsApp', async () => {
+    await render(HomePage, { providers: providers(supabaseReturning({ data: { ...ROW, profile: { ...PROFILE, whatsapp: null } }, error: null })) });
+    await screen.findByText('Boxeo');
+    expect(screen.queryByRole('link', { name: 'Escríbenos por WhatsApp' })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Contáctanos' })).toHaveAttribute('href', '#contact');
   });
 
   it('caches a successful response for the next visit', async () => {

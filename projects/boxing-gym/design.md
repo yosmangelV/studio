@@ -16,7 +16,7 @@ An old-school boxing gym: raw, disciplined, close to the ring. Black rooms, crim
 
 | Role | Token | Use |
 |---|---|---|
-| Ground | `--gym-surface-app`, `--gym-surface-panel`, `--gym-dark`, `--gym-surface-elevated` | Section and panel backgrounds; alternate app and panel between sections |
+| Ground | `--gym-surface-app`, `--gym-surface-panel`, `--gym-surface-raised`, `--gym-surface-elevated` | Section and panel backgrounds; public sections alternate app and raised |
 | Text | `--gym-text-primary`, `--gym-text-high`, `--gym-text-secondary` | Body, emphasis and supporting text |
 | Muted | `--gym-text-muted` | Placeholders, captions, inactive states. Passes 4.5:1 |
 | Disabled | `--gym-text-disabled` | Disabled controls only (exempt from contrast) |
@@ -25,7 +25,7 @@ An old-school boxing gym: raw, disciplined, close to the ring. Black rooms, crim
 | Danger | `--gym-text-danger` / `--color-error-solid` | Error text / danger button fill |
 | WhatsApp | `--gym-whatsapp` + `--gym-whatsapp-ink` | The WhatsApp button: dark ink on green (9.8:1; white was 1.9:1) |
 
-`--gym-red-500` gives 2.38–3.22:1 as text on the gym surfaces and `--gym-gray` 3.6:1, so both are forbidden as text in `contrast.config.json`. Every pair above is checked by `npm run test:contrast`.
+`--gym-red-500` gives 2.38–3.22:1 as text on the gym surfaces and `--gym-gray` 3.6:1, so both are forbidden as text in `contrast.config.json`. Components use only the roles above: the palette primitives at the top of the token file (`--gym-black`, `--gym-dark`, `--gym-white`, `--gym-gray-light`, the reds and golds and their legacy aliases) are listed in `forbiddenTokens`, so a component that references one fails. Every pair above is checked by `npm run test:contrast`.
 
 ## Type
 
@@ -63,7 +63,9 @@ The live page breaks these rules today. Each item names where it gets fixed.
   - 77: "Nuestras clases" body reaches 69% at 1440px. The container is full width, but the `striped-list` rows hold short text. Open: see below.
   - WARN F19: four weights in running use; the fourth (500) is the DS `page-nav` links. Open: see below.
 - [x] Classes: give the `striped-list` rows mass at 1440px (REFLEX 77), a design-system change. On wide lists the class name is set at `--text-3xl` and the description takes a column on the right edge; the layout follows the list's width (container queries). Rows lost the hover state and arrow, since they are not links. `sloplint --render` no longer reports 77.
-- [ ] Weights: DS `page-nav` links use 500 (F19), the panel uses 500 in places, and the Google Fonts link loads Inter 500/700 and Oswald 500, none of which the type rules above allow
+- [x] Weights: DS `page-nav` links use 500 (F19), the panel uses 500 in places, and the Google Fonts link loads Inter 500/700 and Oswald 500, none of which the type rules above allow. The DS uses 600 for nav links, buttons and labels, and for the hero's top line, which used Oswald 400 (not loaded); the panel's 500s are 600 ("Volver a la web" is 400); the login headline used Oswald 300 and is 600; the link loads Inter 400;600 and Oswald 600;700 only
+- [x] Hero actions follow the page rules: primary is WhatsApp (it was "Ver clases"), secondary is classes. With no WhatsApp number the primary falls back to the contact section
+- [x] The public sections use role tokens instead of `--gym-black`, `--gym-dark`, `--gym-gray-light` and `--gym-white`
 
 ## Panel audit, 2026-11-02
 

@@ -43,16 +43,22 @@
         <target>Back to website</target>
       </segment>
     </unit>
-    <unit id="hero.cta.primary">
+    <unit id="hero.cta.whatsapp">
       <segment>
-        <source>Ver clases</source>
-        <target>View classes</target>
+        <source>Escríbenos por WhatsApp</source>
+        <target>Message us on WhatsApp</target>
       </segment>
     </unit>
-    <unit id="hero.cta.secondary">
+    <unit id="hero.cta.contact">
       <segment>
         <source>Contáctanos</source>
         <target>Contact us</target>
+      </segment>
+    </unit>
+    <unit id="hero.cta.classes">
+      <segment>
+        <source>Ver clases</source>
+        <target>View classes</target>
       </segment>
     </unit>
     <unit id="nav.about">

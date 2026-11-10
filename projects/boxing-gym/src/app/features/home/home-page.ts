@@ -39,10 +39,10 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
         [headlineTop]="headlineTop()"
         [headlineMain]="headlineMain()"
         [tagline]="config.tagline"
-        primaryCtaLabel="Ver clases" i18n-primaryCtaLabel="@@hero.cta.primary"
-        primaryCtaHref="#classes"
-        secondaryCtaLabel="Contáctanos" i18n-secondaryCtaLabel="@@hero.cta.secondary"
-        secondaryCtaHref="#contact"
+        [primaryCtaLabel]="heroPrimaryCta().label"
+        [primaryCtaHref]="heroPrimaryCta().href"
+        secondaryCtaLabel="Ver clases" i18n-secondaryCtaLabel="@@hero.cta.classes"
+        secondaryCtaHref="#classes"
         [logoSrc]="config.assets.logoIllustrated"
       />
       <app-about-section
@@ -72,6 +72,14 @@ export default class HomePage {
     { label: $localize`:@@nav.schedule:Horarios`, href: '#schedule' },
     { label: $localize`:@@nav.contact:Contacto`, href: '#contact' },
   ];
+
+  /** The page's one job is a WhatsApp message (design.md); without a number, the contact section. */
+  protected readonly heroPrimaryCta = computed<{ label: string; href: string }>(() => {
+    const whatsappHref = this.gymProfile.contact().whatsappHref;
+    return whatsappHref
+      ? { label: $localize`:@@hero.cta.whatsapp:Escríbenos por WhatsApp`, href: whatsappHref }
+      : { label: $localize`:@@hero.cta.contact:Contáctanos`, href: '#contact' };
+  });
 
   protected readonly headlineTop = computed(() => {
     const words = this.config.name.trim().split(/\s+/);
