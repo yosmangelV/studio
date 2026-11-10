@@ -24,13 +24,13 @@
 
   &__total-label {
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: var(--font-semibold);
     color: var(--color-text-secondary);
   }
 
   &__total-amount {
     font-size: 2.25rem;
-    font-weight: 700;
+    font-weight: var(--font-semibold); // Inter: 400 and 600 only
     color: var(--color-text-primary);
     line-height: 1.1;
   }
@@ -62,13 +62,13 @@
 
   &__method-label {
     font-size: 0.8125rem;
-    font-weight: 500;
+    font-weight: var(--font-semibold);
     color: var(--color-text-secondary);
   }
 
   &__method-amount {
     font-size: 1.375rem;
-    font-weight: 700;
+    font-weight: var(--font-semibold); // Inter: 400 and 600 only
     color: var(--color-text-primary);
 
     &--zero {

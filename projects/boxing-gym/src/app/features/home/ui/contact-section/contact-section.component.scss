@@ -3,7 +3,7 @@
 :host { display: block; }
 
 .contact {
-  background-color: var(--gym-black);
+  background-color: var(--gym-surface-app);
   padding-top: var(--space-24);
 }
 
@@ -38,7 +38,7 @@
   gap: var(--space-3);
   font-family: var(--gym-font-body);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   text-decoration: none;
   color: var(--gym-whatsapp-ink);
   background-color: var(--gym-whatsapp);
@@ -89,7 +89,7 @@
 
 .contact__label {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   color: var(--gym-text-secondary);
   min-width: 80px;
 }
@@ -97,13 +97,13 @@
 .contact__value {
   margin-left: auto;
   font-size: 1rem;
-  color: var(--gym-gray-light);
+  color: var(--gym-text-high);
   text-decoration: none;
   text-align: right;
   overflow-wrap: anywhere;
 
   &:is(a):hover {
-    color: var(--gym-white);
+    color: var(--gym-text-primary);
   }
 
   &--nowrap {

@@ -14,6 +14,27 @@
     "--color-primary-500",
     "--gym-text-disabled"
   ],
+  "forbiddenTokens": [
+    "--gym-red-200",
+    "--gym-red-300",
+    "--gym-red-500",
+    "--gym-red-700",
+    "--gym-black",
+    "--gym-neutral-900",
+    "--gym-dark",
+    "--gym-mid",
+    "--gym-gold-400",
+    "--gym-gold-600",
+    "--gym-white",
+    "--gym-gray",
+    "--gym-gray-light",
+    "--gym-red",
+    "--gym-red-dark",
+    "--gym-red-light",
+    "--gym-dark-mid",
+    "--gym-gold",
+    "--gym-gold-light"
+  ],
   "themes": [
     {
       "name": "boxing-gym",

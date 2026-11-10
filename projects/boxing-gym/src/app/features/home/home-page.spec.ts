@@ -20,16 +20,18 @@ const GYM_CONFIG_MOCK = {
   copyright: '© 2025 El Arte del Guante',
 };
 
+const PROFILE: NonNullable<PublicGymProfile['profile']> = {
+  phone: '+34658078039',
+  whatsapp: '34658078039',
+  email: null,
+  address: 'C. de Lope de Vega, 10, 28350 Ciempozuelos, Madrid',
+  instagram: null,
+  founded_on: '2024-01-01',
+  updated_at: '2026-10-31T10:00:00Z',
+};
+
 const ROW: PublicGymProfile = {
-  profile: {
-    phone: '+34658078039',
-    whatsapp: '34658078039',
-    email: null,
-    address: 'C. de Lope de Vega, 10, 28350 Ciempozuelos, Madrid',
-    instagram: null,
-    founded_on: '2024-01-01',
-    updated_at: '2026-10-31T10:00:00Z',
-  },
+  profile: PROFILE,
   schedule: [
     { day_from: 1, day_to: 5, opens_at: '18:30:00', closes_at: '19:30:00', label: { es: 'Adultos' }, sort_order: 0 },
   ],
@@ -71,6 +73,27 @@ describe('HomePage', () => {
     await render(HomePage, { providers: providers(supabaseReturning({ data: null, error: new Error('offline') })) });
     expect(await screen.findByText('Boxeo')).toBeInTheDocument();
     expect(screen.getByTestId('contact-whatsapp')).toHaveAttribute('href', 'https://wa.me/34658078039');
+  });
+
+  it('makes WhatsApp the hero primary action and classes the secondary', async () => {
+    await render(HomePage, { providers: providers(supabaseReturning({ data: ROW, error: null })) });
+    await screen.findByTestId('contact-whatsapp'); // the profile has loaded
+    const primary = screen.getByTestId('ds-hero-cta-primary');
+    expect(primary).toHaveTextContent('Escríbenos por WhatsApp');
+    expect(primary).toHaveAttribute('href', 'https://wa.me/34658078039');
+    const secondary = screen.getByTestId('ds-hero-cta-secondary');
+    expect(secondary).toHaveTextContent('Ver clases');
+    expect(secondary).toHaveAttribute('href', '#classes');
+  });
+
+  it('points the hero primary action at the contact section when there is no WhatsApp', async () => {
+    await render(HomePage, { providers: providers(supabaseReturning({ data: { ...ROW, profile: { ...PROFILE, whatsapp: null } }, error: null })) });
+    await screen.findByTestId('contact-phone'); // the profile has loaded (no WhatsApp link to wait for)
+    const primary = screen.getByTestId('ds-hero-cta-primary');
+    expect(primary).toHaveTextContent('Contáctanos');
+    expect(primary).toHaveAttribute('href', '#contact');
+    expect(screen.getByTestId('ds-hero-cta-secondary')).toHaveAttribute('href', '#classes');
+    expect(screen.queryByRole('link', { name: 'Escríbenos por WhatsApp' })).not.toBeInTheDocument();
   });
 
   it('caches a successful response for the next visit', async () => {

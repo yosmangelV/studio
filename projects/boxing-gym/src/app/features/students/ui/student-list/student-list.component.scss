@@ -27,7 +27,7 @@
     padding: 0.75rem 1rem;
     text-align: left;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: var(--font-semibold);
     color: var(--gym-text-secondary);
 
     &--actions {

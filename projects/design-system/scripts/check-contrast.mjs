@@ -8,7 +8,7 @@
 // foreground/background pairs each theme must pass. See projects/design-system/contrast.config.json.
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { extname, join } from 'node:path';
+import { extname, join, resolve as resolvePath } from 'node:path';
 
 // ---- Parsing ------------------------------------------------------------------
 
@@ -178,8 +178,10 @@ function inTokenDeclaration(css, index) {
 // `forbiddenTokens` are tokens a component may not reference at all, as text or fill:
 // raw palette values (primitives) that only the token files map onto roles. Mapping
 // one onto another custom property (`--role: var(--primitive)`) is what token files
-// do, so declarations are exempt.
-function usageViolations(sources, forbiddenText = [], forbiddenTokens = []) {
+// do, so declarations are exempt there, and only there: a component that declares
+// `--local: var(--primitive)` still fails.
+function usageViolations(sources, forbiddenText = [], forbiddenTokens = [], tokenFiles = []) {
+  const isTokenFile = new Set(tokenFiles.map((f) => resolvePath(f)));
   const out = [];
   for (const dir of sources) {
     for (const file of walk(dir)) {
@@ -203,7 +205,8 @@ function usageViolations(sources, forbiddenText = [], forbiddenTokens = []) {
         }
       }
       for (const m of masked.matchAll(/var\(\s*(--[\w-]+)/g)) {
-        if (!forbiddenTokens.includes(m[1]) || inTokenDeclaration(masked, m.index)) continue;
+        if (!forbiddenTokens.includes(m[1])) continue;
+        if (isTokenFile.has(resolvePath(file)) && inTokenDeclaration(masked, m.index)) continue;
         out.push({ where: `${file}:${lineAt(m.index)}`, why: `${m[1]} is a primitive: use the role token that maps it` });
       }
     }
@@ -268,7 +271,7 @@ for (const configPath of process.argv.slice(2)) {
     console.log(`✓ ${config.name}: no undefined token references`);
   }
 
-  const misuse = usageViolations(config.sources ?? [], config.forbiddenTextTokens, config.forbiddenTokens);
+  const misuse = usageViolations(config.sources ?? [], config.forbiddenTextTokens, config.forbiddenTokens, [...tokenFiles]);
   if (misuse.length) {
     failures += misuse.length;
     console.log(`✗ ${config.name}: ${misuse.length} component styles bypass the tokens`);

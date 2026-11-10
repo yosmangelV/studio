@@ -17,10 +17,10 @@
     <p class="hero__tagline">{{ tagline() }}</p>
 
     <div class="hero__actions">
-      <a class="hero__cta hero__cta--primary" [href]="primaryCtaHref()">
+      <a class="hero__cta hero__cta--primary" [href]="primaryCtaHref()" data-testid="ds-hero-cta-primary">
         {{ primaryCtaLabel() }}
       </a>
-      <a class="hero__cta hero__cta--ghost" [href]="secondaryCtaHref()">
+      <a class="hero__cta hero__cta--ghost" [href]="secondaryCtaHref()" data-testid="ds-hero-cta-secondary">
         {{ secondaryCtaLabel() }}
       </a>
     </div>

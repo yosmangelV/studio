@@ -20,7 +20,7 @@
 
   &__title {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: var(--font-semibold); // Inter: 400 and 600 only
     color: var(--color-text-primary);
     margin: 0;
   }
@@ -37,7 +37,7 @@
     padding: 0.375rem 0.75rem;
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: var(--font-semibold);
     color: var(--color-text-secondary);
     text-decoration: none;
     transition: color 0.15s, background 0.15s;
@@ -80,7 +80,7 @@
 
   &__period-label {
     font-size: 1.0625rem;
-    font-weight: 600;
+    font-weight: var(--font-semibold);
     color: var(--color-text-primary);
     margin: 0;
   }
