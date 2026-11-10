@@ -60,3 +60,6 @@ projects/boxing-gym/.env
 
 # Hallmark lint screenshots: they capture real story content
 .hallmark/
+
+# Storybook for Angular writes webpack stats here when build-storybook has statsJson (TurboSnap)
+noop-out/
