@@ -19,6 +19,7 @@
   }
 
   &__title {
+    text-wrap: balance;
     font-family: var(--ann-font-display);
     font-size: clamp(1.25rem, 5vw, 1.75rem);
     font-weight: var(--font-bold);
@@ -27,6 +28,7 @@
   }
 
   &__body {
+    text-wrap: pretty;
     font-family: var(--ann-font-body);
     font-size: var(--text-base);
     color: var(--ann-text-soft);
@@ -34,6 +36,7 @@
   }
 
   &__emphasis {
+    text-wrap: pretty;
     font-family: var(--ann-font-script);
     font-style: normal;
     font-size: clamp(1.75rem, 7vw, 2.5rem);

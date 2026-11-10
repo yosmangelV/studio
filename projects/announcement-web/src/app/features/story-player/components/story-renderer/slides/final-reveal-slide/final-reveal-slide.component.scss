@@ -42,6 +42,7 @@
   }
 
   &__title {
+    text-wrap: balance;
     font-family: var(--ann-font-display);
     font-size: clamp(1.75rem, 7vw, 2.5rem);
     font-weight: var(--font-bold);
@@ -49,6 +50,7 @@
   }
 
   &__subtitle {
+    text-wrap: pretty;
     font-family: var(--ann-font-body);
     font-size: var(--text-base);
     color: var(--ann-text-soft);
@@ -59,6 +61,7 @@
 
   // The one emphasised line: script face, 24px or more (design.md, Type)
   &__message {
+    text-wrap: pretty;
     font-family: var(--ann-font-script);
     font-size: clamp(1.5rem, 6vw, 1.75rem);
     font-weight: var(--font-semibold);

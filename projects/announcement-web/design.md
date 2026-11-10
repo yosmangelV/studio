@@ -72,7 +72,12 @@ The deployed player breaks these rules today. Colour, type and motion fixes go i
 - [x] Image slide: the caption renders `{{ data() }}`, the whole slide object (`[object Object]`), instead of its text
 - [x] Image slide: without an `image` it renders an empty `<img>` instead of falling back to the text layout
 - [x] Delete `src/app/app.html`: the unused Angular starter page ("Congratulations! Your app is running. 🎉")
-- [ ] Run the Hallmark lint on the stories against a local API and record the result here (FAIL, REFLEX and WARN counts, and the reason for each REFLEX kept). The DEMO codes no longer exist, and the real codes are private, so the result names slide types, never codes:
+- [x] Run the Hallmark lint on the stories against a local API and record the result here (FAIL, REFLEX and WARN counts, and the reason for each REFLEX kept). The DEMO codes no longer exist, and the real codes are private, so the result names slide types, never codes:
   1. `apps/announcement-api`: `npm run start:dev` (reads the database in `.env`; do not seed)
   2. `npm run announcement` (dev server on 4200)
   3. `node .claude/skills/hallmark/scripts/sloplint.mjs --url http://localhost:4200/announcement/<code> --genre editorial --render` for one story per audience segment, with codes from `seed-data.local.json`
+
+  **Result (2026-11-10), one `friends` and one `family` story (the stories have no `special` segment today):** 0 FAIL, 0 REFLEX, 1 WARN each.
+  - **WARN 77 "1 sections" (kept):** the rule is for landing pages (six to nine sections). The player shows one slide per screen by design ("One idea per slide", "no global navigation"), so one section is the right shape.
+  - **WARN F26 (fixed in the same PR):** a heading ended on a one-word line at 375px. Headings now use `text-wrap: balance` and body and emphasis lines use `text-wrap: pretty`.
+  - **What the lint does not see:** it renders the URL as it loads, which is the first slide. Every slide of both stories was also rendered at 390×844 and 360×640 in headless Chrome: none is clipped, and the computed faces and weights match the Type rules.

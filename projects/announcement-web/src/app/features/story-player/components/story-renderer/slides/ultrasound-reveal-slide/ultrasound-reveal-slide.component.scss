@@ -63,6 +63,7 @@
   }
 
   &__title {
+    text-wrap: balance;
     font-family: var(--ann-font-body);
     font-size: var(--text-lg);
     color: var(--ann-text-dark);
@@ -70,6 +71,7 @@
   }
 
   &__body {
+    text-wrap: pretty;
     font-family: var(--ann-font-script);
     font-size: clamp(2rem, 8vw, 3rem);
     color: var(--ann-text-script);

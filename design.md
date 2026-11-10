@@ -73,5 +73,5 @@ It needs `puppeteer-core` and Chrome (see the Hallmark README). Fix every FAIL; 
 | Product | Rules | Status |
 |---|---|---|
 | boxing-gym | `projects/boxing-gym/design.md` | Defined |
-| announcement-web | `projects/announcement-web/design.md` | Defined (migration open) |
+| announcement-web | `projects/announcement-web/design.md` | Defined |
 | baby-guide, kids-anxiety | — | Pending (spec only) |
