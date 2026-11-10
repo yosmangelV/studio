@@ -1,7 +1,8 @@
 :host {
   display: block;
   // The layout follows the list's own width, not the viewport: the same list can sit
-  // in a full-width section or in a narrow column.
+  // in a full-width section or in a narrow column. A size container takes its width
+  // from its parent, never from its content: give it a block or a sized flex/grid cell.
   container-type: inline-size;
 }
 

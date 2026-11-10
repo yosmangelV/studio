@@ -21,6 +21,9 @@ Lista de filas con separadores. Cada ítem muestra un índice, un nombre y una d
 Por debajo de 768px el nombre va sobre la descripción. Desde 1024px el nombre se compone en grande a la
 izquierda y la descripción ocupa una columna a la derecha, así cada fila llena el contenedor.
 Las filas son contenido, no enlaces: no tienen estado hover ni flecha.
+
+El diseño sigue el ancho de la lista (container queries), no el del viewport. La lista toma su ancho del
+contenedor: dentro de un flex o grid, dale una celda con ancho.
         `,
       },
     },
@@ -37,7 +40,6 @@ type Story = StoryObj<StripedListComponent>;
 export const Default: Story = {};
 
 export const Mobile: Story = {
-  parameters: { viewport: { defaultViewport: 'mobile1' } },
   render: () => ({
     props: { items: SAMPLE_ITEMS },
     template: `<div style="max-width: 360px"><ds-striped-list [items]="items" /></div>`,
