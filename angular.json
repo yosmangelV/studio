@@ -58,7 +58,8 @@
               "projects/design-system/src/styles/tokens.scss"
             ],
             "compodoc": false,
-            "outputDir": "dist/storybook"
+            "outputDir": "dist/storybook",
+            "statsJson": true
           }
         }
       }

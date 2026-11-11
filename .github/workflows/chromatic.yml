@@ -9,6 +9,8 @@ on:
       - 'projects/design-system/**'
       - '.storybook/**'
       - 'package.json'
+      - 'angular.json'
+      - '.github/workflows/chromatic.yml'
   pull_request:
     branches:
       - main
@@ -16,6 +18,8 @@ on:
       - 'projects/design-system/**'
       - '.storybook/**'
       - 'package.json'
+      - 'angular.json'
+      - '.github/workflows/chromatic.yml'
 
 permissions:
   contents: read
@@ -27,7 +31,10 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
+          # Full history and the PR's own head commit (not GitHub's synthetic merge
+          # commit), so TurboSnap can find the baseline build and diff against it.
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
@@ -36,8 +43,22 @@ jobs:
 
       - run: npm ci
 
+      # Built here rather than through buildScriptName: with TurboSnap the action
+      # appends --stats-json <dir>, which the Angular builder does not accept as a
+      # path, so preview-stats.json was never written. statsJson comes from
+      # angular.json and lands in dist/storybook.
+      - run: npm run storybook:build
+
       - name: Publish to Chromatic
         uses: chromaui/action@6ac4c49524e1b1358b8c593c5eea877604228268 # v18.14.2
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: storybook:build
+          storybookBuildDir: dist/storybook
+          # TurboSnap: snapshot only the stories whose module graph a change touches
+          # (reads dist/storybook/preview-stats.json).
+          onlyChanged: true
+          # Global styles and SCSS partials are not imported by any story (they enter
+          # as angular.json styles or are inlined by @use), and angular.json lists
+          # those global styles, so a change to either re-snapshots every story.
+          # One brace glob, so there is no list format to depend on.
+          externals: '{angular.json,projects/design-system/src/styles/**}'
