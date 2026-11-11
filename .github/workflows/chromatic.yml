@@ -58,6 +58,7 @@ jobs:
           # (reads dist/storybook/preview-stats.json).
           onlyChanged: true
           # Global styles and SCSS partials are not imported by any story (they enter
-          # as angular.json styles or are inlined by @use), so a change there
-          # re-snapshots every story.
-          externals: projects/design-system/src/styles/**
+          # as angular.json styles or are inlined by @use), and angular.json lists
+          # those global styles, so a change to either re-snapshots every story.
+          # One brace glob, so there is no list format to depend on.
+          externals: '{angular.json,projects/design-system/src/styles/**}'
