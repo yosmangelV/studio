@@ -1,6 +1,6 @@
 # Next steps
 
-Handoff note, updated 2026-11-10. Update it as items close, and delete it when the list is empty.
+Handoff note, updated 2026-11-12. Update it as items close, and delete it when the list is empty.
 
 ## How we work
 
@@ -35,7 +35,7 @@ New `main` after the rewrite: `e9f3068`.
 
 ## 3. Next PRs, in order
 
-1. **Announcement history purge (owner).** #52 took the stories (real names) and the ultrasound details out of the tree, but the old versions of `apps/announcement-api/scripts/seed.ts`, `semana12.jpg` and `ultrasound.jpg` are still in the public history. The steps are in the #52 description: `git filter-repo --strip-blobs-with-ids` with the old blobs (this keeps the current files), then a force push with protection opened briefly, a GitHub Support ticket and deleting the old Vercel deployments. The other photos in `public/assets/stories/` are personal too; moving them out of the repo is not decided.
+1. ~~**Announcement history purge (owner).**~~ Dropped by the owner on 2026-11-12. #52 already took the stories and the ultrasound details out of the tree; the old versions stay in the history.
 2. ~~**Remaining boxing-gym items**~~ (`projects/boxing-gym/design.md`), all closed:
    - ~~REFLEX 77: the "Nuestras clases" `striped-list` reaches 69% at 1440px.~~ Done in #50.
    - ~~F19: four font weights in use; the fourth (500) comes from the DS `page-nav`.~~ Done in #46, #50 and #53.
