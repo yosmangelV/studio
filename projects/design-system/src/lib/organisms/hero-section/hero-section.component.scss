@@ -45,7 +45,6 @@
     right: clamp(-2rem, 2vw, 4rem);
     bottom: 0;
     height: min(90vh, 100%);
-    width: auto;
     opacity: 0.07;
     pointer-events: none;
     user-select: none;
@@ -65,12 +64,15 @@
   }
 
   // ---- Headline ------------------------------------------------------------
-  // One entrance for the headline, tagline and actions; each sets only its delay.
-  &__headline-top,
-  &__headline-main,
-  &__tagline,
-  &__actions {
-    animation: hero-enter var(--duration-slow) var(--ease-default) both;
+  // One entrance for the headline, tagline and actions, only when motion is
+  // allowed; each element sets only its delay.
+  @media (prefers-reduced-motion: no-preference) {
+    &__headline-top,
+    &__headline-main,
+    &__tagline,
+    &__actions {
+      animation: hero-enter var(--duration-slow) var(--ease-default) both;
+    }
   }
 
   &__headline {
@@ -85,7 +87,7 @@
     font-size: clamp(2rem, 6.5vw, 5.5rem);
     font-weight: var(--font-semibold); // display faces stay at two weights, 600 and 700
     color: var(--color-text-primary);
-    letter-spacing: 0.08em;
+    letter-spacing: var(--tracking-widest);
     animation-delay: var(--stagger-1);
   }
 
@@ -94,7 +96,7 @@
     font-size: clamp(3.5rem, 17vw, 14rem);
     font-weight: var(--font-bold);
     color: var(--color-text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: var(--tracking-tight);
     line-height: 0.88;
     animation-delay: var(--stagger-2);
   }
@@ -104,7 +106,7 @@
     font-size: var(--text-lg);
     color: var(--color-text-secondary);
     margin-bottom: 3rem;
-    max-width: 44ch;
+    max-width: var(--measure-prose);
     animation-delay: var(--stagger-3);
   }
 
@@ -117,7 +119,6 @@
   }
 
   &__cta {
-    display: inline-block;
     font-size: var(--text-base);
     font-weight: var(--font-semibold);
     text-decoration: none;
@@ -202,10 +203,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__headline-top,
-  .hero__headline-main,
-  .hero__tagline,
-  .hero__actions { animation: none; } // opacity falls back to 1 without the animation
-
   .hero__scroll-hint span { animation: none; opacity: 0.4; }
 }

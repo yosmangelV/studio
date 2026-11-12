@@ -6,7 +6,7 @@ The visual rules for every product in this monorepo. Read this before designing 
 
 | Layer | File | Owns |
 |---|---|---|
-| Base tokens | `projects/design-system/src/styles/tokens.scss` | Values: neutral scale, spacing, radii, type scale, motion |
+| Base tokens | `projects/design-system/src/styles/tokens.scss` | Values: neutral scale, spacing, radii, type scale, tracking, measures, motion |
 | Brand tokens | `projects/<app>/src/styles/tokens.<app>.scss` | The product's palette and faces, remapped onto the DS tokens |
 | System rules | `design.md` (this file) | What every product must and must not do |
 | Product rules | `projects/<app>/design.md` | Personality, audience, the page's one job, colour roles |
