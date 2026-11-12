@@ -12,6 +12,14 @@ on:
   pull_request:
     branches: [main]
 
+# A new push to a PR cancels the run it supersedes. Every other run (pushes to
+# main, manual runs) is grouped by its own commit, so it never waits or gets
+# cancelled: GitHub drops a pending run when a third one joins its group, and main
+# is the deploy and the Chromatic baseline.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 
