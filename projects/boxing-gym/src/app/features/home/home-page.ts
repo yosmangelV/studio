@@ -30,6 +30,8 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
       [brandName]="config.name"
       [brandSubtitle]="config.subtitle"
       [links]="navLinks"
+      [ctaLabel]="navCtaLabel"
+      [menuLabel]="navMenuLabel"
       (ctaClick)="onNavCtaClick()"
     >
       <app-locale-switcher />
@@ -65,6 +67,9 @@ export default class HomePage {
   protected readonly config = inject(GYM_CONFIG);
   protected readonly gymProfile = inject(GymProfileService);
   private readonly router = inject(Router);
+
+  protected readonly navCtaLabel = $localize`:@@nav.cta:Acceder`;
+  protected readonly navMenuLabel = $localize`:@@nav.menu:Menú`;
 
   protected readonly navLinks: NavLink[] = [
     { label: $localize`:@@nav.about:Nosotros`,  href: '#about' },
