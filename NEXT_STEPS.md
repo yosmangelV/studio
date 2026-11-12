@@ -50,7 +50,7 @@ New `main` after the rewrite: `e9f3068`.
    - **Pagination arrows are text glyphs.** `ds-pagination` draws its previous/next buttons with `‹ ›`. `design.md` Floor 7 asks for SVG icons (the panel audit already replaced ← with Lucide).
    - **Unused scaffold.** `projects/design-system/src/lib/ui.ts` ("ui works!") is not exported or used; delete it.
 4. ~~**Chromatic snapshot quota.** The workflow snapshots every story (~74) on each push that touches the design system, and on 2026-11-10 the account reached its 5,000-snapshot limit, so "UI Tests" stops reporting until the period resets. Enable TurboSnap (`onlyChanged: true` in `.github/workflows/chromatic.yml`; `fetch-depth: 0` is already set) so a build only snapshots the stories a change affects.~~ TurboSnap enabled in #57; confirm on the first build after the quota resets that it reports "TurboSnap" and snapshots only the affected stories, and that a change to `angular.json` alone still re-snapshots everything (the `externals` brace glob).
-5. Optional, from the zizmor auditor persona: workflow `concurrency` (cancel superseded PR runs) and a GitHub environment for the Chromatic secret.
+5. Optional, from the zizmor auditor persona: ~~workflow `concurrency` (cancel superseded PR runs)~~ done in #62, and a GitHub environment for the Chromatic secret (still open).
 6. Optional: Dependabot for `github-actions`, so the SHAs pinned in #34 get bumped.
 7. Optional: CodeRabbit `chill` profile for some paths (offered, not decided).
 
