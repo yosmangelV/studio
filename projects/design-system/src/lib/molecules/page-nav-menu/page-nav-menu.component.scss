@@ -25,6 +25,8 @@
 
   // Hangs under the positioned bar, full width. [hidden] needs its own rule: the
   // display value on the class would otherwise override the attribute.
+  // On a short screen (a phone held sideways) it scrolls inside, since the fixed bar
+  // keeps the page from scrolling it into view. ds-page-nav sets --page-nav-bar-height.
   &__panel {
     position: absolute;
     top: 100%;
@@ -33,7 +35,10 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    padding: var(--space-2) clamp(1.5rem, 4vw, 3rem) var(--space-6);
+    max-height: calc(100dvh - var(--page-nav-bar-height, 5.25rem));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--space-2) clamp(var(--space-6), 4vw, var(--space-12)) var(--space-6);
     background: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
 
@@ -72,7 +77,6 @@
     background: var(--color-primary-500);
     border: none;
     cursor: pointer;
-    transition: background-color var(--duration-normal) var(--ease-default);
 
     &:hover {
       background-color: var(--color-primary-600);

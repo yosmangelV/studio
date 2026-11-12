@@ -64,7 +64,7 @@ describe('PageNavComponent', () => {
     const ctaClickSpy = vi.fn();
     const { container } = await render(PageNavComponent, {
       componentInputs: BASE_INPUTS,
-      componentOutputs: { ctaClick: { emit: ctaClickSpy } as any },
+      on: { ctaClick: ctaClickSpy },
     });
     fireEvent.click(container.querySelector<HTMLButtonElement>('.page-nav__cta')!);
     expect(ctaClickSpy).toHaveBeenCalledOnce();
@@ -87,7 +87,7 @@ describe('PageNavComponent', () => {
       const ctaClickSpy = vi.fn();
       await render(PageNavComponent, {
         componentInputs: BASE_INPUTS,
-        componentOutputs: { ctaClick: { emit: ctaClickSpy } as any },
+        on: { ctaClick: ctaClickSpy },
       });
       await user.click(screen.getByTestId('ds-page-nav-menu-button'));
       await user.click(within(screen.getByTestId('ds-page-nav-menu')).getByRole('button', { name: 'Acceder' }));

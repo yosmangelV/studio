@@ -22,8 +22,9 @@ let nextMenuId = 0;
  * The page navigation's menu for narrow screens (WAI-ARIA disclosure pattern).
  *
  * A button with `aria-expanded` opens a panel with the section links and the CTA.
- * Escape, a link, the CTA or a click outside closes it, and Escape returns focus to
- * the button. The component hides itself from 768px, where `ds-page-nav` shows the
+ * Escape, a link, the CTA, a click outside or focus leaving the menu closes it, and
+ * Escape returns focus to the button. Closing on focus out keeps the open panel from
+ * covering whatever the keyboard reaches next (WCAG 2.4.11). The component hides itself from 768px, where `ds-page-nav` shows the
  * links in the bar. The panel is absolutely positioned: place it inside a positioned
  * bar (as `ds-page-nav` does) so it hangs under it, full width.
  */
@@ -37,6 +38,7 @@ let nextMenuId = 0;
   host: {
     '(document:keydown.escape)': 'onEscape()',
     '(document:click)': 'onDocumentClick($event)',
+    '(focusout)': 'onFocusOut($event)',
   },
 })
 export class PageNavMenuComponent {
@@ -71,6 +73,13 @@ export class PageNavMenuComponent {
     if (!this.open()) return;
     this.close();
     this.button().nativeElement.focus();
+  }
+
+  protected onFocusOut(event: FocusEvent): void {
+    const next = event.relatedTarget as Node | null;
+    if (this.open() && next && !this.host.nativeElement.contains(next)) {
+      this.close();
+    }
   }
 
   protected onDocumentClick(event: MouseEvent): void {

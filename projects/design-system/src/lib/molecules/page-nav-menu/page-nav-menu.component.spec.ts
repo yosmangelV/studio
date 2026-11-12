@@ -53,6 +53,23 @@ describe('PageNavMenuComponent', () => {
     expect(screen.getByRole('button', { name: 'Antes' })).toHaveFocus();
   });
 
+  it('closes when focus moves past the menu, so the panel cannot cover it', async () => {
+    const user = userEvent.setup();
+    await render(`<ds-page-nav-menu [links]="links" /><button>Después</button>`, {
+      imports: [PageNavMenuComponent],
+      componentProperties: { links: LINKS },
+    });
+    await user.click(menuButton());
+    await user.tab(); // Nosotros
+    await user.tab(); // Clases
+    await user.tab(); // Contacto
+    await user.tab(); // CTA
+    expect(menuButton()).toHaveAttribute('aria-expanded', 'true');
+    await user.tab(); // leaves the menu
+    expect(screen.getByRole('button', { name: 'Después' })).toHaveFocus();
+    expect(menuButton()).toHaveAttribute('aria-expanded', 'false');
+  });
+
   it('closes when a link is chosen', async () => {
     const user = userEvent.setup();
     await render(PageNavMenuComponent, { componentInputs: { links: LINKS } });
@@ -77,7 +94,7 @@ describe('PageNavMenuComponent', () => {
     const ctaClickSpy = vi.fn();
     await render(PageNavMenuComponent, {
       componentInputs: { links: LINKS, ctaLabel: 'Sign in', menuLabel: 'Menu' },
-      componentOutputs: { ctaClick: { emit: ctaClickSpy } as any },
+      on: { ctaClick: ctaClickSpy },
     });
     expect(menuButton()).toHaveAccessibleName('Menu');
     await user.click(menuButton());
