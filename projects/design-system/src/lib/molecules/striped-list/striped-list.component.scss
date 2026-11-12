@@ -27,14 +27,14 @@
     border-bottom: 1px solid var(--color-border);
 
     @container (min-width: 640px) {
-      grid-template-columns: var(--space-12) minmax(0, 14rem) minmax(0, 1fr);
+      grid-template-columns: var(--space-12) minmax(0, var(--measure-label)) minmax(0, 1fr);
       grid-template-areas: 'index name desc';
       align-items: baseline;
       column-gap: var(--space-10);
     }
 
     @container (min-width: 900px) {
-      grid-template-columns: var(--space-12) minmax(0, 1fr) minmax(0, 30rem);
+      grid-template-columns: var(--space-12) minmax(0, 1fr) minmax(0, var(--measure-column));
       column-gap: var(--space-12);
       padding: var(--space-10) 0;
     }
@@ -46,7 +46,7 @@
     font-family: var(--font-display);
     font-size: var(--text-sm);
     font-weight: var(--font-bold);
-    letter-spacing: 0.05em;
+    letter-spacing: var(--tracking-wider);
     color: var(--color-text-accent);
     padding-top: var(--space-1);
 
@@ -66,12 +66,11 @@
     text-transform: uppercase;
     overflow-wrap: break-word;
     hyphens: auto;
-    letter-spacing: 0.03em;
+    letter-spacing: var(--tracking-wide);
     color: var(--color-text-primary);
 
     @container (min-width: 900px) {
       font-size: var(--text-3xl);
-      letter-spacing: 0.02em;
     }
   }
 

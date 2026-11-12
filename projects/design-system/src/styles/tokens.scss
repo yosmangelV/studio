@@ -104,6 +104,14 @@
   --leading-normal:  1.5;
   --leading-relaxed: 1.75;
 
+  // Letter spacing. Negative steps tighten large headings set in mixed case;
+  // positive steps open uppercase display type, wider as the text gets smaller.
+  --tracking-tighter: -0.02em; // display headings
+  --tracking-tight:   -0.01em; // h1, h2, the hero's main line
+  --tracking-wide:     0.03em; // uppercase names in lists
+  --tracking-wider:    0.05em; // small uppercase figures (list indices)
+  --tracking-widest:   0.08em; // uppercase lines above a headline, small brand names
+
   // ---------------------------------------------------------------------------
   // Spacing (base 4px)
   // ---------------------------------------------------------------------------
@@ -145,6 +153,11 @@
   // ---------------------------------------------------------------------------
   --layout-max-width: 1300px;
   --layout-gutter:    clamp(1.5rem, 8vw, 9rem);
+
+  // Measures: widths set by what a column holds, not by the viewport.
+  --measure-label:  14rem; // a short label beside its content (striped-list name)
+  --measure-column: 30rem; // a text column next to a heading (striped-list description)
+  --measure-prose:  44ch;  // a sentence or two of body text (hero tagline)
 
   // ---------------------------------------------------------------------------
   // Interaction — smallest box any control may have (root CLAUDE.md: 44x44px)
