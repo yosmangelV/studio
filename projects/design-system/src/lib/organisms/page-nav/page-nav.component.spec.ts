@@ -70,6 +70,18 @@ describe('PageNavComponent', () => {
     expect(ctaClickSpy).toHaveBeenCalledOnce();
   });
 
+  it('names the landmark and the brand link in Spanish by default', async () => {
+    await render(PageNavComponent, { componentInputs: BASE_INPUTS });
+    expect(screen.getByRole('navigation', { name: 'Navegación principal' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Boxing Club — Inicio' })).toBeInTheDocument();
+  });
+
+  it('takes the landmark and home labels from inputs', async () => {
+    await render(PageNavComponent, { componentInputs: { ...BASE_INPUTS, navLabel: 'Main navigation', homeLabel: 'Home' } });
+    expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Boxing Club — Home' })).toBeInTheDocument();
+  });
+
   // The menu's own behaviour is covered in page-nav-menu.component.spec.ts.
   describe('with the narrow-screen menu', () => {
     it('renders the menu inside the bar with the same links', async () => {
