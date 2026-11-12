@@ -5,10 +5,12 @@ import {
   input,
   output,
 } from '@angular/core';
+import { ChevronLeft, ChevronRight, LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'ds-pagination',
   standalone: true,
+  imports: [LucideAngularModule],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,6 +25,9 @@ export class PaginationComponent {
   readonly nextLabel = input<string>('Página siguiente');
 
   readonly pageChange = output<number>();
+
+  protected readonly previousIcon = ChevronLeft;
+  protected readonly nextIcon = ChevronRight;
 
   readonly pageNumbers = computed(() => {
     const current = this.currentPage();
