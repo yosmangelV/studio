@@ -90,4 +90,14 @@ describe('PaginationComponent', () => {
     expect(screen.getByRole('button', { name: 'Previous page' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Next page' })).toBeInTheDocument();
   });
+
+  it('draws the arrows as hidden SVG icons, not text glyphs (design.md Floor 7)', async () => {
+    await render(PaginationComponent, { componentInputs: { currentPage: 2, pages: 5 } });
+    for (const name of ['Página anterior', 'Página siguiente']) {
+      const button = screen.getByRole('button', { name });
+      expect(button.querySelector('svg')).not.toBeNull();
+      expect(button.querySelector('lucide-angular')).toHaveAttribute('aria-hidden', 'true');
+      expect(button.textContent?.trim()).toBe('');
+    }
+  });
 });

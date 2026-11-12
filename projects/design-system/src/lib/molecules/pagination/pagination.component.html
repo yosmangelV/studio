@@ -7,7 +7,7 @@
       (click)="go(currentPage() - 1)"
       [attr.aria-label]="previousLabel()"
     >
-      ‹
+      <lucide-angular [img]="previousIcon" [size]="16" aria-hidden="true" />
     </button>
 
     @for (item of pageNumbers(); track $index) {
@@ -32,7 +32,7 @@
       (click)="go(currentPage() + 1)"
       [attr.aria-label]="nextLabel()"
     >
-      ›
+      <lucide-angular [img]="nextIcon" [size]="16" aria-hidden="true" />
     </button>
   </nav>
 }

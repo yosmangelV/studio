@@ -7,6 +7,10 @@
   gap: 0.25rem;
 
   &__btn {
+    // Centres the page numbers and the arrow icons alike.
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: var(--size-touch-target);
     height: var(--size-touch-target);
     padding: 0 var(--space-2);
