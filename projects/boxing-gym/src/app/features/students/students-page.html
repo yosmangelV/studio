@@ -44,6 +44,9 @@
       />
 
       <ds-pagination
+        label="Paginación" i18n-label="@@pagination.label"
+        previousLabel="Página anterior" i18n-previousLabel="@@pagination.previous"
+        nextLabel="Página siguiente" i18n-nextLabel="@@pagination.next"
         [currentPage]="service.currentPage()"
         [pages]="service.pages()"
         [total]="service.total()"

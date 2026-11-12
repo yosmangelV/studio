@@ -99,7 +99,7 @@
     </unit>
     <unit id="hero.cta.classes">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:46</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:48</note>
       </notes>
       <segment>
         <source>Ver clases</source>
@@ -107,7 +107,7 @@
     </unit>
     <unit id="nav.cta">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:71</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:73</note>
       </notes>
       <segment>
         <source>Acceder</source>
@@ -115,15 +115,31 @@
     </unit>
     <unit id="nav.menu">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:72</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:74</note>
       </notes>
       <segment>
         <source>Menú</source>
       </segment>
     </unit>
-    <unit id="nav.about">
+    <unit id="nav.label">
       <notes>
         <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:75</note>
+      </notes>
+      <segment>
+        <source>Navegación principal</source>
+      </segment>
+    </unit>
+    <unit id="nav.home">
+      <notes>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:76</note>
+      </notes>
+      <segment>
+        <source>Inicio</source>
+      </segment>
+    </unit>
+    <unit id="nav.about">
+      <notes>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:79</note>
       </notes>
       <segment>
         <source>Nosotros</source>
@@ -131,7 +147,7 @@
     </unit>
     <unit id="nav.classes">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:76</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:80</note>
       </notes>
       <segment>
         <source>Clases</source>
@@ -139,7 +155,7 @@
     </unit>
     <unit id="nav.schedule">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:77</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:81</note>
       </notes>
       <segment>
         <source>Horarios</source>
@@ -147,7 +163,7 @@
     </unit>
     <unit id="nav.contact">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:78</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:82</note>
       </notes>
       <segment>
         <source>Contacto</source>
@@ -155,7 +171,7 @@
     </unit>
     <unit id="hero.cta.whatsapp">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:85</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:89</note>
       </notes>
       <segment>
         <source>Escríbenos por WhatsApp</source>
@@ -163,7 +179,7 @@
     </unit>
     <unit id="hero.cta.contact">
       <notes>
-        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:86</note>
+        <note category="location">projects/boxing-gym/src/app/features/home/home-page.ts:90</note>
       </notes>
       <segment>
         <source>Contáctanos</source>
@@ -239,6 +255,42 @@
       </notes>
       <segment>
         <source>Horarios</source>
+      </segment>
+    </unit>
+    <unit id="pagination.label">
+      <notes>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:47</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:93</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:139</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:195</note>
+        <note category="location">projects/boxing-gym/src/app/features/students/students-page.html:47</note>
+      </notes>
+      <segment>
+        <source>Paginación</source>
+      </segment>
+    </unit>
+    <unit id="pagination.previous">
+      <notes>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:48</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:94</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:140</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:196</note>
+        <note category="location">projects/boxing-gym/src/app/features/students/students-page.html:48</note>
+      </notes>
+      <segment>
+        <source>Página anterior</source>
+      </segment>
+    </unit>
+    <unit id="pagination.next">
+      <notes>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:49</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:95</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:141</note>
+        <note category="location">projects/boxing-gym/src/app/features/payments/ui/payment-summary-dashboard/payment-summary-dashboard.component.html:197</note>
+        <note category="location">projects/boxing-gym/src/app/features/students/students-page.html:49</note>
+      </notes>
+      <segment>
+        <source>Página siguiente</source>
       </segment>
     </unit>
   </file>

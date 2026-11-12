@@ -73,6 +73,36 @@
         <target>Menu</target>
       </segment>
     </unit>
+    <unit id="nav.label">
+      <segment>
+        <source>Navegación principal</source>
+        <target>Main navigation</target>
+      </segment>
+    </unit>
+    <unit id="nav.home">
+      <segment>
+        <source>Inicio</source>
+        <target>Home</target>
+      </segment>
+    </unit>
+    <unit id="pagination.label">
+      <segment>
+        <source>Paginación</source>
+        <target>Pagination</target>
+      </segment>
+    </unit>
+    <unit id="pagination.previous">
+      <segment>
+        <source>Página anterior</source>
+        <target>Previous page</target>
+      </segment>
+    </unit>
+    <unit id="pagination.next">
+      <segment>
+        <source>Página siguiente</source>
+        <target>Next page</target>
+      </segment>
+    </unit>
     <unit id="nav.about">
       <segment>
         <source>Nosotros</source>
