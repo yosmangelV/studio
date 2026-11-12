@@ -1,0 +1,21 @@
+# Keeps the GitHub Actions pinned to commit SHAs (#34) up to date. Dependabot
+# rewrites the SHA and the "# vX.Y.Z" comment next to it.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # Wait a week after a release before proposing it, so a compromised or broken
+    # release has time to be caught and pulled.
+    cooldown:
+      default-days: 7
+    # One PR a week for all actions instead of one per action.
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: ci
+    open-pull-requests-limit: 2
