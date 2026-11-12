@@ -61,6 +61,18 @@
         <target>View classes</target>
       </segment>
     </unit>
+    <unit id="nav.cta">
+      <segment>
+        <source>Acceder</source>
+        <target>Sign in</target>
+      </segment>
+    </unit>
+    <unit id="nav.menu">
+      <segment>
+        <source>Menú</source>
+        <target>Menu</target>
+      </segment>
+    </unit>
     <unit id="nav.about">
       <segment>
         <source>Nosotros</source>

@@ -1,0 +1,25 @@
+<button
+  #button
+  class="page-nav-menu__button"
+  type="button"
+  [attr.aria-label]="menuLabel()"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="panelId"
+  (click)="toggle()"
+  data-testid="ds-page-nav-menu-button"
+>
+  <lucide-angular [img]="icon()" [size]="24" aria-hidden="true" />
+</button>
+
+<div class="page-nav-menu__panel" [id]="panelId" [hidden]="!open()" data-testid="ds-page-nav-menu">
+  <ul class="page-nav-menu__links" role="list">
+    @for (link of links(); track $index) {
+      <li>
+        <a class="page-nav-menu__link" [href]="link.href" (click)="close()">{{ link.label }}</a>
+      </li>
+    }
+  </ul>
+  <button class="page-nav-menu__cta" type="button" (click)="onCtaClick()">
+    {{ ctaLabel() }}
+  </button>
+</div>

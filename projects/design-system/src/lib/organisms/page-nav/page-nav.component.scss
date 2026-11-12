@@ -14,7 +14,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem clamp(1.5rem, 4vw, 3rem);
+  // The bar is its padding plus a 44px control; the menu panel sizes itself below it.
+  // PageNavComponent replaces this with the measured height when content makes it taller.
+  --page-nav-pad-block: var(--space-5);
+  --page-nav-bar-height: calc(2 * var(--page-nav-pad-block) + var(--size-touch-target));
+  padding: var(--page-nav-pad-block) clamp(var(--space-6), 4vw, var(--space-12));
   background: linear-gradient(to bottom, var(--color-surface-nav) 0%, transparent 100%);
   backdrop-filter: blur(10px);
 
@@ -130,7 +134,9 @@
   }
 
   // ---- CTA -----------------------------------------------------------------
+  // Below md the CTA lives in ds-page-nav-menu's panel, so the brand keeps its room.
   &__cta {
+    display: none;
     font-size: var(--text-sm);
     font-weight: var(--font-semibold);
     color: var(--color-text-on-primary);
@@ -148,6 +154,10 @@
     &:focus-visible {
       outline: 2px solid var(--color-border-focus);
       outline-offset: 2px;
+    }
+
+    @include bp.up(md) {
+      display: block;
     }
   }
 }
