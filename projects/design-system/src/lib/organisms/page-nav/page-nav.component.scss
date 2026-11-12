@@ -15,9 +15,9 @@
   align-items: center;
   justify-content: space-between;
   // The bar is its padding plus a 44px control; the menu panel sizes itself below it.
-  --page-nav-pad-block: 1.25rem;
+  --page-nav-pad-block: var(--space-5);
   --page-nav-bar-height: calc(2 * var(--page-nav-pad-block) + var(--size-touch-target));
-  padding: var(--page-nav-pad-block) clamp(1.5rem, 4vw, 3rem);
+  padding: var(--page-nav-pad-block) clamp(var(--space-6), 4vw, var(--space-12));
   background: linear-gradient(to bottom, var(--color-surface-nav) 0%, transparent 100%);
   backdrop-filter: blur(10px);
 
