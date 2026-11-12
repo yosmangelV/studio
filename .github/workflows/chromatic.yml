@@ -34,6 +34,9 @@ permissions:
 
 jobs:
   chromatic:
+    # Dependabot's PRs get no secrets, so the Chromatic token is empty there and
+    # the publish would fail. Their changes are action bumps, not stories.
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0

@@ -51,7 +51,7 @@ New `main` after the rewrite: `e9f3068`.
    - **Unused scaffold.** `projects/design-system/src/lib/ui.ts` ("ui works!") is not exported or used; delete it.
 4. ~~**Chromatic snapshot quota.** The workflow snapshots every story (~74) on each push that touches the design system, and on 2026-11-10 the account reached its 5,000-snapshot limit, so "UI Tests" stops reporting until the period resets. Enable TurboSnap (`onlyChanged: true` in `.github/workflows/chromatic.yml`; `fetch-depth: 0` is already set) so a build only snapshots the stories a change affects.~~ TurboSnap enabled in #57; confirmed on #62 (Chromatic build 75): "TurboSnap enabled", 0 affected story files, 87 snapshots bypassed for a CI and docs change. Still to confirm on the next change that touches it: that a change to `angular.json` alone re-snapshots everything (the `externals` brace glob).
 5. Optional, from the zizmor auditor persona: ~~workflow `concurrency` (cancel superseded PR runs)~~ done in #62, and a GitHub environment for the Chromatic secret (still open).
-6. Optional: Dependabot for `github-actions`, so the SHAs pinned in #34 get bumped.
+6. ~~Optional: Dependabot for `github-actions`, so the SHAs pinned in #34 get bumped.~~ Done in #63 (weekly, grouped, 7-day cooldown). On the first Monday after merge, check Insights → Dependency graph → Dependabot for the run or a config error (GitHub only validates `dependabot.yml` on `main`).
 7. Optional: CodeRabbit `chill` profile for some paths (offered, not decided).
 
 ## 4. Housekeeping
