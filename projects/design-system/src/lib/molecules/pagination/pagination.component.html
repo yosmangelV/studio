@@ -1,11 +1,11 @@
 @if (pages() > 1) {
-  <nav class="pagination" aria-label="Paginación">
+  <nav class="pagination" [attr.aria-label]="label()">
     <button
       class="pagination__btn"
       [class.pagination__btn--disabled]="currentPage() === 1"
       [disabled]="currentPage() === 1"
       (click)="go(currentPage() - 1)"
-      aria-label="Página anterior"
+      [attr.aria-label]="previousLabel()"
     >
       ‹
     </button>
@@ -30,7 +30,7 @@
       [class.pagination__btn--disabled]="currentPage() === pages()"
       [disabled]="currentPage() === pages()"
       (click)="go(currentPage() + 1)"
-      aria-label="Página siguiente"
+      [attr.aria-label]="nextLabel()"
     >
       ›
     </button>

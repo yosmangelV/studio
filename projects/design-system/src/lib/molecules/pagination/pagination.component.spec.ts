@@ -74,4 +74,20 @@ describe('PaginationComponent', () => {
     const ellipses = screen.queryAllByText('…');
     expect(ellipses).toHaveLength(1);
   });
+
+  it('names the landmark and the arrows in Spanish by default', async () => {
+    await render(PaginationComponent, { componentInputs: { currentPage: 2, pages: 5 } });
+    expect(screen.getByRole('navigation', { name: 'Paginación' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Página anterior' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Página siguiente' })).toBeInTheDocument();
+  });
+
+  it('takes the landmark and arrow labels from inputs', async () => {
+    await render(PaginationComponent, {
+      componentInputs: { currentPage: 2, pages: 5, label: 'Pagination', previousLabel: 'Previous page', nextLabel: 'Next page' },
+    });
+    expect(screen.getByRole('navigation', { name: 'Pagination' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Previous page' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Next page' })).toBeInTheDocument();
+  });
 });

@@ -17,6 +17,10 @@ export class PaginationComponent {
   readonly currentPage = input.required<number>();
   readonly pages = input.required<number>();
   readonly total = input<number>(0);
+  /** Accessible name of the nav landmark. */
+  readonly label = input<string>('Paginación');
+  readonly previousLabel = input<string>('Página anterior');
+  readonly nextLabel = input<string>('Página siguiente');
 
   readonly pageChange = output<number>();
 

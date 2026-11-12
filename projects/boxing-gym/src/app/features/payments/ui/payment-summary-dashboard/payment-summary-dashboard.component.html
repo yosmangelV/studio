@@ -44,6 +44,9 @@
         @if (paidPages() > 1) {
           <div class="payment-summary-dashboard__pagination">
             <ds-pagination
+              label="Paginación" i18n-label="@@pagination.label"
+              previousLabel="Página anterior" i18n-previousLabel="@@pagination.previous"
+              nextLabel="Página siguiente" i18n-nextLabel="@@pagination.next"
               [currentPage]="paidPage()"
               [pages]="paidPages()"
               [total]="paid().length"
@@ -87,6 +90,9 @@
         @if (pendingPages() > 1) {
           <div class="payment-summary-dashboard__pagination">
             <ds-pagination
+              label="Paginación" i18n-label="@@pagination.label"
+              previousLabel="Página anterior" i18n-previousLabel="@@pagination.previous"
+              nextLabel="Página siguiente" i18n-nextLabel="@@pagination.next"
               [currentPage]="pendingPage()"
               [pages]="pendingPages()"
               [total]="pending().length"
@@ -130,6 +136,9 @@
         @if (overduePages() > 1) {
           <div class="payment-summary-dashboard__pagination">
             <ds-pagination
+              label="Paginación" i18n-label="@@pagination.label"
+              previousLabel="Página anterior" i18n-previousLabel="@@pagination.previous"
+              nextLabel="Página siguiente" i18n-nextLabel="@@pagination.next"
               [currentPage]="overduePage()"
               [pages]="overduePages()"
               [total]="overdue().length"
@@ -183,6 +192,9 @@
         @if (atRiskPages() > 1) {
           <div class="payment-summary-dashboard__pagination">
             <ds-pagination
+              label="Paginación" i18n-label="@@pagination.label"
+              previousLabel="Página anterior" i18n-previousLabel="@@pagination.previous"
+              nextLabel="Página siguiente" i18n-nextLabel="@@pagination.next"
               [currentPage]="atRiskPage()"
               [pages]="atRiskPages()"
               [total]="atRisk().length"

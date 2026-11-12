@@ -32,10 +32,14 @@ export class PageNavComponent {
   readonly ctaLabel      = input<string>('Acceder');
   /** Accessible name of the menu button shown below 768px. */
   readonly menuLabel     = input<string>('Menú');
+  /** Accessible name of the nav landmark. */
+  readonly navLabel      = input<string>('Navegación principal');
+  /** Appended to the brand name in the brand link's accessible name ("Brand — Inicio"). */
+  readonly homeLabel     = input<string>('Inicio');
 
   readonly ctaClick = output<void>();
 
-  readonly brandAriaLabel = computed(() => `${this.brandName()} — Inicio`);
+  readonly brandAriaLabel = computed(() => `${this.brandName()} — ${this.homeLabel()}`);
 
   private readonly bar = viewChild.required<ElementRef<HTMLElement>>('bar');
   private readonly destroyRef = inject(DestroyRef);

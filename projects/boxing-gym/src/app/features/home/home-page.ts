@@ -32,6 +32,8 @@ import { ContactSectionComponent } from './ui/contact-section/contact-section.co
       [links]="navLinks"
       [ctaLabel]="navCtaLabel"
       [menuLabel]="navMenuLabel"
+      [navLabel]="navLabel"
+      [homeLabel]="navHomeLabel"
       (ctaClick)="onNavCtaClick()"
     >
       <app-locale-switcher />
@@ -70,6 +72,8 @@ export default class HomePage {
 
   protected readonly navCtaLabel = $localize`:@@nav.cta:Acceder`;
   protected readonly navMenuLabel = $localize`:@@nav.menu:Menú`;
+  protected readonly navLabel = $localize`:@@nav.label:Navegación principal`;
+  protected readonly navHomeLabel = $localize`:@@nav.home:Inicio`;
 
   protected readonly navLinks: NavLink[] = [
     { label: $localize`:@@nav.about:Nosotros`,  href: '#about' },
