@@ -19,5 +19,11 @@
     <button class="page-nav__cta" type="button" (click)="ctaClick.emit()">
       {{ ctaLabel() }}
     </button>
+    <ds-page-nav-menu
+      [links]="links()"
+      [ctaLabel]="ctaLabel()"
+      [menuLabel]="menuLabel()"
+      (ctaClick)="ctaClick.emit()"
+    />
   </div>
 </nav>

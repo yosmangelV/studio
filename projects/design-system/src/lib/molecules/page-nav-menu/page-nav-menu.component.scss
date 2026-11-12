@@ -1,0 +1,90 @@
+@use '../../../styles/breakpoints' as bp;
+
+// From md the page nav shows its links in the bar: no menu.
+:host {
+  display: block;
+
+  @include bp.up(md) {
+    display: none;
+  }
+}
+
+.page-nav-menu {
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-touch-target);
+    height: var(--size-touch-target);
+    padding: 0;
+    color: var(--color-text-primary);
+    background: transparent;
+    border: 1px solid var(--color-border-strong);
+    cursor: pointer;
+  }
+
+  // Hangs under the positioned bar, full width. [hidden] needs its own rule: the
+  // display value on the class would otherwise override the attribute.
+  &__panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-2) clamp(1.5rem, 4vw, 3rem) var(--space-6);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li + li {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  &__link,
+  &__cta {
+    min-height: var(--size-touch-target);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    padding-block: var(--space-2);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  &__cta {
+    color: var(--color-text-on-primary);
+    background: var(--color-primary-500);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--duration-normal) var(--ease-default);
+
+    &:hover {
+      background-color: var(--color-primary-600);
+    }
+  }
+
+  &__button,
+  &__link,
+  &__cta {
+    &:focus-visible {
+      outline: 2px solid var(--color-border-focus);
+      outline-offset: 2px;
+    }
+  }
+}

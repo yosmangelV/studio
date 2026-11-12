@@ -13,6 +13,7 @@ export * from './lib/atoms/typography/typography.component';
 export * from './lib/molecules/card/card.component';
 export * from './lib/molecules/form-field/form-field.component';
 export * from './lib/molecules/pagination/pagination.component';
+export * from './lib/molecules/page-nav-menu/page-nav-menu.component';
 
 // Organisms
 export * from './lib/organisms/hero-section/hero-section.component';

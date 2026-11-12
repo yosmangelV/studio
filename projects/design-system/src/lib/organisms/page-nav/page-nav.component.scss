@@ -130,7 +130,9 @@
   }
 
   // ---- CTA -----------------------------------------------------------------
+  // Below md the CTA lives in ds-page-nav-menu's panel, so the brand keeps its room.
   &__cta {
+    display: none;
     font-size: var(--text-sm);
     font-weight: var(--font-semibold);
     color: var(--color-text-on-primary);
@@ -148,6 +150,10 @@
     &:focus-visible {
       outline: 2px solid var(--color-border-focus);
       outline-offset: 2px;
+    }
+
+    @include bp.up(md) {
+      display: block;
     }
   }
 }
