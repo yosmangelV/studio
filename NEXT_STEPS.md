@@ -20,7 +20,7 @@ Handoff note, updated 2026-11-12. Update it as items close, and delete it when t
   ```
   Also ask Support to clear the refs of #39: an early commit of this note named the old SHAs (pointers only, not the data).
 
-  Status 2026-11-15: **not purged yet**. All the old SHAs still resolve through the API, and one of them still serves `create-user.mjs`. No reply has arrived by notification or email; follow up on the ticket at support.github.com (My tickets).
+  Status 2026-11-15: **not purged yet**. All the old SHAs still resolve through the API, and one of them still serves `create-user.mjs`. The 2026-11-08 ticket never reached the owner's account (support.github.com showed no tickets), so a new one was opened on 2026-11-15 (Repositories → Repository features → Data). It names the three old SHAs still served and asks Support to remove the pull request refs of #19–#32, which still point at commits with the removed files, and of #39, then to garbage-collect.
 
 ## 2. History purge (done 2026-11-08), follow-ups
 
