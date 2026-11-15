@@ -32,7 +32,7 @@ What was done:
 
 New `main` after the rewrite: `e9f3068`.
 
-- [ ] Re-clone every other copy of the repo; do not pull into an old one. A plain `pull` merges the old history back in and could push it again. Checked 2026-11-15 on the owner's Mac (`~/Desktop/PROJECTS/studio` and its worktrees): no branch, tag or stash reaches the old history, so a push cannot send it back. One old commit is still in the local object store as an unreachable object, which `git push` never sends. What remains is any copy on another machine.
+- [ ] Re-clone every other copy of the repo; do not pull into an old one. A plain `pull` merges the old history back in and could push it again. Checked 2026-11-15 on the owner's Mac (`~/Desktop/PROJECTS/studio` and its worktrees): none of the old commits is in the local object store, and no ref (all 9: branches and `refs/remotes/*`; no tags or stash) reaches the purged files, so neither a push nor `push --mirror` can send the old history back. What remains is any copy on another machine.
 - [ ] If the sample password from the deleted `create-user.mjs` was ever used on a real account, rotate it in Supabase. It is the password in the usage example of the file's header comment, next to an email and the `instructor` role, and it stays publicly readable by SHA until Support purges. The script itself held no other secret: it read `SUPABASE_SERVICE_ROLE_KEY` from `.env`, and `apps/boxing-gym-api/.env` has never been committed.
 
 ## 3. Next PRs, in order
