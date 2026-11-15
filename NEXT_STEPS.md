@@ -20,6 +20,8 @@ Handoff note, updated 2026-11-12. Update it as items close, and delete it when t
   ```
   Also ask Support to clear the refs of #39: an early commit of this note named the old SHAs (pointers only, not the data).
 
+  Status 2026-11-15: **not purged yet**. All the old SHAs still resolve through the API, and one of them still serves `create-user.mjs`. No reply has arrived by notification or email; follow up on the ticket at support.github.com (My tickets).
+
 ## 2. History purge (done 2026-11-08), follow-ups
 
 What was done:
@@ -30,8 +32,8 @@ What was done:
 
 New `main` after the rewrite: `e9f3068`.
 
-- [ ] Re-clone every other copy of the repo; do not pull into an old one. A plain `pull` merges the old history back in and could push it again.
-- [ ] If the sample password from the deleted `create-user.mjs` was ever used on a real account, rotate it in Supabase.
+- [ ] Re-clone every other copy of the repo; do not pull into an old one. A plain `pull` merges the old history back in and could push it again. Checked 2026-11-15 on the owner's Mac (`~/Desktop/PROJECTS/studio` and its worktrees): no branch, tag or stash reaches the old history, so a push cannot send it back. One old commit is still in the local object store as an unreachable object, which `git push` never sends. What remains is any copy on another machine.
+- [ ] If the sample password from the deleted `create-user.mjs` was ever used on a real account, rotate it in Supabase. It is the password in the usage example of the file's header comment, next to an email and the `instructor` role, and it stays publicly readable by SHA until Support purges. The script itself held no other secret: it read `SUPABASE_SERVICE_ROLE_KEY` from `.env`, and `apps/boxing-gym-api/.env` has never been committed.
 
 ## 3. Next PRs, in order
 
