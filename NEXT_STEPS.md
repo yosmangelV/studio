@@ -20,6 +20,8 @@ Handoff note, updated 2026-11-12. Update it as items close, and delete it when t
   ```
   Also ask Support to clear the refs of #39: an early commit of this note named the old SHAs (pointers only, not the data).
 
+  Status 2026-11-15: **not purged yet**. All the old SHAs still resolve through the API, and one of them still serves `create-user.mjs`. The 2026-11-08 ticket never reached the owner's account (support.github.com showed no tickets), so a new one was opened on 2026-11-15 (Repositories → Repository features → Data). It names the three old SHAs still served and asks Support to remove the pull request refs of #19–#32, which still point at commits with the removed files, and of #39, then to garbage-collect.
+
 ## 2. History purge (done 2026-11-08), follow-ups
 
 What was done:
@@ -30,8 +32,8 @@ What was done:
 
 New `main` after the rewrite: `e9f3068`.
 
-- [ ] Re-clone every other copy of the repo; do not pull into an old one. A plain `pull` merges the old history back in and could push it again.
-- [ ] If the sample password from the deleted `create-user.mjs` was ever used on a real account, rotate it in Supabase.
+- [ ] Re-clone every other copy of the repo; do not pull into an old one. A plain `pull` merges the old history back in and could push it again. Checked 2026-11-15 on the owner's Mac (`~/Desktop/PROJECTS/studio` and its worktrees): none of the old commits is in the local object store, and no ref (all 9: branches and `refs/remotes/*`; no tags or stash) reaches the purged files, so neither a push nor `push --mirror` can send the old history back. What remains is any copy on another machine.
+- [ ] If the sample password from the deleted `create-user.mjs` was ever used on a real account, rotate it in Supabase. It is the password in the usage example of the file's header comment, next to an email and the `instructor` role, and it stays publicly readable by SHA until Support purges. The script itself held no other secret: it read `SUPABASE_SERVICE_ROLE_KEY` from `.env`, and `apps/boxing-gym-api/.env` has never been committed.
 
 ## 3. Next PRs, in order
 
@@ -50,7 +52,7 @@ New `main` after the rewrite: `e9f3068`.
    - ~~**Pagination arrows are text glyphs.** `ds-pagination` draws its previous/next buttons with `‹ ›`. `design.md` Floor 7 asks for SVG icons (the panel audit already replaced ← with Lucide).~~ Done in #65.
    - ~~**Unused scaffold.** `projects/design-system/src/lib/ui.ts` ("ui works!") is not exported or used; delete it.~~ Done in #65.
 4. ~~**Chromatic snapshot quota.** The workflow snapshots every story (~74) on each push that touches the design system, and on 2026-11-10 the account reached its 5,000-snapshot limit, so "UI Tests" stops reporting until the period resets. Enable TurboSnap (`onlyChanged: true` in `.github/workflows/chromatic.yml`; `fetch-depth: 0` is already set) so a build only snapshots the stories a change affects.~~ TurboSnap enabled in #57; confirmed on #62 (Chromatic build 75): "TurboSnap enabled", 0 affected story files, 87 snapshots bypassed for a CI and docs change. Still to confirm on the next change that touches it: that a change to `angular.json` alone re-snapshots everything (the `externals` brace glob).
-5. Optional, from the zizmor auditor persona: ~~workflow `concurrency` (cancel superseded PR runs)~~ done in #62, and a GitHub environment for the Chromatic secret (still open). The token is not exposed: it is an encrypted repository secret, masked in logs, and absent from the code and the history (checked 2026-11-12). An environment would only add a restriction on which branches can read it, or an approval step; the owner creates it in the repo settings, then `chromatic.yml` names it.
+5. ~~Optional, from the zizmor auditor persona: workflow `concurrency` and a GitHub environment for the Chromatic secret.~~ `concurrency` done in #62. The environment was evaluated and dropped (2026-11-15). The token is an encrypted repository secret, masked in logs and absent from the code and the history, and it can only publish Chromatic builds. Restricting it to `main` would stop Chromatic on PRs, where visual changes are reviewed, and a required approval would gate every PR push. A Chromatic OAuth client is not a substitute: with `project:write` and `build:write` it could manage collaborators and accept snapshots, a wider credential than the project token.
 6. ~~Optional: Dependabot for `github-actions`, so the SHAs pinned in #34 get bumped.~~ Done in #63 (weekly, grouped, 7-day cooldown) and validated: its first run on `main` succeeded and opened #64, which bumped `actions/checkout` to v7, `actions/setup-node` to v7, `astral-sh/setup-uv` to v10 and `dorny/paths-filter` to v4. `main`'s CI passed with them after the merge. Review each major bump's release notes before merging its PR.
 
 ## 4. Housekeeping
