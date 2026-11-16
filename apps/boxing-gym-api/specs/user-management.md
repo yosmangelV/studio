@@ -1,7 +1,7 @@
 # Spec: Gestión de Usuarios del Sistema (User Management)
 
 **Fase:** 1.5 — Acceso al sistema  
-**Estado:** `in-progress`  
+**Estado:** `superseded` por [`student-accounts.md`](student-accounts.md) ([ADR 0005](../../../docs/decisions/0005-boxing-gym-student-accounts.md)): las cuentas ya no se crean con contraseña, se invita al alumno por email  
 **Última actualización:** 2026-09-29
 
 ---

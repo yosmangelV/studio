@@ -25,7 +25,7 @@
 | `level`           | enum      | sí        | `beginner` \| `intermediate` \| `advanced`      |
 | `is_active`       | boolean   | sí        | Default `true`. No se eliminan registros, se desactivan |
 | `weight`          | decimal   | no        | Peso en kg. Opcional, principalmente para peleadores activos |
-| `auth_user_id`    | uuid      | no        | FK a `auth.users(id)`. Null si el alumno no tiene acceso al sistema. Ver `specs/user-management.md` |
+| `auth_user_id`    | uuid      | no        | FK a `auth.users(id)`. Null si el alumno no tiene acceso al sistema. Ver `specs/student-accounts.md` |
 | `created_at`      | timestamp | auto      | Generado por Supabase                           |
 | `updated_at`      | timestamp | auto      | Actualizado automáticamente por Supabase        |
 
@@ -128,7 +128,7 @@ Elimina un alumno de la base de datos.
 
 ## Autorización
 
-Permisos en `app_metadata.permissions` del JWT (ver `specs/user-management.md`).
+Permisos en `app_metadata.permissions` del JWT (ver `specs/student-accounts.md`).
 
 | Endpoint | `admin` | `instructor` | `student` / sin rol |
 |---|---|---|---|
