@@ -1,16 +1,16 @@
-name: CI — Diversion Prototype
+name: CI — Kaiju Prototype
 
 on:
   push:
     branches: [main]
     paths:
-      - 'projects/diversion-prototype/**'
-      - '.github/workflows/ci-diversion-prototype.yml'
+      - 'projects/kaiju-prototype/**'
+      - '.github/workflows/ci-kaiju-prototype.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'projects/diversion-prototype/**'
-      - '.github/workflows/ci-diversion-prototype.yml'
+      - 'projects/kaiju-prototype/**'
+      - '.github/workflows/ci-kaiju-prototype.yml'
 
 # A new push to a PR cancels the run it supersedes. Every other run (pushes to
 # main, manual runs) is grouped by its own commit, so it never waits or gets
@@ -51,11 +51,11 @@ jobs:
           echo "GODOT_BIN=$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}_linux.x86_64" >> "$GITHUB_ENV"
 
       - name: Import project
-        run: node projects/diversion-prototype/tools/godot.mjs --headless --import
+        run: node projects/kaiju-prototype/tools/godot.mjs --headless --import
 
       - name: Run acceptance criteria
-        run: node projects/diversion-prototype/tools/godot.mjs --headless --fixed-fps 60 res://tests/acceptance.tscn
+        run: node projects/kaiju-prototype/tools/godot.mjs --headless --fixed-fps 60 res://tests/acceptance.tscn
 
       # Headless skips the touch checks; a virtual display runs the full suite.
       - name: Run acceptance criteria with a window
-        run: xvfb-run -a node projects/diversion-prototype/tools/godot.mjs --audio-driver Dummy --fixed-fps 60 res://tests/acceptance.tscn
+        run: xvfb-run -a node projects/kaiju-prototype/tools/godot.mjs --audio-driver Dummy --fixed-fps 60 res://tests/acceptance.tscn

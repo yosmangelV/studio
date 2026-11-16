@@ -1,4 +1,4 @@
-# Diversion prototype
+# Kaiju prototype
 
 Source of truth: `docs/prototype-spec.md` (what and why) and `docs/technical-spec.md` (how). Both are in Spanish, the product's language.
 
@@ -33,7 +33,7 @@ Source of truth: `docs/prototype-spec.md` (what and why) and `docs/technical-spe
 From the monorepo root, with `godot` on the PATH or `GODOT_BIN` set:
 
 ```bash
-npm run diversion:editor   # Opens the project in the editor
-npm run diversion:play     # Runs the game
-npm run diversion:test     # Checks the section 7 criteria headless
+npm run kaiju:editor   # Opens the project in the editor
+npm run kaiju:play     # Runs the game
+npm run kaiju:test     # Checks the section 7 criteria headless
 ```
