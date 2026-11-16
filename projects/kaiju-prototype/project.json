@@ -1,6 +1,6 @@
 {
-  "name": "diversion-prototype",
-  "root": "projects/diversion-prototype",
+  "name": "kaiju-prototype",
+  "root": "projects/kaiju-prototype",
   "projectType": "application",
   "tags": [
     "type:prototype",
@@ -10,15 +10,15 @@
     "editor": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node projects/diversion-prototype/tools/godot.mjs -e"
+        "command": "node projects/kaiju-prototype/tools/godot.mjs -e"
       }
     },
     "play": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "node projects/diversion-prototype/tools/godot.mjs --headless --import",
-          "node projects/diversion-prototype/tools/godot.mjs"
+          "node projects/kaiju-prototype/tools/godot.mjs --headless --import",
+          "node projects/kaiju-prototype/tools/godot.mjs"
         ],
         "parallel": false
       }
@@ -28,8 +28,8 @@
       "cache": false,
       "options": {
         "commands": [
-          "node projects/diversion-prototype/tools/godot.mjs --headless --import",
-          "node projects/diversion-prototype/tools/godot.mjs --headless --fixed-fps 60 res://tests/acceptance.tscn"
+          "node projects/kaiju-prototype/tools/godot.mjs --headless --import",
+          "node projects/kaiju-prototype/tools/godot.mjs --headless --fixed-fps 60 res://tests/acceptance.tscn"
         ],
         "parallel": false
       }

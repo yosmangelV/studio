@@ -5,6 +5,7 @@ Estado a 8 de noviembre de 2026. Documento de trabajo: se actualiza al cerrar ca
 ## Dónde estamos
 
 - **Prototipo:** fusionado en `main` (PR #31). Pasa sus pruebas de aceptación en CI, en headless y con ventana virtual.
+- **Nombre del proyecto:** `kaiju-prototype` (antes llevaba el nombre del nivel, en inglés), un nombre neutro hasta que haya nombre comercial. "Desvío" sigue siendo el nivel 3 del juego. Godot deriva la carpeta `user://` de `config/name`, así que desde el renombre los CSV de `SessionLog` se escriben en `app_userdata/Kaiju Prototype/logs` y no en `app_userdata/Diversion Prototype/logs` (en macOS, dentro de `~/Library/Application Support/Godot/`). Los CSV anteriores no se mueven solos: siguen en la carpeta antigua.
 - **Prueba informal en móvil:** se hizo con la versión web en un iPhone. Sirvió para descubrir dos problemas, pero la web queda descartada: a partir de aquí, solo compilación nativa.
 - **Destino:**
   - **iOS:** el iPhone del autor. Ahí se harán las pruebas de validación: se le pasa el móvil a cada persona.
@@ -48,7 +49,7 @@ brew install node@22               # Para los scripts npm del monorepo
 echo 'export PATH="$(brew --prefix node@22)/bin:$PATH"' >> ~/.zprofile
 export PATH="$(brew --prefix node@22)/bin:$PATH"
 cd <repo> && npm ci
-npm run diversion:test             # Debe terminar con "RESULT: 0 failures"
+npm run kaiju:test                 # Debe terminar con "RESULT: 0 failures"
 ```
 
 ### Plantillas de exportación de Godot
@@ -110,8 +111,8 @@ Cada uno va en su propio PR, con su comprobación en `tests/acceptance.gd`.
    - **iOS:** identificador de paquete propio, `user_data/accessible_from_files_app=true` y `user_data/accessible_from_itunes_sharing=true` (Apple exige las dos para que los CSV aparezcan en la app Archivos), y `application/export_project_only=true` para que Godot genere solo el proyecto de Xcode y la firma se haga en Xcode.
    - **Secretos:** ni contraseñas ni claves en el repo. Godot guarda las credenciales en `.godot/export_credentials.cfg`, que ya está ignorado.
 3. **Registro accesible en Android:** ahora `SessionLog` escribe en `user://logs`, dentro del almacenamiento privado de la app. Para que los testers puedan mandar el CSV, escribir también en una carpeta accesible o añadir un botón para compartirlo. Por decidir.
-4. **APK en CI:** un paso en `ci-diversion-prototype.yml` que genere el APK de depuración y lo publique como artefacto en cada push a `main`. El paso de Godot ya verifica su hash; el de las plantillas tendría que verificar el suyo igual.
-5. **Scripts npm:** `diversion:export:ios` y `diversion:export:android`, igual que los existentes.
+4. **APK en CI:** un paso en `ci-kaiju-prototype.yml` que genere el APK de depuración y lo publique como artefacto en cada push a `main`. El paso de Godot ya verifica su hash; el de las plantillas tendría que verificar el suyo igual.
+5. **Scripts npm:** `kaiju:export:ios` y `kaiju:export:android`, igual que los existentes.
 
 ## 3. Compilar e instalar
 
@@ -128,20 +129,20 @@ Cada uno va en su propio PR, con su comprobación en `tests/acceptance.gd`.
 - Elegir el del equipo personal: su `O` es el nombre de la cuenta y, si se acaba de crear, es el de `notAfter` más lejano. En caso de duda, Xcode lo muestra en Settings, Accounts, en el equipo marcado como "(Personal Team)".
 - Ponerlo en el preset desde Godot (Project, Export, iOS). Es un dato personal: no se sube al repo si el preset va a ser compartido.
 
-Los comandos se ejecutan desde la raíz del repo. Godot resuelve las rutas de salida relativas desde la carpeta del proyecto, así que los archivos quedan en `projects/diversion-prototype/build/`.
+Los comandos se ejecutan desde la raíz del repo. Godot resuelve las rutas de salida relativas desde la carpeta del proyecto, así que los archivos quedan en `projects/kaiju-prototype/build/`.
 
 ```bash
-P=projects/diversion-prototype
+P=projects/kaiju-prototype
 mkdir -p "$P/build/ios" "$P/build/android"   # Godot no crea la carpeta de destino
 node $P/tools/godot.mjs --headless --import
 # iOS: genera un proyecto de Xcode
-node $P/tools/godot.mjs --headless --export-debug "iOS" build/ios/DiversionPrototype.xcodeproj
+node $P/tools/godot.mjs --headless --export-debug "iOS" build/ios/KaijuPrototype.xcodeproj
 # Android: genera el APK
-node $P/tools/godot.mjs --headless --export-debug "Android" build/android/diversion-prototype.apk
+node $P/tools/godot.mjs --headless --export-debug "Android" build/android/kaiju-prototype.apk
 ```
 
-- **iOS:** abrir `projects/diversion-prototype/build/ios/DiversionPrototype.xcodeproj` y comprobar en Signing & Capabilities que aparece el "Personal Team". Conectar el iPhone y darle a Play. La primera vez, en el iPhone, ir a Ajustes, General, VPN y gestión de dispositivos, y confiar en el desarrollador.
-- **Android:** instalar con `adb install projects/diversion-prototype/build/android/diversion-prototype.apk`, o mandar el archivo.
+- **iOS:** abrir `projects/kaiju-prototype/build/ios/KaijuPrototype.xcodeproj` y comprobar en Signing & Capabilities que aparece el "Personal Team". Conectar el iPhone y darle a Play. La primera vez, en el iPhone, ir a Ajustes, General, VPN y gestión de dispositivos, y confiar en el desarrollador.
+- **Android:** instalar con `adb install projects/kaiju-prototype/build/android/kaiju-prototype.apk`, o mandar el archivo.
 - **`build/`:** no debe entrar en el repo. Añadirlo al `.gitignore` del proyecto con el primer preset.
 
 ## 4. Validación (sección 7 de la especificación)
