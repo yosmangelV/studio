@@ -7,7 +7,7 @@ My personal monorepo: Angular apps with their APIs, the component library they s
 [![CI — Boxing Gym API](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym-api.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-boxing-gym-api.yml)
 [![CI — Announcement Web](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-web.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-web.yml)
 [![CI — Announcement API](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-api.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-announcement-api.yml)
-[![CI — Diversion Prototype](https://github.com/yosmangelV/studio/actions/workflows/ci-diversion-prototype.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-diversion-prototype.yml)
+[![CI — Kaiju Prototype](https://github.com/yosmangelV/studio/actions/workflows/ci-kaiju-prototype.yml/badge.svg)](https://github.com/yosmangelV/studio/actions/workflows/ci-kaiju-prototype.yml)
 [![Storybook](https://img.shields.io/badge/Storybook-Chromatic-FF4785?logo=storybook&logoColor=white)](https://main--6aa5a635a53be81ff5ff530b.chromatic.com)
 
 ---
@@ -39,10 +39,10 @@ The Angular component library the apps build on: Tailwind v4 and SCSS/BEM, organ
 
 ---
 
-### Diversion Prototype
+### Kaiju Prototype
 A throwaway Godot 4 prototype that tests one game mechanic: luring a monster away from a city with beacons. Its acceptance criteria run against the real game in CI.
 
-- **Path:** [`projects/diversion-prototype/`](projects/diversion-prototype)
+- **Path:** [`projects/kaiju-prototype/`](projects/kaiju-prototype)
 
 ---
 
@@ -193,8 +193,8 @@ npx nx test announcement-web --watch=false
 # Announcement API
 (cd apps/announcement-api && npm test)
 
-# Diversion Prototype (needs `godot` on the PATH or GODOT_BIN set)
-npm run diversion:test
+# Kaiju Prototype (needs `godot` on the PATH or GODOT_BIN set)
+npm run kaiju:test
 ```
 
 ---
@@ -214,7 +214,7 @@ studio/
 │   │       └── organisms/
 │   ├── boxing-gym/           ← Angular app
 │   ├── announcement-web/     ← Angular app
-│   ├── diversion-prototype/  ← Godot 4 prototype
+│   ├── kaiju-prototype/      ← Godot 4 prototype
 │   ├── baby-guide/           ← spec only
 │   └── kids-anxiety/         ← spec only
 ├── .github/workflows/        ← CI pipelines
@@ -241,7 +241,7 @@ The free plan gives [750 instance hours per month per workspace](https://render.
 | `ci-announcement-web` | Changes in `projects/announcement-web/`, `package.json` or the lockfile | Runs unit tests |
 | `ci-boxing-gym-api` | Changes in `apps/boxing-gym-api/` | Runs pytest and checks that migrations never write user data |
 | `ci-announcement-api` | Changes in `apps/announcement-api/` | Runs Jest tests |
-| `ci-diversion-prototype` | Changes in `projects/diversion-prototype/` | Runs the acceptance criteria in Godot |
+| `ci-kaiju-prototype` | Changes in `projects/kaiju-prototype/` | Runs the acceptance criteria in Godot |
 | `chromatic` | Changes in `projects/design-system/`, `.storybook/` or `package.json`, or a manual run | Publishes Storybook to Chromatic |
 
 ---

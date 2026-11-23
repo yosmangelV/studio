@@ -23,7 +23,7 @@ Si durante la implementación surge una decisión que afecta al feel y no está 
 ## 2. Estructura de archivos
 
 ```
-diversion-prototype/
+kaiju-prototype/
   project.godot
   CLAUDE.md
   scenes/
