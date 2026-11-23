@@ -7,5 +7,7 @@ Short records of the architecture decisions behind this monorepo: the context, w
 | [0001](0001-boxing-gym-one-deployment-per-school.md) | Boxing Gym: one deployment per school | accepted |
 | [0002](0002-announcement-api-nestjs.md) | Announcement API: NestJS and MongoDB | accepted |
 | [0003](0003-boxing-gym-api-fastapi.md) | Boxing Gym API: Python and FastAPI | accepted |
+| [0004](0004-boxing-gym-mobile-capacitor.md) | Boxing Gym mobile: Capacitor over the existing Angular app | accepted |
+| [0005](0005-boxing-gym-student-accounts.md) | Boxing Gym: student accounts by admin invitation | accepted |
 
 Longer write-ups live in [`../case-studies/`](../case-studies), starting with [turning Boxing Gym into a template](../case-studies/boxing-gym-template.md).
